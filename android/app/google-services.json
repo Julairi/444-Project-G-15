@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "122263950780",
+    "project_id": "esaa-c4278",
+    "storage_bucket": "esaa-c4278.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:122263950780:android:29950470f0c883dd1c87b9",
+        "android_client_info": {
+          "package_name": "com.example.esaa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "122263950780-ssig1veitg17oensgut9vu3b0c3b093s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmS-moWESRO9HeEbA1_HskRYGRwxz0Pjw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "122263950780-ssig1veitg17oensgut9vu3b0c3b093s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
