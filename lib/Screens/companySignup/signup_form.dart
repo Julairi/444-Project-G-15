@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 
-class SignUpForm extends StatefulWidget {
-  const SignUpForm({
+class companySignupForm extends StatefulWidget {
+  const companySignupForm({
     Key? key,
   }) : super(key: key);
   _SignUpFormState createState() => _SignUpFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class _SignUpFormState extends State<companySignupForm> {
   final _formKey = GlobalKey<FormState>();
   final nameEditingController = new TextEditingController();
   final emailEditingController = new TextEditingController();

@@ -1,8 +1,9 @@
+import 'package:esaa/Screens/companySignup/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 import '../../Login/login_screen.dart';
-import '../../Signup/signup_screen.dart';
+import '../../signup/signup_screen.dart';
 
 class LoginAndSignupBtn extends StatelessWidget {
   const LoginAndSignupBtn({
@@ -14,7 +15,6 @@ class LoginAndSignupBtn extends StatelessWidget {
     return Column(
       children: [
         Hero(
-          
           tag: "login_btn",
           child: ElevatedButton(
             onPressed: () {
@@ -22,13 +22,13 @@ class LoginAndSignupBtn extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return LoginScreen();
+                    return companySignUpScreen();
                   },
                 ),
               );
             },
             child: Text(
-              "تسجيل الدخول".toUpperCase(),
+              "تسجيل كشركة".toUpperCase(),
               style: TextStyle(fontSize: 16),
             ),
           ),
@@ -48,7 +48,7 @@ class LoginAndSignupBtn extends StatelessWidget {
           style: ElevatedButton.styleFrom(
               primary: kPrimaryLightColor, elevation: 0),
           child: Text(
-            "إنشاء حساب".toUpperCase(),
+            " تسجيل كباحث عن عمل".toUpperCase(),
             style: TextStyle(color: Colors.black, fontSize: 16),
           ),
         ),
