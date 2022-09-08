@@ -18,6 +18,9 @@ class _SignUpFormState extends State<companySignupForm> {
   final emailEditingController = new TextEditingController();
   final passwordEditingController = new TextEditingController();
   final confPasswordEditingController = new TextEditingController();
+  final AdressEditingController = new TextEditingController();
+  final ContactEditingController = new TextEditingController();
+  final DescrioptionEditingController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,7 @@ class _SignUpFormState extends State<companySignupForm> {
           padding: const EdgeInsets.all(defaultPadding),
           child: Icon(Icons.email),
         ),
-        labelText: "أدخل بريدك الإلكتروني ",
+        labelText: "أدخل البريد الإلكتروني ",
       ),
     );
 
@@ -88,7 +91,7 @@ class _SignUpFormState extends State<companySignupForm> {
         }
         return null;
       },
-      textInputAction: TextInputAction.done,
+      textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
@@ -96,12 +99,83 @@ class _SignUpFormState extends State<companySignupForm> {
         ),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(defaultPadding),
-          child: Icon(Icons.vpn_key),
+          child: Icon(Icons.streetview),
         ),
         hintText: "أعد كتابة كلمة المرور",
       ),
     );
-
+    final AdressField = TextFormField(
+      controller: AdressEditingController,
+      keyboardType: TextInputType.streetAddress,
+      cursorColor: kPrimaryColor,
+      textInputAction: TextInputAction.next,
+      onSaved: (newValue) => AdressEditingController.text = newValue!,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return kEmailNullError;
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: kPrimaryColor),
+        ),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(defaultPadding),
+          child: Icon(Icons.pin_drop),
+        ),
+        labelText: "أدخل عنوان الشركة ",
+      ),
+    );
+    final ContactinfoField = TextFormField(
+      controller: ContactEditingController,
+      keyboardType: TextInputType.text,
+      cursorColor: kPrimaryColor,
+      textInputAction: TextInputAction.next,
+      onSaved: (newValue) => ContactEditingController.text = newValue!, /////
+      validator: (value) {
+        if (value!.isEmpty) {
+          return kEmailNullError;
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: kPrimaryColor),
+        ),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(defaultPadding),
+          child: Icon(Icons.contacts),
+        ),
+        labelText: "طريقة تواصل للشركة",
+      ),
+    );
+    final DescriptionField = TextFormField(
+      controller: DescrioptionEditingController,
+      keyboardType: TextInputType.text,
+      cursorColor: kPrimaryColor,
+      textInputAction: TextInputAction.next,
+      onSaved: (newValue) => DescrioptionEditingController.text = newValue!,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return kEmailNullError;
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: kPrimaryColor),
+        ),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(defaultPadding),
+          child: Icon(Icons.brush),
+        ),
+        labelText: "اضف وصف مختصر عن الشركة",
+      ),
+    );
     return Form(
       key: _formKey,
       child: Column(
@@ -118,6 +192,12 @@ class _SignUpFormState extends State<companySignupForm> {
           passwordField,
           SizedBox(height: defaultPadding / 2),
           confPasswordField,
+          SizedBox(height: defaultPadding / 2),
+          AdressField,
+          SizedBox(height: defaultPadding / 2),
+          ContactinfoField,
+          SizedBox(height: defaultPadding / 2),
+          DescriptionField,
           Padding(padding: const EdgeInsets.all(defaultPadding)),
           const SizedBox(height: defaultPadding / 2),
           ElevatedButton(
@@ -127,13 +207,14 @@ class _SignUpFormState extends State<companySignupForm> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return secSignUpScreen();
+                      return LoginScreen();
                     },
                   ),
                 );
               }
             },
-            child: Text("متابعة".toUpperCase(), style: TextStyle(fontSize: 16)),
+            child: Text("انشاء حساب".toUpperCase(),
+                style: TextStyle(fontSize: 16)),
           ),
           const SizedBox(height: defaultPadding),
           AlreadyHaveAnAccountCheck(
