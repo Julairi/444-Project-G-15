@@ -1,8 +1,12 @@
 import 'package:esaa/Screens/Login/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
+import 'package:esaa/post_job/postJob.dart';
+import 'package:esaa/post_job/button';
+import 'package:esaa/post_job/post_input_field';
 
 class secondSignupScreen extends StatefulWidget {
   const secondSignupScreen({Key? key}) : super(key: key);
@@ -100,10 +104,11 @@ class _secondSignupScreenState extends State<secondSignupScreen> {
       validator: (value) {
         if (value!.isEmpty) {
           return kNationalIdNullError;
-        } else if (!RegExp(r'^[+]+*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.0/-9]$')
-            .hasMatch(value!)) {
-          return kInvalidNationalIdError;
-        } else
+        } //else if (!RegExp(r'^[+]+*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.0/-9]$')
+        //.hasMatch(value!)) {
+        //return kInvalidNationalIdError;
+        // }
+        else
           return null;
       },
     );
@@ -130,10 +135,11 @@ class _secondSignupScreenState extends State<secondSignupScreen> {
       validator: (value) {
         if (value!.isEmpty) {
           return kPhoneNumberNullError;
-        } else if (!RegExp(r'^[+]+*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.0/-9]$')
-            .hasMatch(value!)) {
-          return kInvalidPhoneNumber;
-        } else
+        } // else if (!RegExp(r'^[+]+*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.0/-9]$')
+        //.hasMatch(value!)) {
+        // return kInvalidPhoneNumber;
+        //}
+        else
           return null;
       },
     );
@@ -179,10 +185,16 @@ class _secondSignupScreenState extends State<secondSignupScreen> {
             initialDate: DateTime.now(),
             firstDate: DateTime(1900),
             lastDate: DateTime(2100));
-        if (newDate == null) return;
-        setState(() {
-          date = newDate;
-        });
+        if (newDate != null) {
+          print(newDate);
+          String formattedDate = DateFormat('yyyy-MM-dd').format(newDate);
+          print(formattedDate);
+          setState(() {
+            date = newDate;
+          });
+        } else {
+          print(kDOBNullError);
+        }
       },
       decoration: InputDecoration(
         border: OutlineInputBorder(
@@ -267,7 +279,7 @@ class _secondSignupScreenState extends State<secondSignupScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return LoginScreen();
+                      return AddJob();
                     },
                   ),
                 );
