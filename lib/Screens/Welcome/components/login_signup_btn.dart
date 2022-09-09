@@ -1,4 +1,5 @@
 import 'package:esaa/Screens/companySignup/signup_screen.dart';
+import 'package:esaa/post_job/post_job_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -49,6 +50,26 @@ class LoginAndSignupBtn extends StatelessWidget {
               primary: kPrimaryLightColor, elevation: 0),
           child: Text(
             " تسجيل كباحث عن عمل".toUpperCase(),
+            style: TextStyle(color: Colors.black, fontSize: 16),
+          ),
+        ),
+        //tesst
+        const SizedBox(height: 16),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return postjobScreen();
+                },
+              ),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+              primary: kPrimaryLightColor, elevation: 0),
+          child: Text(
+            " post job".toUpperCase(),
             style: TextStyle(color: Colors.black, fontSize: 16),
           ),
         ),

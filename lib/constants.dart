@@ -20,3 +20,7 @@ const String kNationalIdNullError = "الرجاءإدخال رقم الهوية/
 const String kInvalidNationalIdError =
     "الرجاء إدخال رقم الهوية/الإقامة بشكل صحيح";
 const String kDOBNullError = " الرجاء إدخال يوم ميلادك  ";
+const String kjobTitleNullError = "الرجاء إدخال عنوان الاعلان الوظيفي";
+const String kdescNullError = "الرجاء ادخال الوصف";
+const String klocNullError = "الرجاء ادخال الموقع";
+const String kStartDateNullError = " الرجاء إدخال التاريخ   ";

@@ -4,9 +4,6 @@ import 'package:intl/intl.dart';
 
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
-import 'package:esaa/post_job/postJob.dart';
-import 'package:esaa/post_job/button';
-import 'package:esaa/post_job/post_input_field';
 
 class secondSignupScreen extends StatefulWidget {
   const secondSignupScreen({Key? key}) : super(key: key);
@@ -272,22 +269,6 @@ class _secondSignupScreenState extends State<secondSignupScreen> {
           DOBField,
           Padding(padding: const EdgeInsets.all(defaultPadding)),
           const SizedBox(height: defaultPadding / 2),
-          ElevatedButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return AddJob();
-                    },
-                  ),
-                );
-              }
-            },
-            child: Text("إنشاء حساب".toUpperCase(),
-                style: TextStyle(fontSize: 16)),
-          ),
           const SizedBox(height: defaultPadding),
           AlreadyHaveAnAccountCheck(
             login: false,
