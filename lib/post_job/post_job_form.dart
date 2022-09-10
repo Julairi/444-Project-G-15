@@ -1,12 +1,14 @@
-import 'package:esaa/Screens/Login/login_screen.dart';
+//import 'package:esaa/Screens/Login/login_screen.dart';
 import 'package:esaa/Screens/Welcome/components/login_signup_btn.dart';
 import 'package:esaa/Screens/signup/sec_signup_scren.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import '../../../components/already_have_an_account_acheck.dart';
+//import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class postJob extends StatefulWidget {
   const postJob({
@@ -22,6 +24,7 @@ class _postJobFormState extends State<postJob> {
   final descripEditingController = new TextEditingController();
   final locationEditingController = new TextEditingController();
   final dateEditingController = new TextEditingController();
+  final noHoursEditingController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -140,6 +143,36 @@ class _postJobFormState extends State<postJob> {
       },
     );
 
+    final noHours = TextFormField(
+      controller: noHoursEditingController,
+      cursorColor: kPrimaryColor,
+      keyboardType: TextInputType.number,
+      textInputAction: TextInputAction.next,
+      onSaved: (value) {
+        noHoursEditingController.text = value!;
+      },
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: kPrimaryColor),
+        ),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(defaultPadding),
+        ),
+        labelText: "أدخل عدد الساعات",
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          //// checkkkkkkkkkkk
+          return kPhoneNumberNullError;
+        } // else if (!RegExp(r'^[+]+*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.0/-9]$')
+        //.hasMatch(value!)) {
+        // return kInvalidPhoneNumber;
+        //}
+        else
+          return null;
+      },
+    );
     return Form(
       key: _formKey,
       child: Column(
@@ -153,11 +186,23 @@ class _postJobFormState extends State<postJob> {
           locField,
           SizedBox(height: defaultPadding / 2),
           startDate,
+          SizedBox(height: defaultPadding / 2),
+          noHours,
           Padding(padding: const EdgeInsets.all(defaultPadding)),
           const SizedBox(height: defaultPadding / 2),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (_formKey.currentState!.validate()) {
+                // add new post
+                var currentUser = await FirebaseAuth.instance.currentUser;
+                FirebaseFirestore.instance.collection('posts').doc().set({
+                  'jobTitle': titleEditingController.text,
+                  'jobDesc': descripEditingController.text,
+                  'loc': locationEditingController.text,
+                  'sdate': dateEditingController.text,
+                  'nHours': noHoursEditingController.text,
+                  'user': 'users/' + currentUser!.uid
+                });
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -165,8 +210,8 @@ class _postJobFormState extends State<postJob> {
                       return secSignUpScreen();
                     },
                   ),
-                );
-              }
+                ); //push
+              } //end if
             },
             child: Text("ارسال".toUpperCase(), style: TextStyle(fontSize: 16)),
           ),
