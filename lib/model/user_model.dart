@@ -3,21 +3,24 @@ class UserModel {
   String? email;
   String? firstName;
   String? secondName;
-  String? gender;
-  String? DOB;
+  //String? gender;
+  //String? DOB;
   String? nationalId;
-  String? phone;
-  String? experience;
-  UserModel(
-      {this.uid,
-      this.email,
-      this.firstName,
-      this.secondName,
-      this.gender,
-      this.DOB,
-      this.experience,
-      this.nationalId,
-      this.phone});
+  String? role;
+  // String? phone;
+  //String? experience;
+  UserModel({
+    this.uid,
+    this.email,
+    this.firstName,
+    this.secondName,
+    //this.gender,
+    //this.DOB,
+    //this.experience,
+    this.nationalId,
+    this.role,
+    //this.phone
+  });
 
   // receiving data from server
   factory UserModel.fromMap(map) {
@@ -26,11 +29,12 @@ class UserModel {
       email: map['email'],
       firstName: map['firstName'],
       secondName: map['secondName'],
-      gender: map['gender'],
+      //gender: map['gender'],
       nationalId: map['nationalId'],
-      phone: map['phone_number'],
-      experience: map['experience'],
-      DOB: map['DOB'],
+      role: map['role'],
+      //phone: map['phone_number'],
+      // experience: map['experience'],
+      //DOB: map['DOB'],
     );
   }
 
@@ -41,11 +45,12 @@ class UserModel {
       'email': email,
       'firstName': firstName,
       'secondName': secondName,
-      'gender': gender,
+      //'gender': gender,
       'nationalId': nationalId,
-      'phone': phone,
-      'experience': experience,
-      'DOB': DOB,
+      'role':'jobseeker',
+      //'phone': phone,
+      //'experience': experience,
+      //DOB': DOB,
     };
   }
 }
