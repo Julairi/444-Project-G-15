@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esaa/Screens/Login/login_screen.dart';
 import 'package:esaa/Screens/signup/sec_signup_scren.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
+import '../../../model/user_model.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({
@@ -13,14 +16,104 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
+  final _auth = FirebaseAuth.instance;
+
   final _formKey = GlobalKey<FormState>();
+  final nationalIdEditingController = new TextEditingController();
+
   final nameEditingController = new TextEditingController();
   final emailEditingController = new TextEditingController();
+  final FnameEditingController = new TextEditingController();
+  final SnameEditingController = new TextEditingController();
   final passwordEditingController = new TextEditingController();
   final confPasswordEditingController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final FnameField = TextFormField(
+      controller: FnameEditingController,
+      keyboardType: TextInputType.name,
+      cursorColor: kPrimaryColor,
+      textInputAction: TextInputAction.next,
+      onSaved: (value) {
+        FnameEditingController.text = value!;
+      },
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: kPrimaryColor),
+        ),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(defaultPadding),
+          child: Icon(Icons.person),
+        ),
+        labelText: " أدخل اسمك الأول",
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return kFNamelNullError;
+        } else
+          return null;
+      },
+    );
+
+    final SnameField = TextFormField(
+      controller: SnameEditingController,
+      keyboardType: TextInputType.name,
+      cursorColor: kPrimaryColor,
+      textInputAction: TextInputAction.next,
+      onSaved: (value) {
+        SnameEditingController.text = value!;
+      },
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: kPrimaryColor),
+        ),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(defaultPadding),
+          child: Icon(Icons.person),
+        ),
+        labelText: " أدخل اسمك الأخير ",
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return kSNamelNullError;
+        } else
+          return null;
+      },
+    );
+
+    final nationalIdField = TextFormField(
+      controller: nationalIdEditingController,
+      cursorColor: kPrimaryColor,
+      keyboardType: TextInputType.number,
+      textInputAction: TextInputAction.next,
+      onSaved: (value) {
+        nationalIdEditingController.text = value!;
+      },
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: kPrimaryColor),
+        ),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(defaultPadding),
+          child: Icon(Icons.numbers),
+        ),
+        labelText: "أدخل رقم الهوية /الإقامة",
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return kNationalIdNullError;
+        } //else if (!RegExp(r'^[+]+*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.0/-9]$')
+        //.hasMatch(value!)) {
+        //return kInvalidNationalIdError;
+        // }
+        else
+          return null;
+      },
+    );
     final emailField = TextFormField(
       controller: emailEditingController,
       keyboardType: TextInputType.emailAddress,
@@ -111,6 +204,12 @@ class _SignUpFormState extends State<SignUpForm> {
             width: 290,
             child: Image.asset("assets/logoo.png"),
           ),
+          SizedBox(height: defaultPadding / 2),
+          FnameField,
+          SizedBox(height: defaultPadding / 2),
+          SnameField,
+          SizedBox(height: defaultPadding / 2),
+          nationalIdField,
           Padding(padding: const EdgeInsets.all(defaultPadding)),
           SizedBox(height: defaultPadding / 2),
           emailField,
@@ -122,18 +221,20 @@ class _SignUpFormState extends State<SignUpForm> {
           const SizedBox(height: defaultPadding / 2),
           ElevatedButton(
             onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                Navigator.push(
+              signUp(
+                  emailEditingController.text, passwordEditingController.text);
+
+              /* Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) {
                       return secSignUpScreen();
                     },
                   ),
-                );
-              }
+                );*/
             },
-            child: Text("متابعة".toUpperCase(), style: TextStyle(fontSize: 16)),
+            child: Text("إنشاء حساب".toUpperCase(),
+                style: TextStyle(fontSize: 16)),
           ),
           const SizedBox(height: defaultPadding),
           AlreadyHaveAnAccountCheck(
@@ -152,5 +253,73 @@ class _SignUpFormState extends State<SignUpForm> {
         ],
       ),
     );
+  }
+
+  void signUp(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        await _auth
+            .createUserWithEmailAndPassword(email: email, password: password)
+            .then((value) => {postDetailsToFirestore()})
+            .catchError((e) {
+          //FlutterToast.showToast(msg: e!.message);
+        });
+      } on FirebaseAuthException catch (error) {
+        switch (error.code) {
+          case "invalid-email":
+            // errorMessage = "Your email address appears to be malformed.";
+            break;
+          case "wrong-password":
+            // errorMessage = "Your password is wrong.";
+            break;
+          case "user-not-found":
+            // errorMessage = "User with this email doesn't exist.";
+            break;
+          case "user-disabled":
+            // errorMessage = "User with this email has been disabled.";
+            break;
+          case "too-many-requests":
+            // errorMessage = "Too many requests";
+            break;
+          case "operation-not-allowed":
+            //  errorMessage = "Signing in with Email and Password is not enabled.";
+            break;
+          default:
+          // errorMessage = "An undefined Error happened.";
+        }
+        // Fluttertoast.showToast(msg: errorMessage!);
+        print(error.code);
+      }
+    }
+  }
+
+  postDetailsToFirestore() async {
+    // calling our firestore
+    // calling our user model
+    // sedning these values
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    UserModel userModel = UserModel();
+
+    // writing all the values
+    userModel.email = user!.email;
+
+    userModel.uid = user.uid;
+    userModel.firstName = FnameEditingController.text;
+    userModel.secondName = SnameEditingController.text;
+    userModel.nationalId = nationalIdEditingController.text;
+
+    await firebaseFirestore
+        .collection("jobseekers")
+        .doc(user.uid)
+        .set(userModel.toMap());
+    //Fluttertoast.showToast(msg: "Account created successfully :) ");
+
+    Navigator.pushAndRemoveUntil(
+        (context),
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+        (route) => false);
   }
 }

@@ -16,100 +16,13 @@ class _secondSignupScreenState extends State<secondSignupScreen> {
   @override
   final _formKey = GlobalKey<FormState>();
   DateTime date = DateTime.now();
-  final FnameEditingController = new TextEditingController();
-  final SnameEditingController = new TextEditingController();
+
   final genderEditingController = new TextEditingController();
-  final nationalIdEditingController = new TextEditingController();
   final phoneEditingController = new TextEditingController();
   final experienceEditingController = new TextEditingController();
   final DOBEditingController = new TextEditingController();
 
   Widget build(BuildContext context) {
-    final FnameField = TextFormField(
-      controller: FnameEditingController,
-      keyboardType: TextInputType.name,
-      cursorColor: kPrimaryColor,
-      textInputAction: TextInputAction.next,
-      onSaved: (value) {
-        FnameEditingController.text = value!;
-      },
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: kPrimaryColor),
-        ),
-        prefixIcon: Padding(
-          padding: const EdgeInsets.all(defaultPadding),
-          child: Icon(Icons.person),
-        ),
-        labelText: " أدخل اسمك الأول",
-      ),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return kFNamelNullError;
-        } else
-          return null;
-      },
-    );
-
-    final SnameField = TextFormField(
-      controller: SnameEditingController,
-      keyboardType: TextInputType.name,
-      cursorColor: kPrimaryColor,
-      textInputAction: TextInputAction.next,
-      onSaved: (value) {
-        SnameEditingController.text = value!;
-      },
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: kPrimaryColor),
-        ),
-        prefixIcon: Padding(
-          padding: const EdgeInsets.all(defaultPadding),
-          child: Icon(Icons.person),
-        ),
-        labelText: " أدخل اسمك الأخير ",
-      ),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return kSNamelNullError;
-        } else
-          return null;
-      },
-    );
-
-    final nationalIdField = TextFormField(
-      controller: nationalIdEditingController,
-      cursorColor: kPrimaryColor,
-      keyboardType: TextInputType.number,
-      textInputAction: TextInputAction.next,
-      onSaved: (value) {
-        nationalIdEditingController.text = value!;
-      },
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: kPrimaryColor),
-        ),
-        prefixIcon: Padding(
-          padding: const EdgeInsets.all(defaultPadding),
-          child: Icon(Icons.numbers),
-        ),
-        labelText: "أدخل رقم الهوية /الإقامة",
-      ),
-      validator: (value) {
-        if (value!.isEmpty) {
-          return kNationalIdNullError;
-        } //else if (!RegExp(r'^[+]+*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.0/-9]$')
-        //.hasMatch(value!)) {
-        //return kInvalidNationalIdError;
-        // }
-        else
-          return null;
-      },
-    );
-
     final phoneField = TextFormField(
       controller: phoneEditingController,
       cursorColor: kPrimaryColor,
@@ -216,10 +129,6 @@ class _secondSignupScreenState extends State<secondSignupScreen> {
       key: _formKey,
       child: Column(
         children: [
-          SizedBox(height: defaultPadding / 2),
-          FnameField,
-          SizedBox(height: defaultPadding / 2),
-          SnameField,
           Divider(),
           Row(
             children: [
@@ -259,8 +168,6 @@ class _secondSignupScreenState extends State<secondSignupScreen> {
             ],
           ),
           Divider(),
-          SizedBox(height: defaultPadding / 2),
-          nationalIdField,
           SizedBox(height: defaultPadding / 2),
           phoneField,
           SizedBox(height: defaultPadding / 2),
