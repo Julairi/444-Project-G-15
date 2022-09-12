@@ -1,3 +1,4 @@
+import 'package:esaa/constants.dart';
 import 'package:flutter/material.dart';
 
 class Background extends StatelessWidget {
@@ -14,7 +15,7 @@ class Background extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor:,
+      backgroundColor: Color.fromARGB(255, 239, 242, 242),
       resizeToAvoidBottomInset: false,
       body: Container(
         width: double.infinity,

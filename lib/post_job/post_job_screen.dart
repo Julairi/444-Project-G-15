@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../components/background.dart';
 //import 'components/signup_form.dart';
 //import 'components/socal_sign_up.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class postjobScreen extends StatelessWidget {
   const postjobScreen({Key? key}) : super(key: key);
