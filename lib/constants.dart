@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
-const kPrimaryColor = Color.fromARGB(221, 103, 163, 231);
+//Color.fromARGB(255, 127, 182, 177);
+const kPrimaryColor = Color.fromARGB(255, 112, 171, 166);
 const kPrimaryLightColor = Color.fromARGB(210, 247, 247, 247);
+const kTextcolor = Color.fromARGB(255, 112, 171, 166);
+const kFillColor = Color.fromARGB(255, 249, 250, 250);
 const double defaultPadding = 16.0;
 const double defaultFontSize = 16.0;
 final RegExp emailValidatorRegExp =
@@ -24,3 +27,4 @@ const String kjobTitleNullError = "الرجاء إدخال عنوان الاعل
 const String kdescNullError = "الرجاء ادخال الوصف";
 const String klocNullError = "الرجاء ادخال الموقع";
 const String kStartDateNullError = " الرجاء إدخال التاريخ   ";
+const String ktimeNullError = " الرجاء إدخال الوقت   ";

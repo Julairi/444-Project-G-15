@@ -69,7 +69,7 @@ class LoginAndSignupBtn extends StatelessWidget {
           style: ElevatedButton.styleFrom(
               primary: kPrimaryLightColor, elevation: 0),
           child: Text(
-            " post job".toUpperCase(),
+            " ارسال".toUpperCase(),
             style: TextStyle(color: Colors.black, fontSize: 16),
           ),
         ),

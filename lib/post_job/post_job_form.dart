@@ -4,7 +4,6 @@ import 'package:esaa/Screens/signup/sec_signup_scren.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-//import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -25,6 +24,21 @@ class _postJobFormState extends State<postJob> {
   final locationEditingController = new TextEditingController();
   final dateEditingController = new TextEditingController();
   final noHoursEditingController = new TextEditingController();
+  final payHourEditingController = new TextEditingController();
+  final timeEditingController = new TextEditingController();
+  TimeOfDay timeOfDay = TimeOfDay(hour: 8, minute: 00);
+  FocusNode myFocusNode = new FocusNode();
+
+  void _showTimePicker() {
+    showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    ).then((value) {
+      setState(() {
+        timeOfDay = value!;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +55,20 @@ class _postJobFormState extends State<postJob> {
         return null;
       },
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: kPrimaryColor),
+        filled: true,
+        fillColor: kFillColor,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide(color: kFillColor),
         ),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(defaultPadding),
         ),
         labelText: " ادخل عنوان الاعلان الوظيفي",
+        floatingLabelStyle: TextStyle(
+          color: kTextcolor,
+          fontSize: 20,
+        ),
       ),
     );
 
@@ -64,14 +84,20 @@ class _postJobFormState extends State<postJob> {
       textInputAction: TextInputAction.next,
       cursorColor: kPrimaryColor,
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: kPrimaryColor),
+        filled: true,
+        fillColor: kFillColor,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide(color: kFillColor),
         ),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(defaultPadding),
         ),
         labelText: "أدخل وصف الوظيفه  ",
+        floatingLabelStyle: TextStyle(
+          color: kTextcolor,
+          fontSize: 20,
+        ),
       ),
       maxLines: 100,
       minLines: 5,
@@ -87,23 +113,31 @@ class _postJobFormState extends State<postJob> {
         }
         return null;
       },
-      textInputAction: TextInputAction.done,
+      textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: kPrimaryColor),
+        filled: true,
+        fillColor: kFillColor,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide(color: kFillColor),
         ),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(defaultPadding),
         ),
-        hintText: " ادخل موقع الوظيفه",
+        labelText: " ادخل المدينه",
+        floatingLabelStyle: TextStyle(
+          color: kTextcolor,
+          fontSize: 20,
+        ),
       ),
     );
+
     final startDate = TextFormField(
       controller: dateEditingController,
       cursorColor: kPrimaryColor,
-      keyboardType: TextInputType.datetime,
-      textInputAction: TextInputAction.done,
+      //keyboardType: TextInputType.datetime,
+      readOnly: true,
+      textInputAction: TextInputAction.next,
       onSaved: (value) {
         dateEditingController.text = value!.toString();
       },
@@ -112,33 +146,90 @@ class _postJobFormState extends State<postJob> {
             context: context,
             initialDate: DateTime.now(),
             firstDate: DateTime.now(),
-            lastDate: DateTime(2100));
+            lastDate: DateTime(2101));
         if (newDate != null) {
-          print(newDate);
-          String formattedDate = DateFormat('yyyy-MM-dd').format(newDate);
-          print(formattedDate);
           setState(() {
-            date = newDate;
+            dateEditingController.text =
+                DateFormat('yyyy-MM-dd').format(newDate);
           });
         } else {
           print(kStartDateNullError);
         }
       },
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: kPrimaryColor),
+        filled: true,
+        fillColor: kFillColor,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide(color: kFillColor),
         ),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(defaultPadding),
           child: Icon(Icons.date_range),
         ),
-        labelText: "أدخل تاريخ البدايه",
+        labelText: "أدخل التاريخ ",
+        floatingLabelStyle: TextStyle(
+          color: kTextcolor,
+          fontSize: 20,
+        ),
       ),
       validator: (value) {
         if (value!.isEmpty) {
           return kDOBNullError;
         } else
+          return null;
+      },
+    );
+
+    final time = TextFormField(
+      readOnly: true,
+      controller: timeEditingController,
+      cursorColor: kPrimaryColor,
+      keyboardType: TextInputType.datetime,
+      textInputAction: TextInputAction.next,
+      onSaved: (value) {
+        //timeEditingController.text = value!;
+        timeOfDay.format(context).toString();
+      },
+      // time picker
+      onTap: () async {
+        TimeOfDay? time = await showTimePicker(
+          context: context,
+          initialTime: TimeOfDay.now(),
+        );
+        if (time != null) {
+          setState(() {
+            timeEditingController.text = time.format(context).toString();
+          });
+        }
+      },
+
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: kFillColor,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide(color: kFillColor),
+          // border color
+        ),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(defaultPadding),
+        ),
+        labelText: " الوقت",
+        floatingLabelStyle: TextStyle(
+          color: kTextcolor,
+          fontSize: 20,
+          fontWeight: FontWeight.w800,
+        ),
+      ),
+
+      validator: (value) {
+        if (value!.isEmpty) {
+          //// checkkkkkkkkkkk
+          return ktimeNullError;
+        }
+        //}
+        else
           return null;
       },
     );
@@ -152,27 +243,65 @@ class _postJobFormState extends State<postJob> {
         noHoursEditingController.text = value!;
       },
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: kPrimaryColor),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide(color: kFillColor),
         ),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(defaultPadding),
         ),
         labelText: "أدخل عدد الساعات",
+        floatingLabelStyle: TextStyle(
+          color: kTextcolor,
+          fontSize: 20,
+        ),
       ),
       validator: (value) {
         if (value!.isEmpty) {
           //// checkkkkkkkkkkk
           return kPhoneNumberNullError;
-        } // else if (!RegExp(r'^[+]+*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.0/-9]$')
-        //.hasMatch(value!)) {
-        // return kInvalidPhoneNumber;
+        }
         //}
         else
           return null;
       },
     );
+
+    final payHour = TextFormField(
+      controller: payHourEditingController,
+      cursorColor: kPrimaryColor,
+      keyboardType: TextInputType.number,
+      textInputAction: TextInputAction.done,
+      onSaved: (value) {
+        payHourEditingController.text = value!;
+      },
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: kFillColor,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide(color: kFillColor),
+        ),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(defaultPadding),
+        ),
+        labelText: " الأجر لكل ساعه",
+        floatingLabelStyle: TextStyle(
+          color: kTextcolor,
+          fontSize: 20,
+        ),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          //// checkkkkkkkkkkk
+          return kPhoneNumberNullError;
+        }
+        //}
+        else
+          return null;
+      },
+    );
+
     return Form(
       key: _formKey,
       child: Column(
@@ -188,6 +317,10 @@ class _postJobFormState extends State<postJob> {
           startDate,
           SizedBox(height: defaultPadding / 2),
           noHours,
+          SizedBox(height: defaultPadding / 2),
+          time,
+          SizedBox(height: defaultPadding / 2),
+          payHour,
           Padding(padding: const EdgeInsets.all(defaultPadding)),
           const SizedBox(height: defaultPadding / 2),
           ElevatedButton(
@@ -196,12 +329,14 @@ class _postJobFormState extends State<postJob> {
                 // add new post
                 var currentUser = await FirebaseAuth.instance.currentUser;
                 FirebaseFirestore.instance.collection('posts').doc().set({
-                  'jobTitle': titleEditingController.text,
-                  'jobDesc': descripEditingController.text,
-                  'loc': locationEditingController.text,
-                  'sdate': dateEditingController.text,
+                  'Title': titleEditingController.text,
+                  'Description': descripEditingController.text,
+                  'City': locationEditingController.text,
+                  'Date': dateEditingController.text,
                   'nHours': noHoursEditingController.text,
-                  'user': 'users/' + currentUser!.uid
+                  'Time': timeEditingController.text,
+                  'Pay per hour': payHourEditingController.text,
+                  'user': 'users/nmUoWSvCgKZ24L4yBItbaWuHWcw2',
                 });
                 Navigator.push(
                   context,
