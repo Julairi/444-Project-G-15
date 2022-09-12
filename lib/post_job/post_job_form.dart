@@ -175,7 +175,7 @@ class _postJobFormState extends State<postJob> {
       ),
       validator: (value) {
         if (value!.isEmpty) {
-          return kDOBNullError;
+          return kStartDateNullError;
         } else
           return null;
       },
@@ -259,7 +259,7 @@ class _postJobFormState extends State<postJob> {
       validator: (value) {
         if (value!.isEmpty) {
           //// checkkkkkkkkkkk
-          return kPhoneNumberNullError;
+          return 'الرجاء ادخال عدد الساعات';
         }
         //}
         else
@@ -294,7 +294,7 @@ class _postJobFormState extends State<postJob> {
       validator: (value) {
         if (value!.isEmpty) {
           //// checkkkkkkkkkkk
-          return kPhoneNumberNullError;
+          return 'الرجاء ادخال المبلغ للساعه';
         }
         //}
         else
@@ -328,15 +328,23 @@ class _postJobFormState extends State<postJob> {
               if (_formKey.currentState!.validate()) {
                 // add new post
                 var currentUser = await FirebaseAuth.instance.currentUser;
-                FirebaseFirestore.instance.collection('posts').doc().set({
+                FirebaseFirestore.instance.collection('posts').add({
                   'Title': titleEditingController.text,
                   'Description': descripEditingController.text,
                   'City': locationEditingController.text,
                   'Date': dateEditingController.text,
                   'nHours': noHoursEditingController.text,
                   'Time': timeEditingController.text,
-                  'Pay per hour': payHourEditingController.text,
-                  'user': 'users/nmUoWSvCgKZ24L4yBItbaWuHWcw2',
+                  'PayPerHour': payHourEditingController.text,
+                  //change to '/company/'+ currentUser.cid
+                  /*
+                  'user':{
+                    'uid': currentUser.cid,
+                    'Name': currentUser.Name,
+                    'email': currentUser.email,
+                  }
+                  */
+                  'user': '/company/HtgizLsb0tWt3JxlpXCxsc4Nz623',
                 });
                 Navigator.push(
                   context,
@@ -349,23 +357,6 @@ class _postJobFormState extends State<postJob> {
               } //end if
             },
             child: Text("ارسال".toUpperCase(), style: TextStyle(fontSize: 16)),
-          ),
-          const SizedBox(height: defaultPadding),
-          //extra btn
-          ElevatedButton(
-            onPressed: () {
-              {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return LoginAndSignupBtn();
-                    },
-                  ),
-                );
-              }
-            },
-            child: Text("back".toUpperCase(), style: TextStyle(fontSize: 16)),
           ),
           const SizedBox(height: defaultPadding),
         ],
