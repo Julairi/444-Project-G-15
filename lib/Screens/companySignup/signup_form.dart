@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esaa/Screens/Login/login_screen.dart';
 import 'package:esaa/Screens/signup/sec_signup_scren.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
+import '../../model/company_model.dart';
 
 class companySignupForm extends StatefulWidget {
   const companySignupForm({
@@ -13,6 +16,8 @@ class companySignupForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<companySignupForm> {
+  final _auth = FirebaseAuth.instance;
+
   final _formKey = GlobalKey<FormState>();
   final nameEditingController = new TextEditingController();
   final emailEditingController = new TextEditingController();
@@ -24,6 +29,36 @@ class _SignUpFormState extends State<companySignupForm> {
 
   @override
   Widget build(BuildContext context) {
+    final nameField = TextFormField(
+      controller: nameEditingController,
+      keyboardType: TextInputType.name,
+      cursorColor: kPrimaryColor,
+      textInputAction: TextInputAction.next,
+      onSaved: (newValue) => emailEditingController.text = newValue!,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return kEmailNullError;
+        } //else if (!emailValidatorRegExp.hasMatch(value)) {
+        //return kInvalidEmailError;
+        // }
+        return null;
+      },
+      decoration: InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide(color: kFillColor),
+        ),
+        prefixIcon: Padding(
+          padding: const EdgeInsets.all(defaultPadding),
+          child: Icon(Icons.person_add),
+        ),
+        labelText: " أدخل اسم الشركة",
+        floatingLabelStyle: TextStyle(
+          color: kTextcolor,
+          fontSize: 20,
+        ),
+      ),
+    );
     final emailField = TextFormField(
       controller: emailEditingController,
       keyboardType: TextInputType.emailAddress,
@@ -39,15 +74,21 @@ class _SignUpFormState extends State<companySignupForm> {
         return null;
       },
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: kPrimaryColor),
+        filled: true,
+        fillColor: kFillColor,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide(color: kFillColor),
         ),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(defaultPadding),
           child: Icon(Icons.email),
         ),
         labelText: "أدخل البريد الإلكتروني ",
+        floatingLabelStyle: TextStyle(
+          color: kTextcolor,
+          fontSize: 20,
+        ),
       ),
     );
 
@@ -66,15 +107,21 @@ class _SignUpFormState extends State<companySignupForm> {
       textInputAction: TextInputAction.next,
       cursorColor: kPrimaryColor,
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: kPrimaryColor),
+        filled: true,
+        fillColor: kFillColor,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide(color: kFillColor),
         ),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(defaultPadding),
           child: Icon(Icons.vpn_key),
         ),
         labelText: "أدخل كلمة المرور  ",
+        floatingLabelStyle: TextStyle(
+          color: kTextcolor,
+          fontSize: 20,
+        ),
       ),
     );
 
@@ -93,15 +140,21 @@ class _SignUpFormState extends State<companySignupForm> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: kPrimaryColor),
+        filled: true,
+        fillColor: kFillColor,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide(color: kFillColor),
         ),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(defaultPadding),
           child: Icon(Icons.streetview),
         ),
         hintText: "أعد كتابة كلمة المرور",
+        floatingLabelStyle: TextStyle(
+          color: kTextcolor,
+          fontSize: 20,
+        ),
       ),
     );
     final AdressField = TextFormField(
@@ -117,15 +170,21 @@ class _SignUpFormState extends State<companySignupForm> {
         return null;
       },
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: kPrimaryColor),
+        filled: true,
+        fillColor: kFillColor,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide(color: kFillColor),
         ),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(defaultPadding),
           child: Icon(Icons.pin_drop),
         ),
         labelText: "أدخل عنوان الشركة ",
+        floatingLabelStyle: TextStyle(
+          color: kTextcolor,
+          fontSize: 20,
+        ),
       ),
     );
     final ContactinfoField = TextFormField(
@@ -141,15 +200,21 @@ class _SignUpFormState extends State<companySignupForm> {
         return null;
       },
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: kPrimaryColor),
+        filled: true,
+        fillColor: kFillColor,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide(color: kFillColor),
         ),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(defaultPadding),
           child: Icon(Icons.contacts),
         ),
         labelText: "طريقة تواصل للشركة",
+        floatingLabelStyle: TextStyle(
+          color: kTextcolor,
+          fontSize: 20,
+        ),
       ),
     );
     final DescriptionField = TextFormField(
@@ -165,15 +230,21 @@ class _SignUpFormState extends State<companySignupForm> {
         return null;
       },
       decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide(color: kPrimaryColor),
+        filled: true,
+        fillColor: kFillColor,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: BorderSide(color: kFillColor),
         ),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(defaultPadding),
           child: Icon(Icons.brush),
         ),
         labelText: "اضف وصف مختصر عن الشركة",
+        floatingLabelStyle: TextStyle(
+          color: kTextcolor,
+          fontSize: 20,
+        ),
       ),
     );
     return Form(
@@ -186,6 +257,8 @@ class _SignUpFormState extends State<companySignupForm> {
             child: Image.asset("assets/logoo.png"),
           ),
           Padding(padding: const EdgeInsets.all(defaultPadding)),
+          SizedBox(height: defaultPadding / 2),
+          nameField,
           SizedBox(height: defaultPadding / 2),
           emailField,
           SizedBox(height: defaultPadding / 2),
@@ -202,16 +275,17 @@ class _SignUpFormState extends State<companySignupForm> {
           const SizedBox(height: defaultPadding / 2),
           ElevatedButton(
             onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                Navigator.push(
+              signUp(
+                  emailEditingController.text, passwordEditingController.text);
+
+              /* Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return LoginScreen();
+                      return secSignUpScreen();
                     },
                   ),
-                );
-              }
+                );*/
             },
             child: Text("انشاء حساب".toUpperCase(),
                 style: TextStyle(fontSize: 16)),
@@ -233,5 +307,74 @@ class _SignUpFormState extends State<companySignupForm> {
         ],
       ),
     );
+  }
+
+  void signUp(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        await _auth
+            .createUserWithEmailAndPassword(email: email, password: password)
+            .then((value) => {postDetailsToFirestore()})
+            .catchError((e) {
+          //FlutterToast.showToast(msg: e!.message);
+        });
+      } on FirebaseAuthException catch (error) {
+        switch (error.code) {
+          case "invalid-email":
+            print("Yaddress appears to be malformed.");
+            break;
+            print("wrong-password");
+            // errorMessage = "Your password is wrong.";
+            break;
+            print("user-not-found");
+            // errorMessage = "User with this email doesn't exist.";
+            break;
+            print("user-disabled");
+            // errorMessage = "User with this email has been disabled.";
+            break;
+            print("too-many-requests");
+            // errorMessage = "Too many requests";
+            break;
+            print(
+                "operation-not-allowed"); //  errorMessage = "Signing in with Email and Password is not enabled.";
+            break;
+          default:
+            print("An undefined Error happened.");
+        }
+        // Fluttertoast.showToast(msg: errorMessage!);
+        print(error.code);
+      }
+    }
+  }
+
+  postDetailsToFirestore() async {
+    // calling our firestore
+    // calling our user model
+    // sedning these values
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    CompanyModel companyModel = CompanyModel();
+
+    // writing all the values
+    companyModel.email = user!.email;
+
+    companyModel.cid = user.uid;
+    companyModel.Name = nameEditingController.text;
+    companyModel.address = AdressEditingController.text;
+    companyModel.contact = ContactEditingController.text;
+    companyModel.description = DescrioptionEditingController.text;
+
+    await firebaseFirestore
+        .collection("company")
+        .doc(user.uid)
+        .set(companyModel.toMap());
+    //Fluttertoast.showToast(msg: "Account created successfully :) ");
+
+    Navigator.pushAndRemoveUntil(
+        (context),
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+        (route) => false);
   }
 }
