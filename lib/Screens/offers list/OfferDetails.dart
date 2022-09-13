@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:esaa/Screens/CompanyPage/userCompanyOffers.dart';
 import 'package:esaa/constants.dart';
 import 'package:flutter/material.dart';
 
 class detailsPage extends StatelessWidget {
-  final CompanyName;
+  final String CompanyName;
+  final String CompanyPath;
   final String offertitle;
   final String offerCity;
   final String offerDate;
@@ -12,7 +14,8 @@ class detailsPage extends StatelessWidget {
   final String offerTime;
   final String offerHours;
   const detailsPage(
-      {required this.CompanyName,
+      {required this.CompanyPath,
+      required this.CompanyName,
       required this.offertitle,
       required this.offerCity,
       required this.offerDate,
@@ -30,7 +33,16 @@ class detailsPage extends StatelessWidget {
         title: Text('اسع'),
         leading: IconButton(
           onPressed: () {
-            //do something
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (
+                    context,
+                  ) =>
+                      userOffers(
+                    child: CompanyPath,
+                  ),
+                ));
           },
           icon: Icon(Icons.menu),
         ),

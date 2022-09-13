@@ -1,5 +1,5 @@
 import 'package:esaa/Screens/offers%20list/OfferDetails.dart';
-import 'package:esaa/Screens/offers%20list/offers_list.dart';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -25,16 +25,6 @@ class _ListOffersState extends State<ListOffers> {
         backgroundColor: kPrimaryColor,
         elevation: 0,
         title: Text('اسع'),
-<<<<<<< HEAD
-=======
-        leading: IconButton(
-          onPressed: () {
-            //do something
-            postStreams();
-          },
-          icon: Icon(Icons.menu),
-        ),
->>>>>>> c40c102e878da78f8363146e8eec671e578bfc80
         actions: [
           ImageIcon(
             AssetImage("assets/logoo.png"),
@@ -73,87 +63,85 @@ class _ListOffersState extends State<ListOffers> {
                     ? companyPath.substring(lastSlash)
                     : companyPath;
 
-                final OfferWidget = Expanded(
-                    flex: 8,
-                    child: Container(
-                      margin: EdgeInsets.all(defaultPadding),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Color.fromARGB(255, 62, 75, 100),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(10),
-                        color: kPrimaryColor,
-                      ),
-                      child: Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              Navigator.push(
+                final OfferWidget = Container(
+                  margin: EdgeInsets.all(defaultPadding),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Color.fromARGB(255, 62, 75, 100),
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(10),
+                    color: kPrimaryColor,
+                  ),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (
-                                      context,
-                                    ) =>
-                                        detailsPage(
-                                            CompanyName: companyName,
-                                            offertitle: offertitle,
-                                            offerCity: offerCity,
-                                            offerDate: offerDate,
-                                            offerDes: offerDes,
-                                            offerFee: offerFee,
-                                            offerTime: offerTime,
-                                            offerHours: offerHours),
-                                  ));
-                            },
-                            icon: Icon(Icons.more_horiz_rounded),
-                            color: Colors.white,
-                            iconSize: 40,
-                          ),
-                          Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                child: Column(
+                                ) =>
+                                    detailsPage(
+                                        CompanyPath: companyPath,
+                                        CompanyName: companyName,
+                                        offertitle: offertitle,
+                                        offerCity: offerCity,
+                                        offerDate: offerDate,
+                                        offerDes: offerDes,
+                                        offerFee: offerFee,
+                                        offerTime: offerTime,
+                                        offerHours: offerHours),
+                              ));
+                        },
+                        icon: Icon(Icons.more_horiz_rounded),
+                        color: Colors.white,
+                        iconSize: 40,
+                      ),
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            child: Column(
+                              children: [
+                                Row(
                                   children: [
-                                    Row(
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(Icons.work),
-                                        ),
-                                        Text(
-                                          'Company:$companyName',
-                                          style: TextStyle(
-                                              color: kPrimaryLightColor,
-                                              fontSize: 25,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.work),
                                     ),
                                     Text(
-                                      ' JobTitle: $offertitle',
+                                      'Company:$companyName',
                                       style: TextStyle(
                                           color: kPrimaryLightColor,
                                           fontSize: 25,
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    Text(
-                                      ' City:$offerCity',
-                                      style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 245, 250, 252),
-                                        fontSize: 20,
-                                      ),
-                                    ),
                                   ],
                                 ),
-                              ),
+                                Text(
+                                  ' JobTitle: $offertitle',
+                                  style: TextStyle(
+                                      color: kPrimaryLightColor,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  ' City:$offerCity',
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 245, 250, 252),
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ],
+                        ),
                       ),
-                    ));
+                    ],
+                  ),
+                );
                 titleWidget.add(OfferWidget);
               }
               return Column(
