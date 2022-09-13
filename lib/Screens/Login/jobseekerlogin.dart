@@ -2,8 +2,10 @@ import 'dart:math';
 
 import 'package:esaa/Screens/Login/login_screen.dart';
 import 'package:esaa/Screens/Welcome/components/login_signup_btn.dart';
+import 'package:esaa/Screens/forgotpass/forgotpassform.dart';
 import 'package:esaa/Screens/signup/sec_signup_scren.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../constants.dart';
@@ -119,15 +121,35 @@ class _jsloginState extends State<jslogin> {
                     context: context,
                     builder: (context) {
                       return AlertDialog(
-                        content: Text('البريد/كلمة المرور غير صحيحة'),
+                        content:
+                            Text('البريد الالكتروني/كلمة المرور غير صحيحة'),
                       );
                     },
                   );
                 }
               }
             },
-            child:
-                Text("اهلا بك!".toUpperCase(), style: TextStyle(fontSize: 16)),
+            child: Text("تسجيل الدخول".toUpperCase(),
+                style: TextStyle(fontSize: 16)),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return forgotpass();
+                  },
+                ),
+              );
+            },
+            child: Text(
+              'Forgot Password?',
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ],
       ),

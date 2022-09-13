@@ -1,3 +1,4 @@
+import 'package:esaa/Screens/forgotpass/forgotpasscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:esaa/Screens/Login/jobseekerlogin.dart';
 import '../../components/background.dart';
@@ -57,6 +58,37 @@ class MobileSignupScreen extends StatelessWidget {
         ),
         // const SocalSignUp()
       ],
+    );
+  }
+}
+
+class ForgotPassWord extends StatelessWidget {
+  const ForgotPassWord({
+    Key? key,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(3),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) {
+                return ForgotPass();
+              },
+            ),
+          );
+        },
+        child: Text(
+          'Forgot Password?',
+          style: TextStyle(
+            color: Colors.blue,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
     );
   }
 }
