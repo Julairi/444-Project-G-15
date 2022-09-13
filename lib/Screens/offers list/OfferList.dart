@@ -25,6 +25,16 @@ class _ListOffersState extends State<ListOffers> {
         backgroundColor: kPrimaryColor,
         elevation: 0,
         title: Text('اسع'),
+<<<<<<< HEAD
+=======
+        leading: IconButton(
+          onPressed: () {
+            //do something
+            postStreams();
+          },
+          icon: Icon(Icons.menu),
+        ),
+>>>>>>> c40c102e878da78f8363146e8eec671e578bfc80
         actions: [
           ImageIcon(
             AssetImage("assets/logoo.png"),
