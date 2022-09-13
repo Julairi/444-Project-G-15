@@ -1,43 +1,70 @@
-import 'package:esaa/Screens/offers%20list/OfferDetails.dart';
-import 'package:esaa/Screens/offers%20list/offers_list.dart';
+import 'package:esaa/constants.dart';
+import 'package:esaa/responsive.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:esaa/Screens/Login/login_screen.dart';
+import 'package:esaa/Screens/signup/sec_signup_scren.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../components/already_have_an_account_acheck.dart';
+import '../../../constants.dart';
+import 'package:flutter/material.dart';
 
-import '../../constants.dart';
+// Import the firebase_core plugin
+//Import firestore database
+//import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../components/background.dart';
 
-class ListOffers extends StatefulWidget {
-  const ListOffers({super.key});
-
-  @override
-  State<ListOffers> createState() => _ListOffersState();
+class certianOffers extends StatefulWidget {
+  oneCompanyOffers createState() => oneCompanyOffers();
 }
 
-class _ListOffersState extends State<ListOffers> {
-  final _fireStore = FirebaseFirestore.instance;
-  List<Object> _jobList = [];
+class oneCompanyOffers extends State<certianOffers> {
   final _auth = FirebaseAuth.instance;
+
+  // List<Object> cOffers = [];
+
+  String? retrieveList() {
+    final User? user = FirebaseAuth.instance.currentUser;
+    final cid = user?.uid;
+    //return cid;
+    return "/company/HtgizLsb0tWt3JxlpXCxsc4Nz623";
+    /*final cid = 'testCompany';
+    // here you write the codes to input the data into firestore
+    var docRef = await FirebaseFirestore.instance
+        .collection('posts')
+        .where("user", isEqualTo: cid)
+        .orderBy('Date', descending: true)
+        .get();
+
+    setState(() {
+      cOffers = List.from(docRef.docs.map((doc) => offers.fromSnapshot(doc)));
+    });
+
+    //.get()
+    //doc().get();
+    //.where("capital", isEqualTo: true).get()*/
+  }
 
   @override
   Widget build(BuildContext context) {
+    String? cid = retrieveList();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kPrimaryColor,
-        elevation: 0,
-        title: Text('اسع'),
-        leading: IconButton(
-          onPressed: () {
-            //do something
-            postStreams();
-          },
-          icon: Icon(Icons.menu),
-        ),
+        backgroundColor: Color.fromARGB(255, 52, 64, 110),
+        title: Text('عروض العمل'),
+        centerTitle: true,
         actions: [
-          ImageIcon(
-            AssetImage("assets/logoo.png"),
-            color: Color.fromARGB(255, 255, 255, 255),
-            size: 24,
-          ),
+          IconButton(
+              onPressed: () {
+                postStreams();
+              },
+              icon: Icon(Icons.close)),
+          Center(
+            child: new Image.asset('assets/logoo.png'),
+          )
         ],
       ),
       body: SafeArea(
@@ -48,22 +75,21 @@ class _ListOffersState extends State<ListOffers> {
             height: 30,
           ),
           StreamBuilder<QuerySnapshot>(
-            stream: _fireStore.collection('posts').snapshots(),
+            stream: FirebaseFirestore.instance
+                .collection('posts')
+                .where("user", isEqualTo: cid)
+                .orderBy('Date', descending: true)
+                .snapshots(),
             builder: (context, snapshot) {
               List<Widget> titleWidget = [];
               if (!snapshot.hasData) {
-                // add here a spinner
+                print("You haven't posted any offers");
               }
               final posts = snapshot.data!.docs;
 
               for (var post in posts) {
                 final offertitle = post.get('Title');
                 final offerCity = post.get('City');
-                final offerDate = post.get('Date');
-                final offerDes = post.get('Description');
-                final offerFee = post.get('PayPerHour');
-                final offerTime = post.get('Time');
-                final offerHours = post.get('nHours');
 
                 final OfferWidget = Container(
                     margin: EdgeInsets.all(defaultPadding),
@@ -80,23 +106,7 @@ class _ListOffersState extends State<ListOffers> {
                       child: Row(
                         children: [
                           IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (
-                                      context,
-                                    ) =>
-                                        detailsPage(
-                                            offertitle: offertitle,
-                                            offerCity: offerCity,
-                                            offerDate: offerDate,
-                                            offerDes: offerDes,
-                                            offerFee: offerFee,
-                                            offerTime: offerTime,
-                                            offerHours: offerHours),
-                                  ));
-                            },
+                            onPressed: () {},
                             icon: Icon(Icons.more_horiz_rounded),
                             color: Colors.white,
                             iconSize: 40,
@@ -142,14 +152,9 @@ class _ListOffersState extends State<ListOffers> {
     );
   }
 
-  //Future GetOffersList() async {
-  //final posts = await _fireStore.collection('posts').get();
-  //for (var offer in posts.docs) {
-  //  print(offer.data());
-  // }
-  //}
   void postStreams() async {
-    await for (var snapshot in _fireStore.collection('posts').snapshots()) {
+    await for (var snapshot
+        in FirebaseFirestore.instance.collection('posts').snapshots()) {
       for (var posts in snapshot.docs) {
         print(posts.data());
       }

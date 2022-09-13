@@ -1,6 +1,7 @@
 import 'package:esaa/Screens/companySignup/signup_screen.dart';
 
 import 'package:esaa/Screens/offers%20list/OfferList.dart';
+import 'package:esaa/Screens/CompanyPage/company_offers.dart';
 import 'package:esaa/Screens/offers%20list/offers_list.dart';
 
 import 'package:esaa/post_job/post_job_screen.dart';
@@ -92,6 +93,24 @@ class LoginAndSignupBtn extends StatelessWidget {
               primary: kPrimaryLightColor, elevation: 0),
           child: Text(
             " offers".toUpperCase(),
+            style: TextStyle(color: Colors.black, fontSize: 16),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return certianOffers();
+                },
+              ),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+              primary: kPrimaryLightColor, elevation: 0),
+          child: Text(
+            "Jumana offers".toUpperCase(),
             style: TextStyle(color: Colors.black, fontSize: 16),
           ),
         ),
