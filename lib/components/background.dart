@@ -1,3 +1,7 @@
+// ignore: unused_import
+// ignore_for_file: sized_box_for_whitespace
+
+// ignore: unused_import
 import 'package:esaa/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +19,7 @@ class Background extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // ignore: prefer_const_constructors
       backgroundColor: Color.fromARGB(255, 239, 242, 242),
       resizeToAvoidBottomInset: false,
       body: Container(

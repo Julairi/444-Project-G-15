@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:esaa/Screens/Login/jobseekerlogin.dart';
+import 'package:esaa/Screens/forgotpass/forgotpassform.dart';
 import '../../components/background.dart';
 import '../../constants.dart';
 import '../../responsive.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class ForgotPass extends StatelessWidget {
+  const ForgotPass({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Background(
       child: SingleChildScrollView(
         child: Responsive(
-          mobile: const MobileLoginScreen(),
+          mobile: const ForgotPassScreen(),
           desktop: Row(
             children: [
               Expanded(
@@ -21,7 +21,7 @@ class LoginScreen extends StatelessWidget {
                   children: const [
                     SizedBox(
                       width: 450,
-                      child: jslogin(), //change
+                      child: forgotpass(), //change
                     ),
                     SizedBox(height: defaultPadding / 2),
                     // SocalSignUp()
@@ -36,8 +36,8 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class MobileLoginScreen extends StatelessWidget {
-  const MobileLoginScreen({
+class ForgotPassScreen extends StatelessWidget {
+  const ForgotPassScreen({
     Key? key,
   }) : super(key: key);
 
