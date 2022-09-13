@@ -25,12 +25,6 @@ class _ListOffersState extends State<ListOffers> {
         backgroundColor: kPrimaryColor,
         elevation: 0,
         title: Text('اسع'),
-        leading: IconButton(
-          onPressed: () {
-            //do something
-          },
-          icon: Icon(Icons.menu),
-        ),
         actions: [
           ImageIcon(
             AssetImage("assets/logoo.png"),
@@ -63,19 +57,24 @@ class _ListOffersState extends State<ListOffers> {
                 final offerFee = post.get('PayPerHour');
                 final offerTime = post.get('Time');
                 final offerHours = post.get('nHours');
+                final companyPath = post.get('user');
+                var lastSlash = companyPath.lastIndexOf('/');
+                final String companyName = (lastSlash != -1)
+                    ? companyPath.substring(lastSlash)
+                    : companyPath;
 
-                final OfferWidget = Container(
-                    margin: EdgeInsets.all(defaultPadding),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color.fromARGB(255, 62, 75, 100),
-                        width: 2,
+                final OfferWidget = Expanded(
+                    flex: 8,
+                    child: Container(
+                      margin: EdgeInsets.all(defaultPadding),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Color.fromARGB(255, 62, 75, 100),
+                          width: 2,
+                        ),
+                        borderRadius: BorderRadius.circular(10),
+                        color: kPrimaryColor,
                       ),
-                      borderRadius: BorderRadius.circular(10),
-                      color: kPrimaryColor,
-                    ),
-                    child: Expanded(
-                      flex: 8,
                       child: Row(
                         children: [
                           IconButton(
@@ -87,6 +86,7 @@ class _ListOffersState extends State<ListOffers> {
                                       context,
                                     ) =>
                                         detailsPage(
+                                            CompanyName: companyName,
                                             offertitle: offertitle,
                                             offerCity: offerCity,
                                             offerDate: offerDate,
@@ -106,15 +106,30 @@ class _ListOffersState extends State<ListOffers> {
                               child: Container(
                                 child: Column(
                                   children: [
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(Icons.work),
+                                        ),
+                                        Text(
+                                          'Company:$companyName',
+                                          style: TextStyle(
+                                              color: kPrimaryLightColor,
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
                                     Text(
-                                      ' $offertitle',
+                                      ' JobTitle: $offertitle',
                                       style: TextStyle(
                                           color: kPrimaryLightColor,
                                           fontSize: 25,
                                           fontWeight: FontWeight.bold),
                                     ),
                                     Text(
-                                      ' $offerCity',
+                                      ' City:$offerCity',
                                       style: TextStyle(
                                         color:
                                             Color.fromARGB(255, 245, 250, 252),

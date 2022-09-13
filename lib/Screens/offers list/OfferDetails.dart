@@ -3,6 +3,7 @@ import 'package:esaa/constants.dart';
 import 'package:flutter/material.dart';
 
 class detailsPage extends StatelessWidget {
+  final CompanyName;
   final String offertitle;
   final String offerCity;
   final String offerDate;
@@ -11,7 +12,8 @@ class detailsPage extends StatelessWidget {
   final String offerTime;
   final String offerHours;
   const detailsPage(
-      {required this.offertitle,
+      {required this.CompanyName,
+      required this.offertitle,
       required this.offerCity,
       required this.offerDate,
       required this.offerDes,
