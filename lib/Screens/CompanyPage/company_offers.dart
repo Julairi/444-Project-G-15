@@ -36,7 +36,6 @@ class oneCompanyOffers extends State<certianOffers> {
     var docRef = await FirebaseFirestore.instance
         .collection('posts')
         .where("user", isEqualTo: cid)
-        .orderBy('Date', descending: true)
         .get();
 
     setState(() {
