@@ -12,22 +12,21 @@ class LoginScreen extends StatelessWidget {
     return Background(
       child: SingleChildScrollView(
         child: Responsive(
-          mobile: const MobileLoginScreen(),
+          mobile: const MobileSignupScreen(),
           desktop: Row(
             children: [
               Expanded(
-                child: Row(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
                     SizedBox(
                       width: 450,
-                      child: jslogin(), //change
+                      child: jslogin(),
                     ),
                     SizedBox(height: defaultPadding / 2),
-                    // SocalSignUp()
                   ],
                 ),
-              ),
+              )
             ],
           ),
         ),
@@ -36,8 +35,8 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class MobileLoginScreen extends StatelessWidget {
-  const MobileLoginScreen({
+class MobileSignupScreen extends StatelessWidget {
+  const MobileSignupScreen({
     Key? key,
   }) : super(key: key);
 
@@ -49,9 +48,14 @@ class MobileLoginScreen extends StatelessWidget {
         Row(
           children: const [
             Spacer(),
+            Expanded(
+              flex: 8,
+              child: jslogin(),
+            ),
             Spacer(),
           ],
         ),
+        // const SocalSignUp()
       ],
     );
   }
