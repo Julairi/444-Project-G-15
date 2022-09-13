@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:esaa/Screens/Login/login_screen.dart';
 import 'package:esaa/Screens/Welcome/components/login_signup_btn.dart';
+import 'package:esaa/Screens/forgotpass/forgotpasscreen.dart';
 import 'package:esaa/Screens/forgotpass/forgotpassform.dart';
 import 'package:esaa/Screens/signup/sec_signup_scren.dart';
 import 'package:flutter/cupertino.dart';
@@ -138,7 +139,7 @@ class _jsloginState extends State<jslogin> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return forgotpass();
+                    return ForgotPass();
                   },
                 ),
               );

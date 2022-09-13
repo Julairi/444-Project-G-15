@@ -62,33 +62,5 @@ class MobileSignupScreen extends StatelessWidget {
   }
 }
 
-class ForgotPassWord extends StatelessWidget {
-  const ForgotPassWord({
-    Key? key,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(3),
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) {
-                return ForgotPass();
-              },
-            ),
-          );
-        },
-        child: Text(
-          'Forgot Password?',
-          style: TextStyle(
-            color: Colors.blue,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    );
-  }
-}
+
+
