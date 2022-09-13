@@ -58,7 +58,12 @@ class _ListOffersState extends State<ListOffers> {
               for (var post in posts) {
                 final offertitle = post.get('Title');
                 final offerCity = post.get('City');
-                
+                final offerDate = post.get('Date');
+                final offerDes = post.get('Description');
+                final offerFee = post.get('PayPerHour');
+                final offerTime = post.get('Time');
+                final offerHours = post.get('nHours');
+
                 final OfferWidget = Container(
                     margin: EdgeInsets.all(defaultPadding),
                     decoration: BoxDecoration(
@@ -74,7 +79,23 @@ class _ListOffersState extends State<ListOffers> {
                       child: Row(
                         children: [
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (
+                                      context,
+                                    ) =>
+                                        detailsPage(
+                                            offertitle: offertitle,
+                                            offerCity: offerCity,
+                                            offerDate: offerDate,
+                                            offerDes: offerDes,
+                                            offerFee: offerFee,
+                                            offerTime: offerTime,
+                                            offerHours: offerHours),
+                                  ));
+                            },
                             icon: Icon(Icons.more_horiz_rounded),
                             color: Colors.white,
                             iconSize: 40,

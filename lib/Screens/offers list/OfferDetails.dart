@@ -3,13 +3,13 @@ import 'package:esaa/constants.dart';
 import 'package:flutter/material.dart';
 
 class detailsPage extends StatelessWidget {
-  final offertitle;
-  final offerCity;
-  final offerDate;
-  final offerDes;
-  final offerFee;
-  final offerTime;
-  final offerHours;
+  final String offertitle;
+  final String offerCity;
+  final String offerDate;
+  final String offerDes;
+  final String offerFee;
+  final String offerTime;
+  final String offerHours;
   const detailsPage(
       {required this.offertitle,
       required this.offerCity,
@@ -41,9 +41,40 @@ class detailsPage extends StatelessWidget {
         ],
       ),
       body: Container(
+        color: kPrimaryColor,
         width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: [Text(offertitle)],
+        height: MediaQuery.of(context).size.height,
+        child: Center(
+          child: Column(
+            children: [
+              Text(
+                offertitle,
+                style: TextStyle(color: kPrimaryLightColor, fontSize: 40),
+              ),
+              Text(
+                offerCity,
+                style: TextStyle(color: kPrimaryLightColor, fontSize: 35),
+              ),
+              Text(
+                offerDate,
+                style: TextStyle(color: kPrimaryLightColor, fontSize: 30),
+              ),
+              Text(
+                offerTime,
+                style: TextStyle(
+                    color: kPrimaryLightColor, fontSize: defaultFontSize),
+              ),
+              Text(
+                offerDes,
+                style: TextStyle(
+                    color: kPrimaryLightColor, fontSize: defaultFontSize),
+              ),
+              Text(
+                offerHours + ' ساعات',
+                style: TextStyle(color: kPrimaryLightColor, fontSize: 25),
+              ),
+            ],
+          ),
         ),
       ),
     );
