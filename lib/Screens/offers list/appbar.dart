@@ -15,11 +15,14 @@ class App extends StatelessWidget {
         icon: Icon(Icons.menu),
       ),
       actions: [
-        IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.share),
-        )
+        ImageIcon(
+          AssetImage("assets/logoo.png"),
+          color: Color.fromARGB(255, 255, 255, 255),
+          size: 24,
+        ),
       ],
     );
   }
 }
+
+

@@ -1,5 +1,5 @@
 import 'package:esaa/Screens/companySignup/signup_screen.dart';
-import 'package:esaa/Screens/offers%20list/ListPage.dart';
+
 import 'package:esaa/Screens/offers%20list/OfferList.dart';
 import 'package:esaa/Screens/offers%20list/offers_list.dart';
 
