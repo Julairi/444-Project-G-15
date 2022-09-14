@@ -88,7 +88,45 @@ class _jsloginState extends State<jslogin> {
         ),
       ),
     );
+    //final User? user = FirebaseAuth.instance.currentUser;
+    //final role= user?.role;
 
+    //final _fireStore = FirebaseFirestore.instance;
+    //final users= _fireStore.collection('company').snapshots();
+    // final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance.collection('company').snapshots();
+
+    //final posts = snapshot.data!.docs;
+    //posts.get('role');
+
+    //return FutureBuilder<DocumentSnapshot>(
+    // final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance.collection('company').snapshots();
+
+    //future: users.doc(documentId).get(),
+    //builder:
+    //  (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+
+    // if (snapshot.hasError) {
+    // return Text("Something went wrong");
+    //}
+
+    /*  if (snapshot.hasData && !snapshot.data!.exists) {
+          return Text("Document does not exist");
+        }
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
+          return Text("Full Name: ${data['full_name']} ${data['last_name']}");
+        }
+
+        return Text("loading");
+     },*/
+    //);
+/*
+    FirebaseFirestore.instance
+        .collection('company')
+        .where('role', arrayContains: 'company')
+        .get();
+*/
     return Form(
       key: _formKey,
       child: Column(
@@ -106,6 +144,7 @@ class _jsloginState extends State<jslogin> {
                 await FirebaseAuth.instance.signInWithEmailAndPassword(
                   email: emailEditingController.text.trim(),
                   password: passEditingController.text.trim(),
+                  //final User?
                 );
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'user-not-found') {

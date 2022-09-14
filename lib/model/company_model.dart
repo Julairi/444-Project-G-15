@@ -6,7 +6,8 @@ class CompanyModel {
   String? description;
   String? contact;
   String? address;
-  String? role;
+ bool? company;
+  bool? jobseeker;
   // String? phone;
   //String? experience;
   CompanyModel({
@@ -17,7 +18,8 @@ class CompanyModel {
     this.contact,
     this.description,
     this.address,
-    this.role,
+    this.company,
+    this.jobseeker
   });
 
   // receiving data from server
@@ -30,7 +32,8 @@ class CompanyModel {
 
       contact: map['contact'],
       address: map['address'],
-      role: map['role'],
+      company: map['company'],
+      jobseeker: map['jobsekker'],
       //phone: map['phone_number'],
       // experience: map['experience'],
       //DOB: map['DOB'],
@@ -47,7 +50,9 @@ class CompanyModel {
      'contact':contact,
       //'gender': gender,
       'adress': address,
-      'role':'company',
+      'company':'true',
+      'jobseeker':'false',
+
       //'phone': phone,
       //'experience': experience,
       //DOB': DOB,
