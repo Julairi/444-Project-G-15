@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:esaa/Screens/CompanyPage/company_offers.dart';
 import 'package:esaa/Screens/CompanyPage/userCompanyOffers.dart';
 import 'package:esaa/components/appbar.dart';
 import 'package:esaa/components/background.dart';
 import 'package:esaa/constants.dart';
 import 'package:flutter/material.dart';
 
-class detailsPage extends StatelessWidget  {
-   final String CompanyName;
+class detailsPage extends StatelessWidget {
+  final String CompanyName;
   final String CompanyPath;
   final String offertitle;
   final String offerCity;
@@ -248,6 +249,22 @@ class detailsPage extends StatelessWidget  {
                       SizedBox(
                         height: 35,
                         width: 10,
+                      ),
+                      Row(
+                        children: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (
+                                      context,
+                                    ) =>
+                                            userOffers(child: CompanyPath)));
+                              },
+                              child:
+                                  Text('لمزيدٍ من عروض هذه الشركه اضغط هنا '))
+                        ],
                       ),
                     ],
                   ),
