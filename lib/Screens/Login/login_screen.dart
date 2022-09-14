@@ -62,6 +62,3 @@ class MobileSignupScreen extends StatelessWidget {
     );
   }
 }
-
-
-

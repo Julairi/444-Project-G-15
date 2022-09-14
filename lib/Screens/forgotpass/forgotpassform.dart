@@ -23,6 +23,8 @@ class _forgotpassState extends State<forgotpass> {
 
   @override
   Widget build(BuildContext context) {
+    appBar:
+    AppBar();
     final emailField = TextFormField(
       controller: emailEditingController,
       keyboardType: TextInputType.emailAddress,
