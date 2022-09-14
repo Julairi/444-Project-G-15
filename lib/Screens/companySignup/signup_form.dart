@@ -385,7 +385,7 @@ class _SignUpFormState extends State<companySignupForm> {
 
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => LoginScreen()),
+        MaterialPageRoute(builder: (context) => ListOffers()),
         (route) => false);
   }
 }

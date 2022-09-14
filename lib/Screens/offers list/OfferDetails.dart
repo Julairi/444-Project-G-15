@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esaa/Screens/CompanyPage/userCompanyOffers.dart';
+import 'package:esaa/components/appbar.dart';
 import 'package:esaa/components/background.dart';
 import 'package:esaa/constants.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class detailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Background(
+    return appbar(
       child: SingleChildScrollView(
           child: Column(
         children: [

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esaa/Screens/Login/login_screen.dart';
+import 'package:esaa/Screens/offers%20list/OfferList.dart';
 import 'package:esaa/Screens/signup/sec_signup_scren.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -362,7 +363,7 @@ class _SignUpFormState extends State<SignUpForm> {
 
     Navigator.pushAndRemoveUntil(
         (context),
-        MaterialPageRoute(builder: (context) => LoginScreen()),
+        MaterialPageRoute(builder: (context) => ListOffers()),
         (route) => false);
   }
 }
