@@ -62,6 +62,10 @@ class detailsPage extends StatelessWidget {
                             color: Color.fromARGB(255, 22, 126, 210),
                             size: 40,
                           ),
+                          SizedBox(
+                            height: 20,
+                            width: 12,
+                          ),
                           Text(
                             offertitle,
                             style: TextStyle(

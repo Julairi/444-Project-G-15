@@ -60,54 +60,56 @@ class CardO extends StatelessWidget {
                     ),
                     child: Image.network(
                       "https://i.pinimg.com/474x/6a/d3/66/6ad3663d79ccc962377d7a6cbe4d9bfe.jpg",
-                      height: 100,
+                      height: 50,
                       width: double.infinity,
                       fit: BoxFit.cover,
                     ),
                   ),
-                  Container(
-                    height: 100,
-                    alignment: Alignment.bottomRight,
-                    padding: EdgeInsets.symmetric(
-                      vertical: 10,
-                    ),
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                          Color.fromARGB(255, 105, 110, 112).withOpacity(0),
-                          Color.fromARGB(255, 64, 69, 71).withOpacity(0.2)
+                  Positioned(
+                    child: Container(
+                      height: 50,
+                      alignment: Alignment.bottomRight,
+                      padding: EdgeInsets.symmetric(
+                        vertical: 10,
+                      ),
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                            Color.fromARGB(255, 105, 110, 112).withOpacity(0),
+                            Color.fromARGB(255, 64, 69, 71).withOpacity(0.2)
+                          ],
+                              stops: [
+                            0.6,
+                            1
+                          ])),
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            height: 20,
+                            width: 20,
+                          ),
+                          Icon(
+                            Icons.work_outline,
+                            color: Color.fromARGB(255, 83, 80, 80),
+                            size: 35,
+                          ),
+                          SizedBox(
+                            height: 20,
+                            width: 20,
+                          ),
+                          Text(
+                            offertitle,
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 6, 6, 6),
+                                fontSize: 18,
+                                fontFamily: 'ElMessiri',
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.fade),
+                          ),
                         ],
-                            stops: [
-                          0.6,
-                          1
-                        ])),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          height: 20,
-                          width: 20,
-                        ),
-                        Icon(
-                          Icons.work_outline,
-                          color: Color.fromARGB(255, 83, 80, 80),
-                          size: 35,
-                        ),
-                        SizedBox(
-                          height: 20,
-                          width: 20,
-                        ),
-                        Text(
-                          offertitle,
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 6, 6, 6),
-                              fontSize: 18,
-                              fontFamily: 'ElMessiri',
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.fade),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ],
