@@ -301,7 +301,7 @@ class _SignUpFormState extends State<companySignupForm> {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return ListOffers();
+                    return LoginScreen();
                   },
                 ),
               );

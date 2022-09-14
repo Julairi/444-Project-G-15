@@ -11,10 +11,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import 'package:flutter/material.dart';
+import 'package:esaa/components/OfferCard.dart';
+import 'package:esaa/components/appbar.dart';
 
 // Import the firebase_core plugin
 //Import firestore database
-//import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../components/background.dart';
 
 class certianOffers extends StatefulWidget {
@@ -23,6 +25,8 @@ class certianOffers extends StatefulWidget {
 
 class oneCompanyOffers extends State<certianOffers> {
   final _auth = FirebaseAuth.instance;
+  late  final CompanyName;
+
 
   // List<Object> cOffers = [];
 
@@ -50,23 +54,8 @@ class oneCompanyOffers extends State<certianOffers> {
   @override
   Widget build(BuildContext context) {
     String? cid = retrieveList();
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 52, 64, 110),
-        title: Text('عروض العمل'),
-        centerTitle: true,
-        actions: [
-          IconButton(
-              onPressed: () {
-                postStreams();
-              },
-              icon: Icon(Icons.close)),
-          Center(
-            child: new Image.asset('assets/logoo.png'),
-          )
-        ],
-      ),
-      body: SafeArea(
+    return appbar(
+      child: SafeArea(
           child: Column(
         children: [
           SizedBox(
@@ -89,56 +78,31 @@ class oneCompanyOffers extends State<certianOffers> {
               for (var post in posts) {
                 final offertitle = post.get('Title');
                 final offerCity = post.get('City');
+                final offerDate = post.get('Date');
+                final offerDes = post.get('Description');
+                final offerFee = post.get('PayPerHour');
+                final offerTime = post.get('Time');
+                final offerHours = post.get('nHours');
+                final companyPath = post.get('user');
+                var lastSlash = companyPath.lastIndexOf('/');
+                final String user= (lastSlash != -1)
+                    ? companyPath.substring(lastSlash)
+                    : companyPath;
+                final fm =setCompanyName(companyPath,user);
+                Convertstring(fm);
 
-                final OfferWidget = Container(
-                    margin: EdgeInsets.all(defaultPadding),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color.fromARGB(255, 62, 75, 100),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                      color: kPrimaryColor,
-                    ),
-                    child: Expanded(
-                      flex: 8,
-                      child: Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.more_horiz_rounded),
-                            color: Colors.white,
-                            iconSize: 40,
-                          ),
-                          Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      ' $offertitle',
-                                      style: TextStyle(
-                                          color: kPrimaryLightColor,
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      ' $offerCity',
-                                      style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 245, 250, 252),
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ));
+                final OfferWidget = CardO(
+                  CompanyPath: companyPath,
+                  CompanyName: CompanyName,
+                  offertitle: offertitle,
+                  offerCity: offerCity,
+                  offerDate: offerDate,
+                  offerDes: offerDes,
+                  offerFee: offerFee,
+                  offerHours: offerHours,
+                  offerTime: offerTime,
+                );
+
                 titleWidget.add(OfferWidget);
               }
               return Column(
@@ -158,5 +122,18 @@ class oneCompanyOffers extends State<certianOffers> {
         print(posts.data());
       }
     }
+  }
+  Future<String> setCompanyName(String path,String user) async {
+    final companyName = await FirebaseFirestore.instance.collection('company').doc(user).get().then((val){
+      return val.data()?["Name"];
+    }
+
+    );
+    return companyName;
+
+
+  }
+  void Convertstring (Future<String> cm) async{
+    CompanyName = await cm;
   }
 }
