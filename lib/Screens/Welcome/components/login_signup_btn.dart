@@ -113,7 +113,7 @@ class LoginAndSignupBtn extends StatelessWidget {
             style: TextStyle(color: Colors.black, fontSize: 16),
           ),
         ),
-        /*ElevatedButton(
+        ElevatedButton(
           onPressed: () {
             Navigator.push(
               context,
@@ -130,7 +130,7 @@ class LoginAndSignupBtn extends StatelessWidget {
             " logon".toUpperCase(),
             style: TextStyle(color: Colors.black, fontSize: 16),
           ),
-        ),*/
+        ),
       ],
     );
   }

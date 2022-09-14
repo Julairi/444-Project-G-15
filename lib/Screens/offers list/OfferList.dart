@@ -20,11 +20,11 @@ class _ListOffersState extends State<ListOffers> {
   final _fireStore = FirebaseFirestore.instance;
   List<Object> _jobList = [];
   final _auth = FirebaseAuth.instance;
- late  final CompanyName;
+   late  final CompanyName;
 
   @override
   Widget build(BuildContext context) {
-    return appbar(
+    return  appbar(
       child: SafeArea(
           child: Column(
         children: [

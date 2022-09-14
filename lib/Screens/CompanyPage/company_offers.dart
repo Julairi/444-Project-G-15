@@ -16,7 +16,7 @@ import 'package:esaa/components/appbar.dart';
 
 // Import the firebase_core plugin
 //Import firestore database
-//import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../components/background.dart';
 
 class certianOffers extends StatefulWidget {
@@ -25,6 +25,8 @@ class certianOffers extends StatefulWidget {
 
 class oneCompanyOffers extends State<certianOffers> {
   final _auth = FirebaseAuth.instance;
+  late  final CompanyName;
+
 
   // List<Object> cOffers = [];
 
@@ -83,13 +85,15 @@ class oneCompanyOffers extends State<certianOffers> {
                 final offerHours = post.get('nHours');
                 final companyPath = post.get('user');
                 var lastSlash = companyPath.lastIndexOf('/');
-                final String companyName = (lastSlash != -1)
+                final String user= (lastSlash != -1)
                     ? companyPath.substring(lastSlash)
                     : companyPath;
+                final fm =setCompanyName(companyPath,user);
+                Convertstring(fm);
 
                 final OfferWidget = CardO(
                   CompanyPath: companyPath,
-                  CompanyName: companyName,
+                  CompanyName: CompanyName,
                   offertitle: offertitle,
                   offerCity: offerCity,
                   offerDate: offerDate,
@@ -118,5 +122,18 @@ class oneCompanyOffers extends State<certianOffers> {
         print(posts.data());
       }
     }
+  }
+  Future<String> setCompanyName(String path,String user) async {
+    final companyName = await FirebaseFirestore.instance.collection('company').doc(user).get().then((val){
+      return val.data()?["Name"];
+    }
+
+    );
+    return companyName;
+
+
+  }
+  void Convertstring (Future<String> cm) async{
+    CompanyName = await cm;
   }
 }
