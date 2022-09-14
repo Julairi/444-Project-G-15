@@ -2,6 +2,7 @@ class CompanyModel {
   String? cid;
   String? email;
   String? Name;
+<<<<<<< HEAD
 
   String? description;
   String? contact;
@@ -22,12 +23,33 @@ class CompanyModel {
     // this.company,
     //this.jobseeker
   });
+=======
+  String? imgUrl;
+  String? description;
+  String? contact;
+  String? address;
+  bool? company;
+  bool? jobseeker;
+  // String? phone;
+  //String? experience;
+  CompanyModel(
+      {this.cid,
+      this.email,
+      this.imgUrl,
+      this.Name,
+      this.contact,
+      this.description,
+      this.address,
+      this.company,
+      this.jobseeker});
+>>>>>>> 2ab1a8cea3bb7cf9ecd7b2c4e1a58514cb4490f4
 
   // receiving data from server
   factory CompanyModel.fromMap(map) {
     return CompanyModel(
       cid: map['cid'],
       email: map['email'],
+      imgUrl: map['imgUrl'], //+
       Name: map['Name'],
       description: map['description'],
 
@@ -48,13 +70,22 @@ class CompanyModel {
       'cid': cid,
       'email': email,
       'Name': Name,
+<<<<<<< HEAD
+=======
+      'imgUrl': imgUrl, //++
+>>>>>>> 2ab1a8cea3bb7cf9ecd7b2c4e1a58514cb4490f4
       'description': description,
       'contact': contact,
       //'gender': gender,
       'adress': address,
+<<<<<<< HEAD
       'role': 'company'
       //'company': 'true',
       //'jobseeker': 'false',
+=======
+      'company': 'true',
+      'jobseeker': 'false',
+>>>>>>> 2ab1a8cea3bb7cf9ecd7b2c4e1a58514cb4490f4
 
       //'phone': phone,
       //'experience': experience,

@@ -14,6 +14,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../navbar.dart';
+
 class jslogin extends StatefulWidget {
   const jslogin({
     Key? key,
@@ -89,6 +91,7 @@ class _jsloginState extends State<jslogin> {
         ),
       ),
     );
+
     //final User? user = FirebaseAuth.instance.currentUser;
     //final role= user?.role;
 
@@ -158,6 +161,16 @@ class _jsloginState extends State<jslogin> {
                   password: passEditingController.text.trim(),
                   //final User?
                 );
+                //////////
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return navbar();
+                    },
+                  ),
+                );
+                //////
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'user-not-found') {
                   showDialog(
