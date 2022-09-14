@@ -33,7 +33,7 @@ class LoginAndSignupBtn extends StatelessWidget {
               );
             },
             child: Text(
-              "إنشاء تسجيل كشركة".toUpperCase(),
+              "إنشاء حساب كشركة".toUpperCase(),
               style: TextStyle(fontSize: 16),
             ),
           ),
