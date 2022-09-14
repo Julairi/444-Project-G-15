@@ -126,7 +126,7 @@ class _SignUpFormState extends State<SignUpForm> {
       validator: (value) {
         if (value!.isEmpty) {
           return kNationalIdNullError;
-        } else if (value != 10)
+        } else if (value.length != 10)
           return kInvalidNationalIdError;
         else
           return null;
@@ -321,15 +321,16 @@ class _SignUpFormState extends State<SignUpForm> {
             print("too-many-requests");
             errorMessage = "Too many requests";
             break;
-            case "operation-not-allowed":
-          errorMessage="Signing in with this email and password isn't enabled"; //  errorMessage = "Signing in with Email and Password is not enabled.";
+          case "operation-not-allowed":
+            errorMessage =
+                "Signing in with this email and password isn't enabled"; //  errorMessage = "Signing in with Email and Password is not enabled.";
             break;
           default:
             errorMessage = "an undefiened eroor happened";
           // print("An undefined Error happened.");
         }
         Fluttertoast.showToast(msg: errorMessage!);
-       
+
         print(error.code);
       }
     }
