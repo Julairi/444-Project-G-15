@@ -10,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import '../../../model/user_model.dart';
+import '../../../navbarjs.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({
@@ -251,6 +252,11 @@ class _SignUpFormState extends State<SignUpForm> {
           emailField,
           SizedBox(height: defaultPadding / 2),
           passwordField,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [Text("* يجب ان تحتوي كلمة المرور على ٨ حروف على الاقل")],
+          ),
           SizedBox(height: defaultPadding / 2),
           confPasswordField,
           Padding(padding: const EdgeInsets.all(defaultPadding)),
@@ -365,7 +371,7 @@ class _SignUpFormState extends State<SignUpForm> {
         (context),
 
         ///navbarjs
-        MaterialPageRoute(builder: (context) => ListOffers()),
+        MaterialPageRoute(builder: (context) => navbarjs()),
         (route) => false);
   }
 }

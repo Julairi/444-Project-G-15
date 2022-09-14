@@ -33,7 +33,7 @@ class LoginAndSignupBtn extends StatelessWidget {
               );
             },
             child: Text(
-              "تسجيل كشركة".toUpperCase(),
+              "إنشاء تسجيل كشركة".toUpperCase(),
               style: TextStyle(fontSize: 16),
             ),
           ),
@@ -53,48 +53,13 @@ class LoginAndSignupBtn extends StatelessWidget {
           style: ElevatedButton.styleFrom(
               primary: kPrimaryLightColor, elevation: 0),
           child: Text(
-            " تسجيل كباحث عن عمل".toUpperCase(),
+            " إنشاء حساب كباحث عن عمل".toUpperCase(),
             style: TextStyle(color: Colors.black, fontSize: 16),
           ),
         ),
         //tesst
         const SizedBox(height: 16),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return postjobScreen();
-                },
-              ),
-            );
-          },
-          style: ElevatedButton.styleFrom(
-              primary: kPrimaryLightColor, elevation: 0),
-          child: Text(
-            " ارسال".toUpperCase(),
-            style: TextStyle(color: Colors.black, fontSize: 16),
-          ),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return ListOffers();
-                },
-              ),
-            );
-          },
-          style: ElevatedButton.styleFrom(
-              primary: kPrimaryLightColor, elevation: 0),
-          child: Text(
-            " Offers".toUpperCase(),
-            style: TextStyle(color: Colors.black, fontSize: 16),
-          ),
-        ),
+
         ElevatedButton(
           onPressed: () {
             Navigator.push(
