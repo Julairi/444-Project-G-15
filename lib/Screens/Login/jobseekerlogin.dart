@@ -144,12 +144,19 @@ class _jsloginState extends State<jslogin> {
                 ),
               );
             },
-            child: Text(
-              'Forgot Password?',
-              style: TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
-              ),
+            child: Column(
+              children: [
+                Padding(padding: const EdgeInsets.all(defaultPadding)),
+                SizedBox(height: defaultPadding / 4),
+                Text(
+                  'نسيت كلمة المرور',
+                  style: TextStyle(
+                    color: kPrimaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              ],
             ),
           ),
         ],

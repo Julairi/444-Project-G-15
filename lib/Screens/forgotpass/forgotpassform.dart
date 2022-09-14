@@ -71,7 +71,8 @@ class _forgotpassState extends State<forgotpass> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
-                      content: Text('otp has been sent to your email!'),
+                      content: Text(
+                          'تم إرسال رابط إعادة تعيين المرور على البريد الالكتروني المدخل'),
                     );
                   },
                 );
@@ -79,8 +80,7 @@ class _forgotpassState extends State<forgotpass> {
                 print(e);
               }
             },
-            child:
-                Text("اهلا بك!".toUpperCase(), style: TextStyle(fontSize: 16)),
+            child: Text("ارسال".toUpperCase(), style: TextStyle(fontSize: 16)),
           ),
         ],
       ),
