@@ -1,25 +1,26 @@
 class CompanyModel {
   String? cid;
   String? email;
-  String?Name;
+  String? Name;
 
   String? description;
   String? contact;
   String? address;
- bool? company;
-  bool? jobseeker;
+  String? role;
+  //bool? company;
+  // bool? jobseeker;
   // String? phone;
   //String? experience;
   CompanyModel({
     this.cid,
     this.email,
     this.Name,
-
     this.contact,
     this.description,
     this.address,
-    this.company,
-    this.jobseeker
+    this.role,
+    // this.company,
+    //this.jobseeker
   });
 
   // receiving data from server
@@ -32,8 +33,9 @@ class CompanyModel {
 
       contact: map['contact'],
       address: map['address'],
-      company: map['company'],
-      jobseeker: map['jobsekker'],
+      role: map['role'],
+      // company: map['company'],
+      // jobseeker: map['jobsekker'],
       //phone: map['phone_number'],
       // experience: map['experience'],
       //DOB: map['DOB'],
@@ -46,12 +48,13 @@ class CompanyModel {
       'cid': cid,
       'email': email,
       'Name': Name,
-      'description':description,
-     'contact':contact,
+      'description': description,
+      'contact': contact,
       //'gender': gender,
       'adress': address,
-      'company':'true',
-      'jobseeker':'false',
+      'role': 'company'
+      //'company': 'true',
+      //'jobseeker': 'false',
 
       //'phone': phone,
       //'experience': experience,

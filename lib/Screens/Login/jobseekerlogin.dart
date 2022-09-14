@@ -35,7 +35,7 @@ class _jsloginState extends State<jslogin> {
       onSaved: (newValue) => emailEditingController.text = newValue!,
       validator: (value) {
         if (value!.isEmpty) {
-          return kjobTitleNullError;
+          return kEmailNullError;
         }
         return null;
       },
@@ -67,7 +67,7 @@ class _jsloginState extends State<jslogin> {
       onSaved: (newValue) => passEditingController.text = newValue!,
       validator: (value) {
         if (value!.isEmpty) {
-          return kjobTitleNullError;
+          return kPassNullError;
         }
         return null;
       },
@@ -128,6 +128,12 @@ class _jsloginState extends State<jslogin> {
         .where('role', arrayContains: 'company')
         .get();
 */
+    Widget okbutton = TextButton(
+      child: Text('الغاء'),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
     return Form(
       key: _formKey,
       child: Column(
@@ -159,6 +165,7 @@ class _jsloginState extends State<jslogin> {
                     builder: (context) {
                       return AlertDialog(
                         content: Text('ليس هناك حساب لهذا البريد الالكتروني'),
+                        actions: [okbutton],
                       );
                     },
                   );
@@ -169,6 +176,9 @@ class _jsloginState extends State<jslogin> {
                       return AlertDialog(
                         content:
                             Text('البريد الالكتروني/كلمة المرور غير صحيحة'),
+                        actions: [
+                          okbutton,
+                        ],
                       );
                     },
                   );

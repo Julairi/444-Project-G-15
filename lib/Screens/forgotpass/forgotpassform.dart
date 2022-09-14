@@ -52,7 +52,12 @@ class _forgotpassState extends State<forgotpass> {
         ),
       ),
     );
-
+    Widget okbutton = TextButton(
+      child: Text('الغاء'),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
     return Form(
       key: _formKey,
       child: Column(
@@ -78,6 +83,7 @@ class _forgotpassState extends State<forgotpass> {
                     return AlertDialog(
                       content: Text(
                           'تم إرسال رابط إعادة تعيين المرور على البريد الالكتروني المدخل'),
+                      actions: [okbutton],
                     );
                   },
                 );
