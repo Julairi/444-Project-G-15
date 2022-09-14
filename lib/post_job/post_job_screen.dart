@@ -1,3 +1,4 @@
+import 'package:esaa/components/appbar.dart';
 import 'package:esaa/constants.dart';
 import 'package:esaa/post_job/post_job_form.dart';
 import 'package:esaa/responsive.dart';
@@ -13,7 +14,7 @@ class postjobScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Background(
+    return appbar(
       child: SingleChildScrollView(
         child: Responsive(
           mobile: const MobileSignupScreen(),
