@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import '../../../model/user_model.dart';
@@ -18,7 +19,7 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   final _auth = FirebaseAuth.instance;
-
+  String? errorMessage;
   final _formKey = GlobalKey<FormState>();
   final nationalIdEditingController = new TextEditingController();
 
@@ -125,10 +126,8 @@ class _SignUpFormState extends State<SignUpForm> {
       validator: (value) {
         if (value!.isEmpty) {
           return kNationalIdNullError;
-        } //else if (!RegExp(r'^[+]+*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\.0/-9]$')
-        //.hasMatch(value!)) {
-        //return kInvalidNationalIdError;
-        // }
+        } else if (value.length != 10)
+          return kInvalidNationalIdError;
         else
           return null;
       },
@@ -298,32 +297,40 @@ class _SignUpFormState extends State<SignUpForm> {
             .createUserWithEmailAndPassword(email: email, password: password)
             .then((value) => {postDetailsToFirestore()})
             .catchError((e) {
-          //FlutterToast.showToast(msg: e!.message);
+          Fluttertoast.showToast(msg: e!.message);
         });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
           case "invalid-email":
-            print("Yaddress appears to be malformed.");
+            errorMessage = "Your email appears to be malformed";
+            //print("Yaddress appears to be malformed.");
             break;
-            print("wrong-password");
+          case "wrong-password":
+            errorMessage = "your password is wrong";
             // errorMessage = "Your password is wrong.";
             break;
-            print("user-not-found");
+          case "user-not-found":
+            errorMessage = "user with this email doesn't exist";
             // errorMessage = "User with this email doesn't exist.";
             break;
-            print("user-disabled");
+          case "user-disabled":
+            errorMessage = "user with this email has been disabled";
             // errorMessage = "User with this email has been disabled.";
             break;
+          case "too-many-requests":
             print("too-many-requests");
-            // errorMessage = "Too many requests";
+            errorMessage = "Too many requests";
             break;
-            print(
-                "operation-not-allowed"); //  errorMessage = "Signing in with Email and Password is not enabled.";
+          case "operation-not-allowed":
+            errorMessage =
+                "Signing in with this email and password isn't enabled"; //  errorMessage = "Signing in with Email and Password is not enabled.";
             break;
           default:
-            print("An undefined Error happened.");
+            errorMessage = "an undefiened eroor happened";
+          // print("An undefined Error happened.");
         }
-        // Fluttertoast.showToast(msg: errorMessage!);
+        Fluttertoast.showToast(msg: errorMessage!);
+
         print(error.code);
       }
     }
@@ -351,7 +358,7 @@ class _SignUpFormState extends State<SignUpForm> {
         .collection("jobseekers")
         .doc(user.uid)
         .set(userModel.toMap());
-    //Fluttertoast.showToast(msg: "Account created successfully :) ");
+    Fluttertoast.showToast(msg: "تم إنشاء حسابك بنجاح ");
 
     Navigator.pushAndRemoveUntil(
         (context),

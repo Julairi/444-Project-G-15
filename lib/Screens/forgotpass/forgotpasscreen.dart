@@ -1,12 +1,11 @@
-import 'package:esaa/Screens/forgotpass/forgotpasscreen.dart';
 import 'package:flutter/material.dart';
-import 'package:esaa/Screens/Login/jobseekerlogin.dart';
+import 'package:esaa/Screens/forgotpass/forgotpassform.dart';
 import '../../components/background.dart';
 import '../../constants.dart';
 import '../../responsive.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class ForgotPass extends StatelessWidget {
+  const ForgotPass({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,7 @@ class LoginScreen extends StatelessWidget {
                   children: const [
                     SizedBox(
                       width: 450,
-                      child: jslogin(),
+                      child: forgotpass(),
                     ),
                     SizedBox(height: defaultPadding / 2),
                   ],
@@ -51,7 +50,7 @@ class MobileSignupScreen extends StatelessWidget {
             Spacer(),
             Expanded(
               flex: 8,
-              child: jslogin(),
+              child: forgotpass(),
             ),
             Spacer(),
           ],
@@ -61,6 +60,3 @@ class MobileSignupScreen extends StatelessWidget {
     );
   }
 }
-
-
-
