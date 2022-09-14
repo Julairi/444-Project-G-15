@@ -1,4 +1,6 @@
 import 'package:esaa/Screens/offers%20list/OfferDetails.dart';
+import 'package:esaa/components/OfferCard.dart';
+import 'package:esaa/components/background.dart';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,20 +22,8 @@ class _ListOffersState extends State<ListOffers> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kPrimaryColor,
-        elevation: 0,
-        title: Text('اسع'),
-        actions: [
-          ImageIcon(
-            AssetImage("assets/logoo.png"),
-            color: Color.fromARGB(255, 255, 255, 255),
-            size: 24,
-          ),
-        ],
-      ),
-      body: SafeArea(
+    return Background(
+      child: SafeArea(
           child: Column(
         children: [
           SizedBox(
@@ -63,85 +53,18 @@ class _ListOffersState extends State<ListOffers> {
                     ? companyPath.substring(lastSlash)
                     : companyPath;
 
-                final OfferWidget = Container(
-                  margin: EdgeInsets.all(defaultPadding),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Color.fromARGB(255, 62, 75, 100),
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                    color: kPrimaryColor,
-                  ),
-                  child: Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (
-                                  context,
-                                ) =>
-                                    detailsPage(
-                                        CompanyPath: companyPath,
-                                        CompanyName: companyName,
-                                        offertitle: offertitle,
-                                        offerCity: offerCity,
-                                        offerDate: offerDate,
-                                        offerDes: offerDes,
-                                        offerFee: offerFee,
-                                        offerTime: offerTime,
-                                        offerHours: offerHours),
-                              ));
-                        },
-                        icon: Icon(Icons.more_horiz_rounded),
-                        color: Colors.white,
-                        iconSize: 40,
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.work),
-                                    ),
-                                    Text(
-                                      'Company:$companyName',
-                                      style: TextStyle(
-                                          color: kPrimaryLightColor,
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                                Text(
-                                  ' JobTitle: $offertitle',
-                                  style: TextStyle(
-                                      color: kPrimaryLightColor,
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  ' City:$offerCity',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 245, 250, 252),
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                final OfferWidget = CardO(
+                  CompanyPath: companyPath,
+                  CompanyName: companyName,
+                  offertitle: offertitle,
+                  offerCity: offerCity,
+                  offerDate: offerDate,
+                  offerDes: offerDes,
+                  offerFee: offerFee,
+                  offerHours: offerHours,
+                  offerTime: offerTime,
                 );
+
                 titleWidget.add(OfferWidget);
               }
               return Column(
