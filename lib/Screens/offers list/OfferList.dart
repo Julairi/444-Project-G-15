@@ -25,7 +25,7 @@ class _ListOffersState extends State<ListOffers> {
   @override
   Widget build(BuildContext context) {
     return appbar(
-      child: SingleChildScrollView(
+      child: SafeArea(
           child: Column(
         children: [
           SizedBox(
