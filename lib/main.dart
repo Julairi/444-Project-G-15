@@ -1,6 +1,7 @@
 import 'package:esaa/Screens/Welcome/components/welcome_screen.dart';
 import 'package:esaa/constants.dart';
 import 'package:esaa/screens/Signup/signup_screen.dart';
+import 'package:esaa/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
           )),
-      home: const WelcomeScreen(),
+      home: const splash(),
     );
   }
 }
