@@ -25,7 +25,6 @@ class _jsloginState extends State<jslogin> {
   final _formKey = GlobalKey<FormState>();
   final emailEditingController = new TextEditingController();
   final passEditingController = new TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     final emailField = TextFormField(
@@ -49,6 +48,7 @@ class _jsloginState extends State<jslogin> {
         ),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(defaultPadding),
+          child: Icon(Icons.email),
         ),
         labelText: "ادخل عنوان البريد الالكتروني ",
         floatingLabelStyle: TextStyle(
@@ -80,6 +80,7 @@ class _jsloginState extends State<jslogin> {
         ),
         prefixIcon: Padding(
           padding: const EdgeInsets.all(defaultPadding),
+          child: Icon(Icons.vpn_key),
         ),
         labelText: " ادخل كلمة المرور ",
         floatingLabelStyle: TextStyle(
@@ -131,6 +132,11 @@ class _jsloginState extends State<jslogin> {
       key: _formKey,
       child: Column(
         children: [
+          SizedBox(
+            height: 200,
+            width: 290,
+            child: Image.asset("assets/logoo.png"),
+          ),
           Padding(padding: const EdgeInsets.all(defaultPadding)),
           SizedBox(height: defaultPadding / 2),
           emailField,
