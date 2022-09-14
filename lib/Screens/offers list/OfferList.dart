@@ -25,7 +25,7 @@ class _ListOffersState extends State<ListOffers> {
   @override
   Widget build(BuildContext context) {
     return appbar(
-      child: SafeArea(
+      child: SingleChildScrollView(
           child: Column(
         children: [
           SizedBox(
@@ -39,39 +39,41 @@ class _ListOffersState extends State<ListOffers> {
               if (!snapshot.hasData) {
                 // add here a spinner
               }
-              final posts = snapshot.data!.docs;
 
-              for (var post in posts) {
-                final offertitle = post.get('Title');
-                final offerCity = post.get('City');
-                final offerDate = post.get('Date');
-                final offerDes = post.get('Description');
-                final offerFee = post.get('PayPerHour');
-                final offerTime = post.get('Time');
-                final offerHours = post.get('nHours');
-                final companyPath = post.get('user');
-                var lastSlash = companyPath.lastIndexOf('/');
-                String user = (lastSlash != -1)
-                    ? companyPath.substring(lastSlash)
-                    : companyPath;
+              if (snapshot.data != null) {
+                final posts = snapshot.data?.docs;
 
-                final fm = setCompanyName(companyPath, user);
-                Convertstring(fm);
-                final OfferWidget = CardO(
-                  CompanyPath: companyPath,
-                  CompanyName: CompanyName,
-                  offertitle: offertitle,
-                  offerCity: offerCity,
-                  offerDate: offerDate,
-                  offerDes: offerDes,
-                  offerFee: offerFee,
-                  offerHours: offerHours,
-                  offerTime: offerTime,
-                );
+                for (var post in posts!) {
+                  final offertitle = post.get('Title');
+                  final offerCity = post.get('City');
+                  final offerDate = post.get('Date');
+                  final offerDes = post.get('Description');
+                  final offerFee = post.get('PayPerHour');
+                  final offerTime = post.get('Time');
+                  final offerHours = post.get('nHours');
+                  final companyPath = post.get('user');
+                  var lastSlash = companyPath.lastIndexOf('/');
+                  String user = (lastSlash != -1)
+                      ? companyPath.substring(lastSlash)
+                      : companyPath;
 
-                titleWidget.add(OfferWidget);
+                  final fm = setCompanyName(companyPath, user);
+                  Convertstring(fm);
+                  final OfferWidget = CardO(
+                    CompanyPath: companyPath,
+                    CompanyName: CompanyName,
+                    offertitle: offertitle,
+                    offerCity: offerCity,
+                    offerDate: offerDate,
+                    offerDes: offerDes,
+                    offerFee: offerFee,
+                    offerHours: offerHours,
+                    offerTime: offerTime,
+                  );
+
+                  titleWidget.add(OfferWidget);
+                }
               }
-
               return Column(
                 children: titleWidget,
               );
