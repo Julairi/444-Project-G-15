@@ -363,6 +363,8 @@ class _SignUpFormState extends State<SignUpForm> {
 
     Navigator.pushAndRemoveUntil(
         (context),
+
+        ///navbarjs
         MaterialPageRoute(builder: (context) => ListOffers()),
         (route) => false);
   }
