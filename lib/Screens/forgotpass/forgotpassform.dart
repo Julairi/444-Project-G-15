@@ -23,8 +23,6 @@ class _forgotpassState extends State<forgotpass> {
 
   @override
   Widget build(BuildContext context) {
-    appBar:
-    AppBar();
     final emailField = TextFormField(
       controller: emailEditingController,
       keyboardType: TextInputType.emailAddress,
@@ -59,6 +57,11 @@ class _forgotpassState extends State<forgotpass> {
       key: _formKey,
       child: Column(
         children: [
+          SizedBox(
+            height: 200,
+            width: 290,
+            child: Image.asset("assets/logoo.png"),
+          ),
           Padding(padding: const EdgeInsets.all(defaultPadding)),
           SizedBox(height: defaultPadding / 2),
           emailField,

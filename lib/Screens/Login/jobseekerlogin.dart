@@ -132,6 +132,11 @@ class _jsloginState extends State<jslogin> {
       key: _formKey,
       child: Column(
         children: [
+          SizedBox(
+            height: 200,
+            width: 290,
+            child: Image.asset("assets/logoo.png"),
+          ),
           Padding(padding: const EdgeInsets.all(defaultPadding)),
           SizedBox(height: defaultPadding / 2),
           emailField,

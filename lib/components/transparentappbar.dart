@@ -18,28 +18,25 @@ class transparentappbar extends StatelessWidget {
       extendBodyBehindAppBar: true,
       backgroundColor: Color.fromARGB(255, 239, 242, 242),
       resizeToAvoidBottomInset: false,
-    
-        appBar: AppBar(
-          leading: BackButton(), 
-          backgroundColor: Colors.transparent,
-          elevation: 0,
+
+      appBar: AppBar(
+        leading: BackButton(
+          color: kPrimaryColor,
         ),
-      
-      
-      
-       
-         
-       
-        // ignore: prefer_const_constructors
-        // backgroundColor: kPrimaryColor,
-        //resizeToAvoidBottomInset: false,
-        body: Container(
-          width: double.infinity,
-          height: MediaQuery.of(context).size.height,
-          child: Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              /* Positioned(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+
+      // ignore: prefer_const_constructors
+      // backgroundColor: kPrimaryColor,
+      //resizeToAvoidBottomInset: false,
+      body: Container(
+        width: double.infinity,
+        height: MediaQuery.of(context).size.height,
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            /* Positioned(
               top: 0,
               left: 0,
               child: Image.asset(
@@ -52,11 +49,10 @@ class transparentappbar extends StatelessWidget {
               right: 0,
               child: Image.asset(bottomImage, width: 120),
             ), */
-              SafeArea(child: child),
-            ],
-          ),
+            SafeArea(child: child),
+          ],
         ),
-   
+      ),
     );
   }
 }
