@@ -11,6 +11,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import 'package:flutter/material.dart';
+import 'package:esaa/components/OfferCard.dart';
+import 'package:esaa/components/appbar.dart';
 
 class userOffers extends StatelessWidget {
   final String child;
@@ -18,13 +20,8 @@ class userOffers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 52, 64, 110),
-        title: Text('عروض العمل'),
-        centerTitle: true,
-      ),
-      body: SafeArea(
+    return appbar(
+      child: SafeArea(
           child: Column(
         children: [
           SizedBox(
@@ -39,63 +36,36 @@ class userOffers extends StatelessWidget {
             builder: (context, snapshot) {
               List<Widget> titleWidget = [];
               if (!snapshot.hasData) {
-                print("Company doesn't have offers");
+                print("Company doesn't have job offers, check again later!");
               }
               final posts = snapshot.data!.docs;
 
               for (var post in posts) {
                 final offertitle = post.get('Title');
                 final offerCity = post.get('City');
+                final offerDate = post.get('Date');
+                final offerDes = post.get('Description');
+                final offerFee = post.get('PayPerHour');
+                final offerTime = post.get('Time');
+                final offerHours = post.get('nHours');
+                final companyPath = post.get('user');
+                var lastSlash = companyPath.lastIndexOf('/');
+                final String companyName = (lastSlash != -1)
+                    ? companyPath.substring(lastSlash)
+                    : companyPath;
 
-                final OfferWidget = Container(
-                    margin: EdgeInsets.all(defaultPadding),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Color.fromARGB(255, 62, 75, 100),
-                        width: 2,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                      color: kPrimaryColor,
-                    ),
-                    child: Expanded(
-                      flex: 8,
-                      child: Row(
-                        children: [
-                          IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.more_horiz_rounded),
-                            color: Colors.white,
-                            iconSize: 40,
-                          ),
-                          Center(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      ' $offertitle',
-                                      style: TextStyle(
-                                          color: kPrimaryLightColor,
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      ' $offerCity',
-                                      style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 245, 250, 252),
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ));
+                final OfferWidget = CardO(
+                  CompanyPath: companyPath,
+                  CompanyName: companyName,
+                  offertitle: offertitle,
+                  offerCity: offerCity,
+                  offerDate: offerDate,
+                  offerDes: offerDes,
+                  offerFee: offerFee,
+                  offerHours: offerHours,
+                  offerTime: offerTime,
+                );
+
                 titleWidget.add(OfferWidget);
               }
               return Column(
