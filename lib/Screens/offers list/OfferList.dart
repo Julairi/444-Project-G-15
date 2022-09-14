@@ -20,11 +20,11 @@ class _ListOffersState extends State<ListOffers> {
   final _fireStore = FirebaseFirestore.instance;
   List<Object> _jobList = [];
   final _auth = FirebaseAuth.instance;
-   late  final CompanyName;
+  late final CompanyName;
 
   @override
   Widget build(BuildContext context) {
-    return  appbar(
+    return appbar(
       child: SafeArea(
           child: Column(
         children: [
@@ -32,7 +32,6 @@ class _ListOffersState extends State<ListOffers> {
             width: 20,
             height: 30,
           ),
-
           StreamBuilder<QuerySnapshot>(
             stream: _fireStore.collection('posts').snapshots(),
             builder: (context, snapshot) {
@@ -52,12 +51,12 @@ class _ListOffersState extends State<ListOffers> {
                 final offerHours = post.get('nHours');
                 final companyPath = post.get('user');
                 var lastSlash = companyPath.lastIndexOf('/');
-               String user = (lastSlash != -1)
+                String user = (lastSlash != -1)
                     ? companyPath.substring(lastSlash)
                     : companyPath;
 
-              final fm =setCompanyName(companyPath,user);
-               Convertstring(fm);
+                final fm = setCompanyName(companyPath, user);
+                Convertstring(fm);
                 final OfferWidget = CardO(
                   CompanyPath: companyPath,
                   CompanyName: CompanyName,
@@ -69,7 +68,6 @@ class _ListOffersState extends State<ListOffers> {
                   offerHours: offerHours,
                   offerTime: offerTime,
                 );
-
 
                 titleWidget.add(OfferWidget);
               }
@@ -90,18 +88,18 @@ class _ListOffersState extends State<ListOffers> {
   //  print(offer.data());
   // }
   //}
-  Future<String> setCompanyName(String path,String user) async {
-    final companyName = await FirebaseFirestore.instance.collection('company').doc(user).get().then((val){
+  Future<String> setCompanyName(String path, String user) async {
+    final companyName = await FirebaseFirestore.instance
+        .collection('company')
+        .doc(user)
+        .get()
+        .then((val) {
       return val.data()?["Name"];
-    }
-    
-    );
+    });
     return companyName;
-    
-
-    }
-   void Convertstring (Future<String> cm) async{
-     CompanyName = await cm;
-    }
   }
 
+  void Convertstring(Future<String> cm) async {
+    CompanyName = await cm;
+  }
+}
