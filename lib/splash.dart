@@ -29,7 +29,7 @@ class _splashState extends State<splash> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 3), navigateToSecondPage);
+    Timer(Duration(seconds: 2), navigateToSecondPage);
   }
 
   void navigateToSecondPage() {
