@@ -20,11 +20,20 @@ class _ListOffersState extends State<ListOffers> {
   final _fireStore = FirebaseFirestore.instance;
   List<Object> _jobList = [];
   final _auth = FirebaseAuth.instance;
+<<<<<<< HEAD
+  late final CompanyName;
+=======
+  var CompanyName = 'company';
+>>>>>>> c66a11313c6aeb4d310a6fbf5f9fc51bc8c1f109
 
   @override
   Widget build(BuildContext context) {
     return appbar(
+<<<<<<< HEAD
       child: SafeArea(
+=======
+      child: SingleChildScrollView(
+>>>>>>> c66a11313c6aeb4d310a6fbf5f9fc51bc8c1f109
           child: Column(
         children: [
           SizedBox(
@@ -38,8 +47,8 @@ class _ListOffersState extends State<ListOffers> {
               if (!snapshot.hasData) {
                 // add here a spinner
               }
-              final posts = snapshot.data!.docs;
 
+<<<<<<< HEAD
               for (var post in posts) {
                 final offertitle = post.get('Title');
                 final offerCity = post.get('City');
@@ -50,13 +59,15 @@ class _ListOffersState extends State<ListOffers> {
                 final offerHours = post.get('nHours');
                 final companyPath = post.get('user');
                 var lastSlash = companyPath.lastIndexOf('/');
-                final String companyName = (lastSlash != -1)
+                String user = (lastSlash != -1)
                     ? companyPath.substring(lastSlash)
                     : companyPath;
 
+                final fm = setCompanyName(companyPath, user);
+                Convertstring(fm);
                 final OfferWidget = CardO(
                   CompanyPath: companyPath,
-                  CompanyName: companyName,
+                  CompanyName: CompanyName,
                   offertitle: offertitle,
                   offerCity: offerCity,
                   offerDate: offerDate,
@@ -67,6 +78,41 @@ class _ListOffersState extends State<ListOffers> {
                 );
 
                 titleWidget.add(OfferWidget);
+=======
+              if (snapshot.data != null) {
+                final posts = snapshot.data?.docs;
+
+                for (var post in posts!) {
+                  final offertitle = post.get('Title');
+                  final offerCity = post.get('City');
+                  final offerDate = post.get('Date');
+                  final offerDes = post.get('Description');
+                  final offerFee = post.get('PayPerHour');
+                  final offerTime = post.get('Time');
+                  final offerHours = post.get('nHours');
+                  final companyPath = post.get('user');
+                  var lastSlash = companyPath.lastIndexOf('/');
+                  String user = (lastSlash != -1)
+                      ? companyPath.substring(lastSlash)
+                      : companyPath;
+
+                  final fm = setCompanyName(companyPath, user);
+                  Convertstring(fm);
+                  final OfferWidget = CardO(
+                    CompanyPath: companyPath,
+                    CompanyName: CompanyName,
+                    offertitle: offertitle,
+                    offerCity: offerCity,
+                    offerDate: offerDate,
+                    offerDes: offerDes,
+                    offerFee: offerFee,
+                    offerHours: offerHours,
+                    offerTime: offerTime,
+                  );
+
+                  titleWidget.add(OfferWidget);
+                }
+>>>>>>> c66a11313c6aeb4d310a6fbf5f9fc51bc8c1f109
               }
               return Column(
                 children: titleWidget,
@@ -84,11 +130,18 @@ class _ListOffersState extends State<ListOffers> {
   //  print(offer.data());
   // }
   //}
-  void postStreams() async {
-    await for (var snapshot in _fireStore.collection('posts').snapshots()) {
-      for (var posts in snapshot.docs) {
-        print(posts.data());
-      }
-    }
+  Future<String> setCompanyName(String path, String user) async {
+    final companyName = await FirebaseFirestore.instance
+        .collection('company')
+        .doc(user)
+        .get()
+        .then((val) {
+      return val.data()?["Name"];
+    });
+    return companyName;
+  }
+
+  void Convertstring(Future<String> cm) async {
+    CompanyName = await cm;
   }
 }

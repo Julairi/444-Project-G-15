@@ -1,3 +1,4 @@
+import 'package:esaa/components/transparentappbar.dart';
 import 'package:esaa/constants.dart';
 import 'package:esaa/responsive.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Background(
+    return transparentappbar(
       child: SingleChildScrollView(
         child: Responsive(
           mobile: const MobileSignupScreen(),

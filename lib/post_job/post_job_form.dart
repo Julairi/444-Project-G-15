@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:esaa/Screens/CompanyPage/company_offers.dart';
 import 'package:esaa/Screens/Login/login_screen.dart';
 import 'package:esaa/Screens/Welcome/components/login_signup_btn.dart';
 import 'package:esaa/Screens/signup/sec_signup_scren.dart';
@@ -102,6 +105,10 @@ class _postJobFormState extends State<postJob> {
       maxLines: 100,
       minLines: 5,
     );
+
+//88888888888888888888888
+
+//88888888888888
 
     final locField = TextFormField(
       controller: locationEditingController,
@@ -323,11 +330,22 @@ class _postJobFormState extends State<postJob> {
           payHour,
           Padding(padding: const EdgeInsets.all(defaultPadding)),
           const SizedBox(height: defaultPadding / 2),
+
+          // btn *****************
           ElevatedButton(
             onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 // add new post
-                var currentUser = await FirebaseAuth.instance.currentUser;
+                User? currentUser = await FirebaseAuth.instance.currentUser;
+                /*
+                var cName = await FirebaseFirestore.instance
+                    .collection('company')
+                    .doc("HtgizLsb0tWt3JxlpXCxsc4Nz623")
+                    .get()
+                    .then((value) {
+                  return value
+                      .data()!['Name']; // Access your after your get the data
+                });*/
                 FirebaseFirestore.instance.collection('posts').add({
                   'Title': titleEditingController.text,
                   'Description': descripEditingController.text,
@@ -336,21 +354,21 @@ class _postJobFormState extends State<postJob> {
                   'nHours': noHoursEditingController.text,
                   'Time': timeEditingController.text,
                   'PayPerHour': payHourEditingController.text,
-                  //change to '/company/'+ currentUser.cid
+                  'user': '/company/' + currentUser!.uid,
                   /*
-                  'user':{
-                    'uid': currentUser.cid,
-                    'Name': currentUser.Name,
+                  'user': {
+                    'uid': currentUser!.uid,
+                    'Name': cName,
                     'email': currentUser.email,
-                  }
-                  */
-                  'user': '/company/HtgizLsb0tWt3JxlpXCxsc4Nz623',
+                  }*/
+                  //'user': '/company/HtgizLsb0tWt3JxlpXCxsc4Nz623',
                 });
+                log('post done ');
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return secSignUpScreen();
+                      return certianOffers();
                     },
                   ),
                 ); //push

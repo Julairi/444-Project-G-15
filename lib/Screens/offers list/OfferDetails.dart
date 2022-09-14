@@ -5,8 +5,8 @@ import 'package:esaa/components/background.dart';
 import 'package:esaa/constants.dart';
 import 'package:flutter/material.dart';
 
-class detailsPage extends StatelessWidget {
-  final String CompanyName;
+class detailsPage extends StatelessWidget  {
+   final String CompanyName;
   final String CompanyPath;
   final String offertitle;
   final String offerCity;

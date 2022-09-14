@@ -1,4 +1,5 @@
 import 'package:esaa/Screens/forgotpass/forgotpasscreen.dart';
+import 'package:esaa/components/transparentappbar.dart';
 import 'package:flutter/material.dart';
 import 'package:esaa/Screens/Login/jobseekerlogin.dart';
 import '../../components/background.dart';
@@ -10,7 +11,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Background(
+    return transparentappbar(
       child: SingleChildScrollView(
         child: Responsive(
           mobile: const MobileSignupScreen(),
@@ -61,6 +62,3 @@ class MobileSignupScreen extends StatelessWidget {
     );
   }
 }
-
-
-

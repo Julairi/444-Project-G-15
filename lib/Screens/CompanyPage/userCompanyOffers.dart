@@ -17,7 +17,7 @@ import 'package:esaa/components/appbar.dart';
 class userOffers extends StatelessWidget {
   final String child;
   userOffers({required this.child});
-
+  late  final CompanyName;
   @override
   Widget build(BuildContext context) {
     return appbar(
@@ -50,13 +50,14 @@ class userOffers extends StatelessWidget {
                 final offerHours = post.get('nHours');
                 final companyPath = post.get('user');
                 var lastSlash = companyPath.lastIndexOf('/');
-                final String companyName = (lastSlash != -1)
+                final String user = (lastSlash != -1)
                     ? companyPath.substring(lastSlash)
                     : companyPath;
-
+                final fm =setCompanyName(companyPath,user);
+                Convertstring(fm);
                 final OfferWidget = CardO(
                   CompanyPath: companyPath,
-                  CompanyName: companyName,
+                  CompanyName: CompanyName,
                   offertitle: offertitle,
                   offerCity: offerCity,
                   offerDate: offerDate,
@@ -73,8 +74,24 @@ class userOffers extends StatelessWidget {
               );
             },
           ),
+
         ],
       )),
     );
+
+
+  }
+  Future<String> setCompanyName(String path,String user) async {
+    final companyName = await FirebaseFirestore.instance.collection('company').doc(user).get().then((val){
+      return val.data()?["Name"];
+    }
+
+    );
+    return companyName;
+
+
+  }
+  void Convertstring (Future<String> cm) async{
+    CompanyName = await cm;
   }
 }
