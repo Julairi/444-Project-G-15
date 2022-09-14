@@ -1,5 +1,6 @@
 import 'package:esaa/Screens/offers%20list/OfferDetails.dart';
 import 'package:esaa/components/OfferCard.dart';
+import 'package:esaa/components/appbar.dart';
 import 'package:esaa/components/background.dart';
 
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class _ListOffersState extends State<ListOffers> {
 
   @override
   Widget build(BuildContext context) {
-    return Background(
+    return appbar(
       child: SafeArea(
           child: Column(
         children: [
