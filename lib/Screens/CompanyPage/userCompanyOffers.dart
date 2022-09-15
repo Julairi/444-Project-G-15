@@ -21,7 +21,7 @@ class userOffers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return appbar(
-      child: SafeArea(
+      child: SingleChildScrollView(
           child: Column(
         children: [
           SizedBox(
