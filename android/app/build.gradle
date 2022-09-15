@@ -73,6 +73,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
 
     implementation "io.grpc:grpc-okhttp:1.41.0"
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
