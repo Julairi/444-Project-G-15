@@ -269,7 +269,7 @@ class _jsloginState extends State<jslogin> {
           .doc(user.uid)
           .snapshots();
       result.forEach((firestoreUserInfo) {
-        userType = firestoreUserInfo.data()?['jobseeker'];
+        userType = firestoreUserInfo.data()?['role'];
       });
     }
   }
