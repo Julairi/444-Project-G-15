@@ -38,7 +38,7 @@ class _ListOffersState extends State<ListOffers> {
             builder: (context, snapshot) {
               List<Widget> titleWidget = [];
               if (!snapshot.hasData) {
-                // add here a spinner
+                return Text('No offers available');
               }
 
               if (snapshot.data != null) {

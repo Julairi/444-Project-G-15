@@ -26,13 +26,11 @@ class mySquare extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
               children: [
-                Image.asset('assets/click.png',
-                    height: 50, width: 50, fit: BoxFit.cover),
                 //),
                 Text(
                   child,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 30),
+                  style: TextStyle(fontSize: 30, color: kPrimaryColor),
                   //textAlign: Center,
                 ),
               ],
