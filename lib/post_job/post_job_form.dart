@@ -244,7 +244,8 @@ class _postJobFormState extends State<postJob> {
     final noHours = TextFormField(
       controller: noHoursEditingController,
       cursorColor: kPrimaryColor,
-      keyboardType: TextInputType.number,
+      keyboardType:
+          TextInputType.numberWithOptions(signed: false, decimal: true),
       textInputAction: TextInputAction.next,
       onSaved: (value) {
         noHoursEditingController.text = value!;
