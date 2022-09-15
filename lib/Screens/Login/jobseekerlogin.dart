@@ -5,6 +5,8 @@ import 'package:esaa/Screens/Welcome/components/login_signup_btn.dart';
 import 'package:esaa/Screens/forgotpass/forgotpasscreen.dart';
 import 'package:esaa/Screens/forgotpass/forgotpassform.dart';
 import 'package:esaa/Screens/signup/sec_signup_scren.dart';
+import 'package:esaa/model/user_model.dart';
+import 'package:esaa/navbarjs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +29,7 @@ class _jsloginState extends State<jslogin> {
   final _formKey = GlobalKey<FormState>();
   final emailEditingController = new TextEditingController();
   final passEditingController = new TextEditingController();
+  String userType = '';
   @override
   Widget build(BuildContext context) {
     final emailField = TextFormField(
@@ -156,20 +159,41 @@ class _jsloginState extends State<jslogin> {
           ElevatedButton(
             onPressed: () async {
               try {
-                await FirebaseAuth.instance.signInWithEmailAndPassword(
+                await FirebaseAuth.instance
+                    .signInWithEmailAndPassword(
                   email: emailEditingController.text.trim(),
                   password: passEditingController.text.trim(),
                   //final User?
-                );
+                )
+                    .then((user) {
+                  final User? newUser = user.user;
+                  getUserType(newUser).timeout(Duration(seconds: 5));
+                  Future.delayed(Duration(
+                    seconds: 2,
+                  )).whenComplete(
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          if (userType == "jobseeker") {
+                            return navbarjs();
+                          } else
+                            return navbar();
+                        },
+                      ),
+                    ),
+                  );
+                });
+
                 //////////
-                Navigator.push(
+                /* Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) {
                       return navbar();
                     },
                   ),
-                );
+                );*/
                 //////
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'user-not-found') {
@@ -230,5 +254,23 @@ class _jsloginState extends State<jslogin> {
         ],
       ),
     );
+  }
+
+  Future<void> getUserType(User? loginUser) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = FirebaseAuth.instance.currentUser;
+
+    if (loginUser?.email == user?.email) {
+      UserModel userModel = UserModel();
+      userModel.email = user!.email;
+
+      var result = await firebaseFirestore
+          .collection("jobseekers")
+          .doc(user.uid)
+          .snapshots();
+      result.forEach((firestoreUserInfo) {
+        userType = firestoreUserInfo.data()?['jobseeker'];
+      });
+    }
   }
 }
