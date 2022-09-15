@@ -6,6 +6,7 @@ import 'package:esaa/components/background.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:esaa/Screens/CompanyPage/square.dart';
 
 import '../../constants.dart';
 
@@ -73,6 +74,10 @@ class _ListOffersState extends State<ListOffers> {
 
                   titleWidget.add(OfferWidget);
                 }
+              } else {
+                return mySquare(
+                  child: 'No available offers at this time!',
+                );
               }
               return Column(
                 children: titleWidget,
