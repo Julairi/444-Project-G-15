@@ -32,8 +32,8 @@ class oneCompanyOffers extends State<certianOffers> {
   String? retrieveList() {
     final User? user = FirebaseAuth.instance.currentUser;
     final cid = user?.uid;
-    //return cid;
-    return "/company/HtgizLsb0tWt3JxlpXCxsc4Nz623";
+    return cid;
+    //return "/company/HtgizLsb0tWt3JxlpXCxsc4Nz623";
     /*final cid = 'testCompany';
     // here you write the codes to input the data into firestore
     var docRef = await FirebaseFirestore.instance
