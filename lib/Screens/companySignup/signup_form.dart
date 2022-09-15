@@ -168,7 +168,7 @@ class _SignUpFormState extends State<companySignupForm> {
       onSaved: (newValue) => AdressEditingController.text = newValue!,
       validator: (value) {
         if (value!.isEmpty) {
-          return kEmailNullError;
+          return 'الرجاء ادخال عنوان الشركة';
         }
         return null;
       },
@@ -198,7 +198,7 @@ class _SignUpFormState extends State<companySignupForm> {
       onSaved: (newValue) => ContactEditingController.text = newValue!, /////
       validator: (value) {
         if (value!.isEmpty) {
-          return kEmailNullError;
+          return 'الرجاء ادخال طريقة للتواصل';
         }
         return null;
       },
@@ -228,7 +228,7 @@ class _SignUpFormState extends State<companySignupForm> {
       onSaved: (newValue) => DescrioptionEditingController.text = newValue!,
       validator: (value) {
         if (value!.isEmpty) {
-          return kEmailNullError;
+          return 'الرجاء ادخال وصف للشركة';
         }
         return null;
       },
@@ -266,6 +266,11 @@ class _SignUpFormState extends State<companySignupForm> {
           emailField,
           SizedBox(height: defaultPadding / 2),
           passwordField,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [Text("كلمة المرور يجب ألا تقل عن 8 خانات")],
+          ),
           SizedBox(height: defaultPadding / 2),
           confPasswordField,
           SizedBox(height: defaultPadding / 2),

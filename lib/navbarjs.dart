@@ -16,10 +16,6 @@ class _navbarjsState extends State<navbarjs> {
   int index = 1;
   final items = const [
     Icon(
-      Icons.add_rounded,
-      color: Colors.white,
-    ),
-    Icon(
       Icons.home,
       color: Colors.white,
     ),
@@ -49,9 +45,6 @@ class _navbarjsState extends State<navbarjs> {
     Widget widget;
     //
     switch (index) {
-      case 0:
-        widget = const postJob(); //post a new
-        break;
       default:
         widget = const ListOffers(); //jumanas page
         break;

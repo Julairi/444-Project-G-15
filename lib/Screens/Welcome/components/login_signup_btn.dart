@@ -50,8 +50,7 @@ class LoginAndSignupBtn extends StatelessWidget {
               ),
             );
           },
-          style: ElevatedButton.styleFrom(
-              primary: kPrimaryLightColor, elevation: 0),
+          style: ElevatedButton.styleFrom(primary: kPrimaryColor, elevation: 0),
           child: Text(
             " إنشاء حساب كباحث عن عمل".toUpperCase(),
             style: TextStyle(color: Colors.black, fontSize: 16),
