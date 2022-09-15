@@ -3,13 +3,14 @@ import 'package:esaa/Screens/forgotpass/forgotpassform.dart';
 import '../../components/background.dart';
 import '../../constants.dart';
 import '../../responsive.dart';
+import 'package:esaa/components/transparentappbar.dart';
 
 class ForgotPass extends StatelessWidget {
   const ForgotPass({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Background(
+    return transparentappbar(
       child: SingleChildScrollView(
         child: Responsive(
           mobile: const MobileSignupScreen(),
