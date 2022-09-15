@@ -14,6 +14,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../navbar.dart';
+
 class jslogin extends StatefulWidget {
   const jslogin({
     Key? key,
@@ -35,7 +37,7 @@ class _jsloginState extends State<jslogin> {
       onSaved: (newValue) => emailEditingController.text = newValue!,
       validator: (value) {
         if (value!.isEmpty) {
-          return kjobTitleNullError;
+          return kEmailNullError;
         }
         return null;
       },
@@ -67,7 +69,7 @@ class _jsloginState extends State<jslogin> {
       onSaved: (newValue) => passEditingController.text = newValue!,
       validator: (value) {
         if (value!.isEmpty) {
-          return kjobTitleNullError;
+          return kPassNullError;
         }
         return null;
       },
@@ -89,6 +91,7 @@ class _jsloginState extends State<jslogin> {
         ),
       ),
     );
+
     //final User? user = FirebaseAuth.instance.currentUser;
     //final role= user?.role;
 
@@ -128,6 +131,12 @@ class _jsloginState extends State<jslogin> {
         .where('role', arrayContains: 'company')
         .get();
 */
+    Widget okbutton = TextButton(
+      child: Text('الغاء'),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
     return Form(
       key: _formKey,
       child: Column(
@@ -152,6 +161,16 @@ class _jsloginState extends State<jslogin> {
                   password: passEditingController.text.trim(),
                   //final User?
                 );
+                //////////
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return navbar();
+                    },
+                  ),
+                );
+                //////
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'user-not-found') {
                   showDialog(
@@ -159,6 +178,7 @@ class _jsloginState extends State<jslogin> {
                     builder: (context) {
                       return AlertDialog(
                         content: Text('ليس هناك حساب لهذا البريد الالكتروني'),
+                        actions: [okbutton],
                       );
                     },
                   );
@@ -169,6 +189,9 @@ class _jsloginState extends State<jslogin> {
                       return AlertDialog(
                         content:
                             Text('البريد الالكتروني/كلمة المرور غير صحيحة'),
+                        actions: [
+                          okbutton,
+                        ],
                       );
                     },
                   );

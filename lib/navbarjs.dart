@@ -5,14 +5,14 @@ import 'package:esaa/post_job/post_job_form.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class navbar extends StatefulWidget {
-  const navbar({Key? key}) : super(key: key);
+class navbarjs extends StatefulWidget {
+  const navbarjs({Key? key}) : super(key: key);
 
   @override
-  State<navbar> createState() => _navbarState();
+  State<navbarjs> createState() => _navbarjsState();
 }
 
-class _navbarState extends State<navbar> {
+class _navbarjsState extends State<navbarjs> {
   int index = 1;
   final items = const [
     Icon(
