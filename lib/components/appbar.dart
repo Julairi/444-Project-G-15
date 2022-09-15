@@ -23,7 +23,7 @@ class appbar extends StatelessWidget {
           SliverAppBar(
             flexibleSpace: FlexibleSpaceBar(
               background: Image.asset(
-                'assets/logoo.png',
+                'assets/header.jpg',
                 fit: BoxFit.cover,
               ),
             ),
