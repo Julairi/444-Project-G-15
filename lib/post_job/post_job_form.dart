@@ -312,73 +312,76 @@ class _postJobFormState extends State<postJob> {
 
     return Form(
       key: _formKey,
-      child: Column(
-        children: [
-          Padding(padding: const EdgeInsets.all(defaultPadding)),
-          SizedBox(height: defaultPadding / 2),
-          titleField,
-          SizedBox(height: defaultPadding / 2),
-          descripField,
-          SizedBox(height: defaultPadding / 2),
-          locField,
-          SizedBox(height: defaultPadding / 2),
-          startDate,
-          SizedBox(height: defaultPadding / 2),
-          noHours,
-          SizedBox(height: defaultPadding / 2),
-          time,
-          SizedBox(height: defaultPadding / 2),
-          payHour,
-          Padding(padding: const EdgeInsets.all(defaultPadding)),
-          const SizedBox(height: defaultPadding / 2),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(padding: const EdgeInsets.all(defaultPadding)),
+            SizedBox(height: defaultPadding / 2),
+            titleField,
+            SizedBox(height: defaultPadding / 2),
+            descripField,
+            SizedBox(height: defaultPadding / 2),
+            locField,
+            SizedBox(height: defaultPadding / 2),
+            startDate,
+            SizedBox(height: defaultPadding / 2),
+            noHours,
+            SizedBox(height: defaultPadding / 2),
+            time,
+            SizedBox(height: defaultPadding / 2),
+            payHour,
+            Padding(padding: const EdgeInsets.all(defaultPadding)),
+            const SizedBox(height: defaultPadding / 2),
 
-          // btn *****************
-          ElevatedButton(
-            onPressed: () async {
-              if (_formKey.currentState!.validate()) {
-                // add new post
-                User? currentUser = await FirebaseAuth.instance.currentUser;
-                /*
-                var cName = await FirebaseFirestore.instance
-                    .collection('company')
-                    .doc("HtgizLsb0tWt3JxlpXCxsc4Nz623")
-                    .get()
-                    .then((value) {
-                  return value
-                      .data()!['Name']; // Access your after your get the data
-                });*/
-                FirebaseFirestore.instance.collection('posts').add({
-                  'Title': titleEditingController.text,
-                  'Description': descripEditingController.text,
-                  'City': locationEditingController.text,
-                  'Date': dateEditingController.text,
-                  'nHours': noHoursEditingController.text,
-                  'Time': timeEditingController.text,
-                  'PayPerHour': payHourEditingController.text,
-                  'user': '/company/' + currentUser!.uid,
+            // btn *****************
+            ElevatedButton(
+              onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                  // add new post
+                  User? currentUser = await FirebaseAuth.instance.currentUser;
                   /*
-                  'user': {
-                    'uid': currentUser!.uid,
-                    'Name': cName,
-                    'email': currentUser.email,
-                  }*/
-                  //'user': '/company/HtgizLsb0tWt3JxlpXCxsc4Nz623',
-                });
-                log('post done ');
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return certianOffers();
-                    },
-                  ),
-                ); //push
-              } //end if
-            },
-            child: Text("ارسال".toUpperCase(), style: TextStyle(fontSize: 16)),
-          ),
-          const SizedBox(height: defaultPadding),
-        ],
+                  var cName = await FirebaseFirestore.instance
+                      .collection('company')
+                      .doc("HtgizLsb0tWt3JxlpXCxsc4Nz623")
+                      .get()
+                      .then((value) {
+                    return value
+                        .data()!['Name']; // Access your after your get the data
+                  });*/
+                  FirebaseFirestore.instance.collection('posts').add({
+                    'Title': titleEditingController.text,
+                    'Description': descripEditingController.text,
+                    'City': locationEditingController.text,
+                    'Date': dateEditingController.text,
+                    'nHours': noHoursEditingController.text,
+                    'Time': timeEditingController.text,
+                    'PayPerHour': payHourEditingController.text,
+                    'user': '/company/' + currentUser!.uid,
+                    /*
+                    'user': {
+                      'uid': currentUser!.uid,
+                      'Name': cName,
+                      'email': currentUser.email,
+                    }*/
+                    //'user': '/company/HtgizLsb0tWt3JxlpXCxsc4Nz623',
+                  });
+                  log('post done ');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return certianOffers();
+                      },
+                    ),
+                  ); //push
+                } //end if
+              },
+              child:
+                  Text("ارسال".toUpperCase(), style: TextStyle(fontSize: 16)),
+            ),
+            const SizedBox(height: defaultPadding),
+          ],
+        ),
       ),
     );
   }

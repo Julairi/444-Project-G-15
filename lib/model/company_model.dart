@@ -2,39 +2,38 @@ class CompanyModel {
   String? cid;
   String? email;
   String? Name;
-  String? role;
+  String? imgUrl; //++++++++++++++++++++++++++++++++++
   String? description;
   String? contact;
   String? address;
-  //bool? company;
-  //bool? jobseeker;
+  bool? company;
+  bool? jobseeker;
   // String? phone;
   //String? experience;
-  CompanyModel({
-    this.cid,
-    this.email,
-    this.Name,
-    this.contact,
-    this.description,
-    this.address,
-    //this.company,
-    //this.jobseeker
-    this.role,
-  });
+  CompanyModel(
+      {this.cid,
+      this.email,
+      this.Name,
+      this.imgUrl, //+++
+      this.contact,
+      this.description,
+      this.address,
+      this.company,
+      this.jobseeker});
 
   // receiving data from server
   factory CompanyModel.fromMap(map) {
     return CompanyModel(
       cid: map['cid'],
       email: map['email'],
+      imgUrl: map['imgUrl'], //++
       Name: map['Name'],
       description: map['description'],
 
       contact: map['contact'],
       address: map['address'],
-      //company: map['company'],
-      // jobseeker: map['jobsekker'],
-      role: map['company'],
+      company: map['company'],
+      jobseeker: map['jobsekker'],
       //phone: map['phone_number'],
       // experience: map['experience'],
       //DOB: map['DOB'],
@@ -47,13 +46,14 @@ class CompanyModel {
       'cid': cid,
       'email': email,
       'Name': Name,
+      'imgUrl': imgUrl,
       'description': description,
       'contact': contact,
       //'gender': gender,
       'adress': address,
-      //'company': 'true',
-      //'jobseeker': 'false',
-      'role': 'company',
+      'company': 'true',
+      'jobseeker': 'false',
+
       //'phone': phone,
       //'experience': experience,
       //DOB': DOB,

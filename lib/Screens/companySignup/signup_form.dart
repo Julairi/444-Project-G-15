@@ -1,7 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:esaa/Screens/Login/login_screen.dart';
-import 'package:esaa/Screens/offers%20list/OfferList.dart';
-import 'package:esaa/Screens/signup/sec_signup_scren.dart';
+//import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:esaa/Screens/Login/login_screen.dart';
+//import 'package:esaa/Screens/offers%20list/OfferList.dart';
+//import 'package:esaa/Screens/signup/sec_signup_scren.dart';
+/*import 'package:esaa/navbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -9,6 +10,22 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import '../../model/company_model.dart';
+*/
+import 'dart:typed_data';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:esaa/Screens/Login/login_screen.dart';
+import 'package:esaa/services/storage_method.dart';
+import 'package:esaa/Screens/offers%20list/OfferList.dart';
+import 'package:esaa/Screens/signup/sec_signup_scren.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
+import '../../../components/already_have_an_account_acheck.dart';
+import '../../../constants.dart';
+import '../../model/company_model.dart';
+import '../../navbar.dart';
+import '../../utilis/utilis.dart';
 
 class companySignupForm extends StatefulWidget {
   const companySignupForm({
@@ -22,6 +39,8 @@ class _SignUpFormState extends State<companySignupForm> {
   String? errorMessage;
 
   final _formKey = GlobalKey<FormState>();
+  //bool isbuttonDisable= true;
+
   final nameEditingController = new TextEditingController();
   final emailEditingController = new TextEditingController();
   final passwordEditingController = new TextEditingController();
@@ -29,6 +48,15 @@ class _SignUpFormState extends State<companySignupForm> {
   final AdressEditingController = new TextEditingController();
   final ContactEditingController = new TextEditingController();
   final DescrioptionEditingController = new TextEditingController();
+  Uint8List? _image;
+
+  void selectImage() async {
+    Uint8List im = await pickIamge(ImageSource.gallery);
+
+    setState(() {
+      _image = im;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +68,7 @@ class _SignUpFormState extends State<companySignupForm> {
       onSaved: (newValue) => emailEditingController.text = newValue!,
       validator: (value) {
         if (value!.isEmpty) {
-          return kEmailNullError;
+          return 'الرجاء ادخال اسم الشركة^';
         } //else if (!emailValidatorRegExp.hasMatch(value)) {
         //return kInvalidEmailError;
         // }
@@ -168,7 +196,7 @@ class _SignUpFormState extends State<companySignupForm> {
       onSaved: (newValue) => AdressEditingController.text = newValue!,
       validator: (value) {
         if (value!.isEmpty) {
-          return 'الرجاء ادخال عنوان الشركة';
+          return ' لرجاء اضافة  عنوان  الشركة';
         }
         return null;
       },
@@ -198,7 +226,7 @@ class _SignUpFormState extends State<companySignupForm> {
       onSaved: (newValue) => ContactEditingController.text = newValue!, /////
       validator: (value) {
         if (value!.isEmpty) {
-          return 'الرجاء ادخال طريقة للتواصل';
+          return ' لرجاء اضافة طريقة تواصل مع الشركة';
         }
         return null;
       },
@@ -228,7 +256,7 @@ class _SignUpFormState extends State<companySignupForm> {
       onSaved: (newValue) => DescrioptionEditingController.text = newValue!,
       validator: (value) {
         if (value!.isEmpty) {
-          return 'الرجاء ادخال وصف للشركة';
+          return kEmailNullError;
         }
         return null;
       },
@@ -250,43 +278,53 @@ class _SignUpFormState extends State<companySignupForm> {
         ),
       ),
     );
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [
-          SizedBox(
-            height: 200,
-            width: 290,
-            child: Image.asset("assets/logoo.png"),
-          ),
-          Padding(padding: const EdgeInsets.all(defaultPadding)),
-          SizedBox(height: defaultPadding / 2),
-          nameField,
-          SizedBox(height: defaultPadding / 2),
-          emailField,
-          SizedBox(height: defaultPadding / 2),
-          passwordField,
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [Text("كلمة المرور يجب ألا تقل عن 8 خانات")],
-          ),
-          SizedBox(height: defaultPadding / 2),
-          confPasswordField,
-          SizedBox(height: defaultPadding / 2),
-          AdressField,
-          SizedBox(height: defaultPadding / 2),
-          ContactinfoField,
-          SizedBox(height: defaultPadding / 2),
-          DescriptionField,
-          Padding(padding: const EdgeInsets.all(defaultPadding)),
-          const SizedBox(height: defaultPadding / 2),
-          ElevatedButton(
-            onPressed: () {
-              signUp(
-                  emailEditingController.text, passwordEditingController.text);
+    return SafeArea(
+      child: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              _image != null
+                  ? CircleAvatar(
+                      radius: 70, backgroundImage: MemoryImage(_image!))
+                  : GestureDetector(
+                      onTap: selectImage,
+                      child: SizedBox(
+                        height: 200,
+                        width: 290,
+                        child: Image.asset("assets/logoo.png"),
+                      ),
+                    ),
+              Padding(padding: const EdgeInsets.all(defaultPadding)),
+              SizedBox(height: defaultPadding / 2),
+              nameField,
+              SizedBox(height: defaultPadding / 2),
+              emailField,
+              SizedBox(height: defaultPadding / 2),
+              passwordField,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text("* يجب ان تحتوي كلمة المرور على ٨ حروف على الاقل")
+                ],
+              ),
+              SizedBox(height: defaultPadding / 2),
+              confPasswordField,
+              SizedBox(height: defaultPadding / 2),
+              AdressField,
+              SizedBox(height: defaultPadding / 2),
+              ContactinfoField,
+              SizedBox(height: defaultPadding / 2),
+              DescriptionField,
+              Padding(padding: const EdgeInsets.all(defaultPadding)),
+              const SizedBox(height: defaultPadding / 2),
+              ElevatedButton(
+                onPressed: () {
+                  signUp(emailEditingController.text,
+                      passwordEditingController.text);
 
-              /* Navigator.push(
+                  /* Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) {
@@ -294,25 +332,27 @@ class _SignUpFormState extends State<companySignupForm> {
                     },
                   ),
                 );*/
-            },
-            child: Text("انشاء حساب".toUpperCase(),
-                style: TextStyle(fontSize: 16)),
+                },
+                child: Text("انشاء حساب".toUpperCase(),
+                    style: TextStyle(fontSize: 16)),
+              ),
+              const SizedBox(height: defaultPadding),
+              AlreadyHaveAnAccountCheck(
+                login: false,
+                press: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return LoginScreen();
+                      },
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
-          const SizedBox(height: defaultPadding),
-          AlreadyHaveAnAccountCheck(
-            login: false,
-            press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return LoginScreen();
-                  },
-                ),
-              );
-            },
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -321,9 +361,13 @@ class _SignUpFormState extends State<companySignupForm> {
     if (_formKey.currentState!.validate()) {
       try {
         await _auth
-            .createUserWithEmailAndPassword(email: email, password: password)
+            .createUserWithEmailAndPassword(
+              email: email.toString(),
+              password: password.toString(),
+            )
             .then((value) => {postDetailsToFirestore()})
             .catchError((e) {
+          print(e.message);
           //FlutterToast.showToast(msg: e!.message);
         });
       } on FirebaseAuthException catch (error) {
@@ -359,6 +403,8 @@ class _SignUpFormState extends State<companySignupForm> {
         Fluttertoast.showToast(msg: errorMessage!);
 
         print(error.code);
+        //showSnackBar(error.toString(), context);
+
       }
     }
   }
@@ -367,6 +413,8 @@ class _SignUpFormState extends State<companySignupForm> {
     // calling our firestore
     // calling our user model
     // sedning these values
+    String imgUUUrl =
+        await StorageMethod().uploadImageToString("companyLogo ", _image!);
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
@@ -375,7 +423,7 @@ class _SignUpFormState extends State<companySignupForm> {
 
     // writing all the values
     companyModel.email = user!.email;
-
+    companyModel.imgUrl = imgUUUrl;
     companyModel.cid = user.uid;
     companyModel.Name = nameEditingController.text;
     companyModel.address = AdressEditingController.text;
@@ -387,10 +435,7 @@ class _SignUpFormState extends State<companySignupForm> {
         .doc(user.uid)
         .set(companyModel.toMap());
     Fluttertoast.showToast(msg: "تم إنشاء حسابك بنجاح ");
-
-    Navigator.pushAndRemoveUntil(
-        (context),
-        MaterialPageRoute(builder: (context) => ListOffers()),
-        (route) => false);
+    Navigator.pushAndRemoveUntil((context),
+        MaterialPageRoute(builder: (context) => navbar()), (route) => false);
   }
 }

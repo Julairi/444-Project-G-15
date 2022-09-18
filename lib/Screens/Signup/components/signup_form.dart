@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esaa/Screens/Login/login_screen.dart';
 import 'package:esaa/Screens/offers%20list/OfferList.dart';
 import 'package:esaa/Screens/signup/sec_signup_scren.dart';
+import 'package:esaa/navbarjjs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import '../../../model/user_model.dart';
-import '../../../navbarjs.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({
@@ -371,7 +371,7 @@ class _SignUpFormState extends State<SignUpForm> {
         (context),
 
         ///navbarjs
-        MaterialPageRoute(builder: (context) => navbarjs()),
+        MaterialPageRoute(builder: (context) => navbarjjs()),
         (route) => false);
   }
 }

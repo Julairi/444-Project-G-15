@@ -41,13 +41,34 @@ class _navbarState extends State<navbar> {
           });
         },
       ),
-      body: Container(child: getselectedWidget(index: index)),
+      body: new Stack(
+        children: [
+          new Transform.rotate(
+            origin: Offset(40, -150),
+            angle: 2.4,
+            child: Container(
+              margin: EdgeInsets.only(
+                left: 75,
+                top: 40,
+              ),
+              height: 400,
+              width: 300,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(80),
+                gradient: LinearGradient(
+                    begin: Alignment.bottomLeft,
+                    colors: [kPrimaryColor, kTextcolor]),
+              ),
+            ),
+          ),
+          Container(child: getselectedWidget(index: index)),
+        ],
+      ),
     );
   }
 
   Widget getselectedWidget({required int index}) {
     Widget widget;
-    //
     switch (index) {
       case 0:
         widget = const postJob(); //post a new

@@ -1,8 +1,6 @@
 import 'package:esaa/Screens/Signup/components/sign_up_top_image.dart';
 import 'package:esaa/Screens/Signup/components/signup_form.dart';
 import 'package:esaa/Screens/companySignup/signup_form.dart';
-import 'package:esaa/components/appbar.dart';
-import 'package:esaa/components/transparentappbar.dart';
 import 'package:esaa/constants.dart';
 import 'package:esaa/responsive.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +12,7 @@ class companySignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return transparentappbar(
+    return Background(
       child: SingleChildScrollView(
         child: Responsive(
           mobile: const MobileSignupScreen(),

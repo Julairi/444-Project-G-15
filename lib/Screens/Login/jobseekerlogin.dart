@@ -6,7 +6,7 @@ import 'package:esaa/Screens/forgotpass/forgotpasscreen.dart';
 import 'package:esaa/Screens/forgotpass/forgotpassform.dart';
 import 'package:esaa/Screens/signup/sec_signup_scren.dart';
 import 'package:esaa/model/user_model.dart';
-import 'package:esaa/navbarjs.dart';
+import 'package:esaa/navbarjjs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -176,7 +176,7 @@ class _jsloginState extends State<jslogin> {
                       MaterialPageRoute(
                         builder: (context) {
                           if (userType == "jobseeker") {
-                            return navbarjs();
+                            return navbarjjs();
                           } else
                             return navbar();
                         },

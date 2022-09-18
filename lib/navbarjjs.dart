@@ -5,16 +5,20 @@ import 'package:esaa/post_job/post_job_form.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class navbarjs extends StatefulWidget {
-  const navbarjs({Key? key}) : super(key: key);
+class navbarjjs extends StatefulWidget {
+  const navbarjjs({Key? key}) : super(key: key);
 
   @override
-  State<navbarjs> createState() => _navbarjsState();
+  State<navbarjjs> createState() => _navbarjjsState();
 }
 
-class _navbarjsState extends State<navbarjs> {
+class _navbarjjsState extends State<navbarjjs> {
   int index = 1;
   final items = const [
+    Icon(
+      Icons.add_rounded,
+      color: Colors.white,
+    ),
     Icon(
       Icons.home,
       color: Colors.white,
@@ -37,14 +41,38 @@ class _navbarjsState extends State<navbarjs> {
           });
         },
       ),
-      body: Container(child: getselectedWidget(index: index)),
+      body: new Stack(
+        children: [
+          new Transform.rotate(
+            origin: Offset(40, -150),
+            angle: 2.4,
+            child: Container(
+              margin: EdgeInsets.only(
+                left: 75,
+                top: 40,
+              ),
+              height: 400,
+              width: 300,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(80),
+                gradient: LinearGradient(
+                    begin: Alignment.bottomLeft,
+                    colors: [kPrimaryColor, kTextcolor]),
+              ),
+            ),
+          ),
+          Container(child: getselectedWidget(index: index)),
+        ],
+      ),
     );
   }
 
   Widget getselectedWidget({required int index}) {
     Widget widget;
-    //
     switch (index) {
+      case 0:
+        widget = const ListOffers(); //post a new
+        break;
       default:
         widget = const ListOffers(); //jumanas page
         break;
