@@ -6,20 +6,23 @@ class CompanyModel {
   String? description;
   String? contact;
   String? address;
-  bool? company;
-  bool? jobseeker;
+  String? role;
+  //bool? company;
+  //bool? jobseeker;
   // String? phone;
   //String? experience;
-  CompanyModel(
-      {this.cid,
-      this.email,
-      this.Name,
-      this.imgUrl, //+++
-      this.contact,
-      this.description,
-      this.address,
-      this.company,
-      this.jobseeker});
+  CompanyModel({
+    this.cid,
+    this.email,
+    this.Name,
+    this.imgUrl, //+++
+    this.contact,
+    this.description,
+    this.address,
+    this.role,
+    // this.company,
+    // this.jobseeker
+  });
 
   // receiving data from server
   factory CompanyModel.fromMap(map) {
@@ -32,8 +35,9 @@ class CompanyModel {
 
       contact: map['contact'],
       address: map['address'],
-      company: map['company'],
-      jobseeker: map['jobsekker'],
+      role: map['role'],
+      //company: map['company'],
+      //jobseeker: map['jobsekker'],
       //phone: map['phone_number'],
       // experience: map['experience'],
       //DOB: map['DOB'],
@@ -51,8 +55,9 @@ class CompanyModel {
       'contact': contact,
       //'gender': gender,
       'adress': address,
-      'company': 'true',
-      'jobseeker': 'false',
+      'role': 'company',
+      //'company': 'true',
+      //'jobseeker': 'false',
 
       //'phone': phone,
       //'experience': experience,

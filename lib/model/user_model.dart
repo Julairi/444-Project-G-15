@@ -6,8 +6,9 @@ class UserModel {
   //String? gender;
   //String? DOB;
   String? nationalId;
-  bool? company;
-  bool? jobseeker;
+  //bool? company;
+  //bool? jobseeker;
+  String? role;
 
   // String? phone;
   //String? experience;
@@ -20,8 +21,9 @@ class UserModel {
     //this.DOB,
     //this.experience,
     this.nationalId,
-    this.company,
-    this.jobseeker,
+    this.role,
+    // this.company,
+    //this.jobseeker,
     //this.phone
   });
 
@@ -34,8 +36,9 @@ class UserModel {
       secondName: map['secondName'],
       //gender: map['gender'],
       nationalId: map['nationalId'],
-      company: map['company'],
-      jobseeker: map['jobseeker'],
+      role: map['role'],
+      // company: map['company'],
+      //jobseeker: map['jobseeker'],
       //phone: map['phone_number'],
       // experience: map['experience'],
       //DOB: map['DOB'],
@@ -51,8 +54,9 @@ class UserModel {
       'secondName': secondName,
       //'gender': gender,
       'nationalId': nationalId,
-      'jobseeker': 'true',
-      'company': 'false',
+      'role': 'jobseeker',
+      //'jobseeker': 'true',
+      //'company': 'false',
       //'phone': phone,
       //'experience': experience,
       //DOB': DOB,

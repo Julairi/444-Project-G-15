@@ -4,6 +4,7 @@ import 'package:esaa/Screens/CompanyPage/company_offers.dart';
 import 'package:esaa/Screens/Login/login_screen.dart';
 import 'package:esaa/Screens/Welcome/components/login_signup_btn.dart';
 import 'package:esaa/Screens/signup/sec_signup_scren.dart';
+import 'package:esaa/navbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -370,7 +371,7 @@ class _postJobFormState extends State<postJob> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return certianOffers();
+                        return navbar();
                       },
                     ),
                   ); //push

@@ -167,7 +167,7 @@ class _jsloginState extends State<jslogin> {
                 )
                     .then((user) {
                   final User? newUser = user.user;
-                  getUserType(newUser).timeout(Duration(seconds: 5));
+                  getUserType(newUser).timeout(Duration(seconds: 10));
                   Future.delayed(Duration(
                     seconds: 2,
                   )).whenComplete(
