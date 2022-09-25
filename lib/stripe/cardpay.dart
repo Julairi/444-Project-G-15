@@ -6,14 +6,14 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:stripe_payment/Constants.dart';
 
 
-class HomeScreen extends StatefulWidget {
+class cardpay extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _cardpay createState() => _cardpay();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _cardpay extends State<HomeScreen> {
 
   Map<String, dynamic>? paymentIntent;
 
