@@ -5,16 +5,14 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:stripe_payment/Constants.dart';
 
-
 class cardpay extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  const cardpay({Key? key}) : super(key: key);
 
   @override
   _cardpay createState() => _cardpay();
 }
 
-class _cardpay extends State<HomeScreen> {
-
+class _cardpay extends State<cardpay> {
   Map<String, dynamic>? paymentIntent;
 
   @override
@@ -26,27 +24,27 @@ class _cardpay extends State<HomeScreen> {
       body: Center(
         child: TextButton(
           child: const Text('Make Payment'),
-          onPressed: ()async{
+          onPressed: () async {
             await makePayment();
           },
-          ),
+        ),
       ),
     );
   }
 
   Future<void> makePayment() async {
     try {
-      paymentIntent = await createPaymentIntent('10', 'USD'); 
-      //Payment Sheet 
-      await Stripe.instance.initPaymentSheet(
-          paymentSheetParameters: SetupPaymentSheetParameters(
-              paymentIntentClientSecret: paymentIntent!['client_secret'],
-              // applePay: const PaymentSheetApplePay(merchantCountryCode: '+92',),
-              // googlePay: const PaymentSheetGooglePay(testEnv: true, currencyCode: "US", merchantCountryCode: "+92"),
-              style: ThemeMode.dark,
-              merchantDisplayName: 'Adnan')).then((value){
-      });
-
+      paymentIntent = await createPaymentIntent('10', 'USD');
+      //Payment Sheet
+      await Stripe.instance
+          .initPaymentSheet(
+              paymentSheetParameters: SetupPaymentSheetParameters(
+                  paymentIntentClientSecret: paymentIntent!['client_secret'],
+                  // applePay: const PaymentSheetApplePay(merchantCountryCode: '+92',),
+                  // googlePay: const PaymentSheetGooglePay(testEnv: true, currencyCode: "US", merchantCountryCode: "+92"),
+                  style: ThemeMode.dark,
+                  merchantDisplayName: 'Adnan'))
+          .then((value) {});
 
       ///now finally display payment sheeet
       displayPaymentSheet();
@@ -56,41 +54,39 @@ class _cardpay extends State<HomeScreen> {
   }
 
   displayPaymentSheet() async {
-
     try {
-      await Stripe.instance.presentPaymentSheet(
-          ).then((value){
+      await Stripe.instance.presentPaymentSheet().then((value) {
         showDialog(
-          context: context,
-          builder: (_) => AlertDialog(
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: const [
-                    Icon(Icons.check_circle, color: Colors.green,),
-                    Text("Payment Successfull"),
-                  ],
-                ),
-              ],
-            ), 
-          ));
+            context: context,
+            builder: (_) => AlertDialog(
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: const [
+                          Icon(
+                            Icons.check_circle,
+                            color: Colors.green,
+                          ),
+                          Text("Payment Successfull"),
+                        ],
+                      ),
+                    ],
+                  ),
+                ));
         // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("paid successfully")));
 
         paymentIntent = null;
-
-      }).onError((error, stackTrace){
+      }).onError((error, stackTrace) {
         print('Error is:--->$error $stackTrace');
       });
-
-
     } on StripeException catch (e) {
       print('Error is:---> $e');
       showDialog(
           context: context,
           builder: (_) => const AlertDialog(
-            content: Text("Cancelled "),
-          ));
+                content: Text("Cancelled "),
+              ));
     } catch (e) {
       print('$e');
     }
@@ -106,13 +102,13 @@ class _cardpay extends State<HomeScreen> {
       };
 
       var response = await http.post(
-          Uri.parse('https://api.stripe.com/v1/payment_intents'),
-          headers: {
-            'Authorization': 'Bearer $SECRET_KEY',
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          body: body,
-          );
+        Uri.parse('https://api.stripe.com/v1/payment_intents'),
+        headers: {
+          'Authorization': 'Bearer $SECRET_KEY',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: body,
+      );
       // ignore: avoid_print
       print('Payment Intent Body->>> ${response.body.toString()}');
       return jsonDecode(response.body);
@@ -123,8 +119,7 @@ class _cardpay extends State<HomeScreen> {
   }
 
   calculateAmount(String amount) {
-    final calculatedAmout = (int.parse(amount)) * 100 ;
+    final calculatedAmout = (int.parse(amount)) * 100;
     return calculatedAmout.toString();
   }
-
 }
