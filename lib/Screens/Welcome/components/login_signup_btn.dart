@@ -78,6 +78,24 @@ class LoginAndSignupBtn extends StatelessWidget {
             style: TextStyle(color: Colors.black, fontSize: 16),
           ),
         ),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return cardpay();
+                },
+              ),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+              primary: kPrimaryLightColor, elevation: 0),
+          child: Text(
+            "Stripe page".toUpperCase(),
+            style: TextStyle(color: Colors.black, fontSize: 16),
+          ),
+        ),
       ],
     );
   }
