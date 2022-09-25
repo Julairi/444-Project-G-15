@@ -4,6 +4,7 @@ import 'package:esaa/Screens/companySignup/signup_screen.dart';
 import 'package:esaa/Screens/forgotpass/forgotpassform.dart';
 import 'package:esaa/Screens/offers%20list/OfferList.dart';
 import 'package:esaa/post_job/post_job_screen.dart';
+import 'package:esaa/stripe/cardpay.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
