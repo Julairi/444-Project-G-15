@@ -358,6 +358,8 @@ class _postJobFormState extends State<postJob> {
                     'Time': timeEditingController.text,
                     'PayPerHour': payHourEditingController.text,
                     'user': '/company/' + currentUser!.uid,
+                    'offerstatus': 'pending',
+                    'orderstatus':'none',
                     /*
                     'user': {
                       'uid': currentUser!.uid,

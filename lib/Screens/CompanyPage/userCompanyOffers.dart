@@ -38,36 +38,40 @@ class userOffers extends StatelessWidget {
               if (!snapshot.hasData) {
                 print("Company doesn't have job offers, check again later!");
               }
-              final posts = snapshot.data!.docs;
+              if (snapshot.data != null) {
+                final posts = snapshot.data!.docs;
 
-              for (var post in posts) {
-                final offertitle = post.get('Title');
-                final offerCity = post.get('City');
-                final offerDate = post.get('Date');
-                final offerDes = post.get('Description');
-                final offerFee = post.get('PayPerHour');
-                final offerTime = post.get('Time');
-                final offerHours = post.get('nHours');
-                final companyPath = post.get('user');
-                var lastSlash = companyPath.lastIndexOf('/');
-                final String user = (lastSlash != -1)
-                    ? companyPath.substring(lastSlash)
-                    : companyPath;
-                final fm = setCompanyName(companyPath, user);
-                Convertstring(fm);
-                final OfferWidget = CardO(
-                  CompanyPath: companyPath,
-                  CompanyName: CompanyName,
-                  offertitle: offertitle,
-                  offerCity: offerCity,
-                  offerDate: offerDate,
-                  offerDes: offerDes,
-                  offerFee: offerFee,
-                  offerHours: offerHours,
-                  offerTime: offerTime,
-                );
+                for (var post in posts) {
+                  final uid = post.id;
+                  final offertitle = post.get('Title');
+                  final offerCity = post.get('City');
+                  final offerDate = post.get('Date');
+                  final offerDes = post.get('Description');
+                  final offerFee = post.get('PayPerHour');
+                  final offerTime = post.get('Time');
+                  final offerHours = post.get('nHours');
+                  final companyPath = post.get('user');
+                  var lastSlash = companyPath.lastIndexOf('/');
+                  final String user = (lastSlash != -1)
+                      ? companyPath.substring(lastSlash)
+                      : companyPath;
+                  final fm = setCompanyName(companyPath, user);
+                  Convertstring(fm);
+                  final OfferWidget = CardO(
+                    UID: uid,
+                    CompanyPath: companyPath,
+                    CompanyName: CompanyName,
+                    offertitle: offertitle,
+                    offerCity: offerCity,
+                    offerDate: offerDate,
+                    offerDes: offerDes,
+                    offerFee: offerFee,
+                    offerHours: offerHours,
+                    offerTime: offerTime,
+                  );
 
-                titleWidget.add(OfferWidget);
+                  titleWidget.add(OfferWidget);
+                }
               }
               return Column(
                 children: titleWidget,

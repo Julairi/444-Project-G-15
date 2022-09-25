@@ -75,6 +75,7 @@ class oneCompanyOffers extends State<certianOffers> {
               final posts = snapshot.data!.docs;
 
               for (var post in posts) {
+                final uid = post.id;
                 final offertitle = post.get('Title');
                 final offerCity = post.get('City');
                 final offerDate = post.get('Date');
@@ -91,6 +92,7 @@ class oneCompanyOffers extends State<certianOffers> {
                 Convertstring(fm);
 
                 final OfferWidget = CardO(
+                  UID: uid,
                   CompanyPath: companyPath,
                   CompanyName: CompanyName,
                   offertitle: offertitle,

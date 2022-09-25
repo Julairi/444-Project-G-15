@@ -3,6 +3,7 @@ import 'package:esaa/constants.dart';
 import 'package:flutter/material.dart';
 
 class CardO extends StatelessWidget {
+  final String UID;
   final String CompanyPath;
   final String CompanyName;
   final String offertitle;
@@ -11,6 +12,7 @@ class CardO extends StatelessWidget {
   final String offerDes, offerFee, offerHours, offerTime;
   const CardO(
       {super.key,
+      required this.UID,
       required this.CompanyPath,
       required this.CompanyName,
       required this.offertitle,
@@ -32,6 +34,7 @@ class CardO extends StatelessWidget {
                   context,
                 ) =>
                     detailsPage(
+                        uid: UID,
                         CompanyPath: CompanyPath,
                         CompanyName: CompanyName,
                         offertitle: offertitle,

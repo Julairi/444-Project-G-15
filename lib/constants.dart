@@ -29,3 +29,4 @@ const String kdescNullError = "الرجاء ادخال الوصف";
 const String klocNullError = "الرجاء ادخال الموقع";
 const String kStartDateNullError = " الرجاء إدخال التاريخ   ";
 const String ktimeNullError = " الرجاء إدخال الوقت   ";
+const String kNullError = "الرجاء إدخال نبذة تعريفية";

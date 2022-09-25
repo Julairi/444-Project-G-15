@@ -45,6 +45,7 @@ class _ListOffersState extends State<ListOffers> {
                 final posts = snapshot.data?.docs;
 
                 for (var post in posts!) {
+                  final uid = post.id;
                   final offertitle = post.get('Title');
                   final offerCity = post.get('City');
                   final offerDate = post.get('Date');
@@ -61,6 +62,7 @@ class _ListOffersState extends State<ListOffers> {
                   final fm = setCompanyName(companyPath, user);
                   Convertstring(fm);
                   final OfferWidget = CardO(
+                    UID: uid,
                     CompanyPath: companyPath,
                     CompanyName: CompanyName,
                     offertitle: offertitle,

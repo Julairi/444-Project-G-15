@@ -78,6 +78,7 @@ class LoginAndSignupBtn extends StatelessWidget {
             style: TextStyle(color: Colors.black, fontSize: 16),
           ),
         ),
+        
       ],
     );
   }
