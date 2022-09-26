@@ -1,9 +1,11 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:esaa/Screens/CompanyPage/company_offers.dart';
 import 'package:esaa/Screens/offers%20list/OfferList.dart';
 import 'package:esaa/constants.dart';
 import 'package:esaa/post_job/post_job_form.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:esaa/Screens/CompanyPage/company_offers.dart';
 
 class navbar extends StatefulWidget {
   const navbar({Key? key}) : super(key: key);
@@ -74,7 +76,7 @@ class _navbarState extends State<navbar> {
         widget = const postJob(); //post a new
         break;
       default:
-        widget = const ListOffers(); //jumanas page
+        widget = certianOffers(); //jumanas page
         break;
     }
     return widget;

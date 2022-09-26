@@ -25,13 +25,15 @@ class certianOffers extends StatefulWidget {
 
 class oneCompanyOffers extends State<certianOffers> {
   final _auth = FirebaseAuth.instance;
-  late final CompanyName;
+  var CompanyName = 'company';
+  //late final CompanyName;
 
   // List<Object> cOffers = [];
 
   String? retrieveList() {
     final User? user = FirebaseAuth.instance.currentUser;
-    final cid = user?.uid;
+    //final cid = user?.uid;
+    String? cid = '/company/' + user!.uid;
     return cid;
     //return "/company/HtgizLsb0tWt3JxlpXCxsc4Nz623";
     /*final cid = 'testCompany';
@@ -53,8 +55,9 @@ class oneCompanyOffers extends State<certianOffers> {
   @override
   Widget build(BuildContext context) {
     String? cid = retrieveList();
+
     return appbar(
-      child: SafeArea(
+      child: SingleChildScrollView(
           child: Column(
         children: [
           SizedBox(
@@ -65,7 +68,7 @@ class oneCompanyOffers extends State<certianOffers> {
             stream: FirebaseFirestore.instance
                 .collection('posts')
                 .where("user", isEqualTo: cid)
-                .orderBy('Date', descending: true)
+                // .orderBy('Date', descending: true)
                 .snapshots(),
             builder: (context, snapshot) {
               List<Widget> titleWidget = [];
@@ -73,38 +76,40 @@ class oneCompanyOffers extends State<certianOffers> {
                 return Text('No offers Posted');
               }
               final posts = snapshot.data!.docs;
+              if (snapshot.data != null) {
+                for (var post in posts) {
+                  final uid = post.id;
+                  final offertitle = post.get('Title');
+                  final offerCity = post.get('City');
+                  final offerDate = post.get('Date');
+                  final offerDes = post.get('Description');
+                  final offerFee = post.get('PayPerHour');
+                  final offerTime = post.get('Time');
+                  final offerHours = post.get('nHours');
+                  final companyPath = post.get('user');
+                  var lastSlash = companyPath.lastIndexOf('/');
+                  final String user = (lastSlash != -1)
+                      ? companyPath.substring(lastSlash)
+                      : companyPath;
 
-              for (var post in posts) {
-                final uid = post.id;
-                final offertitle = post.get('Title');
-                final offerCity = post.get('City');
-                final offerDate = post.get('Date');
-                final offerDes = post.get('Description');
-                final offerFee = post.get('PayPerHour');
-                final offerTime = post.get('Time');
-                final offerHours = post.get('nHours');
-                final companyPath = post.get('user');
-                var lastSlash = companyPath.lastIndexOf('/');
-                final String user = (lastSlash != -1)
-                    ? companyPath.substring(lastSlash)
-                    : companyPath;
-                final fm = setCompanyName(companyPath, user);
-                Convertstring(fm);
+                  final fm = setCompanyName(companyPath, user);
+                  Convertstring(fm);
 
-                final OfferWidget = CardO(
-                  UID: uid,
-                  CompanyPath: companyPath,
-                  CompanyName: CompanyName,
-                  offertitle: offertitle,
-                  offerCity: offerCity,
-                  offerDate: offerDate,
-                  offerDes: offerDes,
-                  offerFee: offerFee,
-                  offerHours: offerHours,
-                  offerTime: offerTime,
-                );
+                  final OfferWidget = CardO(
+                    UID: uid,
+                    CompanyPath: companyPath,
+                    CompanyName: CompanyName,
+                    offertitle: offertitle,
+                    offerCity: offerCity,
+                    offerDate: offerDate,
+                    offerDes: offerDes,
+                    offerFee: offerFee,
+                    offerHours: offerHours,
+                    offerTime: offerTime,
+                  );
 
-                titleWidget.add(OfferWidget);
+                  titleWidget.add(OfferWidget);
+                }
               }
               return Column(
                 children: titleWidget,
