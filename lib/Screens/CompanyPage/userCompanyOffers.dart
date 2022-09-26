@@ -17,7 +17,7 @@ import 'package:esaa/components/appbar.dart';
 class userOffers extends StatelessWidget {
   final String child;
   userOffers({required this.child});
-  late final CompanyName;
+  var CompanyName = 'company';
   @override
   Widget build(BuildContext context) {
     return appbar(
