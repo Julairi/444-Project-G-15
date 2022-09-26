@@ -1,4 +1,5 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:esaa/Screens/OfferStatus/InterstedJSCard.dart';
 import 'package:esaa/Screens/offers%20list/OfferList.dart';
 import 'package:esaa/constants.dart';
 import 'package:esaa/post_job/post_job_form.dart';
@@ -74,7 +75,7 @@ class _navbarState extends State<navbar> {
         widget = const postJob(); //post a new
         break;
       default:
-        widget = const ListOffers(); //jumanas page
+        widget = IntrestedJSCard(); //jumanas page
         break;
     }
     return widget;
