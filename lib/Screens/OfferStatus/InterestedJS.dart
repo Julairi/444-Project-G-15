@@ -13,9 +13,9 @@ class InterstedJS extends StatefulWidget {
 }
 
 class _InterstedJSState extends State<InterstedJS> {
-  // final _fireStore = FirebaseFirestore.instance;
-  // List<Object> _jobList = [];
-  //final _auth = FirebaseAuth.instance;
+  final _fireStore = FirebaseFirestore.instance;
+  List<Object> _jobList = [];
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class _InterstedJSState extends State<InterstedJS> {
             height: 30,
           ),
           StreamBuilder<QuerySnapshot>(
-            //stream: _fireStore.collection('posts').snapshots(),
+            stream: _fireStore.collection('orders').snapshots(),
             builder: (context, snapshot) {
               List<Widget> titleWidget = [];
               if (!snapshot.hasData) {
