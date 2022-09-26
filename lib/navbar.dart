@@ -1,10 +1,12 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:esaa/Screens/OfferStatus/InterstedJSCard.dart';
 import 'package:esaa/Screens/offers%20list/OfferList.dart';
 import 'package:esaa/constants.dart';
 import 'package:esaa/post_job/post_job_form.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'Screens/CompanyPage/company_offers.dart';
+import 'Screens/OfferStatus/InterstedJSCard.dart';
 
 class navbar extends StatefulWidget {
   const navbar({Key? key}) : super(key: key);
@@ -24,6 +26,14 @@ class _navbarState extends State<navbar> {
       Icons.home,
       color: Colors.white,
     ),
+    Icon(
+      Icons.document_scanner_rounded,
+      color: Colors.white,
+    ),
+    Icon(
+      Icons.home,
+      color: Colors.white,
+    ),
   ];
 
   @override
@@ -33,7 +43,7 @@ class _navbarState extends State<navbar> {
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: kFillColor,
         color: kPrimaryColor,
-        animationDuration: Duration(milliseconds: 400),
+        animationDuration: Duration(milliseconds: 40),
         index: index,
         items: items,
         onTap: (selectedIndex) {
@@ -42,29 +52,7 @@ class _navbarState extends State<navbar> {
           });
         },
       ),
-      body: new Stack(
-        children: [
-          new Transform.rotate(
-            origin: Offset(40, -150),
-            angle: 2.4,
-            child: Container(
-              margin: EdgeInsets.only(
-                left: 75,
-                top: 40,
-              ),
-              height: 400,
-              width: 300,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(80),
-                gradient: LinearGradient(
-                    begin: Alignment.bottomLeft,
-                    colors: [kPrimaryColor, kTextcolor]),
-              ),
-            ),
-          ),
-          Container(child: getselectedWidget(index: index)),
-        ],
-      ),
+      body: Container(child: getselectedWidget(index: index)),
     );
   }
 
@@ -74,8 +62,17 @@ class _navbarState extends State<navbar> {
       case 0:
         widget = const postJob(); //post a new
         break;
+      case 1:
+        widget = const ListOffers(); //post a new
+        break;
+      case 2:
+        widget = IntrestedJSCard(); //post a new
+        break;
+      case 3:
+        widget = certianOffers(); //post a new
+        break;
       default:
-        widget = IntrestedJSCard(); //jumanas page
+        widget = const ListOffers(); //jumanas page
         break;
     }
     return widget;
