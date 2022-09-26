@@ -127,7 +127,7 @@ class _applystate extends State<apply> {
                   });*/
                   FirebaseFirestore.instance
                       .collection('posts')
-                      .doc('currentUsers.uid')
+                      .doc(widget.uid)
                       .update({
                     'orderstatus': 'pending',
                   });
