@@ -11,7 +11,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import 'package:flutter/material.dart';
-import 'package:esaa/components/OfferCard.dart';
+//import 'package:esaa/components/OfferCard.dart';
+import 'package:esaa/components/offerCardComp.dart';
 import 'package:esaa/components/appbar.dart';
 
 // Import the firebase_core plugin
@@ -95,7 +96,7 @@ class oneCompanyOffers extends State<certianOffers> {
                   final fm = setCompanyName(companyPath, user);
                   Convertstring(fm);
 
-                  final OfferWidget = CardO(
+                  final OfferWidget = CardCo(
                     UID: uid,
                     CompanyPath: companyPath,
                     CompanyName: CompanyName,
