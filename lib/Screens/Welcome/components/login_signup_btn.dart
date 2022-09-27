@@ -3,6 +3,7 @@ import 'package:esaa/Screens/CompanyPage/userCompanyOffers.dart';
 import 'package:esaa/Screens/companySignup/signup_screen.dart';
 import 'package:esaa/Screens/forgotpass/forgotpassform.dart';
 import 'package:esaa/Screens/offers%20list/OfferList.dart';
+import 'package:esaa/Screens/stripePayment/payment_screen.dart';
 import 'package:esaa/post_job/post_job_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -78,7 +79,25 @@ class LoginAndSignupBtn extends StatelessWidget {
             style: TextStyle(color: Colors.black, fontSize: 16),
           ),
         ),
-        
+        const SizedBox(height: 16),
+        ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return paymentScreen();
+                },
+              ),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+              backgroundColor: kPrimaryLightColor, elevation: 0),
+          child: Text(
+            " payment".toUpperCase(),
+            style: TextStyle(color: Colors.black, fontSize: 16),
+          ),
+        ),
       ],
     );
   }

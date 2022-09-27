@@ -1,16 +1,10 @@
 import 'dart:developer';
-
-import 'package:esaa/Screens/CompanyPage/company_offers.dart';
-import 'package:esaa/Screens/Login/login_screen.dart';
-import 'package:esaa/Screens/Welcome/components/login_signup_btn.dart';
-import 'package:esaa/Screens/signup/sec_signup_scren.dart';
 import 'package:esaa/navbar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+//import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class postJob extends StatefulWidget {
@@ -32,17 +26,6 @@ class _postJobFormState extends State<postJob> {
   final timeEditingController = new TextEditingController();
   TimeOfDay timeOfDay = TimeOfDay(hour: 8, minute: 00);
   FocusNode myFocusNode = new FocusNode();
-
-  void _showTimePicker() {
-    showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    ).then((value) {
-      setState(() {
-        timeOfDay = value!;
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -359,7 +342,7 @@ class _postJobFormState extends State<postJob> {
                     'PayPerHour': payHourEditingController.text,
                     'user': '/company/' + currentUser!.uid,
                     'offerstatus': 'pending',
-                    'orderstatus':'none',
+                    'orderstatus': 'none',
                     /*
                     'user': {
                       'uid': currentUser!.uid,

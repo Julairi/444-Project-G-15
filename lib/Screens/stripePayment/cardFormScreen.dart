@@ -16,7 +16,18 @@ class CardFormScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [],
+            children: [
+              Text(
+                'بيانات البطاقة',
+                style: Theme.of(context).textTheme.headline5,
+              ),
+              const SizedBox(height: 20),
+              CardFormField(
+                controller: CardFormEditController(),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(onPressed: () {}, child: const Text('ادفع')),
+            ],
           ),
         ));
   }

@@ -1,10 +1,10 @@
+import 'package:esaa/Screens/stripePayment/cardFormScreen.dart';
 import 'package:esaa/Screens/stripePayment/payment.dart';
 import 'package:esaa/post_job/post_job_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:esaa/constants.dart';
 import 'package:esaa/components/appbar.dart';
 import 'package:esaa/responsive.dart';
-import '../../components/background.dart';
 
 class paymentScreen extends StatelessWidget {
   const paymentScreen({Key? key}) : super(key: key);
@@ -23,7 +23,7 @@ class paymentScreen extends StatelessWidget {
                   children: const [
                     SizedBox(
                       width: 450,
-                      child: payment(), //change
+                      child: CardFormScreen(), //change
                     ),
                     SizedBox(height: defaultPadding / 2),
                     // SocalSignUp()

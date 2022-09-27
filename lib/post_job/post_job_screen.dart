@@ -1,13 +1,11 @@
+import 'package:esaa/Screens/stripePayment/payment_screen.dart';
 import 'package:esaa/components/appbar.dart';
 import 'package:esaa/constants.dart';
 import 'package:esaa/post_job/post_job_form.dart';
 import 'package:esaa/responsive.dart';
 import 'package:flutter/material.dart';
-
-import '../../components/background.dart';
 //import 'components/signup_form.dart';
 //import 'components/socal_sign_up.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class postjobScreen extends StatelessWidget {
   const postjobScreen({Key? key}) : super(key: key);

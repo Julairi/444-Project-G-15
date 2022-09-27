@@ -26,7 +26,7 @@ class stripePayment extends State<payment> {
             );
           },
           style: ElevatedButton.styleFrom(
-              primary: kPrimaryLightColor, elevation: 0),
+              backgroundColor: kPrimaryLightColor, elevation: 0),
           child: Text(
             " اتمام عملية الدفع".toUpperCase(),
             style: TextStyle(color: Colors.black, fontSize: 16),
