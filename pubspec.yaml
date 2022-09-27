@@ -40,12 +40,16 @@ dependencies:
   curved_navigation_bar: ^1.0.3 #latest version
   fluttertoast: ^8.0.9
   flutter_auth: ^0.0.1
-  intl: ^0.17.0
+  intl: ^0.17.0 
   firebase_auth: ^3.8.0
   firebase_core: ^1.22.0
   cloud_firestore: ^3.4.7
   image_picker: ^0.8.5+3
   firebase_storage: ^10.3.8
+  flutter_stripe: ^5.1.0
+  http: ^0.13.1
+  flutter_bloc: ^8.01
+  equatable: ^2.0.3
 
 
   #google_fonts_arabic: ^1.1.7
