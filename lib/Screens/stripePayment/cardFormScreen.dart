@@ -1,6 +1,7 @@
 import 'package:esaa/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CardFormScreen extends StatelessWidget {
   const CardFormScreen({
@@ -10,7 +11,10 @@ class CardFormScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('الدفع بالبطاقة الائتمانية')),
+        appBar: AppBar(
+          title: const Text('الدفع بالبطاقة الائتمانية'),
+          backgroundColor: kPrimaryColor,
+        ),
         body: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
