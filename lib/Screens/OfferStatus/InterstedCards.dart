@@ -21,27 +21,6 @@ class InterstedCardComp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-
-        //    onTap: () {
-        //  Navigator.push(
-        //   context,
-        //    MaterialPageRoute(
-        ///      builder: (
-        //         context,
-        //  ) =>
-        //DetailsPageForC(
-        //  uid: UID,
-        //    CompanyPath: CompanyPath,
-        //      CompanyName: CompanyName,
-        //offertitle: offertitle,
-        ///  offerCity: offerCity,
-        //    offerDate: offerDate,
-        //      offerDes: offerDes,
-        //        offerFee: offerFee,
-        //          offerTime: offerTime,
-        //            offerHours: offerHours),
-        //    ));
-        //   },
         child: Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
