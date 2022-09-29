@@ -21,19 +21,21 @@ class mySquare extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Container(
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                //),
-                Text(
-                  child,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 30, color: kPrimaryColor),
-                  //textAlign: Center,
-                ),
-              ],
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  //),
+                  Text(
+                    child,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 30, color: kPrimaryColor),
+                    //textAlign: Center,
+                  ),
+                ],
+              ),
             ),
             /*Image.asset('assets/bookstore.png',
                 height: 50, width: 50, fit: BoxFit.cover),

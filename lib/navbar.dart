@@ -6,7 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'Screens/CompanyPage/company_offers.dart';
-import 'Screens/OfferStatus/InterstedJSCard.dart';
+//import 'Screens/OfferStatus/InterstedJSCard.dart';
+import 'Screens/OfferStatus/tapbarpageComp.dart';
 
 class navbar extends StatefulWidget {
   const navbar({Key? key}) : super(key: key);
@@ -28,10 +29,6 @@ class _navbarState extends State<navbar> {
     ),
     Icon(
       Icons.document_scanner_rounded,
-      color: Colors.white,
-    ),
-    Icon(
-      Icons.home,
       color: Colors.white,
     ),
   ];
@@ -63,12 +60,10 @@ class _navbarState extends State<navbar> {
         widget = const postJob(); //post a new
         break;
       case 1:
-        widget = const ListOffers(); //post a new
+        widget = const TabBarPageComp(); //post a new
         break;
+
       case 2:
-        widget = IntrestedJSCard(); //post a new
-        break;
-      case 3:
         widget = certianOffers(); //post a new
         break;
       default:

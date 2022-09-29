@@ -1,3 +1,5 @@
+import 'package:esaa/Screens/OfferStatus/AssignedCardComp.dart';
+import 'package:esaa/Screens/OfferStatus/CardComp.dart';
 import 'package:esaa/constants.dart';
 import 'package:esaa/responsive.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../components/already_have_an_account_acheck.dart';
 import '../../../constants.dart';
 import 'package:flutter/material.dart';
-import 'package:esaa/components/OfferCard.dart';
+//import 'package:esaa/components/OfferCard.dart';
+//import 'package:esaa/components/offerCardComp.dart';
 import 'package:esaa/components/appbar.dart';
 
 // Import the firebase_core plugin
@@ -19,11 +22,11 @@ import 'package:esaa/components/appbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../components/background.dart';
 
-class certianOffers extends StatefulWidget {
-  oneCompanyOffers createState() => oneCompanyOffers();
+class assignedCompList extends StatefulWidget {
+  oneassignedCompList createState() => oneassignedCompList();
 }
 
-class oneCompanyOffers extends State<certianOffers> {
+class oneassignedCompList extends State<assignedCompList> {
   final _auth = FirebaseAuth.instance;
   var CompanyName = 'company';
   //late final CompanyName;
@@ -54,7 +57,7 @@ class oneCompanyOffers extends State<certianOffers> {
   Widget build(BuildContext context) {
     String? cid = retrieveList();
 
-    return appbar(
+    return Container(
       child: SingleChildScrollView(
           child: Column(
         children: [
@@ -66,7 +69,8 @@ class oneCompanyOffers extends State<certianOffers> {
             stream: FirebaseFirestore.instance
                 .collection('posts')
                 .where("user", isEqualTo: cid)
-                // .orderBy('Date', descending: true)
+                .where("offerstatus", isEqualTo: "assigned")
+                //.orderBy('Date', descending: true)
                 .snapshots(),
             builder: (context, snapshot) {
               List<Widget> titleWidget = [];
@@ -93,7 +97,7 @@ class oneCompanyOffers extends State<certianOffers> {
                   final fm = setCompanyName(companyPath, user);
                   Convertstring(fm);
 
-                  final OfferWidget = CardO(
+                  final OfferWidget = AssignedCardCom(
                     UID: uid,
                     CompanyPath: companyPath,
                     CompanyName: CompanyName,

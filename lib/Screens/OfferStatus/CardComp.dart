@@ -1,49 +1,44 @@
+import 'package:esaa/Screens/OfferStatus/DetailsPageForC.dart';
+import 'package:esaa/Screens/OfferStatus/InterstedJs.dart';
+//import 'package:esaa/Screens/offers%20list/offerDetailsforC.dart';
 import 'package:esaa/constants.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class IntrestedJSCard extends StatelessWidget {
-  //final String CompanyPath;
-  //final String CompanyName;
-  //final String offertitle;
-  //final String offerCity;
-  //final String offerDate;
-  // final String offerDes, offerFee, offerHours, offerTime;
-  // const IntrestedJSCard(
-  // {super.key,
-  //required this.CompanyPath,
-  //required this.CompanyName,
-  //required this.offertitle,
-  //required this.offerCity,
-  // required this.offerDate,
-  //required this.offerDes,
-  //  required this.offerFee,
-  //  required this.offerHours,
-  //   required this.offerTime});
+class CardComp extends StatelessWidget {
+  final String UID;
+  final String CompanyPath;
+  final String CompanyName;
+  final String offertitle;
+  final String offerCity;
+  final String offerDate;
+  final String offerDes, offerFee, offerHours, offerTime;
+  const CardComp(
+      {super.key,
+      required this.UID,
+      required this.CompanyPath,
+      required this.CompanyName,
+      required this.offertitle,
+      required this.offerCity,
+      required this.offerDate,
+      required this.offerDes,
+      required this.offerFee,
+      required this.offerHours,
+      required this.offerTime});
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-        //onTap: () {
-        // Navigator.push(
-        //      context,
-        //     MaterialPageRoute(
-        //      builder: (
-        //      context,
-        //   ) =>
-        //      detailsPage(
-        //         CompanyPath: CompanyPath,
-        //        CompanyName: CompanyName,
-        //        offertitle: offertitle,
-        //       offerCity: offerCity,
-        //      offerDate: offerDate,
-        //     offerDes: offerDes,
-        //     offerFee: offerFee,
-        //     offerTime: offerTime,
-        //    offerHours: offerHours),
-        // ));
-        // },
-        child: Card(
+    return Container(
+        child: InkWell(
+            //    onTap: () {
+            //        Navigator.push(
+            //        context,
+            //       MaterialPageRoute(
+            //            builder: (
+            //         context,
+            //       ) =>
+            //               IntrestedJs(postid: UID)));
+            //  },
+            child: Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
@@ -100,7 +95,7 @@ class IntrestedJSCard extends StatelessWidget {
                         width: 20,
                       ),
                       Text(
-                        "offertitle",
+                        offertitle,
                         style: TextStyle(
                             color: Color.fromARGB(255, 6, 6, 6),
                             fontSize: 18,
@@ -129,7 +124,7 @@ class IntrestedJSCard extends StatelessWidget {
                       height: 20,
                       width: 10,
                     ),
-                    Text("offerCity",
+                    Text(offerCity,
                         style: TextStyle(
                             color: kPrimaryColor,
                             fontSize: defaultFontSize,
@@ -151,12 +146,22 @@ class IntrestedJSCard extends StatelessWidget {
                       height: 20,
                       width: 10,
                     ),
-                    Text("CompanyName",
-                        style: TextStyle(
-                            color: kPrimaryColor,
-                            fontSize: defaultFontSize,
-                            fontWeight: FontWeight.bold,
-                            overflow: TextOverflow.ellipsis))
+                    GestureDetector(
+                        child: Text("طلبات هذا العرض",
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: defaultFontSize,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
+                                overflow: TextOverflow.ellipsis)),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => new IntrestedJs(
+                                        postid: UID,
+                                      )));
+                        })
                   ],
                 ),
               ],
@@ -164,6 +169,6 @@ class IntrestedJSCard extends StatelessWidget {
           )
         ],
       ),
-    ));
+    )));
   }
 }
