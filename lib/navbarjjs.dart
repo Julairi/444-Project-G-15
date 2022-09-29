@@ -82,7 +82,6 @@ class _navbarjjsState extends State<navbarjjs> {
       case 1:
         widget = const TabBarPage(); //post a new
         break;
-
       default:
         widget = const ListOffers(); //jumanas page
         break;

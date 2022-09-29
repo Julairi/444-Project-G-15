@@ -1,7 +1,11 @@
 import 'package:esaa/Screens/tapBar/Tab1.dart';
 import 'package:esaa/Screens/tapBar/Tab2.dart';
 import 'package:esaa/Screens/tapBar/Tab3.dart';
+
+import 'package:esaa/constants.dart';
 import 'package:flutter/material.dart';
+
+import '../../components/appbar.dart';
 
 class TabBarPage extends StatefulWidget {
   const TabBarPage({Key? key}) : super(key: key);
@@ -16,7 +20,7 @@ class _TabBarPageState extends State<TabBarPage>
 
   @override
   void initState() {
-    tabController = TabController(length: 2, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
@@ -28,12 +32,8 @@ class _TabBarPageState extends State<TabBarPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text('Tab bar Without Appbar'),
-      ),
-      body: SingleChildScrollView(
+    return appbar(
+      child: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Container(
@@ -45,15 +45,15 @@ class _TabBarPageState extends State<TabBarPage>
                   // height: 50,
                   width: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
-                      color: Colors.redAccent,
+                      color: kPrimaryLightColor,
                       borderRadius: BorderRadius.circular(5)),
                   child: Column(
                     children: [
                       Padding(
                         padding: EdgeInsets.all(5),
                         child: TabBar(
-                          unselectedLabelColor: Colors.white,
-                          labelColor: Colors.black,
+                          unselectedLabelColor: kPrimaryColor,
+                          labelColor: Color.fromARGB(255, 75, 73, 73),
                           indicatorColor: Colors.white,
                           indicatorWeight: 2,
                           indicator: BoxDecoration(
@@ -66,8 +66,11 @@ class _TabBarPageState extends State<TabBarPage>
                               text: 'Tab 1',
                             ),
                             Tab(
-                              text: 'Tab 1',
+                              text: 'Tab 2',
                             ),
+                            Tab(
+                              text: 'Tab 3',
+                            )
                           ],
                         ),
                       ),
@@ -76,9 +79,8 @@ class _TabBarPageState extends State<TabBarPage>
                 ),
                 Expanded(
                   child: TabBarView(
-                    controller: tabController,
-                    children: [Tab1(), Tab2(), Tab3()],
-                  ),
+                      controller: tabController,
+                      children: [Tab1(), Tab2(), Tab3()]),
                 )
               ],
             ),

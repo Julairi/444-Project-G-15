@@ -5,6 +5,7 @@ import 'package:esaa/Screens/Login/login_screen.dart';
 import 'package:esaa/Screens/Welcome/components/login_signup_btn.dart';
 import 'package:esaa/Screens/signup/sec_signup_scren.dart';
 import 'package:esaa/navbar.dart';
+import 'package:esaa/navbarjjs.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -135,7 +136,7 @@ class _applystate extends State<apply> {
                   FirebaseFirestore.instance.collection('orders').add({
                     'skills': infoEditingController.text,
                     'summary': descripEditingController.text,
-                    'user': '/jobseeker/' + currentUser!.uid,
+                    'user': '/jobseekers/' + currentUser!.uid,
                     'post': '/posts/' + widget.uid,
                   });
 
@@ -144,7 +145,7 @@ class _applystate extends State<apply> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return navbar();
+                        return navbarjjs();
                       },
                     ),
                   ); //push
