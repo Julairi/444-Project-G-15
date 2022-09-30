@@ -32,7 +32,7 @@ exports.stripePaymentIntentRequest = functions.https.onRequest(async (req, res) 
         //Creates a new payment intent with amount passed in from the client
         const paymentIntent = await stripe.paymentIntents.create({
             amount: parseInt(req.body.amount),
-            currency: 'sar',
+            currency: 'usd',
             customer: customerId,
         })
 
@@ -46,4 +46,21 @@ exports.stripePaymentIntentRequest = functions.https.onRequest(async (req, res) 
     } catch (error) {
         res.status(404).send({ success: false, error: error.message })
     }
+    //======================================
+   /* const paymentIntent = await stripe.paymentIntents.create({
+        amount: parseInt(req.body.amount),
+        currency: 'usd',
+    }, 
+    function (err , paymentIntent){
+        if(err!= null){
+            console.log(err);
+        }
+        else {
+            res.json({
+                paymentIntent: paymentIntent.client_secret
+            })
+        }
+    }
+    )*/
+
 });
