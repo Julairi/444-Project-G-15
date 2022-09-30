@@ -6,20 +6,20 @@
     "configurations": [
         {
             "name": "esaa",
-            "cwd": "essa\\esaa",
+            "cwd": "esaa",
             "request": "launch",
             "type": "dart"
         },
         {
             "name": "esaa (profile mode)",
-            "cwd": "essa\\esaa",
+            "cwd": "esaa",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
             "name": "esaa (release mode)",
-            "cwd": "essa\\esaa",
+            "cwd": "esaa",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
