@@ -11,31 +11,29 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomAppbar(
-        showNotification: true,
+        //showNotification: true,
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-
-              // This should be last in this column
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    Get.find<UserController>().clearAll();
-                    await Auth().signOut();
-                    Get.offAndToNamed('/welcome_screen');
-                  },
-                  style: ElevatedButton.styleFrom(
-                      primary: kPrimaryColor, elevation: 0),
-                  child: const Text(
-                    "Logout",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                ),
+      child: Column(
+        children: [
+          // This should be last in this column
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: ElevatedButton(
+              onPressed: () async {
+                Get.find<UserController>().clearAll();
+                await Auth().signOut();
+                Get.offAndToNamed('/welcome_screen');
+              },
+              style: ElevatedButton.styleFrom(
+                  primary: kPrimaryColor, elevation: 0),
+              child: const Text(
+                "Logout",
+                style: TextStyle(color: Colors.white, fontSize: 16),
               ),
-            ],
+            ),
           ),
-        )
-    );
+        ],
+      ),
+    ));
   }
 }
