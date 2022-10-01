@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esaa/app.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/models/models.dart';
@@ -5,6 +6,8 @@ import 'package:esaa/screens/company_home/company_home.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CompanyTabBarPage extends StatefulWidget {
   const CompanyTabBarPage({Key? key}) : super(key: key);
@@ -59,12 +62,89 @@ class CompanyTabBarPageState extends State<CompanyTabBarPage> with SingleTickerP
                             borderRadius: BorderRadius.circular(5),
                           ),
                           controller: tabController,
-                          tabs: const [
+                          tabs: [
                             Tab(
-                              text: 'عروض قيد الانتظار',
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text('عروض قيد الانتظار'),
+
+                                  const SizedBox(width: defaultPadding),
+
+                                  SizedBox(
+                                    child: FirestoreQueryBuilder<Object?>(
+                                      query: PostDatabase.postsCollection
+                                          .where("companyID", isEqualTo: App.user.id)
+                                          .where("offerStatus", whereIn: ["pending", "assigned"]),
+                                      builder: (context, snapshot, _) {
+                                        if (snapshot.isFetching) {
+                                          return const SpinKitRing(
+                                            color: kPrimaryColor,
+                                            size: 24.0,
+                                          );
+                                        }
+
+                                        if (snapshot.hasError) {
+                                          Fluttertoast.showToast(msg: '${snapshot.error}');
+                                        }
+
+                                        final count = snapshot.docs.length;
+
+                                        return Text(
+                                          "$count",
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            color: kPrimaryColor,
+                                            fontSize: 16
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  )
+
+                                ],
+                              ),
                             ),
+
                             Tab(
-                              text: 'العروض تم اسنادها',
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text('العروض تم اسنادها'),
+
+                                  const SizedBox(width: defaultPadding),
+
+                                  FirestoreQueryBuilder<Object?>(
+                                    query: PostDatabase.postsCollection
+                                        .where("companyID", isEqualTo: App.user.id)
+                                        .where("offerStatus", whereIn: ["assigned", "fully_assigned"]),
+                                    builder: (context, snapshot, _) {
+                                      if (snapshot.isFetching) {
+                                        return const SpinKitRing(
+                                          color: kPrimaryColor,
+                                          size: 24.0,
+                                        );
+                                      }
+
+                                      if (snapshot.hasError) {
+                                        Fluttertoast.showToast(msg: '${snapshot.error}');
+                                      }
+
+                                      final count = snapshot.docs.length;
+
+                                      return Text(
+                                        "$count",
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: kPrimaryColor,
+                                          fontSize: 16
+                                        ),
+                                      );
+                                    },
+                                  )
+
+                                ],
+                              ),
                             )
                           ],
                         ),
@@ -97,7 +177,7 @@ class _TabOne extends StatelessWidget {
     return CustomListView(
       query: PostDatabase.postsCollection
           .where("companyID", isEqualTo: App.user.id)
-          .where("offerStatus", isEqualTo: "pending")
+          .where("offerStatus", whereIn: ["pending", "assigned"])
           .orderBy("timePosted", descending: true),
       emptyListWidget: const SizedBox(
         child: Text(
@@ -111,7 +191,7 @@ class _TabOne extends StatelessWidget {
       ),
       itemBuilder: (context, querySnapshot) {
         Post post = Post.fromDocumentSnapshot(querySnapshot);
-        return PostCardCompany(post: post);
+        return PostCardCompany(post: post, filters: const ["pending", "assigned"]);
       },
     );
   }
@@ -125,7 +205,7 @@ class _TabTwo extends StatelessWidget {
     return CustomListView(
       query: PostDatabase.postsCollection
           .where("companyID", isEqualTo: App.user.id)
-          .where("offerStatus", isEqualTo: "assigned")
+          .where("offerStatus", whereIn: ["assigned", "fully_assigned"])
           .orderBy("timePosted", descending: true),
       emptyListWidget: const SizedBox(
         child: Text(
@@ -139,7 +219,7 @@ class _TabTwo extends StatelessWidget {
       ),
       itemBuilder: (context, querySnapshot) {
         Post post = Post.fromDocumentSnapshot(querySnapshot);
-        return PostCardCompany(post: post);
+        return PostCardCompany(post: post, filters: const ["accepted"]);
       }
     );
   }

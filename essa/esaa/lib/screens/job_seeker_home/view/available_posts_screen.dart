@@ -27,7 +27,7 @@ class AvailablePostsScreen extends StatelessWidget {
 
                     return SizedBox(
                       child: Text(
-                        '$postCount Available Post${postCount > 0 ? "s" : ""}',
+                        '$postCount Available Post${postCount > 1 ? "s" : ""}',
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 22,

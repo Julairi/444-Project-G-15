@@ -4,10 +4,11 @@ class Order {
 
   late String id, postID, skills, summary, userID, userName, orderStatus;
   late DateTime timeApplied;
+  late bool hasBeenPaid;
 
   Order({required this.id, required this.postID, required this.skills,
     required this.summary, required this.userID, required this.userName,
-    required this.orderStatus, required this.timeApplied});
+    required this.orderStatus, required this.timeApplied, this.hasBeenPaid = false});
 
   Order.empty() {
     id = "";
@@ -18,6 +19,7 @@ class Order {
     userName = "";
     orderStatus = "";
     timeApplied = DateTime.now();
+    hasBeenPaid = false;
   }
 
   Map<String, dynamic> toMap() {
@@ -30,6 +32,7 @@ class Order {
       'userName': userName,
       'orderStatus': orderStatus,
       "timeApplied": Timestamp.fromDate(timeApplied),
+      "hasBeenPaid": hasBeenPaid,
     };
   }
 
@@ -44,6 +47,7 @@ class Order {
       userName: snapshot.get('userName') ?? "",
       orderStatus: snapshot.get('orderStatus') ?? "",
       timeApplied: timestamp.toDate(),
+      hasBeenPaid: snapshot.get('hasBeenPaid') ?? false,
     );
   }
 }

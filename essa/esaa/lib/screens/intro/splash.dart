@@ -15,12 +15,10 @@ class Splash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    signIn();
-
     Future.delayed(const Duration(seconds: 2), () {
       if(Auth().isSignedIn){
         Get.toNamed('/');
-      } else {
+      }else {
         Get.toNamed('/welcome_screen');
       }
     });
@@ -51,6 +49,4 @@ class Splash extends StatelessWidget {
       ),
     );
   }
-
-  void signIn() {}
 }

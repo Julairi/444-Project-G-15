@@ -17,7 +17,7 @@ class UserController extends GetxController {
     user.bindStream(UserDatabase(userID).user);
   }
 
-  clearAll(){
+  void clearAll(){
     user.value = User.empty();
   }
 

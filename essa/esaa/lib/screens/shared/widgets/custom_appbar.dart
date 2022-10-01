@@ -1,4 +1,6 @@
+import 'package:esaa/app.dart';
 import 'package:esaa/config/constants.dart';
+import 'package:esaa/screens/notifications/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,11 +8,13 @@ class CustomAppbar extends StatelessWidget {
   final Widget child;
   final String topImage, bottomImage;
   final bool showLeading;
+  final bool showNotification;
 
   const CustomAppbar({
     Key? key,
     required this.child,
     this.showLeading = false,
+    this.showNotification = false,
     this.topImage = "assets/images/main_top.png",
     this.bottomImage = "assets/images/login_bottom.png",
   }) : super(key: key);
@@ -40,6 +44,25 @@ class CustomAppbar extends StatelessWidget {
                   )
                 )
                 : const SizedBox(),
+            actions: [
+              showNotification
+                  ? IconButton(
+                    onPressed: () {
+                      if(App.user.userType == 'jobSeeker'){
+                        Get.to(() => JobSeekerNotificationScreen());
+                      }else{
+                        Get.to(() => const CompanyNotificationScreen());
+                      }
+                    },
+                    icon: const Icon(
+                      Icons.notifications,
+                      color: Colors.white,
+                    )
+                  )
+                  : const SizedBox(),
+
+              const SizedBox(width: defaultPadding)
+            ] ,
             backgroundColor: kPrimaryColor,
             expandedHeight: 200,
             floating: true,

@@ -44,7 +44,6 @@ class _DesktopSignupScreen extends StatelessWidget {
                 child: CompanySignUpForm(),
               ),
               SizedBox(height: defaultPadding / 2),
-              // SocalSignUp()
             ],
           ),
         )

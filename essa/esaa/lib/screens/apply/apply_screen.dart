@@ -46,7 +46,6 @@ class _DesktopApplyScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: defaultPadding / 2),
-              // SocalSignUp()
             ],
           ),
         )

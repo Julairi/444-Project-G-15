@@ -1,4 +1,5 @@
 import 'package:esaa/screens/default.dart';
+import 'package:esaa/services/database/user_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,7 +13,7 @@ import 'screens/intro/intro.dart';
 class App extends StatelessWidget {
   App({Key? key}) : super(key: key) {
     Get.put(UserController());
-    Get.find<UserController>().bindUser();
+    //UserDatabase(Auth().uID).getUserWith;
   }
 
   @override
@@ -61,7 +62,7 @@ class App extends StatelessWidget {
         GetPage(name: '/sign_up_screen', page : () => const SignUpScreen()),
         GetPage(name: '/login_screen', page : () => const LoginScreen()),
         GetPage(name: '/forgot_password', page : () => const ForgotPasswordScreen()),
-        GetPage(name: '/', page : () => const Default()),
+        GetPage(name: '/', page : () => Default()),
       ],
       initialRoute: '/splash',
     );

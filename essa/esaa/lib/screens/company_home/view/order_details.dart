@@ -252,7 +252,7 @@ class OrderDetails extends StatelessWidget {
 
                       const SizedBox(height: 30),
 
-                      if(post.offerStatus == "pending")
+                      if(order.orderStatus == "pending")
                         Row(
                         children: [
                           Expanded(
@@ -333,18 +333,21 @@ class OrderDetails extends StatelessWidget {
                         ],
                       ),
 
-                      if(post.offerStatus == "assigned")
+                      if(order.orderStatus == "accepted")
                         ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(primary: kPrimaryColor, elevation: 0),
+                          onPressed: () => payOrder(order),
+                          style: ElevatedButton.styleFrom(
+                              primary: order.hasBeenPaid ? kPrimaryColor.withOpacity(0.5) : kPrimaryColor,
+                              elevation: 0
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                                padding: const EdgeInsets.symmetric(horizontal: 10.0),
                                 child: Text(
-                                  "Pay",
-                                  style: TextStyle(color: kFillColor, fontSize: 16),
+                                  order.hasBeenPaid ? "Paid" : "Pay",
+                                  style: const TextStyle(color: kFillColor, fontSize: 16),
                                 ),
                               ),
 
@@ -524,7 +527,7 @@ class OrderDetails extends StatelessWidget {
   }
 
   void _acceptOrder(Order order, Post post, OrderDetailsController controller) async{
-    if(int.parse(post.maxNoOfApplicants) >= int.parse(post.acceptedApplicants)){
+    if(int.parse(post.maxNoOfApplicants) <= int.parse(post.acceptedApplicants)){
       Fluttertoast.showToast(
         msg: "You have accepted the maximum number of applicants for this post.",
         timeInSecForIosWeb: 2,
@@ -543,10 +546,11 @@ class OrderDetails extends StatelessWidget {
       'orderStatus': order.orderStatus
     });
 
+    post.offerStatus = "assigned";
     post.acceptedApplicants = '${(int.parse(post.acceptedApplicants) + 1)}';
 
-    if(int.parse(post.maxNoOfApplicants) >= int.parse(post.acceptedApplicants)) {
-      post.offerStatus = "assigned";
+    if(int.parse(post.maxNoOfApplicants) <= int.parse(post.acceptedApplicants)) {
+      post.offerStatus = "fully_assigned";
       await OrderDatabase().rejectAll(post.id);
     }
 
@@ -574,6 +578,26 @@ class OrderDetails extends StatelessWidget {
     controller.isRejecting.value = false;
 
     Get.offAllNamed("/");
+  }
+
+  Future<void> payOrder(Order order) async {
+    if(order.hasBeenPaid){
+      Fluttertoast.showToast(
+          msg: "You have paid this order already.",
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.black54,
+          textColor: kFillColor,
+          toastLength: Toast.LENGTH_LONG
+      );
+      return;
+    }
+    order.hasBeenPaid = true;
+    await OrderDatabase().updateOrderDetails({
+      "id": order.id,
+      "hasBeenPaid": order.hasBeenPaid,
+    });
+
+    Fluttertoast.showToast(msg: "Payment Successful");
   }
 }
 

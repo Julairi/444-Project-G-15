@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
-import 'package:esaa/services/services.dart';
+import 'package:esaa/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,7 +12,9 @@ import 'job_seeker_home/job_seeker_home.dart';
 import 'post_job/post_job.dart';
 
 class Default extends StatelessWidget {
-  const Default({Key? key}) : super(key: key);
+  Default({Key? key}) : super(key: key) {
+    Get.find<UserController>().bindUser();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +96,10 @@ class Default extends StatelessWidget {
           Icons.home,
           color: Colors.white,
         ),
+        Icon(
+          Icons.account_circle,
+          color: Colors.white,
+        ),
       ];
     }
     else if (userType == "company"){
@@ -108,6 +114,10 @@ class Default extends StatelessWidget {
         ),
         Icon(
           Icons.document_scanner_rounded,
+          color: Colors.white,
+        ),
+        Icon(
+          Icons.account_circle,
           color: Colors.white,
         ),
       ];
@@ -125,6 +135,10 @@ class Default extends StatelessWidget {
         Icons.document_scanner_rounded,
         color: Colors.white,
       ),
+      Icon(
+        Icons.account_circle,
+        color: Colors.white,
+      ),
     ];
   }
 
@@ -140,7 +154,10 @@ class Default extends StatelessWidget {
           widget = const JobSeekerTabBarPage();
           break;
         case 2:
-          widget = const AvailablePostsScreen(); //ListOffers();
+          widget = const AvailablePostsScreen();
+          break;
+        case 3:
+          widget = const ProfileScreen();
           break;
 
         default:
@@ -161,8 +178,12 @@ class Default extends StatelessWidget {
           widget = const CompanyTabBarPage(); //view all posts... differentiate assigned and unassigned
           break;
 
+        case 3:
+          widget = const ProfileScreen();
+          break;
+
         default:
-          widget = Container(color: Colors.brown);//const ListOffers(); //jumanas page
+          widget = const CompanyPosts();
           break;
       }
     }

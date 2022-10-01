@@ -7,13 +7,14 @@ import 'package:get/get.dart';
 
 class PostCardCompany extends StatelessWidget {
   final Post post;
-  const PostCardCompany({required this.post, super.key});
+  final List<String> filters;
+  const PostCardCompany({required this.post, required this.filters, super.key});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
         onTap: () {
-          Get.to(() => CompanyPostDetails(post: post));
+          Get.to(() => CompanyPostDetails(post: post, filters: filters));
         },
         child: Card(
           shape: RoundedRectangleBorder(
@@ -93,6 +94,30 @@ class PostCardCompany extends StatelessWidget {
                   children: [
                     Row(
                       children: [
+                        GestureDetector(
+                            child: Text(
+                                '${post.acceptedApplicants}/${post.maxNoOfApplicants} Accepted Orders',
+                                style: const TextStyle(
+                                    color: Colors.blue,
+                                    fontSize: defaultFontSize,
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.underline,
+                                    overflow: TextOverflow.ellipsis
+                                )
+                            ),
+
+                            onTap: () => Get.to(() => CompanyPostDetails(post: post, filters: filters))
+                        )
+                      ],
+                    ),
+
+                    const SizedBox(
+                      height: 20,
+                      width: 15,
+                    ),
+
+                    Row(
+                      children: [
                         const Icon(
                           Icons.location_on,
                           color: Color.fromARGB(255, 237, 229, 109),
@@ -112,10 +137,12 @@ class PostCardCompany extends StatelessWidget {
                         )
                       ],
                     ),
+
                     const SizedBox(
                       height: 20,
                       width: 15,
                     ),
+
                     Row(
                       children: [
                         const Icon(
