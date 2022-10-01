@@ -60,7 +60,7 @@ class ApplyFormState extends State<ApplyForm> {
       validator: (value) {
         if (value!.isEmpty) {
           return kNullError;
-        }
+        } else if (value.length >= 200) return kdeserror;
         return null;
       },
       textInputAction: TextInputAction.next,
@@ -75,7 +75,7 @@ class ApplyFormState extends State<ApplyForm> {
         prefixIcon: const Padding(
           padding: EdgeInsets.all(defaultPadding),
         ),
-        labelText: "أدخل نبذة تعريفية عنك ",
+        labelText: "أدخل نبذة تعريفية عنك *",
         floatingLabelStyle: const TextStyle(
           color: kTextColor,
           fontSize: 20,
@@ -91,27 +91,21 @@ class ApplyFormState extends State<ApplyForm> {
         child: Column(
           children: [
             const Padding(padding: EdgeInsets.all(defaultPadding)),
-
             const SizedBox(height: defaultPadding / 2),
-
             titleField,
-
             const SizedBox(height: defaultPadding / 2),
-
             descriptionField,
-
             const SizedBox(height: defaultPadding / 2),
-
             const Padding(padding: EdgeInsets.all(defaultPadding)),
-
             const SizedBox(height: defaultPadding / 2),
-
             ElevatedButton(
-              onPressed: () => _addNewOrder(widget.post, infoEditingController.text, descriptionEditingController.text),
-              child:
-                  Text("ارسال".toUpperCase(), style: const TextStyle(fontSize: 16)),
+              onPressed: () => _addNewOrder(
+                  widget.post,
+                  infoEditingController.text,
+                  descriptionEditingController.text),
+              child: Text("ارسال".toUpperCase(),
+                  style: const TextStyle(fontSize: 16)),
             ),
-
             const SizedBox(height: defaultPadding),
           ],
         ),
@@ -120,9 +114,7 @@ class ApplyFormState extends State<ApplyForm> {
   }
 
   Future<void> _addNewOrder(Post post, String skills, String summary) async {
-
     if (_formKey.currentState!.validate()) {
-
       Order order = Order.empty();
       order.postID = post.id;
       order.skills = skills;
@@ -133,19 +125,16 @@ class ApplyFormState extends State<ApplyForm> {
       order.timeApplied = DateTime.now();
 
       final applied = await OrderDatabase().doesOrderExist(order);
-      if(applied){
+      if (applied) {
         Fluttertoast.showToast(
-            msg: "You have applied for this post already",
+            msg: "لقد قمت بالتقديم على هذه الوظيفة مسبقاٌ",
             backgroundColor: Colors.redAccent,
-            textColor: kFillColor
-        );
-      }else {
+            textColor: kFillColor);
+      } else {
         await OrderDatabase().createOrder(order.toMap());
 
         Get.offAllNamed('/');
       }
-
     }
-
   }
 }

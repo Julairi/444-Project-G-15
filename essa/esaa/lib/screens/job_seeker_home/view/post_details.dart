@@ -1,4 +1,3 @@
-
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/models/models.dart';
 import 'package:esaa/screens/apply/apply_screen.dart';
@@ -11,7 +10,8 @@ import '../widgets/company_posts_for_job_seeker.dart';
 class PostDetails extends StatelessWidget {
   final Post post;
   final bool canApply;
-  const PostDetails({required this.post, this.canApply = true, Key? key}) : super(key: key);
+  const PostDetails({required this.post, this.canApply = true, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +29,12 @@ class PostDetails extends StatelessWidget {
               topRight: Radius.circular(24),
             ),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: defaultPadding, vertical: defaultPadding),
+          padding: const EdgeInsets.symmetric(
+              horizontal: defaultPadding, vertical: defaultPadding),
           child: SingleChildScrollView(
             child: Column(
               children: [
-
                 const SizedBox(height: 30),
-
                 Row(
                   children: [
                     const Icon(
@@ -57,11 +56,9 @@ class PostDetails extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 const SizedBox(
                   height: 30,
                 ),
-
                 Row(
                   children: [
                     Text(
@@ -74,11 +71,9 @@ class PostDetails extends StatelessWidget {
                     )
                   ],
                 ),
-
                 const SizedBox(
                   height: 40,
                 ),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -115,8 +110,7 @@ class PostDetails extends StatelessWidget {
                           height: 20,
                           width: 10,
                         ),
-                        Text(
-                            post.city,
+                        Text(post.city,
                             style: const TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: defaultFontSize,
@@ -126,26 +120,22 @@ class PostDetails extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 const SizedBox(
                   height: 35,
                   width: 15,
                 ),
-
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Row(
                       children: [
                         const Icon(Icons.calendar_month_outlined,
-                            color: Color.fromARGB(255, 3, 77, 138),
-                            size: 35),
+                            color: Color.fromARGB(255, 3, 77, 138), size: 35),
                         const SizedBox(
                           height: 20,
                           width: 10,
                         ),
-                        Text(
-                            post.date,
+                        Text(post.date,
                             style: const TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: defaultFontSize,
@@ -168,8 +158,7 @@ class PostDetails extends StatelessWidget {
                           height: 20,
                           width: 10,
                         ),
-                        Text(
-                            post.date,
+                        Text(post.date,
                             style: const TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: defaultFontSize,
@@ -179,7 +168,6 @@ class PostDetails extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 const SizedBox(
                   height: 35,
                   width: 10,
@@ -235,23 +223,20 @@ class PostDetails extends StatelessWidget {
                     ),
                   ],
                 ),
-
                 const SizedBox(
                   height: 35,
                   width: 10,
                 ),
-
-                if(canApply)
+                if (canApply)
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: ElevatedButton(
                         onPressed: () => Get.to(() => ApplyScreen(post: post)),
                         child: const Text('التقديم على الوظيفة')),
                   ),
-
-
                 TextButton(
-                    onPressed: () => Get.to(() => CompanyPostsForJobSeeker(companyID: post.companyID)),
+                    onPressed: () => Get.to(() =>
+                        CompanyPostsForJobSeeker(companyID: post.companyID)),
                     child: const Text('لمزيدٍ من عروض هذه الشركه اضغط هنا ')),
               ],
             ),

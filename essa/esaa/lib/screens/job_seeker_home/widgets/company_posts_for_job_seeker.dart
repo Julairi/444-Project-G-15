@@ -8,39 +8,38 @@ import 'package:flutter/material.dart';
 class CompanyPostsForJobSeeker extends StatelessWidget {
   final String companyID;
 
-  const CompanyPostsForJobSeeker({Key? key, required this.companyID}) : super(key: key);
+  const CompanyPostsForJobSeeker({Key? key, required this.companyID})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomAppbar(
       showLeading: true,
       child: SingleChildScrollView(
-           child: Column(
-         children: [
-           const SizedBox(height: 10),
-
-           CustomListView(
-               query: PostDatabase.postsCollection
-                   .where("companyID", isEqualTo: companyID)
-                   .where("offerStatus", isEqualTo: "pending")
-                   .orderBy("timePosted", descending: true),
-               emptyListWidget: const SizedBox(
-                 child: Text(
-                   "Company doesn't have any job offers, check again later!",
-                   textAlign: TextAlign.center,
-                   style: TextStyle(
-                     fontSize: 20,
-                     color: kPrimaryColor,
-                   ),
-                 ),
-               ),
-               itemBuilder: (context, querySnapshot) {
-                 Post post = Post.fromDocumentSnapshot(querySnapshot);
-                 return PostCardJobSeeker(post: post);
-               }
-           ),
-         ],
-       )),
+          child: Column(
+        children: [
+          const SizedBox(height: 10),
+          CustomListView(
+              query: PostDatabase.postsCollection
+                  .where("companyID", isEqualTo: companyID)
+                  .where("offerStatus", isEqualTo: "pending")
+                  .orderBy("timePosted", descending: true),
+              emptyListWidget: const SizedBox(
+                child: Text(
+                  "هذه الشركة ليست لديها أي عروض حالياً",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: kPrimaryColor,
+                  ),
+                ),
+              ),
+              itemBuilder: (context, querySnapshot) {
+                Post post = Post.fromDocumentSnapshot(querySnapshot);
+                return PostCardJobSeeker(post: post);
+              }),
+        ],
+      )),
     );
   }
 }

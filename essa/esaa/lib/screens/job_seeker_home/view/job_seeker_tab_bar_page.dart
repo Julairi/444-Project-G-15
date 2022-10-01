@@ -14,7 +14,8 @@ class JobSeekerTabBarPage extends StatefulWidget {
   JobSeekerTabBarPageState createState() => JobSeekerTabBarPageState();
 }
 
-class JobSeekerTabBarPageState extends State<JobSeekerTabBarPage> with SingleTickerProviderStateMixin {
+class JobSeekerTabBarPageState extends State<JobSeekerTabBarPage>
+    with SingleTickerProviderStateMixin {
   late TabController tabController;
 
   @override
@@ -37,58 +38,54 @@ class JobSeekerTabBarPageState extends State<JobSeekerTabBarPage> with SingleTic
           height: MediaQuery.of(context).size.height - 150,
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const SizedBox(height: 20),
-
-                Container(
-                  width: MediaQuery.of(context).size.height,
-                  decoration: BoxDecoration(
-                      color: kPrimaryLightColor,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: TabBar(
-                          unselectedLabelColor: kPrimaryColor,
-                          labelColor: const Color.fromARGB(255, 75, 73, 73),
-                          indicatorColor: Colors.white,
-                          indicatorWeight: 2,
-                          indicator: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          controller: tabController,
-                          tabs: const [
-                            Tab(
-                              text: 'Pending',
-                            ),
-                            Tab(
-                              text: 'Accepted',
-                            ),
-                            Tab(
-                              text: 'Rejected',
-                            )
-                          ],
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 20),
+              Container(
+                width: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(
+                    color: kPrimaryLightColor,
+                    borderRadius: BorderRadius.circular(5)),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: TabBar(
+                        unselectedLabelColor: kPrimaryColor,
+                        labelColor: const Color.fromARGB(255, 75, 73, 73),
+                        indicatorColor: Colors.white,
+                        indicatorWeight: 2,
+                        indicator: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
                         ),
+                        controller: tabController,
+                        tabs: const [
+                          Tab(
+                            text: 'عروض قيد الانتظار',
+                          ),
+                          Tab(
+                            text: 'عروض مقبولة',
+                          ),
+                          Tab(
+                            text: 'عروض مرفوضة',
+                          )
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-
-                Expanded(
-                  child: TabBarView(
-                      controller: tabController,
-                      children: const [_TabOne(), _TabTwo(), _TabThree()]),
-                ),
-
-                const SizedBox(height: 20),
-
-              ],
-            ),
+              ),
+              Expanded(
+                child: TabBarView(
+                    controller: tabController,
+                    children: const [_TabOne(), _TabTwo(), _TabThree()]),
+              ),
+              const SizedBox(height: 20),
+            ],
+          ),
         ),
-        ),
+      ),
     );
   }
 }
@@ -122,59 +119,55 @@ class _TabOne extends StatelessWidget {
 }
 
 class _TabTwo extends StatelessWidget {
-  const _TabTwo ({Key? key}) : super(key: key);
+  const _TabTwo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomListView(
         query: OrderDatabase.ordersCollection
-          .where("userID", isEqualTo: App.user.id)
-          .where("orderStatus", isEqualTo: "accepted")
-          .orderBy("timeApplied", descending: true),
-      emptyListWidget: const SizedBox(
-        child: Text(
-          'No accepted application',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 20,
-            color: kPrimaryColor,
+            .where("userID", isEqualTo: App.user.id)
+            .where("orderStatus", isEqualTo: "accepted")
+            .orderBy("timeApplied", descending: true),
+        emptyListWidget: const SizedBox(
+          child: Text(
+            'No accepted application',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20,
+              color: kPrimaryColor,
+            ),
           ),
         ),
-      ),
-      itemBuilder: (context, querySnapshot) {
-        Order order = Order.fromDocumentSnapshot(querySnapshot);
-        return OrderCard(order: order);
-      }
-    );
+        itemBuilder: (context, querySnapshot) {
+          Order order = Order.fromDocumentSnapshot(querySnapshot);
+          return OrderCard(order: order);
+        });
   }
-
 }
 
 class _TabThree extends StatelessWidget {
-  const _TabThree ({Key? key}) : super(key: key);
+  const _TabThree({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomListView(
-      query: OrderDatabase.ordersCollection
-          .where("userID", isEqualTo: App.user.id)
-          .where("orderStatus", isEqualTo: "rejected")
-          .orderBy("timeApplied", descending: true),
-      emptyListWidget: const SizedBox(
-        child: Text(
-          'No rejected application',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 20,
-            color: kPrimaryColor,
+        query: OrderDatabase.ordersCollection
+            .where("userID", isEqualTo: App.user.id)
+            .where("orderStatus", isEqualTo: "rejected")
+            .orderBy("timeApplied", descending: true),
+        emptyListWidget: const SizedBox(
+          child: Text(
+            'No rejected application',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20,
+              color: kPrimaryColor,
+            ),
           ),
         ),
-      ),
-      itemBuilder: (context, querySnapshot) {
-        Order order = Order.fromDocumentSnapshot(querySnapshot);
-        return OrderCard(order: order);
-      }
-    );
+        itemBuilder: (context, querySnapshot) {
+          Order order = Order.fromDocumentSnapshot(querySnapshot);
+          return OrderCard(order: order);
+        });
   }
-
 }

@@ -30,3 +30,5 @@ const String kLocationNullError = "الرجاء ادخال الموقع";
 const String kStartDateNullError = " الرجاء إدخال التاريخ   ";
 const String kTimeNullError = " الرجاء إدخال الوقت   ";
 const String kNullError = "الرجاء إدخال نبذة تعريفية";
+const String kdeserror = "النص يجب أن لا يتجاوز 200 حرف";
+const String kdesempty = 'رجاءً قم بادخال النبذة بشكل صحيح';
