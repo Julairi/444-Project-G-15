@@ -1,4 +1,5 @@
 import 'package:esaa/config/constants.dart';
+import 'package:esaa/screens/stripePayment/cardFormScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -119,6 +120,24 @@ class LoginAndSignupBtn extends StatelessWidget {
           ),
         ),
 
+        ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return CardFormScreen();
+                },
+              ),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+              primary: kPrimaryLightColor, elevation: 0),
+          child: Text(
+            "payment".toUpperCase(),
+            style: const TextStyle(color: Colors.black, fontSize: 16),
+          ),
+        ),
       ],
     );
   }

@@ -26,6 +26,10 @@ dependencies:
   firebase_storage: ^10.3.8
   get: ^4.6.5
   flutter_spinkit: ^5.1.0
+  flutter_stripe: ^5.1.0
+  http: ^0.13.5
+  flutter_bloc: ^8.0.1
+  equatable: ^2.0.3
 
     #google_fonts_arabic: ^1.1.7
 
