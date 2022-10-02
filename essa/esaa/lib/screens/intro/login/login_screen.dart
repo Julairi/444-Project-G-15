@@ -12,9 +12,7 @@ class LoginScreen extends StatelessWidget {
     return const TransparentAppbar(
       child: SingleChildScrollView(
         child: Responsive(
-          mobile: _MobileLoginScreen(),
-          desktop: _DesktopLoginScreen()
-        ),
+            mobile: _MobileLoginScreen(), desktop: _DesktopLoginScreen()),
       ),
     );
   }
@@ -27,7 +25,7 @@ class _DesktopLoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Row(
+    return Row(
       children: [
         Expanded(
           child: Column(

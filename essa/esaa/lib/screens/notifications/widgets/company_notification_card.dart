@@ -1,16 +1,13 @@
 import 'package:esaa/config/constants.dart';
+import 'package:esaa/controllers/controllers.dart';
+import 'package:esaa/models/models.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CompanyNotificationCard extends StatelessWidget {
-  final String uID;
-  final String companyPath;
-  final String postTitle;
-  final String notification;
+  final PushNotification notification;
   const CompanyNotificationCard({
     super.key,
-    required this.uID,
-    required this.companyPath,
-    required this.postTitle,
     required this.notification,
   });
 
@@ -64,7 +61,7 @@ class CompanyNotificationCard extends StatelessWidget {
                       ),
 
                       Text(
-                          postTitle,
+                          notification.title,
                           style: const TextStyle(
                               color: kPrimaryColor,
                               fontSize: defaultFontSize,
@@ -84,7 +81,7 @@ class CompanyNotificationCard extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      notification,
+                      notification.body,
                       style: const TextStyle(
                           color: Color.fromARGB(255, 6, 6, 6),
                           fontSize: 18,
@@ -95,14 +92,8 @@ class CompanyNotificationCard extends StatelessWidget {
                 ),
                 TextButton(
                     onPressed: () {
-                      /* Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return conotification_screen();
-                          },
-                        ),
-                      );*/
+                      Get.back();
+                      Get.find<UserController>().changePage(1);
                     },
                     child: const Text('تفاصيل الطلب')),
               ],

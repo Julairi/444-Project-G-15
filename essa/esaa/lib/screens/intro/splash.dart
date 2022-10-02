@@ -11,15 +11,13 @@ class Splash extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
-
     Future.delayed(const Duration(seconds: 2), () {
-      if(Auth().isSignedIn){
+      if (Auth().isSignedIn) {
         Get.toNamed('/');
-      }else {
-        Get.toNamed('/welcome_screen');
+      } else {
+        Get.toNamed('/login_screen');
       }
     });
 

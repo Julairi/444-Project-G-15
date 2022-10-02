@@ -12,7 +12,7 @@ class CompanyPosts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TransparentAppbar(
+    return CustomAppbar(
       child: SingleChildScrollView(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.start,

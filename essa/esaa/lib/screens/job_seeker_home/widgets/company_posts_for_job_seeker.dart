@@ -22,8 +22,10 @@ class CompanyPostsForJobSeeker extends StatelessWidget {
           CustomListView(
               query: PostDatabase.postsCollection
                   .where("companyID", isEqualTo: companyID)
-                  .where("offerStatus", isEqualTo: "pending")
-                  .orderBy("timePosted", descending: true),
+                  .where("offerStatus", whereIn: [
+                "pending",
+                "assigned"
+              ]).orderBy("timePosted", descending: true),
               emptyListWidget: const SizedBox(
                 child: Text(
                   "ليس هناك أي عروض مقدمة لهذه الشركة",

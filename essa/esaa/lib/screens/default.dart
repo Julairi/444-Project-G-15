@@ -3,19 +3,49 @@ import 'dart:io';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
+import 'package:esaa/models/models.dart';
 import 'package:esaa/screens/profile_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:overlay_support/overlay_support.dart';
 
 import 'company_home/company_home.dart';
 import 'job_seeker_home/job_seeker_home.dart';
 import 'post_job/post_job.dart';
 
-class Default extends StatelessWidget {
+
+class Default extends StatefulWidget {
   Default({Key? key}) : super(key: key) {
     Get.find<UserController>().bindUser();
   }
 
+  @override
+  State<Default> createState() => _DefaultState();
+}
+
+class _DefaultState extends State<Default> {
+
+  @override
+  void initState() {
+    registerNotification();
+
+    // For handling notification when the app is in background
+    // but not terminated
+    checkForInitialMessage();
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      PushNotification notification = PushNotification(
+        title: message.notification?.title ?? "",
+        body: message.notification?.body ?? "",
+      );
+      _showNotification(notification);
+    });
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -189,5 +219,58 @@ class Default extends StatelessWidget {
     }
 
     return widget;
+  }
+
+  void registerNotification() async {
+    final FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      badge: true,
+      provisional: false,
+      sound: true,
+    );
+
+    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        PushNotification notification = PushNotification(
+          title: message.notification?.title ?? "",
+          body: message.notification?.body ?? "",
+        );
+
+        _showNotification(notification);
+      });
+    } else {
+      if (kDebugMode) {
+        print('User declined or has not accepted permission');
+      }
+    }
+  }
+
+  checkForInitialMessage() async {
+    await Firebase.initializeApp();
+
+    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+
+    if (initialMessage != null) {
+      PushNotification notification = PushNotification(
+        title: initialMessage.notification?.title ?? "",
+        body: initialMessage.notification?.body ?? "",
+      );
+      _showNotification(notification);
+    }
+  }
+
+  void _showNotification(PushNotification notification) {
+    if (notification.body != "" && notification.title != "") {
+      showSimpleNotification(
+        Text(notification.title),
+        leading: const Icon(Icons.notifications),
+        subtitle: Text(notification.body),
+        background: kPrimaryColor,
+        duration: const Duration(seconds: 2),
+      );
+    }
   }
 }

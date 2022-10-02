@@ -1,17 +1,23 @@
 import 'package:esaa/app.dart';
 import 'package:esaa/config/constants.dart';
+import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/models/models.dart';
 import 'package:esaa/services/database/database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
+import 'package:esaa/services/notification.dart' as notification;
+
 class ApplyForm extends StatefulWidget {
   final Post post;
-  const ApplyForm({
+  ApplyForm({
     Key? key,
     required this.post,
-  }) : super(key: key);
+  }) : super(key: key) {
+    Get.put(ApplyFormController());
+    Get.find<ApplyFormController>().bindUserWithID(post.companyID);
+  }
 
   @override
   ApplyFormState createState() => ApplyFormState();
@@ -129,14 +135,20 @@ class ApplyFormState extends State<ApplyForm> {
       final applied = await OrderDatabase().doesOrderExist(order);
       if (applied) {
         Fluttertoast.showToast(
-            msg: "لقد قدمت لهذا العرض مسبقًا",
+            msg: "You have applied for this post already",
             backgroundColor: Colors.redAccent,
             textColor: kFillColor);
       } else {
         await OrderDatabase().createOrder(order.toMap());
+
+        await notification.Notification().sendNotification(
+            Get.find<ApplyFormController>().user.value,
+            PushNotification(title: "طلب جديد", body: "عرضك تلقى طلبا جديدا"));
 
         Get.offAllNamed('/');
       }
     }
   }
 }
+
+class ApplyFormController extends UserController {}

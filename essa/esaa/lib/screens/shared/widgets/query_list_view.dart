@@ -426,7 +426,6 @@ class FirestoreListView<Document> extends FirestoreQueryBuilder<Document> {
     required Query<Document> query,
     required FirestoreItemBuilder<Document> itemBuilder,
     int pageSize = 10,
-    Widget? extraItem,
     FirestoreLoadingBuilder? loadingBuilder,
     FirestoreErrorBuilder? errorBuilder,
     EmptyListBuilder? emptyListBuilder,
@@ -501,14 +500,10 @@ class FirestoreListView<Document> extends FirestoreQueryBuilder<Document> {
       }
 
       return ListView.builder(
-        itemCount: extraItem == null ? snapshot.docs.length : snapshot.docs.length + 1,
+        itemCount: snapshot.docs.length,
         itemBuilder: (context, index) {
           final isLastItem = index + 1 == snapshot.docs.length;
           if (isLastItem && snapshot.hasMore) snapshot.fetchMore();
-
-          if (extraItem != null && index == snapshot.docs.length){
-            return extraItem;
-          }
 
           final doc = snapshot.docs[index];
           return itemBuilder(context, doc);

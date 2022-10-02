@@ -15,6 +15,7 @@ class ProfileScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
+
               // This should be last in this column
               Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -27,13 +28,14 @@ class ProfileScreen extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       primary: kPrimaryColor, elevation: 0),
                   child: const Text(
-                    "تسجيل الخروج",
+                    "Logout",
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ),
               ),
             ],
           ),
-        ));
+        )
+    );
   }
 }

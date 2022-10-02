@@ -18,7 +18,8 @@ class CompanyPostDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TransparentAppbar(
+    return CustomAppbar(
+      showLeading: true,
       child: SingleChildScrollView(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -43,7 +44,7 @@ class CompanyPostDetails extends StatelessWidget {
               final count = snapshot.docs.length;
 
               return Text(
-                '$count طلبات${count > 1 ? "s" : ""}',
+                '$count طلبات${count > 1 ? "" : ""}',
                 style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Colors.black,

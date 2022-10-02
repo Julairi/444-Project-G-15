@@ -233,7 +233,7 @@ class OrderDetails extends StatelessWidget {
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 10.0),
                                   child: Text(
-                                    "Reject",
+                                    "ارفض",
                                     style: TextStyle(
                                         color: kFillColor, fontSize: 16),
                                   ),
@@ -269,7 +269,7 @@ class OrderDetails extends StatelessWidget {
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 10.0),
                                   child: Text(
-                                    "Accept",
+                                    "اقبل",
                                     style: TextStyle(
                                         color: kFillColor, fontSize: 16),
                                   ),
@@ -295,7 +295,7 @@ class OrderDetails extends StatelessWidget {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 10.0),
                             child: Text(
-                              order.hasBeenPaid ? "Paid" : "Pay",
+                              order.hasBeenPaid ? "تم الدفع" : "ادفع",
                               style: const TextStyle(
                                   color: kFillColor, fontSize: 16),
                             ),
@@ -328,7 +328,7 @@ class OrderDetails extends StatelessWidget {
                   children: [
                     const SizedBox(height: 30),
                     const Text(
-                      "Are you sure you want to accept this request?",
+                      "هل أنت متأكد برغبتك بقبول هذا الطلب؟",
                       style: TextStyle(color: Colors.black, fontSize: 20),
                       textAlign: TextAlign.center,
                     ),
@@ -345,7 +345,7 @@ class OrderDetails extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
                                 Text(
-                                  "Cancel",
+                                  "الغاء",
                                   style: TextStyle(
                                       color: kFillColor, fontSize: 16),
                                 ),
@@ -367,7 +367,7 @@ class OrderDetails extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
                                 Text(
-                                  "Accept",
+                                  "اقبل",
                                   style: TextStyle(
                                       color: kFillColor, fontSize: 16),
                                 ),
@@ -442,7 +442,7 @@ class OrderDetails extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
                                 Text(
-                                  "Cancel",
+                                  "إلغاء",
                                   style: TextStyle(
                                       color: kFillColor, fontSize: 16),
                                 ),

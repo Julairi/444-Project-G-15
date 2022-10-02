@@ -2,6 +2,7 @@ import 'package:esaa/config/constants.dart';
 import 'package:esaa/models/models.dart';
 import 'package:esaa/screens/intro/intro.dart';
 import 'package:esaa/services/services.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -328,6 +329,8 @@ class SignUpFormState extends State<SignUpForm> {
     jobSeeker.email = emailEditingController.text;
     jobSeeker.userType = "jobSeeker";
     jobSeeker.sex = "Female"; //todo get properly
+    String? token = await FirebaseMessaging.instance.getToken();
+    jobSeeker.notificationToken = token ?? "";
 
     await UserDatabase(uID).createUser(jobSeeker.toMap());
   }

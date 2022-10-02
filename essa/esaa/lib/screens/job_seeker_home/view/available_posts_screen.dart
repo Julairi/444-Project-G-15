@@ -10,54 +10,57 @@ class AvailablePostsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TransparentAppbar(
+    return CustomAppbar(
       child: SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
           child: Column(
-        children: [
-          Center(
-            child: StreamBuilder<List<Post>>(
-                stream: PostDatabase().getAvailablePosts(),
-                builder: (context, snapshot) {
-                  int postCount = 0;
+            children: [
+              Center(
+                child: StreamBuilder<List<Post>>(
+                    stream: PostDatabase().getAvailablePosts(),
+                    builder: (context, snapshot) {
+                      int postCount = 0;
 
-                  if (snapshot.hasData) {
-                    postCount = snapshot.data?.length ?? 0;
-                  }
+                      if (snapshot.hasData) {
+                        postCount = snapshot.data?.length ?? 0;
+                      }
 
-                  return SizedBox(
+                      return SizedBox(
+                        child: Text(
+                          '$postCount المنشورات المتاحة${postCount > 1 ? "" : ""}',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),
+                        ),
+                      );
+                    }),
+              ),
+              const SizedBox(height: 10),
+              CustomListView(
+                  query: PostDatabase.postsCollection.where("offerStatus",
+                      whereIn: [
+                        "pending",
+                        "assigned"
+                      ]).orderBy("timePosted", descending: true),
+                  emptyListWidget: const SizedBox(
                     child: Text(
-                      '$postCount المنشورات المتاحة${postCount > 1 ? "s" : ""}',
+                      'ليس هناك أي منشورات في الوقت الحالي',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: kPrimaryColor,
                       ),
                     ),
-                  );
-                }),
-          ),
-          const SizedBox(height: 10),
-          CustomListView(
-              query: PostDatabase.postsCollection
-                  .where("offerStatus", isEqualTo: "pending")
-                  .orderBy("timePosted", descending: true),
-              emptyListWidget: const SizedBox(
-                child: Text(
-                  'ليس هناك أي منشورات في الوقت الحالي',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: kPrimaryColor,
                   ),
-                ),
-              ),
-              itemBuilder: (context, querySnapshot) {
-                Post post = Post.fromDocumentSnapshot(querySnapshot);
-                return PostCardJobSeeker(post: post);
-              }),
-        ],
-      )),
+                  itemBuilder: (context, querySnapshot) {
+                    Post post = Post.fromDocumentSnapshot(querySnapshot);
+                    return PostCardJobSeeker(post: post);
+                  }),
+            ],
+          )),
     );
   }
 }

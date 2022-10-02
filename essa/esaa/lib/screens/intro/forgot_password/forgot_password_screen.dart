@@ -66,7 +66,6 @@ class _MobileForgotPasswordScreen extends StatelessWidget {
             Spacer(),
           ],
         ),
-        // const SocalSignUp()
       ],
     );
   }

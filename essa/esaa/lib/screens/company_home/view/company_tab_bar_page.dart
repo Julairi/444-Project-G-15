@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esaa/app.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/models/models.dart';
@@ -34,7 +33,7 @@ class CompanyTabBarPageState extends State<CompanyTabBarPage>
 
   @override
   Widget build(BuildContext context) {
-    return TransparentAppbar(
+    return CustomAppbar(
       child: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height - 150,

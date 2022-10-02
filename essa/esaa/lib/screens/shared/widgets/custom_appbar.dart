@@ -49,7 +49,7 @@ class CustomAppbar extends StatelessWidget {
                   ? IconButton(
                     onPressed: () {
                       if(App.user.userType == 'jobSeeker'){
-                        Get.to(() => JobSeekerNotificationScreen());
+                        Get.to(() => const JobSeekerNotificationScreen());
                       }else{
                         Get.to(() => const CompanyNotificationScreen());
                       }

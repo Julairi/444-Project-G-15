@@ -1,24 +1,24 @@
 import 'package:esaa/config/constants.dart';
+import 'package:esaa/controllers/controllers.dart';
+import 'package:esaa/models/models.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class JobSeekerNotificationCard extends StatelessWidget {
-  final String uID;
-  final String companyPath;
-  final String companyName;
-
-  final String notification;
+  final PushNotification notification;
   const JobSeekerNotificationCard({
     super.key,
-    required this.uID,
-    required this.companyPath,
-    required this.companyName,
     required this.notification,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        child: Card(
+      onTap: () {
+        Get.back();
+        Get.find<UserController>().changePage(1);
+      },
+      child: Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
@@ -65,7 +65,7 @@ class JobSeekerNotificationCard extends StatelessWidget {
                       ),
 
                       Text(
-                          companyName,
+                          notification.title,
                           style: const TextStyle(
                               color: kPrimaryColor,
                               fontSize: defaultFontSize,
@@ -84,7 +84,7 @@ class JobSeekerNotificationCard extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  notification,
+                  notification.body,
                   style: const TextStyle(
                       color: Color.fromARGB(255, 6, 6, 6),
                       fontSize: 18,

@@ -4,7 +4,6 @@ import 'package:esaa/screens/company_home/view/company_post_details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class PostCardCompany extends StatelessWidget {
   final Post post;
   final List<String> filters;
@@ -38,7 +37,6 @@ class PostCardCompany extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-
                   Positioned(
                     child: Container(
                       height: 50,
@@ -51,12 +49,15 @@ class PostCardCompany extends StatelessWidget {
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: [
-                                const Color.fromARGB(255, 105, 110, 112).withOpacity(0),
-                                const Color.fromARGB(255, 64, 69, 71).withOpacity(0.2)
-                              ],
-                              stops: const [0.6, 1]
-                          )
-                      ),
+                            const Color.fromARGB(255, 105, 110, 112)
+                                .withOpacity(0),
+                            const Color.fromARGB(255, 64, 69, 71)
+                                .withOpacity(0.2)
+                          ],
+                              stops: const [
+                            0.6,
+                            1
+                          ])),
                       child: Row(
                         children: [
                           const SizedBox(
@@ -96,26 +97,21 @@ class PostCardCompany extends StatelessWidget {
                       children: [
                         GestureDetector(
                             child: Text(
-                                '${post.acceptedApplicants}/${post.maxNoOfApplicants} Accepted Orders',
+                                '${post.acceptedApplicants}/${post.maxNoOfApplicants} طلبات مقبولة',
                                 style: const TextStyle(
                                     color: Colors.blue,
                                     fontSize: defaultFontSize,
                                     fontWeight: FontWeight.bold,
                                     decoration: TextDecoration.underline,
-                                    overflow: TextOverflow.ellipsis
-                                )
-                            ),
-
-                            onTap: () => Get.to(() => CompanyPostDetails(post: post, filters: filters))
-                        )
+                                    overflow: TextOverflow.ellipsis)),
+                            onTap: () => Get.to(() => CompanyPostDetails(
+                                post: post, filters: filters)))
                       ],
                     ),
-
                     const SizedBox(
                       height: 20,
                       width: 15,
                     ),
-
                     Row(
                       children: [
                         const Icon(
@@ -126,23 +122,18 @@ class PostCardCompany extends StatelessWidget {
                           height: 20,
                           width: 10,
                         ),
-                        Text(
-                            post.city,
+                        Text(post.city,
                             style: const TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: defaultFontSize,
                                 fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.fade
-                            )
-                        )
+                                overflow: TextOverflow.fade))
                       ],
                     ),
-
                     const SizedBox(
                       height: 20,
                       width: 15,
                     ),
-
                     Row(
                       children: [
                         const Icon(
@@ -158,9 +149,7 @@ class PostCardCompany extends StatelessWidget {
                                 color: kPrimaryColor,
                                 fontSize: defaultFontSize,
                                 fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.ellipsis
-                            )
-                        )
+                                overflow: TextOverflow.ellipsis))
                       ],
                     ),
                   ],
@@ -168,7 +157,6 @@ class PostCardCompany extends StatelessWidget {
               )
             ],
           ),
-        )
-    );
+        ));
   }
 }

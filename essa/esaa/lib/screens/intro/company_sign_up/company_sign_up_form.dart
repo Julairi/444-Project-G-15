@@ -276,8 +276,7 @@ class CompanySignUpFormState extends State<CompanySignUpForm> {
             children: [
               _image != null
                   ? CircleAvatar(
-                      radius: 70, backgroundImage: MemoryImage(_image!)
-                  )
+                      radius: 70, backgroundImage: MemoryImage(_image!))
                   : GestureDetector(
                       onTap: selectImage,
                       child: SizedBox(
@@ -286,21 +285,13 @@ class CompanySignUpFormState extends State<CompanySignUpForm> {
                         child: Image.asset("assets/logo.png"),
                       ),
                     ),
-
               const Padding(padding: EdgeInsets.all(defaultPadding)),
-
               const SizedBox(height: defaultPadding / 2),
-
               nameField,
-
               const SizedBox(height: defaultPadding / 2),
-
               emailField,
-
               const SizedBox(height: defaultPadding / 2),
-
               passwordField,
-
               Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -308,30 +299,20 @@ class CompanySignUpFormState extends State<CompanySignUpForm> {
                   Text("* يجب ان تحتوي كلمة المرور على ٨ حروف على الاقل")
                 ],
               ),
-
               const SizedBox(height: defaultPadding / 2),
-
               confirmPasswordField,
-
               const SizedBox(height: defaultPadding / 2),
-
               addressField,
-
               const SizedBox(height: defaultPadding / 2),
-
               contactInfoField,
-
               const SizedBox(height: defaultPadding / 2),
-
               descriptionField,
-
               const Padding(padding: EdgeInsets.all(defaultPadding)),
-
               const SizedBox(height: defaultPadding / 2),
-
               ElevatedButton(
                 onPressed: () {
-                  signUp(emailEditingController.text, passwordEditingController.text);
+                  signUp(emailEditingController.text,
+                      passwordEditingController.text);
 
                   /* Navigator.push(
                   context,
@@ -342,19 +323,14 @@ class CompanySignUpFormState extends State<CompanySignUpForm> {
                   ),
                 );*/
                 },
-                child: Text(
-                    "انشاء حساب".toUpperCase(),
-                    style: const TextStyle(fontSize: 16)
-                ),
+                child: Text("انشاء حساب".toUpperCase(),
+                    style: const TextStyle(fontSize: 16)),
               ),
-
               const SizedBox(height: defaultPadding),
-
               AlreadyHasAnAccount(
                 login: false,
                 press: () => Get.toNamed('/login_screen'),
               ),
-
               const SizedBox(height: defaultPadding),
             ],
           ),
@@ -373,7 +349,6 @@ class CompanySignUpFormState extends State<CompanySignUpForm> {
         Fluttertoast.showToast(msg: "تم إنشاء حسابك بنجاح ");
 
         Get.offAllNamed('/');
-
       } else {
         Auth().authFailed();
 
@@ -385,7 +360,7 @@ class CompanySignUpFormState extends State<CompanySignUpForm> {
 
   Future<void> _createCompany(String uID) async {
     String imgUrl = "";
-    if(_image != null) {
+    if (_image != null) {
       imgUrl = await Storage().uploadImageToString("companyLogo ", _image!);
     }
 

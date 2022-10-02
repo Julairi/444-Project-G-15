@@ -17,10 +17,11 @@ class OrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
         onTap: () async {
-          if (post == null) {
+          if(post == null){
             final orderPost = await PostDatabase().getPost(order.postID);
 
             Get.to(() => PostDetails(post: orderPost!, canApply: false));
+
           } else {
             Get.to(() => OrderDetails(order: order, post: post!));
           }
@@ -59,15 +60,12 @@ class OrderCard extends StatelessWidget {
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: [
-                            const Color.fromARGB(255, 105, 110, 112)
-                                .withOpacity(0),
-                            const Color.fromARGB(255, 64, 69, 71)
-                                .withOpacity(0.2)
-                          ],
-                              stops: const [
-                            0.6,
-                            1
-                          ])),
+                                const Color.fromARGB(255, 105, 110, 112).withOpacity(0),
+                                const Color.fromARGB(255, 64, 69, 71).withOpacity(0.2)
+                              ],
+                              stops: const [0.6, 1]
+                          )
+                      ),
                       child: Row(
                         children: [
                           const SizedBox(
@@ -122,44 +120,53 @@ class OrderCard extends StatelessWidget {
                           width: 10,
                         ),
                         GestureDetector(
-                            child: const Text("تفاصيل الطلب",
+                            child: const Text(
+                                "تفاصيل الطلب",
                                 style: TextStyle(
                                     color: Colors.blue,
                                     fontSize: defaultFontSize,
                                     fontWeight: FontWeight.bold,
                                     decoration: TextDecoration.underline,
-                                    overflow: TextOverflow.ellipsis)),
+                                    overflow: TextOverflow.ellipsis
+                                )
+                            ),
                             onTap: () async {
-                              if (post == null) {
-                                final orderPost =
-                                    await PostDatabase().getPost(order.postID);
+                              if(post == null){
+                                final orderPost = await PostDatabase().getPost(order.postID);
 
-                                Get.to(() => PostDetails(
-                                    post: orderPost!, canApply: false));
+                                Get.to(() => PostDetails(post: orderPost!, canApply: false));
+
                               } else {
-                                Get.to(() =>
-                                    OrderDetails(order: order, post: post!));
+                                Get.to(() => OrderDetails(order: order, post: post!));
                               }
-                            }),
+                            },
+                        ),
                       ],
                     ),
+
                     const SizedBox(
                       height: 20,
                       width: 15,
                     ),
-                    if (order.orderStatus == "accepted")
-                      Text(order.hasBeenPaid ? "Paid" : "Unpaid",
+
+                    if(order.orderStatus == "accepted")
+                      Text(
+                          order.hasBeenPaid ? "Paid" :"Unpaid" ,
                           style: TextStyle(
-                              color:
-                                  order.hasBeenPaid ? Colors.green : Colors.red,
+                              color: order.hasBeenPaid ? Colors.green : Colors.red,
                               fontSize: defaultFontSize,
                               fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.ellipsis)),
+                              overflow: TextOverflow.ellipsis
+                          )
+                      ),
+
                   ],
                 ),
               )
             ],
           ),
-        ));
+        )
+    );
   }
 }
+
