@@ -1,4 +1,5 @@
 import 'package:esaa/config/constants.dart';
+import 'package:esaa/screens/intro/sign_up/jsandcomscreen.dart';
 import 'package:esaa/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -93,40 +94,59 @@ class LoginFormState extends State<LoginForm> {
             width: 290,
             child: Image.asset("assets/logo.png"),
           ),
-
           const Padding(padding: EdgeInsets.all(defaultPadding)),
-
           const SizedBox(height: defaultPadding / 2),
-
           emailField,
-
           const SizedBox(height: defaultPadding / 2),
-
           passField,
-
           const Padding(padding: EdgeInsets.all(defaultPadding)),
-
           const SizedBox(height: defaultPadding / 2),
-
           ElevatedButton(
-            onPressed: () => login(emailEditingController.text, passEditingController.text),
-            child: Text("تسجيل الدخول".toUpperCase(), style: const TextStyle(fontSize: 16)),
+            onPressed: () =>
+                login(emailEditingController.text, passEditingController.text),
+            child: Text("تسجيل الدخول".toUpperCase(),
+                style: const TextStyle(fontSize: 16)),
           ),
-
           GestureDetector(
             onTap: () => Get.toNamed('/forgot_password'),
             child: Column(
               children: const [
                 Padding(padding: EdgeInsets.all(defaultPadding)),
-
                 SizedBox(height: defaultPadding / 4),
-
                 Text(
                   'نسيت كلمة المرور',
                   style: TextStyle(
                     color: kPrimaryColor,
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return jscomsignup();
+                  },
+                ),
+              );
+            },
+            child: Column(
+              children: const [
+                Padding(padding: EdgeInsets.all(defaultPadding)),
+                SizedBox(height: defaultPadding / 4),
+                Text(
+                  'لا تمتلك حساب؟ تسجيل حساب جديد',
+                  style: TextStyle(
+                    color: kPrimaryColor,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                    decoration: TextDecoration.underline,
                   ),
                 ),
               ],
@@ -137,48 +157,39 @@ class LoginFormState extends State<LoginForm> {
     );
   }
 
-  Widget okButton = TextButton(
-    child: const Text('الغاء'),
-    onPressed: () => Get.back()
-  );
+  Widget okButton =
+      TextButton(child: const Text('الغاء'), onPressed: () => Get.back());
 
   void login(String email, String password) async {
     if (_formKey.currentState!.validate()) {
-
-
-        await Auth().signInWithEmail(
-            email,
-            password,
-            exceptionBuilder: (FirebaseAuthException e){
-              if (e.code == 'user-not-found') {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      content: const Text('ليس هناك حساب لهذا البريد الالكتروني'),
-                      actions: [okButton],
-                    );
-                  },
-                );
-              }
-              else if (e.code == 'wrong-password') {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      content:
-                      const Text('البريد الالكتروني/كلمة المرور غير صحيحة'),
-                      actions: [okButton],
-                    );
-                  },
-                );
-              }
-            }
-        );
-
-        if (Auth().isSignedIn) {
-          Get.offAllNamed('/');
+      await Auth().signInWithEmail(email, password,
+          exceptionBuilder: (FirebaseAuthException e) {
+        if (e.code == 'user-not-found') {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: const Text('ليس هناك حساب لهذا البريد الالكتروني'),
+                actions: [okButton],
+              );
+            },
+          );
+        } else if (e.code == 'wrong-password') {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: const Text('البريد الالكتروني/كلمة المرور غير صحيحة'),
+                actions: [okButton],
+              );
+            },
+          );
         }
+      });
+
+      if (Auth().isSignedIn) {
+        Get.offAllNamed('/');
+      }
     }
   }
 }

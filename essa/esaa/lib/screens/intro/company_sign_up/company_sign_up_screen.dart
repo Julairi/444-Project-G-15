@@ -10,16 +10,15 @@ class CompanySignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: const Background(
-        child: SingleChildScrollView(
-          child: Responsive(
-            mobile: _MobileSignupScreen(),
-            desktop: _DesktopSignupScreen(),
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: const TransparentAppbar(
+          child: SingleChildScrollView(
+            child: Responsive(
+              mobile: _MobileSignupScreen(),
+              desktop: _DesktopSignupScreen(),
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
 
@@ -61,16 +60,13 @@ class _MobileSignupScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         const SignUpScreenTopImage(),
-
         Row(
           children: const [
             Spacer(),
-
             Expanded(
               flex: 8,
               child: CompanySignUpForm(),
             ),
-
             Spacer(),
           ],
         ),

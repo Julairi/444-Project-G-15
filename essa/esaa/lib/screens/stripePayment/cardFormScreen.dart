@@ -51,13 +51,13 @@ class CardFormScreen extends StatelessWidget {
       if (errorr is StripeException) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('An error occured ${errorr.error.localizedMessage}'),
+            content: Text('حدث خطآ في ${errorr.error.localizedMessage}'),
           ),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('An error occured $errorr'),
+            content: Text('حدث خطأ في $errorr'),
           ),
         );
       }

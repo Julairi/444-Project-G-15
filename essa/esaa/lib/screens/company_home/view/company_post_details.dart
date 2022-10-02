@@ -12,75 +12,70 @@ class CompanyPostDetails extends StatelessWidget {
   final Post post;
   final List<String> filters;
 
-  const CompanyPostDetails({required this.post, required this.filters, Key? key}): super(key: key);
+  const CompanyPostDetails(
+      {required this.post, required this.filters, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return CustomAppbar(
-      showLeading: true,
+    return TransparentAppbar(
       child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(height: 10),
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const SizedBox(height: 10),
+          FirestoreQueryBuilder<Object?>(
+            query: OrderDatabase.ordersCollection
+                .where("postID", isEqualTo: post.id)
+                .where("orderStatus", whereIn: filters),
+            builder: (context, snapshot, _) {
+              if (snapshot.isFetching) {
+                return const SpinKitRing(
+                  color: kFillColor,
+                  size: 24.0,
+                );
+              }
 
-            FirestoreQueryBuilder<Object?>(
+              if (snapshot.hasError) {
+                Fluttertoast.showToast(msg: '${snapshot.error}');
+              }
+
+              final count = snapshot.docs.length;
+
+              return Text(
+                '$count طلبات${count > 1 ? "s" : ""}',
+                style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                    fontSize: 20),
+              );
+            },
+          ),
+          const SizedBox(height: 10),
+          CustomListView(
               query: OrderDatabase.ordersCollection
                   .where("postID", isEqualTo: post.id)
-                  .where("orderStatus", whereIn: filters),
-              builder: (context, snapshot, _) {
-                if (snapshot.isFetching) {
-                  return const SpinKitRing(
-                    color: kFillColor,
-                    size: 24.0,
-                  );
-                }
-
-                if (snapshot.hasError) {
-                  Fluttertoast.showToast(msg: '${snapshot.error}');
-                }
-
-                final count = snapshot.docs.length;
-
-                return Text(
-                  '$count Order${count > 1 ? "s" : ""}',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                      fontSize: 20
-                  ),
-                );
-              },
-            ),
-
-            const SizedBox(height: 10),
-
-            CustomListView(
-                query: OrderDatabase.ordersCollection
-                    .where("postID", isEqualTo: post.id)
-                    .where("orderStatus", whereIn: filters)
-                    .orderBy("timeApplied", descending: true),
-                emptyListWidget: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 40.0),
-                    child: Text(
-                      'No request has been ${filters.contains("pending") ? "made" : "accepted"} for this post',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        color: kPrimaryColor,
-                      ),
+                  .where("orderStatus", whereIn: filters)
+                  .orderBy("timeApplied", descending: true),
+              emptyListWidget: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 40.0),
+                  child: Text(
+                    'ليس هناك طلبات ${filters.contains("pending") ? "مقدمة" : "مقبولة"} لهذا العرض',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      color: kPrimaryColor,
                     ),
                   ),
                 ),
-                itemBuilder: (context, querySnapshot) {
-                  Order order = Order.fromDocumentSnapshot(querySnapshot);
-                  return OrderCard(order: order, post: post);
-                }
-            ),
-          ],
-        )
-      ),
+              ),
+              itemBuilder: (context, querySnapshot) {
+                Order order = Order.fromDocumentSnapshot(querySnapshot);
+                return OrderCard(order: order, post: post);
+              }),
+        ],
+      )),
     );
   }
 }

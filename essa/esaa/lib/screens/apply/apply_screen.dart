@@ -14,7 +14,7 @@ class ApplyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomAppbar(
+    return TransparentAppbar(
       child: SingleChildScrollView(
         child: Responsive(
           mobile: _MobileApplyScreen(post: post),
@@ -44,7 +44,6 @@ class _DesktopApplyScreen extends StatelessWidget {
                 width: 450,
                 child: ApplyForm(post: post), //change
               ),
-
               const SizedBox(height: defaultPadding / 2),
             ],
           ),
@@ -69,14 +68,12 @@ class _MobileApplyScreen extends StatelessWidget {
         Row(
           children: [
             const Spacer(),
-
             Expanded(
               flex: 8,
               child: ApplyForm(
                 post: post,
               ),
             ),
-
             const Spacer(),
           ],
         ),

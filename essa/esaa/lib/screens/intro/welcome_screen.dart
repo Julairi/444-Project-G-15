@@ -85,41 +85,23 @@ class LoginAndSignupBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Hero(
-          tag: "login_btn",
-          child: ElevatedButton(
-            onPressed: () => Get.toNamed('/company_sign_up_screen'),
-            child: Text(
-              "تسجيل كشركة".toUpperCase(),
-              style: const TextStyle(fontSize: 16),
-            ),
-          ),
+        SizedBox(
+          height: 200,
+          width: 290,
+          child: Image.asset("assets/logo.png"),
         ),
 
-        const SizedBox(height: 16),
-
-        ElevatedButton(
-          onPressed: () => Get.toNamed('/sign_up_screen'),
-          style: ElevatedButton.styleFrom(
-              primary: kPrimaryLightColor, elevation: 0),
-          child: Text(
-            " تسجيل كباحث عن عمل".toUpperCase(),
-            style: const TextStyle(color: Colors.black, fontSize: 16),
-          ),
-        ),
         //test
         const SizedBox(height: 16),
 
         ElevatedButton(
           onPressed: () => Get.toNamed('/login_screen'),
-          style: ElevatedButton.styleFrom(
-              primary: kPrimaryLightColor, elevation: 0),
           child: Text(
             "تسجيل الدخول".toUpperCase(),
-            style: const TextStyle(color: Colors.black, fontSize: 16),
+            style: const TextStyle(color: Colors.white, fontSize: 16),
           ),
         ),
-
+        const SizedBox(height: 16),
         ElevatedButton(
           onPressed: () {
             Navigator.push(
@@ -131,11 +113,9 @@ class LoginAndSignupBtn extends StatelessWidget {
               ),
             );
           },
-          style: ElevatedButton.styleFrom(
-              primary: kPrimaryLightColor, elevation: 0),
           child: Text(
             "payment".toUpperCase(),
-            style: const TextStyle(color: Colors.black, fontSize: 16),
+            style: const TextStyle(color: Colors.white, fontSize: 16),
           ),
         ),
       ],

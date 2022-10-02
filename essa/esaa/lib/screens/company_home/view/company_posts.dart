@@ -8,40 +8,37 @@ import 'package:esaa/services/database/database.dart';
 import 'package:flutter/material.dart';
 
 class CompanyPosts extends StatelessWidget {
-  const CompanyPosts({Key? key}): super(key: key);
+  const CompanyPosts({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return CustomAppbar(
+    return TransparentAppbar(
       child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(height: 10),
-
-            CustomListView(
-                query: PostDatabase.postsCollection
-                    .where("companyID", isEqualTo: App.user.id)
-                    .orderBy("timePosted", descending: true),
-                emptyListWidget: const SizedBox(
-                  child: Text(
-                    'No offers posted',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: kPrimaryColor,
-                    ),
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const SizedBox(height: 10),
+          CustomListView(
+              query: PostDatabase.postsCollection
+                  .where("companyID", isEqualTo: App.user.id)
+                  .orderBy("timePosted", descending: true),
+              emptyListWidget: const SizedBox(
+                child: Text(
+                  'لا توجد عروض منشورة',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: kPrimaryColor,
                   ),
                 ),
-                itemBuilder: (context, querySnapshot) {
-                  Post post = Post.fromDocumentSnapshot(querySnapshot);
-                  return PostCardCompany(post: post, filters: const ["pending", "accepted"]);
-                }
-            ),
-
-          ],
-        )
-      ),
+              ),
+              itemBuilder: (context, querySnapshot) {
+                Post post = Post.fromDocumentSnapshot(querySnapshot);
+                return PostCardCompany(
+                    post: post, filters: const ["pending", "accepted"]);
+              }),
+        ],
+      )),
     );
   }
 }

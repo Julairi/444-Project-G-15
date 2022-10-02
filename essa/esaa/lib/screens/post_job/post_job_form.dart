@@ -243,7 +243,8 @@ class PostJobFormState extends State<PostJobForm> {
     final noOfHours = TextFormField(
       controller: noOfHoursEditingController,
       cursorColor: kPrimaryColor,
-      keyboardType: const TextInputType.numberWithOptions(signed: false, decimal: true),
+      keyboardType:
+          const TextInputType.numberWithOptions(signed: false, decimal: true),
       textInputAction: TextInputAction.next,
       onSaved: (value) {
         noOfHoursEditingController.text = value!;
@@ -328,7 +329,7 @@ class PostJobFormState extends State<PostJobForm> {
         prefixIcon: const Padding(
           padding: EdgeInsets.all(defaultPadding),
         ),
-        labelText: "Max no. of applicants",
+        labelText: "العدد الأقصى للمقدمين",
         floatingLabelStyle: const TextStyle(
           color: kTextColor,
           fontSize: 20,
@@ -345,43 +346,24 @@ class PostJobFormState extends State<PostJobForm> {
         child: Column(
           children: [
             const Padding(padding: EdgeInsets.all(defaultPadding)),
-
             const SizedBox(height: defaultPadding / 2),
-
             titleField,
-
             const SizedBox(height: defaultPadding / 2),
-
             descriptionField,
-
             const SizedBox(height: defaultPadding / 2),
-
             locationField,
-
             const SizedBox(height: defaultPadding / 2),
-
             startDate,
-
             const SizedBox(height: defaultPadding / 2),
-
             noOfHours,
-
             const SizedBox(height: defaultPadding / 2),
-
             time,
-
             const SizedBox(height: defaultPadding / 2),
-
             payPerHour,
-
             const SizedBox(height: defaultPadding / 2),
-
             maxNoOfApplicants,
-
             const Padding(padding: EdgeInsets.all(defaultPadding)),
-
             const SizedBox(height: defaultPadding / 2),
-
             ElevatedButton(
               onPressed: () async {
                 final controller = Get.find<UserController>();
@@ -398,7 +380,10 @@ class PostJobFormState extends State<PostJobForm> {
                   post.offerStatus = 'pending';
                   post.companyID = App.user.id;
                   post.companyName = App.user.name;
-                  post.maxNoOfApplicants = applicantsEditingController.text == "" ? "1" : applicantsEditingController.text;
+                  post.maxNoOfApplicants =
+                      applicantsEditingController.text == ""
+                          ? "1"
+                          : applicantsEditingController.text;
                   post.acceptedApplicants = "0";
 
                   controller.isLoading.value = true; //Show Indicator
@@ -410,37 +395,31 @@ class PostJobFormState extends State<PostJobForm> {
                   Get.find<UserController>().changePage(1);
                 }
               },
-              child:
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-
-                      //Show indicator if post is being created, hide otherwise
-                      GetX<UserController>(
-                        builder: (controller) {
-                          return Visibility(
-                            visible: controller.isLoading.value,
-                              child: LayoutBuilder (
-                                builder: (context, constraints) {
-                                  return const SpinKitRing(
-                                    color: kFillColor,
-                                    size: 24.0,
-                                  );
-                                }
-                              )
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  //Show indicator if post is being created, hide otherwise
+                  GetX<UserController>(builder: (controller) {
+                    return Visibility(
+                        visible: controller.isLoading.value,
+                        child: LayoutBuilder(builder: (context, constraints) {
+                          return const SpinKitRing(
+                            color: kFillColor,
+                            size: 24.0,
                           );
-                        }
-                      ),
+                        }));
+                  }),
 
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: defaultPadding * 2),
-                        child: Text("ارسال".toUpperCase(), style: const TextStyle(fontSize: 16)),
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: defaultPadding * 2),
+                    child: Text("ارسال".toUpperCase(),
+                        style: const TextStyle(fontSize: 16)),
                   ),
+                ],
+              ),
             ),
-
             const SizedBox(height: defaultPadding),
           ],
         ),
