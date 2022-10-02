@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
 
-  late String name, address, id, nationalID, contact, email, imgUrl, sex, userType, description;
+  late String name, address, id, nationalID, contact, email, imgUrl, sex, userType, description, notificationToken;
 
 
   User({
@@ -16,6 +16,7 @@ class User {
     required this.sex,
     required this.userType,
     required this.description,
+    required this.notificationToken,
   });
 
   User.empty(){
@@ -29,6 +30,7 @@ class User {
     contact = "";
     address = "";
     description = "";
+    notificationToken = "";
   }
 
   String get firstName {
@@ -57,6 +59,7 @@ class User {
       'contact': contact,
       'address': address,
       'description': description,
+      'notificationToken': notificationToken,
     };
   }
 
@@ -72,6 +75,7 @@ class User {
         contact: snapshot.get('contact') ?? "",
         address: snapshot.get('address') ?? "",
         description: snapshot.get('description') ?? "",
+        notificationToken: snapshot.get('notificationToken') ?? "",
     );
   }
 
