@@ -295,7 +295,7 @@ class OrderDetails extends StatelessWidget {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 10.0),
                             child: Text(
-                              order.hasBeenPaid ? "Paid" : "Pay",
+                              order.hasBeenPaid ? "تم الدفع" : "ادفع",
                               style: const TextStyle(
                                   color: kFillColor, fontSize: 16),
                             ),
@@ -328,7 +328,7 @@ class OrderDetails extends StatelessWidget {
                   children: [
                     const SizedBox(height: 30),
                     const Text(
-                      "Are you sure you want to accept this request?",
+                      "هل أنت متأكد برغبتك بقبول هذا الطلب؟",
                       style: TextStyle(color: Colors.black, fontSize: 20),
                       textAlign: TextAlign.center,
                     ),

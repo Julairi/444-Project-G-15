@@ -102,22 +102,6 @@ class LoginAndSignupBtn extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return CardFormScreen();
-                },
-              ),
-            );
-          },
-          child: Text(
-            "payment".toUpperCase(),
-            style: const TextStyle(color: Colors.white, fontSize: 16),
-          ),
-        ),
       ],
     );
   }

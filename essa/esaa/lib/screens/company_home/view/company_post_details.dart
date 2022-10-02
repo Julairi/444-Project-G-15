@@ -43,7 +43,7 @@ class CompanyPostDetails extends StatelessWidget {
               final count = snapshot.docs.length;
 
               return Text(
-                '$count طلبات${count > 1 ? "s" : ""}',
+                '$count طلبات${count > 1 ? "" : ""}',
                 style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Colors.black,

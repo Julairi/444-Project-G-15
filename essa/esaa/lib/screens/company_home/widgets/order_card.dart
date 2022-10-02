@@ -148,7 +148,7 @@ class OrderCard extends StatelessWidget {
                       width: 15,
                     ),
                     if (order.orderStatus == "accepted")
-                      Text(order.hasBeenPaid ? "Paid" : "Unpaid",
+                      Text(order.hasBeenPaid ? "تم الدفع" : "لم يتم الدفع",
                           style: TextStyle(
                               color:
                                   order.hasBeenPaid ? Colors.green : Colors.red,
