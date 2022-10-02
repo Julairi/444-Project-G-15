@@ -60,7 +60,9 @@ class ApplyFormState extends State<ApplyForm> {
       validator: (value) {
         if (value!.isEmpty) {
           return kNullError;
-        }
+        } else if (value.length >= 500)
+          return kdeserror;
+        else if (value == '') return kdesempty;
         return null;
       },
       textInputAction: TextInputAction.next,
