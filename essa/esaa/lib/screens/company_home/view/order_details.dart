@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/models/models.dart';
@@ -7,6 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+
+import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:developer';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 
 class OrderDetails extends StatelessWidget {
   final Order order;
@@ -21,7 +31,9 @@ class OrderDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<OrderDetailsController>();
-    return TransparentAppbar(
+    var riyals = calcRiyal(order);
+    return CustomAppbar(
+      showLeading: true,
       child: SingleChildScrollView(
           child: Container(
         color: Colors.white,
@@ -134,7 +146,7 @@ class OrderDetails extends StatelessWidget {
                               color: Color.fromARGB(255, 237, 229, 109),
                               size: 28),
                           SizedBox(width: 5),
-                          Text("المهارات",
+                          Text(":المهارات",
                               style: TextStyle(
                                   color: kPrimaryColor,
                                   fontSize: defaultFontSize,
@@ -169,7 +181,7 @@ class OrderDetails extends StatelessWidget {
                               color: Color.fromARGB(255, 237, 229, 109),
                               size: 28),
                           SizedBox(width: 5),
-                          Text("الملخص",
+                          Text(":النبذة التعريفية",
                               style: TextStyle(
                                   color: kPrimaryColor,
                                   fontSize: defaultFontSize,
@@ -221,7 +233,7 @@ class OrderDetails extends StatelessWidget {
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 10.0),
                                   child: Text(
-                                    "رفض",
+                                    "Reject",
                                     style: TextStyle(
                                         color: kFillColor, fontSize: 16),
                                   ),
@@ -257,7 +269,7 @@ class OrderDetails extends StatelessWidget {
                                   padding:
                                       EdgeInsets.symmetric(horizontal: 10.0),
                                   child: Text(
-                                    "قبول",
+                                    "Accept",
                                     style: TextStyle(
                                         color: kFillColor, fontSize: 16),
                                   ),
@@ -316,7 +328,7 @@ class OrderDetails extends StatelessWidget {
                   children: [
                     const SizedBox(height: 30),
                     const Text(
-                      "هل أنت متأكد من قبول هذا الطلب؟",
+                      "Are you sure you want to accept this request?",
                       style: TextStyle(color: Colors.black, fontSize: 20),
                       textAlign: TextAlign.center,
                     ),
@@ -333,7 +345,7 @@ class OrderDetails extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
                                 Text(
-                                  "إلغاء",
+                                  "Cancel",
                                   style: TextStyle(
                                       color: kFillColor, fontSize: 16),
                                 ),
@@ -355,7 +367,7 @@ class OrderDetails extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
                                 Text(
-                                  "قبول",
+                                  "Accept",
                                   style: TextStyle(
                                       color: kFillColor, fontSize: 16),
                                 ),
@@ -391,7 +403,7 @@ class OrderDetails extends StatelessWidget {
                   children: [
                     const SizedBox(height: 30),
                     const Text(
-                      "هل انت متأكد من رفض هذا الطلب؟",
+                      "هل أنت متأكد أنك تريد رفض هذا العرض",
                       style: TextStyle(color: Colors.black, fontSize: 20),
                       textAlign: TextAlign.center,
                     ),
@@ -411,7 +423,7 @@ class OrderDetails extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
                                 Text(
-                                  "رفض",
+                                  "Reject",
                                   style: TextStyle(
                                       color: kFillColor, fontSize: 16),
                                 ),
@@ -430,7 +442,7 @@ class OrderDetails extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
                                 Text(
-                                  "إلغاء",
+                                  "Cancel",
                                   style: TextStyle(
                                       color: kFillColor, fontSize: 16),
                                 ),
@@ -456,7 +468,7 @@ class OrderDetails extends StatelessWidget {
     if (int.parse(post.maxNoOfApplicants) <=
         int.parse(post.acceptedApplicants)) {
       Fluttertoast.showToast(
-          msg: "لفد وصلت الحد الأعلى لعدد المقبولين لهذا العرض",
+          msg: "لقد قبلت بالفعل العدد الاقصى من الموظفين",
           timeInSecForIosWeb: 2,
           backgroundColor: Colors.redAccent,
           textColor: kFillColor,
@@ -503,26 +515,148 @@ class OrderDetails extends StatelessWidget {
   }
 
   Future<void> payOrder(Order order) async {
-    if (order.hasBeenPaid) {
+    //INSERT PAYING METHOD
+    var postID = order.postID;
+    Post? myPost = await PostDatabase().getPost(postID);
+
+    var now = new DateTime.now();
+    var nMon = now.month;
+    var nDay = now.day;
+    var nYear = now.year;
+    var postDate = DateTime.parse(myPost!.date);
+
+    var postMon = postDate.month;
+    var postDay = postDate.day;
+    var postYear = postDate.year;
+    if (nYear != postYear) {
       Fluttertoast.showToast(
-          msg: "لقد دفعت لهذا الطلب مسبقًا",
+          msg: "لايمكنك الدفع اللآن حاول لاحقاً بعد تاريخ العمل.",
           timeInSecForIosWeb: 2,
           backgroundColor: Colors.black54,
           textColor: kFillColor,
           toastLength: Toast.LENGTH_LONG);
       return;
     }
+    if (nMon != postMon) {
+      Fluttertoast.showToast(
+          msg: "لايمكنك الدفع اللآن حاول لاحقاً بعد تاريخ العمل",
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.black54,
+          textColor: kFillColor,
+          toastLength: Toast.LENGTH_LONG);
+      return;
+    }
+    if (nDay < postDay) {
+      Fluttertoast.showToast(
+          msg: "لايمكنك الدفع اللآن حاول لاحقاً بعد تاريخ العمل.",
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.black54,
+          textColor: kFillColor,
+          toastLength: Toast.LENGTH_LONG);
+      return;
+    }
+
+    var postPay = myPost.payPerHour;
+    var postnH = myPost.nHours;
+
+    var fee = int.parse(postPay);
+    var nH = int.parse(postnH);
+    var payDollars = nH * fee * 0.266667;
+    var payRiyals = nH * fee;
+
+    if (order.hasBeenPaid) {
+      Fluttertoast.showToast(
+          msg: "ريالاُ بالفعل $payRiyals لقد دفعت",
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.black54,
+          textColor: kFillColor,
+          toastLength: Toast.LENGTH_LONG);
+      return;
+    }
+
     order.hasBeenPaid = true;
+
     await OrderDatabase().updateOrderDetails({
       "id": order.id,
       "hasBeenPaid": order.hasBeenPaid,
     });
 
-    Fluttertoast.showToast(msg: "تمت عملية الدفع بنجاح");
+    //Actual payment method
+    await initPayment(amount: payDollars * 100, email: 'email@test.com');
   }
 }
 
 class OrderDetailsController extends UserController {
   RxBool isAccepting = false.obs;
   RxBool isRejecting = false.obs;
+}
+
+Future<void> initPayment(
+    {required String email, required double amount}) async {
+  try {
+    // 1. Create a payment intent on the server
+    final response = await http.post(
+        Uri.parse(
+            'https://us-central1-esaa-c4278.cloudfunctions.net/stripePaymentIntentRequest'),
+        body: {
+          'email': email,
+          'amount': amount.toString(),
+        });
+    // Stripe.merchantIdentifier
+    final jsonResponse = jsonDecode(response.body);
+    log(jsonResponse.toString());
+    // 2. Initialize the payment sheet
+    await Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: SetupPaymentSheetParameters(
+      paymentIntentClientSecret: jsonResponse['paymentIntent'],
+      merchantDisplayName: 'Esaa Flutter App',
+      customerId: jsonResponse['customer'],
+      customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
+
+      //testEnv: true,
+      //merchantCountryCode: 'US',
+    ));
+    await Stripe.instance.presentPaymentSheet();
+    Fluttertoast.showToast(msg: "Payment Successful");
+  } catch (errorr) {
+    if (errorr is StripeException) {
+      Fluttertoast.showToast(
+          msg: "An error occured ${errorr.error.localizedMessage}");
+    } else {
+      Fluttertoast.showToast(msg: "An error occured ${errorr}");
+    }
+  }
+}
+
+Future<bool> postTime(Order order) async {
+  Post? myPost = await PostDatabase().getPost(order.postID);
+  var now = new DateTime.now();
+  var nMon = now.month;
+  var nDay = now.day;
+  var nYear = now.year;
+  var postDate = DateTime.parse(myPost!.date);
+
+  var postMon = postDate.month;
+  var postDay = postDate.day;
+  var postYear = postDate.year;
+  if (nYear == postYear) {
+    if (nMon == postMon) {
+      if (postDay > (nDay + 5) && (postDay) < (nDay + 10)) return true;
+    }
+  } else
+    return false;
+
+  return false;
+}
+
+Future<double> calcRiyal(Order order) async {
+  var postID = order.postID;
+  Post? myPost = await PostDatabase().getPost(postID);
+
+  var postPay = myPost!.payPerHour;
+  var postnH = myPost.nHours;
+  var fee = int.parse(postPay);
+  var nH = int.parse(postnH);
+  var payRiyals = nH * fee + 0.0;
+  return payRiyals;
 }
