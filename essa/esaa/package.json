@@ -1,0 +1,24 @@
+{
+  "name": "444-project-g-15",
+  "version": "1.0.0",
+  "description": "Project repository for the elective course SWE444",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Julairi/444-Project-G-15.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Julairi/444-Project-G-15/issues"
+  },
+  "homepage": "https://github.com/Julairi/444-Project-G-15#readme"
+}
