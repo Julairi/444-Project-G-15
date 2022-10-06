@@ -1,4 +1,5 @@
 import 'package:esaa/config/constants.dart';
+import 'package:esaa/screens/ProfilePageJs.dart';
 import 'package:esaa/screens/intro/sign_up/jsandcomscreen.dart';
 //import 'package:esaa/screens/intro/sign_up/jsandcomscreen.dart';
 import 'package:esaa/services/services.dart';
@@ -107,6 +108,11 @@ class LoginFormState extends State<LoginForm> {
                 login(emailEditingController.text, passEditingController.text),
             child: Text("تسجيل الدخول".toUpperCase(),
                 style: const TextStyle(fontSize: 16)),
+          ),
+          ElevatedButton(
+            onPressed: () => Get.toNamed('/ProfilePageJs'),
+            child:
+                Text("خول".toUpperCase(), style: const TextStyle(fontSize: 16)),
           ),
           GestureDetector(
             onTap: () => Get.toNamed('/forgot_password'),
