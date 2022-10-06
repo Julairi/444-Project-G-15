@@ -3,7 +3,7 @@ class UserModel {
   String? email;
   String? firstName;
   String? secondName;
-  //String? gender;
+  //String? gendiujer;
   //String? DOB;
   String? nationalId;
   //bool? company;
