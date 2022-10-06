@@ -11,13 +11,11 @@ class ProfileScreenForC extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'حسابك الشخصي',
+      title: 'حساب',
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: kPrimaryColor,
-          title: Center(
-            child: const Text('حسابك الشخصي'),
-          ),
+          title: Center(child: const Text('حساب المتقدم')),
         ),
         body: ListView(
           children: <Widget>[
@@ -59,7 +57,7 @@ class ProfileScreenForC extends StatelessWidget {
                         ),
                       ),
                       CircleAvatar(
-                        backgroundColor: Colors.red.shade300,
+                        backgroundColor: kPrimaryLightColor,
                         minRadius: 35.0,
                         child: Icon(
                           Icons.message,
@@ -72,7 +70,7 @@ class ProfileScreenForC extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    'Leonardo Palmeiro',
+                    'محمد',
                     style: TextStyle(
                       fontSize: 35,
                       fontWeight: FontWeight.bold,
@@ -80,7 +78,7 @@ class ProfileScreenForC extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Flutter Developer',
+                    'مطور تطبيقات',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 25,
@@ -94,10 +92,10 @@ class ProfileScreenForC extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                      color: Colors.deepOrange.shade300,
+                      color: kSPrimaryColor,
                       child: ListTile(
                         title: Text(
-                          '5000',
+                          '500',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -118,10 +116,10 @@ class ProfileScreenForC extends StatelessWidget {
                   ),
                   Expanded(
                     child: Container(
-                      color: Colors.red,
+                      color: kSPrimaryColor,
                       child: ListTile(
                         title: Text(
-                          '5000',
+                          '500',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -150,13 +148,13 @@ class ProfileScreenForC extends StatelessWidget {
                     title: Text(
                       'Email',
                       style: TextStyle(
-                        color: Colors.deepOrange,
+                        color: kPrimaryLightColor,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     subtitle: Text(
-                      'palmeiro.leonardo@gmail.com',
+                      'mohammed@gmail.com',
                       style: TextStyle(
                         fontSize: 18,
                       ),
@@ -167,7 +165,7 @@ class ProfileScreenForC extends StatelessWidget {
                     title: Text(
                       'GitHub',
                       style: TextStyle(
-                        color: Colors.deepOrange,
+                        color:kPrimaryLightColor,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
