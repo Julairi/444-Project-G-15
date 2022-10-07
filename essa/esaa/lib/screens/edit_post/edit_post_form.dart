@@ -63,7 +63,7 @@ class EditPostFormState extends State<EditPostForm> {
       keyboardType: TextInputType.name,
       cursorColor: kPrimaryColor,
       textInputAction: TextInputAction.next,
-      onSaved: (newValue) => titleEditingController.text = newValue!,
+      onSaved: (newValue) => titleEditingController.text = newValue!.trim(),
       validator: (value) {
         if (value!.trim().isEmpty) {
           return kJobTitleNullError;
@@ -90,7 +90,8 @@ class EditPostFormState extends State<EditPostForm> {
 
     final descriptionField = TextFormField(
       controller: descriptionEditingController,
-      onSaved: (newValue) => descriptionEditingController.text = newValue!,
+      onSaved: (newValue) =>
+          descriptionEditingController.text = newValue!.trim(),
       validator: (value) {
         if (value!.trim().isEmpty) {
           return kDescNullError;
@@ -119,70 +120,90 @@ class EditPostFormState extends State<EditPostForm> {
       minLines: 5,
     );
 
-    final locationField = Container(
-      height: 48,
-      decoration: const BoxDecoration(
-          color: kFillColor,
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
-          )),
-      child: PopupMenuButton<String>(
-        tooltip: "Select City",
-        enabled: true,
-        constraints: BoxConstraints(
-          minHeight: 24,
-          maxHeight: MediaQuery.of(context).size.height / 1.35,
-          minWidth: 180,
-          maxWidth: 180,
-        ),
-        position: PopupMenuPosition.under,
-        itemBuilder: (context) =>
-            controller.cities.map<PopupMenuItem<String>>((String city) {
-          return PopupMenuItem<String>(
-            value: city,
-            child: SizedBox(
-              height: 18,
-              child: Text(
-                city,
-                style: const TextStyle(
-                    color: Colors.black54,
-                    fontSize: 16,
-                    overflow: TextOverflow.ellipsis),
+    final locationField = SizedBox(
+        height: 52,
+        child: Stack(
+          alignment: Alignment.topLeft,
+          children: [
+            Container(
+              height: 44,
+              decoration: const BoxDecoration(
+                  color: kFillColor,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  )),
+              margin: const EdgeInsets.only(top: 8),
+              child: PopupMenuButton<String>(
+                tooltip: "Select City",
+                enabled: true,
+                constraints: BoxConstraints(
+                  minHeight: 24,
+                  maxHeight: MediaQuery.of(context).size.height / 1.35,
+                  minWidth: 180,
+                  maxWidth: 180,
+                ),
+                position: PopupMenuPosition.under,
+                itemBuilder: (context) =>
+                    controller.cities.map<PopupMenuItem<String>>((String city) {
+                  return PopupMenuItem<String>(
+                    value: city,
+                    child: SizedBox(
+                      height: 18,
+                      child: Text(
+                        city,
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            overflow: TextOverflow.ellipsis),
+                      ),
+                    ),
+                  );
+                }).toList(),
+                onSelected: (String city) {
+                  controller.city.value = city;
+                },
+                child: SizedBox(
+                    width: double.infinity,
+                    height: 30,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 5.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.all(26),
+                          ),
+                          SizedBox(
+                            height: 18,
+                            child: GetX<EditPostFormController>(
+                                builder: (controller) {
+                              return Text(
+                                controller.city.value,
+                                style: const TextStyle(
+                                    color: Colors.black, fontSize: 16),
+                                textAlign: TextAlign.start,
+                              );
+                            }),
+                          ),
+                        ],
+                      ),
+                    )),
               ),
             ),
-          );
-        }).toList(),
-        onSelected: (String city) {
-          controller.city.value = city;
-        },
-        child: SizedBox(
-            width: double.infinity,
-            height: 30,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 5.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(26),
-                  ),
-                  SizedBox(
-                    height: 18,
-                    child: GetX<EditPostFormController>(builder: (controller) {
-                      return Text(
-                        controller.city.value,
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 16),
-                        textAlign: TextAlign.start,
-                      );
-                    }),
-                  ),
-                ],
+            Container(
+              height: 20,
+              margin: const EdgeInsets.only(left: 48),
+              child: const Text(
+                "اختر المدينة",
+                style: TextStyle(
+                  color: kTextColor,
+                  fontSize: 14,
+                ),
               ),
-            )),
-      ),
-    );
+            )
+          ],
+        ));
 
     final startDate = TextFormField(
       controller: dateEditingController,
@@ -315,7 +336,7 @@ class EditPostFormState extends State<EditPostForm> {
           const TextInputType.numberWithOptions(signed: false, decimal: true),
       textInputAction: TextInputAction.next,
       onSaved: (value) {
-        noOfHoursEditingController.text = value!;
+        noOfHoursEditingController.text = value!.trim();
       },
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
@@ -350,7 +371,7 @@ class EditPostFormState extends State<EditPostForm> {
       keyboardType: TextInputType.number,
       textInputAction: TextInputAction.done,
       onSaved: (value) {
-        payPerHourEditingController.text = value!;
+        payPerHourEditingController.text = value!.trim();
       },
       decoration: InputDecoration(
         filled: true,
@@ -407,10 +428,18 @@ class EditPostFormState extends State<EditPostForm> {
         ),
       ),
       validator: (value) {
-        return null;
+        if (value!.trim().isEmpty) {
+          //// checkkkkkkkkkkk
+          return 'الرجاء ادخال العدد الأقصى للطلبات';
+        } else {
+          if (value.trim() == "0") {
+            return "العدد الأقصى للطلبات يجب أن يكون أكبر من صفر";
+          } else {
+            return null;
+          }
+        }
       },
     );
-
     return Form(
       key: _formKey,
       child: SingleChildScrollView(

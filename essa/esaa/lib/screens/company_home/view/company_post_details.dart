@@ -71,7 +71,8 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                               Icons.edit,
                               color: controller.editable.value
                                   ? Colors.blueAccent
-                                  : Colors.blueAccent.withOpacity(0.5),
+                                  //: Colors.grey,
+                                  : Colors.blueAccent.withOpacity(0.1),
                               size: 30,
                             ),
                           );
@@ -84,7 +85,8 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                           icon: Icon(
                             Icons.delete,
                             color: int.parse(widget.post.acceptedApplicants) > 0
-                                ? Colors.redAccent.withOpacity(0.5)
+                                // ? Colors.grey
+                                ? Colors.redAccent.withOpacity(0.1)
                                 : Colors.redAccent,
                             size: 30,
                           ),
