@@ -2,7 +2,6 @@ import 'package:esaa/config/constants.dart';
 import 'package:esaa/models/models.dart';
 import 'package:esaa/screens/intro/intro.dart';
 import 'package:esaa/services/services.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

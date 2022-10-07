@@ -29,7 +29,7 @@ class CompanyNotificationScreen extends StatelessWidget {
                     .orderBy("timeSent", descending: true),
                 emptyListWidget: const SizedBox(
                   child: Text(
-                    'No notification yet',
+                    'لايوجد لديك إشعارات',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20,

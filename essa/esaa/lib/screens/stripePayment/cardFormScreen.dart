@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 import '../../config/constants.dart';
@@ -40,22 +41,23 @@ class CardFormScreen extends StatelessWidget {
         //merchantCountryCode: 'US',
       ));
       await Stripe.instance.presentPaymentSheet();
-      ScaffoldMessenger.of(context).showSnackBar(
+
+      ScaffoldMessenger.of(Get.context!).showSnackBar(
         const SnackBar(
           content: Text('تم الدفع بنجاح'),
         ),
       );
-    } catch (errorr) {
-      if (errorr is StripeException) {
+    } catch (error) {
+      if (error is StripeException) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('حدث خطآ في ${errorr.error.localizedMessage}'),
+            content: Text('حدث خطآ في ${error.error.localizedMessage}'),
           ),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('حدث خطأ في $errorr'),
+            content: Text('حدث خطأ في $error'),
           ),
         );
       }

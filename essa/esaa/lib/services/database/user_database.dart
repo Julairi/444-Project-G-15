@@ -13,11 +13,11 @@ class UserDatabase{
     }
   }
 
-  static CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
+  static CollectionReference usersCollection = FirebaseFirestore.instance.collection('users');
 
   Future<void> createUser(Map<String, dynamic> values) async {
     try {
-      await userCollection.doc(id).set(values);
+      await usersCollection.doc(id).set(values);
 
       String? token = await FirebaseMessaging.instance.getToken();
 
@@ -33,7 +33,7 @@ class UserDatabase{
 
   Future<void> updateDetails(Map<String, dynamic> values) async {
     try {
-      await userCollection.doc(id).update(values);
+      await usersCollection.doc(id).update(values);
     } on FirebaseException catch (e) {
       Default.showDatabaseError(e);
     }
@@ -41,11 +41,26 @@ class UserDatabase{
 
   Stream<User> get user {
     if(id.isNotEmpty) {
-      return userCollection.doc(id).snapshots().map((documentSnapshot) {
+      return usersCollection.doc(id).snapshots().map((documentSnapshot) {
         return User.fromDocumentSnapshot(documentSnapshot);
       });
     }else{
       return const Stream<User>.empty();
+    }
+  }
+
+  Future<User?> getUser (String id) async {
+    try {
+      final result = await usersCollection.where("id", isEqualTo: id).get();
+      if(result.docs.isNotEmpty){
+        for (QueryDocumentSnapshot documentSnapshot in result.docs) {
+          return User.fromDocumentSnapshot(documentSnapshot);
+        }
+      }
+      return null;
+    } on FirebaseException catch (e) {
+      Default.showDatabaseError(e);
+      return null;
     }
   }
 

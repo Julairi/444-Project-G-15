@@ -78,17 +78,17 @@ class CompanyNotificationCard extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      notification.body,
-                      style: const TextStyle(
-                          color: Color.fromARGB(255, 6, 6, 6),
-                          fontSize: 18,
-                          fontFamily: 'ElMessiri',
-                          overflow: TextOverflow.fade),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    notification.body,
+                    style: const TextStyle(
+                        color: Color.fromARGB(255, 6, 6, 6),
+                        fontSize: 18,
+                        fontFamily: 'ElMessiri',
+                        overflow: TextOverflow.fade
                     ),
-                  ],
+                  ),
                 ),
                 TextButton(
                     onPressed: () {

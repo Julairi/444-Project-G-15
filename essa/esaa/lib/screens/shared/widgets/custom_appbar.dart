@@ -19,7 +19,6 @@ class CustomAppbar extends StatelessWidget {
     this.bottomImage = "assets/images/login_bottom.png",
   }) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,42 +28,34 @@ class CustomAppbar extends StatelessWidget {
         floatHeaderSlivers: true,
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
-            flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(
-                'assets/header.jpg',
-                fit: BoxFit.cover,
-              ),
-            ),
+            flexibleSpace: FlexibleSpaceBar(),
             leading: showLeading
                 ? IconButton(
-                  onPressed: () => Get.back(),
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: kFillColor,
-                  )
-                )
+                    onPressed: () => Get.back(),
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: kFillColor,
+                    ))
                 : const SizedBox(),
             actions: [
               showNotification
                   ? IconButton(
-                    onPressed: () {
-                      if(App.user.userType == 'jobSeeker'){
-                        Get.to(() => const JobSeekerNotificationScreen());
-                      }else{
-                        Get.to(() => const CompanyNotificationScreen());
-                      }
-                    },
-                    icon: const Icon(
-                      Icons.notifications,
-                      color: Colors.white,
-                    )
-                  )
+                      onPressed: () {
+                        if (App.user.userType == 'jobSeeker') {
+                          Get.to(() => const JobSeekerNotificationScreen());
+                        } else {
+                          Get.to(() => const CompanyNotificationScreen());
+                        }
+                      },
+                      icon: const Icon(
+                        Icons.notifications,
+                        color: Colors.white,
+                      ))
                   : const SizedBox(),
-
               const SizedBox(width: defaultPadding)
-            ] ,
+            ],
             backgroundColor: kPrimaryColor,
-            expandedHeight: 200,
+            expandedHeight: 80,
             floating: true,
             snap: true,
             pinned: true,
@@ -90,14 +81,13 @@ class CustomAppbar extends StatelessWidget {
               child: Image.asset(bottomImage, width: 120),
             ), */
               Scaffold(
-                appBar: AppBar(
-                  leading: const SizedBox(),
+                  appBar: AppBar(
+                    leading: const SizedBox(),
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                  ),
                   backgroundColor: Colors.transparent,
-                  elevation: 0,
-                ),
-                backgroundColor: Colors.transparent,
-                body: child
-              ),
+                  body: child),
             ],
           ),
         ),

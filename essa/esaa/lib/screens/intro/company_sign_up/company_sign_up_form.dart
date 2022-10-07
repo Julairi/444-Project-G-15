@@ -211,7 +211,7 @@ class CompanySignUpFormState extends State<CompanySignUpForm> {
       keyboardType: TextInputType.text,
       cursorColor: kPrimaryColor,
       textInputAction: TextInputAction.next,
-      onSaved: (newValue) => contactEditingController.text = newValue!, /////
+      onSaved: (newValue) => contactEditingController.text = newValue!,
       validator: (value) {
         if (value!.isEmpty) {
           return ' لرجاء اضافة طريقة تواصل مع الشركة';

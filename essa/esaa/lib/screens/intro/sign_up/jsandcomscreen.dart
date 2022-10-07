@@ -1,4 +1,3 @@
-import 'package:esaa/config/constants.dart';
 import 'package:esaa/screens/intro/sign_up/jsandcombuttons.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:flutter/material.dart';

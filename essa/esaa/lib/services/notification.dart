@@ -1,11 +1,14 @@
 import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esaa/models/models.dart';
 import 'package:esaa/services/database/database.dart';
 import 'package:flutter/foundation.dart';
+
 import 'package:http/http.dart' as http;
 
 class Notification {
+
   Future<void> sendNotification (User user, PushNotification notification) async {
     notification.uID = user.id;
     notification.timeSent = DateTime.now();

@@ -30,7 +30,7 @@ class JobSeekerNotificationScreen extends StatelessWidget {
                   .orderBy("timeSent", descending: true),
               emptyListWidget: const SizedBox(
                 child: Text(
-                  'No notification yet',
+                  'لايوجد لديك إشعارات',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20,
@@ -40,7 +40,7 @@ class JobSeekerNotificationScreen extends StatelessWidget {
               ),
               itemBuilder: (context, querySnapshot) {
                 PushNotification notification = PushNotification.fromDocumentSnapshot(querySnapshot);
-                return CompanyNotificationCard(notification: notification);
+                return JobSeekerNotificationCard(notification: notification);
               }
           ),
         ],

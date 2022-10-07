@@ -26,13 +26,7 @@ class PostDatabase {
       Default.showDatabaseError(e);
     }
   }
-  Future<void> deletePost(String postId) async{
-    try {
-      await postsCollection.doc(postId).delete();
-    } on FirebaseException catch (e) {
-      Default.showDatabaseError(e);
-    }
-  }
+
   Future<Post?> getPost(String postId) async {
     try {
       final result = await postsCollection.where("id", isEqualTo: postId).get();
@@ -84,5 +78,15 @@ class PostDatabase {
 
       return posts;
     });
+  }
+
+  Future<bool> deletePost(String postId) async {
+    try {
+      await postsCollection.doc(postId).delete();
+      return true;
+    } on FirebaseException catch (e) {
+      Default.showDatabaseError(e);
+      return false;
+    }
   }
 }

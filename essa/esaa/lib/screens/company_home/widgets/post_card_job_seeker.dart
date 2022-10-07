@@ -136,12 +136,6 @@ class PostCardJobSeeker extends StatelessWidget {
                         )
                       ],
                     ),
-
-                    /*if (now.compareTo(DateTime.parse(offerDate)) > 0 ||
-                        now.compareTo(DateTime.parse(offerDate)) == 0)
-                      {
-
-                      }*/
                   ],
                 ),
               )

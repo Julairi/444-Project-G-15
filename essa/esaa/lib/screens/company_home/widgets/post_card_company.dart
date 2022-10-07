@@ -1,7 +1,6 @@
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/models/models.dart';
 import 'package:esaa/screens/company_home/view/company_post_details.dart';
-import 'package:esaa/services/database/database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -137,9 +136,20 @@ class PostCardCompany extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        IconButton(
-                            onPressed: () => showConfirmDeletingDialog(context),
-                            icon: Icon(Icons.delete))
+                        const Icon(
+                          Icons.business,
+                          color: Color.fromARGB(255, 3, 77, 138),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                          width: 10,
+                        ),
+                        Text(post.companyName,
+                            style: const TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: defaultFontSize,
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.ellipsis))
                       ],
                     ),
                   ],
@@ -148,83 +158,5 @@ class PostCardCompany extends StatelessWidget {
             ],
           ),
         ));
-  }
-
-  void showConfirmDeletingDialog(BuildContext context) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            content: Container(
-                width: 300,
-                height: 200,
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const SizedBox(height: 10),
-                    const Text(
-                      "هل أنت متأكد برغبتك بحذف هذا المنشور؟",
-                      style: TextStyle(color: Colors.black, fontSize: 20),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: ElevatedButton(
-                            onPressed: () => Get.back(),
-                            style: ElevatedButton.styleFrom(
-                                primary: Colors.red, elevation: 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  "الغاء",
-                                  style: TextStyle(
-                                      color: kFillColor, fontSize: 16),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          flex: 2,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Get.back();
-                              _delete(post.id);
-                            },
-                            style: ElevatedButton.styleFrom(
-                                primary: Colors.green, elevation: 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  "نعم",
-                                  style: TextStyle(
-                                      color: kFillColor, fontSize: 16),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                )),
-            backgroundColor: Colors.white,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-            contentPadding: const EdgeInsets.all(15),
-          );
-        });
-  }
-
-  Future<void> _delete(String postId) async {
-    await PostDatabase().deletePost(postId);
   }
 }
