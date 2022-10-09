@@ -59,28 +59,6 @@ class jcProfilePage extends StatelessWidget {
                     textfield(
                       hintText: 'Email',
                     ),
-                    textfield(
-                      hintText: 'Password',
-                    ),
-                    textfield(
-                      hintText: 'Confirm password',
-                    ),
-                    Container(
-                      height: 55,
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                            primary: kPrimaryColor, elevation: 0),
-                        child: Text(
-                          "Update",
-                          style: TextStyle(
-                            fontSize: 23,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    )
                   ],
                 ),
               )
@@ -99,7 +77,7 @@ class jcProfilePage extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(20),
                 child: Text(
-                  "Profile",
+                  "حساب المتقدم",
                   style: TextStyle(
                     fontSize: 35,
                     letterSpacing: 1.5,
