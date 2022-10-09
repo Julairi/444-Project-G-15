@@ -42,7 +42,7 @@ class ProfileScreenForC extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       CircleAvatar(
-                        backgroundColor: Colors.red.shade300,
+                        backgroundColor: Color.fromARGB(255, 123, 184, 172),
                         minRadius: 35.0,
                         child: Icon(
                           Icons.call,
@@ -59,7 +59,7 @@ class ProfileScreenForC extends StatelessWidget {
                         ),
                       ),
                       CircleAvatar(
-                        backgroundColor: Colors.red.shade300,
+                        backgroundColor: Color.fromARGB(255, 123, 184, 172),
                         minRadius: 35.0,
                         child: Icon(
                           Icons.message,
@@ -72,7 +72,7 @@ class ProfileScreenForC extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    'Leonardo Palmeiro',
+                    'شركة توصيل',
                     style: TextStyle(
                       fontSize: 35,
                       fontWeight: FontWeight.bold,
@@ -80,7 +80,7 @@ class ProfileScreenForC extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Flutter Developer',
+                    'شركة توصيل منتجات متنوعة لعدد كبير من المحلات',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 25,
@@ -94,10 +94,10 @@ class ProfileScreenForC extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                     child: Container(
-                      color: Colors.deepOrange.shade300,
+                      color: Color.fromARGB(255, 123, 184, 172),
                       child: ListTile(
                         title: Text(
-                          '5000',
+                          '23',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -106,7 +106,7 @@ class ProfileScreenForC extends StatelessWidget {
                           ),
                         ),
                         subtitle: Text(
-                          'Followers',
+                          'عدد فرص العمل الكلية',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
@@ -118,10 +118,10 @@ class ProfileScreenForC extends StatelessWidget {
                   ),
                   Expanded(
                     child: Container(
-                      color: Colors.red,
+                      color: Colors.greenAccent,
                       child: ListTile(
                         title: Text(
-                          '5000',
+                          '3',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -130,7 +130,7 @@ class ProfileScreenForC extends StatelessWidget {
                           ),
                         ),
                         subtitle: Text(
-                          'Following',
+                          'فرص العمل المتاحة',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
@@ -148,15 +148,15 @@ class ProfileScreenForC extends StatelessWidget {
                 children: <Widget>[
                   ListTile(
                     title: Text(
-                      'Email',
+                      'الإيميل',
                       style: TextStyle(
-                        color: Colors.deepOrange,
+                        color: Color.fromARGB(255, 179, 205, 180),
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     subtitle: Text(
-                      'palmeiro.leonardo@gmail.com',
+                      'tumoor@gmail.com',
                       style: TextStyle(
                         fontSize: 18,
                       ),
@@ -165,15 +165,15 @@ class ProfileScreenForC extends StatelessWidget {
                   Divider(),
                   ListTile(
                     title: Text(
-                      'GitHub',
+                      'نبذة',
                       style: TextStyle(
-                        color: Colors.deepOrange,
+                        color: Color.fromARGB(255, 179, 205, 180),
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     subtitle: Text(
-                      'https://github.com/leopalmeiro',
+                      'شركة توصيل مركزنا موجود بالقصيم',
                       style: TextStyle(
                         fontSize: 18,
                       ),
@@ -182,15 +182,15 @@ class ProfileScreenForC extends StatelessWidget {
                   Divider(),
                   ListTile(
                     title: Text(
-                      'Linkedin',
+                      'طريقة تواصل',
                       style: TextStyle(
-                        color: Colors.deepOrange,
+                        color: Color.fromARGB(255, 179, 205, 180),
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     subtitle: Text(
-                      'www.linkedin.com/in/leonardo-palmeiro-834a1755',
+                      'لدى تويتر @tumoor_saQ',
                       style: TextStyle(
                         fontSize: 18,
                       ),
