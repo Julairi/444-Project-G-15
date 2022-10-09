@@ -5,7 +5,7 @@ class ProfilePage extends StatelessWidget {
   Widget textfield({@required hintText}) {
     return Material(
       elevation: 4,
-      shadowColor: Colors.grey,
+      shadowColor: kPrimaryColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
@@ -31,7 +31,7 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        backgroundColor: Color(0xff555555),
+        backgroundColor: kPrimaryColor,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -108,34 +108,10 @@ class ProfilePage extends StatelessWidget {
                   ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(10.0),
-                width: MediaQuery.of(context).size.width / 2,
-                height: MediaQuery.of(context).size.width / 2,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white, width: 5),
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage('images/profile.png'),
-                  ),
-                ),
-              ),
             ],
           ),
           Padding(
-            padding: EdgeInsets.only(bottom: 270, left: 184),
-            child: CircleAvatar(
-              backgroundColor: Colors.black54,
-              child: IconButton(
-                icon: Icon(
-                  Icons.edit,
-                  color: Colors.white,
-                ),
-                onPressed: () {},
-              ),
-            ),
+            padding: EdgeInsets.only(bottom: 70, left: 184),
           )
         ],
       ),
@@ -146,11 +122,11 @@ class ProfilePage extends StatelessWidget {
 class HeaderCurvedContainer extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()..color = Color(0xff555555);
+    Paint paint = Paint()..color = kPrimaryColor;
     Path path = Path()
-      ..relativeLineTo(0, 150)
-      ..quadraticBezierTo(size.width / 2, 225, size.width, 150)
-      ..relativeLineTo(0, -150)
+      ..relativeLineTo(0, 50)
+      ..quadraticBezierTo(size.width / 2, 125, size.width, 50)
+      ..relativeLineTo(0, -50)
       ..close();
     canvas.drawPath(path, paint);
   }
