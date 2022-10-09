@@ -79,4 +79,14 @@ class PostDatabase {
       return posts;
     });
   }
+
+  Future<bool> deletePost(String postId) async {
+    try {
+      await postsCollection.doc(postId).delete();
+      return true;
+    } on FirebaseException catch (e) {
+      Default.showDatabaseError(e);
+      return false;
+    }
+  }
 }

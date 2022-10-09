@@ -250,6 +250,7 @@ class _DefaultState extends State<Default> {
         title: initialMessage.notification?.title ?? "",
         body: initialMessage.notification?.body ?? "",
       );
+
       _showNotification(notification);
     }
   }

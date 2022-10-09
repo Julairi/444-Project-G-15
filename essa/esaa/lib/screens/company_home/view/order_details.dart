@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/models/models.dart';
@@ -11,12 +9,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:developer';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
+import 'package:esaa/services/notification.dart' as notification;
 
 class OrderDetails extends StatelessWidget {
   final Order order;
@@ -423,7 +419,7 @@ class OrderDetails extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
                                 Text(
-                                  "Reject",
+                                  "رفض",
                                   style: TextStyle(
                                       color: kFillColor, fontSize: 16),
                                 ),
@@ -482,6 +478,11 @@ class OrderDetails extends StatelessWidget {
     await OrderDatabase()
         .updateOrderDetails({'id': order.id, 'orderStatus': order.orderStatus});
 
+    await notification.Notification().sendNotification(
+        Get.find<OrderDetailsController>().user.value,
+        PushNotification(
+            title: "طلب مقبول", body: "يسرناإعلامك بقبول طلبك لهذه الوظيفة"));
+
     post.offerStatus = "assigned";
     post.acceptedApplicants = '${(int.parse(post.acceptedApplicants) + 1)}';
 
@@ -509,6 +510,11 @@ class OrderDetails extends StatelessWidget {
     await OrderDatabase()
         .updateOrderDetails({'id': order.id, 'orderStatus': order.orderStatus});
 
+    await notification.Notification().sendNotification(
+        Get.find<OrderDetailsController>().user.value,
+        PushNotification(
+            title: "طلب مرفوض", body: "يؤسفناإعلامك برفضك لهذه الوظيفة"));
+
     controller.isRejecting.value = false;
 
     Get.offAllNamed("/");
@@ -519,7 +525,7 @@ class OrderDetails extends StatelessWidget {
     var postID = order.postID;
     Post? myPost = await PostDatabase().getPost(postID);
 
-    var now = new DateTime.now();
+    var now = DateTime.now();
     var nMon = now.month;
     var nDay = now.day;
     var nYear = now.year;
@@ -557,10 +563,10 @@ class OrderDetails extends StatelessWidget {
     }
 
     var postPay = myPost.payPerHour;
-    var postnH = myPost.nHours;
+    var postNHours = myPost.nHours;
 
     var fee = int.parse(postPay);
-    var nH = int.parse(postnH);
+    var nH = int.parse(postNHours);
     var payDollars = nH * fee * 0.266667;
     var payRiyals = nH * fee;
 
@@ -618,19 +624,19 @@ Future<void> initPayment(
     ));
     await Stripe.instance.presentPaymentSheet();
     Fluttertoast.showToast(msg: "Payment Successful");
-  } catch (errorr) {
-    if (errorr is StripeException) {
+  } catch (error) {
+    if (error is StripeException) {
       Fluttertoast.showToast(
-          msg: "An error occured ${errorr.error.localizedMessage}");
+          msg: "An error occurred ${error.error.localizedMessage}");
     } else {
-      Fluttertoast.showToast(msg: "An error occured ${errorr}");
+      Fluttertoast.showToast(msg: "An error occurred $error");
     }
   }
 }
 
 Future<bool> postTime(Order order) async {
   Post? myPost = await PostDatabase().getPost(order.postID);
-  var now = new DateTime.now();
+  var now = DateTime.now();
   var nMon = now.month;
   var nDay = now.day;
   var nYear = now.year;
@@ -643,8 +649,9 @@ Future<bool> postTime(Order order) async {
     if (nMon == postMon) {
       if (postDay > (nDay + 5) && (postDay) < (nDay + 10)) return true;
     }
-  } else
+  } else {
     return false;
+  }
 
   return false;
 }
@@ -654,9 +661,9 @@ Future<double> calcRiyal(Order order) async {
   Post? myPost = await PostDatabase().getPost(postID);
 
   var postPay = myPost!.payPerHour;
-  var postnH = myPost.nHours;
+  var postNHours = myPost.nHours;
   var fee = int.parse(postPay);
-  var nH = int.parse(postnH);
+  var nH = int.parse(postNHours);
   var payRiyals = nH * fee + 0.0;
   return payRiyals;
 }

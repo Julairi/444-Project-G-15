@@ -1,4 +1,6 @@
+import 'package:esaa/services/database/user_database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -80,6 +82,13 @@ class Auth {
     try {
 
       await _auth.signInWithEmailAndPassword(email: email, password: password);
+
+      String? token = await FirebaseMessaging.instance.getToken();
+
+      await UserDatabase(Auth().uID).updateDetails({
+        "id" : Auth().uID,
+        "notificationToken" : token ?? ""
+      });
 
     } on FirebaseAuthException catch (e) {
       if(exceptionBuilder == null) {

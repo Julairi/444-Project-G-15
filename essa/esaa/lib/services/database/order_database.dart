@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esaa/models/models.dart';
+import 'package:esaa/services/notification.dart';
 
 import 'database.dart';
 
@@ -50,13 +51,77 @@ class OrderDatabase {
       for(DocumentSnapshot snapshot in querySnapshot.docs){
         Order order = Order.fromDocumentSnapshot(snapshot);
         order.orderStatus = 'rejected';
+
         await updateOrderDetails({
           'id': order.id,
           'orderStatus': order.orderStatus
         });
+
+        final user = await UserDatabase(order.userID).getUser(order.userID);
+
+        if(user != null) {
+          await Notification().sendNotification(
+              user,
+              PushNotification(
+                title: "طلب مرفوض",
+                body: "يؤسفناإعلامك برفضك لهذه الوظيفة"
+              )
+          );
+        }
       }
     } on FirebaseException catch (e) {
       Default.showDatabaseError(e);
+    }
+  }
+
+  Future<void> deleteAll(String postID) async{
+    try {
+      final querySnapshot = await ordersCollection
+          .where("postID", isEqualTo: postID)
+          .where("orderStatus", isEqualTo: 'pending').get();
+
+      for(DocumentSnapshot snapshot in querySnapshot.docs){
+        Order order = Order.fromDocumentSnapshot(snapshot);
+        order.orderStatus = 'deleted';
+
+        await updateOrderDetails({
+          'id': order.id,
+          'orderStatus': order.orderStatus
+        });
+
+        final user = await UserDatabase(order.userID).getUser(order.userID);
+
+        if(user != null) {
+          await Notification().sendNotification(
+              user,
+              PushNotification(
+                title: " طلب مرفوض",
+                body: "لقد تم حذف عرض الوظيفة من قبل الشركة"
+              )
+          );
+        }
+      }
+    } on FirebaseException catch (e) {
+      Default.showDatabaseError(e);
+    }
+  }
+
+  Future<List<Order>> getOrders (String postID) async{
+    try {
+      final querySnapshot = await ordersCollection
+          .where("postID", isEqualTo: postID).get();
+
+      List<Order> orders = [];
+      for(DocumentSnapshot snapshot in querySnapshot.docs){
+        Order order = Order.fromDocumentSnapshot(snapshot);
+
+        orders.add(order);
+      }
+
+      return orders;
+    } on FirebaseException catch (e) {
+      Default.showDatabaseError(e);
+      return [];
     }
   }
 

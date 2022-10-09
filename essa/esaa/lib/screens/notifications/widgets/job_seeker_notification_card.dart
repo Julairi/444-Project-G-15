@@ -70,7 +70,8 @@ class JobSeekerNotificationCard extends StatelessWidget {
                               color: kPrimaryColor,
                               fontSize: defaultFontSize,
                               fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.ellipsis)
+                              overflow: TextOverflow.ellipsis
+                          )
                       )
                     ],
                   ),
@@ -81,17 +82,23 @@ class JobSeekerNotificationCard extends StatelessWidget {
 
           Padding(
             padding: const EdgeInsets.all(20),
-            child: Row(
-              children: [
-                Text(
+            child: SizedBox(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
                   notification.body,
+                  maxLines: 3,
+                  softWrap: true,
+                  textAlign: TextAlign.start,
                   style: const TextStyle(
                       color: Color.fromARGB(255, 6, 6, 6),
                       fontSize: 18,
                       fontFamily: 'ElMessiri',
-                      overflow: TextOverflow.fade),
+                      height: 1.2,
+                      overflow: TextOverflow.fade
+                  ),
                 ),
-              ],
+              ),
             ),
           )
         ],

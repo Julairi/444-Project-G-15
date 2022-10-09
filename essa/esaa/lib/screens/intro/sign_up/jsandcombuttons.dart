@@ -1,14 +1,8 @@
-import 'package:esaa/screens/apply/apply.dart';
 import 'package:flutter/material.dart';
-import 'package:esaa/config/constants.dart';
-import 'package:esaa/screens/intro/login/login.dart';
-import 'package:esaa/screens/intro/company_sign_up/company_sign_up.dart';
 import 'package:get/get.dart';
 
 class jscombuttons extends StatelessWidget {
-  const jscombuttons({
-    Key? key,
-  }) : super(key: key);
+  const jscombuttons({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +19,7 @@ class jscombuttons extends StatelessWidget {
             onPressed: () => Get.toNamed('/company_sign_up_screen'),
             child: Text(
               "تسجيل كشركة".toUpperCase(),
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
           ),
         ),
@@ -34,7 +28,7 @@ class jscombuttons extends StatelessWidget {
           onPressed: () => Get.toNamed('/sign_up_screen'),
           child: Text(
             " تسجيل كباحث عن عمل".toUpperCase(),
-            style: TextStyle(color: Colors.white, fontSize: 16),
+            style: const TextStyle(color: Colors.white, fontSize: 16),
           ),
         ),
       ],

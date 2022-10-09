@@ -4,6 +4,7 @@ import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/models/models.dart';
 import 'package:esaa/services/database/database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 
@@ -11,13 +12,10 @@ import 'package:esaa/services/notification.dart' as notification;
 
 class ApplyForm extends StatefulWidget {
   final Post post;
-  ApplyForm({
+  const ApplyForm({
     Key? key,
     required this.post,
-  }) : super(key: key) {
-    Get.put(ApplyFormController());
-    Get.find<ApplyFormController>().bindUserWithID(post.companyID);
-  }
+  }) : super(key: key);
 
   @override
   ApplyFormState createState() => ApplyFormState();
@@ -66,9 +64,11 @@ class ApplyFormState extends State<ApplyForm> {
       validator: (value) {
         if (value!.isEmpty) {
           return kNullError;
-        } else if (value.length >= 500)
-          return kdeserror;
-        else if (value == '') return kdesempty;
+        } else if (value.length >= 500) {
+          return kDesError;
+        } else if (value == '') {
+          return kDesEmpty;
+        }
         return null;
       },
       textInputAction: TextInputAction.next,
@@ -111,8 +111,33 @@ class ApplyFormState extends State<ApplyForm> {
                   widget.post,
                   infoEditingController.text,
                   descriptionEditingController.text),
-              child: Text("ارسال".toUpperCase(),
-                  style: const TextStyle(fontSize: 16)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+
+                  GetX<UserController>(
+                      builder: (controller) {
+                        return Visibility(
+                            visible: controller.isLoading.value,
+                            child: LayoutBuilder (
+                                builder: (context, constraints) {
+                                  return const SpinKitRing(
+                                    color: kFillColor,
+                                    size: 24.0,
+                                  );
+                                }
+                            )
+                        );
+                      }
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: defaultPadding * 2),
+                    child: Text("ارسال".toUpperCase(), style: const TextStyle(fontSize: 16)),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: defaultPadding),
           ],
@@ -132,23 +157,41 @@ class ApplyFormState extends State<ApplyForm> {
       order.orderStatus = "pending";
       order.timeApplied = DateTime.now();
 
+      final controller = Get.find<UserController>();
+
+      controller.isLoading.value = true;
+
       final applied = await OrderDatabase().doesOrderExist(order);
       if (applied) {
+        controller.isLoading.value = false;
         Fluttertoast.showToast(
-            msg: "You have applied for this post already",
+            msg: "لقد قدمت طلب لهذا المنشور بالفعل",
             backgroundColor: Colors.redAccent,
             textColor: kFillColor);
       } else {
+
+        final user = await UserDatabase(post.companyID).getUser(post.companyID);
+
+        if(user == null){
+          Fluttertoast.showToast(
+              msg: "Could not get company details, try again later",
+              backgroundColor: Colors.redAccent,
+              textColor: kFillColor);
+
+          controller.isLoading.value = false;
+          return;
+        }
+
         await OrderDatabase().createOrder(order.toMap());
 
         await notification.Notification().sendNotification(
-            Get.find<ApplyFormController>().user.value,
+            user,
             PushNotification(title: "طلب جديد", body: "عرضك تلقى طلبا جديدا"));
+
+        controller.isLoading.value = false;
 
         Get.offAllNamed('/');
       }
     }
   }
 }
-
-class ApplyFormController extends UserController {}

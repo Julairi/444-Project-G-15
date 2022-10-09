@@ -21,6 +21,7 @@ class CompanyPosts extends StatelessWidget {
           CustomListView(
               query: PostDatabase.postsCollection
                   .where("companyID", isEqualTo: App.user.id)
+                  .where("offerStatus", whereIn: ["pending", "assigned", "fully_assigned"])
                   .orderBy("timePosted", descending: true),
               emptyListWidget: const SizedBox(
                 child: Text(
