@@ -10,6 +10,7 @@ const double defaultPadding = 16.0;
 const double defaultFontSize = 16.0;
 final RegExp emailValidatorRegExp =
     RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+final RegExp textlValidatorRegExp = RegExp("[0-9]");
 const String kEmailNullError = "الرجاء إدخال البريد الإلكتروني";
 const String kInvalidEmailError = " الرجاء إدخال البريد الإلكتروني بشكل صحيح";
 const String kPassNullError = "الرجاء إدخال كلمة المرور";

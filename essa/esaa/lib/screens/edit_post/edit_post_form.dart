@@ -65,9 +65,14 @@ class EditPostFormState extends State<EditPostForm> {
       textInputAction: TextInputAction.next,
       onSaved: (newValue) => titleEditingController.text = newValue!.trim(),
       validator: (value) {
+        final number = num.tryParse(value!);
+
         if (value!.trim().isEmpty) {
           return kJobTitleNullError;
+        } else if (number != null) {
+          return 'يجب أن يحتوي عنوان الإعلان الوظيفي على حروف وأرقام معا';
         }
+
         return null;
       },
       decoration: InputDecoration(
@@ -93,8 +98,11 @@ class EditPostFormState extends State<EditPostForm> {
       onSaved: (newValue) =>
           descriptionEditingController.text = newValue!.trim(),
       validator: (value) {
+        final number = num.tryParse(value!);
         if (value!.trim().isEmpty) {
           return kDescNullError;
+        } else if (number != null) {
+          return 'يجب أن يحتوي وصف الوظيفة على حروف وأرقام معا';
         }
         return null;
       },
@@ -677,4 +685,9 @@ class EditPostFormController extends UserController {
     "Az Zaimah",
     "Zulfi",
   ].obs;
+  bool isNumericUsingRegularExpression(String string) {
+    final numericRegex = RegExp(r'^-?(([0-9]*)|(([0-9]*)\.([0-9]*)))$');
+
+    return numericRegex.hasMatch(string);
+  }
 }
