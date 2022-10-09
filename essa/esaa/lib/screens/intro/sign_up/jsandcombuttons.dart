@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class jscombuttons extends StatelessWidget {
-  const jscombuttons({Key? key,}) : super(key: key);
+  const jscombuttons({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,13 @@ class jscombuttons extends StatelessWidget {
           onPressed: () => Get.toNamed('/sign_up_screen'),
           child: Text(
             " تسجيل كباحث عن عمل".toUpperCase(),
+            style: const TextStyle(color: Colors.white, fontSize: 16),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () => Get.toNamed('/job_seeker_profile_forC'),
+          child: Text(
+            "profile".toUpperCase(),
             style: const TextStyle(color: Colors.white, fontSize: 16),
           ),
         ),

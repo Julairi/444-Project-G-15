@@ -1,4 +1,5 @@
 import 'package:esaa/screens/default.dart';
+import 'package:esaa/screens/job_seeker_home/job_seeker_profile/job_seeker_profile_forC.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -53,16 +54,21 @@ class App extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(30)),
                 borderSide: BorderSide.none,
               ),
-            )
-        ),
+            )),
         getPages: [
-          GetPage(name: '/splash', page : () => const Splash()),
-          GetPage(name: '/welcome_screen', page : () => const WelcomeScreen()),
-          GetPage(name: '/company_sign_up_screen', page : () => const CompanySignUpScreen()),
-          GetPage(name: '/sign_up_screen', page : () => const SignUpScreen()),
-          GetPage(name: '/login_screen', page : () => const LoginScreen()),
-          GetPage(name: '/forgot_password', page : () => const ForgotPasswordScreen()),
-          GetPage(name: '/', page : () => Default()),
+          GetPage(name: '/splash', page: () => const Splash()),
+          GetPage(name: '/welcome_screen', page: () => const WelcomeScreen()),
+          GetPage(
+              name: '/company_sign_up_screen',
+              page: () => const CompanySignUpScreen()),
+          GetPage(name: '/sign_up_screen', page: () => const SignUpScreen()),
+          GetPage(name: '/login_screen', page: () => const LoginScreen()),
+          GetPage(
+              name: '/forgot_password',
+              page: () => const ForgotPasswordScreen()),
+          GetPage(name: '/', page: () => Default()),
+          GetPage(
+              name: '/job_seeker_profile_forC', page: () => jcProfilePage()),
         ],
         initialRoute: '/splash',
       ),
