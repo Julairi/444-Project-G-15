@@ -34,6 +34,8 @@ dependencies:
   flutter_local_notifications:
   overlay_support:
   firebase_analytics:
+  flutter_rating_bar: ^4.0.1
+  rating_dialog: ^2.0.4
     #google_fonts_arabic: ^1.1.7
 
 

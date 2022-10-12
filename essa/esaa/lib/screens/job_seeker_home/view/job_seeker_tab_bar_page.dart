@@ -5,6 +5,8 @@ import 'package:esaa/screens/company_home/company_home.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_connect.dart';
+import 'package:rating_dialog/rating_dialog.dart';
 
 class JobSeekerTabBarPage extends StatefulWidget {
   const JobSeekerTabBarPage({Key? key}) : super(key: key);
@@ -141,6 +143,7 @@ class _TabTwo extends StatelessWidget {
           Order order = Order.fromDocumentSnapshot(querySnapshot);
           return OrderCard(order: order);
         });
+    // ignore: dead_code
   }
 }
 
@@ -152,8 +155,9 @@ class _TabThree extends StatelessWidget {
     return CustomListView(
         query: OrderDatabase.ordersCollection
             .where("userID", isEqualTo: App.user.id)
-            .where("orderStatus", whereIn: ["rejected", "deleted"])
-            .orderBy("timeApplied", descending: true),
+            .where("orderStatus", whereIn: ["rejected", "deleted"]).orderBy(
+                "timeApplied",
+                descending: true),
         emptyListWidget: const SizedBox(
           child: Text(
             'لا يوجد تقديم مرفوض',

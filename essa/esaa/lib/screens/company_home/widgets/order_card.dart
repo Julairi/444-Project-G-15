@@ -1,11 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/models/models.dart';
 import 'package:esaa/screens/job_seeker_home/view/post_details.dart';
 import 'package:esaa/services/database/database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:rating_dialog/rating_dialog.dart';
 import '../company_home.dart';
+import 'package:esaa/screens/job_seeker_home/view/job_seeker_tab_bar_page.dart';
 
 class OrderCard extends StatelessWidget {
   final Order order;
@@ -164,11 +167,56 @@ class OrderCard extends StatelessWidget {
                               fontSize: defaultFontSize,
                               fontWeight: FontWeight.bold,
                               overflow: TextOverflow.ellipsis)),
+                    const SizedBox(
+                      height: 20,
+                      width: 15,
+                    ),
+                    if (order.hasBeenPaid == false)
+                      GestureDetector(
+                        child: const Text("تقييم",
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: defaultFontSize,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
+                                overflow: TextOverflow.ellipsis)),
+                        onTap: () async {
+                          show(context);
+                        },
+                      ),
                   ],
                 ),
               )
             ],
           ),
         ));
+  }
+
+  void show(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return RatingDialog(
+              title: Text(
+                'تقييم الخدمة',
+                textAlign: TextAlign.center,
+              ),
+              submitButtonText: 'إرسال',
+              enableComment: false,
+              onSubmitted: (response) {
+                double rate = response.rating;
+
+                FirebaseFirestore firestore = FirebaseFirestore.instance;
+                firestore
+                    .collection('users')
+                    .doc(post!.companyID)
+                    .update({
+                      'rates': FieldValue.arrayUnion([rate])
+                    })
+                    .then((value) => print("Updated"))
+                    .catchError((error) => print("Failed"));
+              });
+        });
   }
 }
