@@ -144,12 +144,6 @@ class PostCardCompany extends StatelessWidget {
                           height: 20,
                           width: 10,
                         ),
-                        Text(post.companyName,
-                            style: const TextStyle(
-                                color: kPrimaryColor,
-                                fontSize: defaultFontSize,
-                                fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.ellipsis))
                       ],
                     ),
                   ],
