@@ -330,7 +330,7 @@ class profileFormState extends State<EditPostForm> {
                   controller.isLoading.value = false;
 
                   Fluttertoast.showToast(
-                      msg: "تم تعديل المنشور بنجاح",
+                      msg: "",
                       backgroundColor: Colors.black54,
                       toastLength: Toast.LENGTH_LONG,
                       textColor: kFillColor);
@@ -355,7 +355,7 @@ class profileFormState extends State<EditPostForm> {
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: defaultPadding * 2),
-                    child: Text("تعديل".toUpperCase(),
+                    child: Text("".toUpperCase(),
                         style: const TextStyle(fontSize: 16)),
                   ),
                 ],
