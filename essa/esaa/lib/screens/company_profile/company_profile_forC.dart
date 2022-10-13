@@ -54,61 +54,63 @@ class ProfileScreenForC extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Container(
-                height: 450,
-                width: double.infinity,
-                margin: EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      height: 35,
-                    ),
-                    textfield(
-                      hintText: 'Username',
-                    ),
-                    textfield(
-                      hintText: 'Email',
-                    ),
-                    textfield(
-                      hintText: 'Password',
-                    ),
-                    textfield(
-                      hintText: 'Confirm password',
-                    ),
-                    Container(
-                      height: 55,
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                            primary: kPrimaryColor, elevation: 0),
-                        child: Text(
-                          "Update",
-                          style: TextStyle(
-                            fontSize: 23,
-                            color: Colors.black,
+              SingleChildScrollView(
+                child: Container(
+                  height: 450,
+                  width: double.infinity,
+                  margin: EdgeInsets.symmetric(horizontal: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        height: 90,
+                      ),
+                      textfield(
+                        hintText: 'Username',
+                      ),
+                      textfield(
+                        hintText: 'Email',
+                      ),
+                      textfield(
+                        hintText: 'Password',
+                      ),
+                      textfield(
+                        hintText: 'Confirm password',
+                      ),
+                      Container(
+                        height: 55,
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                              primary: kPrimaryColor, elevation: 0),
+                          child: Text(
+                            "Update",
+                            style: TextStyle(
+                              fontSize: 23,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Container(
-                      height: 55,
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                            primary: kPrimaryColor, elevation: 0),
-                        child: Text(
-                          "Logout",
-                          style: TextStyle(
-                            fontSize: 23,
-                            color: Colors.black,
+                      Container(
+                        height: 55,
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ElevatedButton.styleFrom(
+                              primary: kPrimaryColor, elevation: 0),
+                          child: Text(
+                            "Logout",
+                            style: TextStyle(
+                              fontSize: 23,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
-                      ),
-                    )
-                  ],
+                      )
+                    ],
+                  ),
                 ),
               )
             ],
@@ -126,7 +128,7 @@ class ProfileScreenForC extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(20),
                 child: Text(
-                  "Profile",
+                  "حسابك الخاص",
                   style: TextStyle(
                     fontSize: 35,
                     letterSpacing: 1.5,
@@ -173,7 +175,7 @@ class ProfileScreenForC extends StatelessWidget {
 class HeaderCurvedContainer extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = Paint()..color = Color(0xff555555);
+    Paint paint = Paint()..color = Color.fromARGB(255, 117, 154, 148);
     Path path = Path()
       ..relativeLineTo(0, 150)
       ..quadraticBezierTo(size.width / 2, 225, size.width, 150)
