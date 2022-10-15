@@ -521,6 +521,8 @@ class EditPostFormState extends State<EditPostForm> {
             const SizedBox(height: defaultPadding / 2),
             startDate,
             const SizedBox(height: defaultPadding / 2),
+            EndDate,
+            const SizedBox(height: defaultPadding / 2),
             noOfHours,
             const SizedBox(height: defaultPadding / 2),
             time,
