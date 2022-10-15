@@ -178,20 +178,20 @@ class _DefaultState extends State<Default> {
     if(userType == "jobSeeker"){
       switch (index) {
         case 0:
-          widget = const AvailablePostsScreen();
+          widget = AvailablePostsScreen();
           break;
         case 1:
           widget = const JobSeekerTabBarPage();
           break;
         case 2:
-          widget = const AvailablePostsScreen();
+          widget = AvailablePostsScreen();
           break;
         case 3:
           widget = const ProfileScreen();
           break;
 
         default:
-          widget = const AvailablePostsScreen();
+          widget = AvailablePostsScreen();
           break;
       }
     } else {

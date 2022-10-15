@@ -2,8 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Post {
 
-  late String id, city, date, description, payPerHour, time, title, nHours,
+  late String id, city, date, description, time, title, nHours,
       offerStatus, companyName, companyID, maxNoOfApplicants, acceptedApplicants;
+  late int payPerHour;
   late DateTime timePosted;
 
   Post({
@@ -31,7 +32,7 @@ class Post {
     date = "";
     nHours = "";
     time = "";
-    payPerHour = "";
+    payPerHour = 0;
     acceptedApplicants = "";
     maxNoOfApplicants = "";
     offerStatus = "";
@@ -66,7 +67,7 @@ class Post {
       city: snapshot.get('city') ?? "",
       date: snapshot.get('date') ?? "",
       description: snapshot.get('description') ?? "",
-      payPerHour: snapshot.get('payPerHour') ?? "",
+      payPerHour: snapshot.get('payPerHour') ?? 0,
       acceptedApplicants: snapshot.get('acceptedApplicants') ?? "",
       maxNoOfApplicants: snapshot.get('maxNoOfApplicants') ?? "",
       time: snapshot.get('time') ?? "",

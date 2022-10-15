@@ -1,7 +1,6 @@
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/models/models.dart';
-import 'package:esaa/screens/edit_post/edit_post.dart';
 import 'package:esaa/services/database/database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +66,7 @@ class EditPostFormState extends State<EditPostForm> {
       validator: (value) {
         final number = num.tryParse(value!);
 
-        if (value!.trim().isEmpty) {
+        if (value.trim().isEmpty) {
           return kJobTitleNullError;
         } else if (number != null) {
           return 'يجب أن يحتوي عنوان الإعلان الوظيفي على حروف وأرقام معا';
@@ -99,7 +98,7 @@ class EditPostFormState extends State<EditPostForm> {
           descriptionEditingController.text = newValue!.trim(),
       validator: (value) {
         final number = num.tryParse(value!);
-        if (value!.trim().isEmpty) {
+        if (value.trim().isEmpty) {
           return kDescNullError;
         } else if (number != null) {
           return 'يجب أن يحتوي وصف الوظيفة على حروف وأرقام معا';
@@ -496,8 +495,7 @@ class EditPostFormState extends State<EditPostForm> {
                   widget.post.date = dateEditingController.text.trim();
                   widget.post.nHours = noOfHoursEditingController.text.trim();
                   widget.post.time = timeEditingController.text.trim();
-                  widget.post.payPerHour =
-                      payPerHourEditingController.text.trim();
+                  widget.post.payPerHour = int.parse(payPerHourEditingController.text.trim());
                   widget.post.maxNoOfApplicants =
                       applicantsEditingController.text.trim() == ""
                           ? "1"
@@ -563,7 +561,7 @@ class EditPostFormState extends State<EditPostForm> {
     locationEditingController.text = post.city;
     dateEditingController.text = post.date;
     noOfHoursEditingController.text = post.nHours;
-    payPerHourEditingController.text = post.payPerHour;
+    payPerHourEditingController.text = post.payPerHour.toString();
     timeEditingController.text = post.time;
     applicantsEditingController.text = post.maxNoOfApplicants;
   }

@@ -565,7 +565,7 @@ class OrderDetails extends StatelessWidget {
     var postPay = myPost.payPerHour;
     var postNHours = myPost.nHours;
 
-    var fee = int.parse(postPay);
+    var fee = postPay;
     var nH = int.parse(postNHours);
     var payDollars = nH * fee * 0.266667;
     var payRiyals = nH * fee;
@@ -662,7 +662,7 @@ Future<double> calcRiyal(Order order) async {
 
   var postPay = myPost!.payPerHour;
   var postNHours = myPost.nHours;
-  var fee = int.parse(postPay);
+  var fee = postPay;
   var nH = int.parse(postNHours);
   var payRiyals = nH * fee + 0.0;
   return payRiyals;

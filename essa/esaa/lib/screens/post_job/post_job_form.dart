@@ -394,7 +394,7 @@ class PostJobFormState extends State<PostJobForm> {
                   post.date = dateEditingController.text;
                   post.nHours = noOfHoursEditingController.text;
                   post.time = timeEditingController.text;
-                  post.payPerHour = payPerHourEditingController.text;
+                  post.payPerHour = int.parse(payPerHourEditingController.text);
                   post.offerStatus = 'pending';
                   post.companyID = App.user.id;
                   post.companyName = App.user.name;
