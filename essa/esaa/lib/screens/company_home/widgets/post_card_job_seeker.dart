@@ -126,7 +126,16 @@ class PostCardJobSeeker extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                            post.date,
+                            post.Sdate,
+                            style: const TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: defaultFontSize,
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.ellipsis
+                            )
+                        ),
+                         Text(
+                            post.Edate,
                             style: const TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: defaultFontSize,

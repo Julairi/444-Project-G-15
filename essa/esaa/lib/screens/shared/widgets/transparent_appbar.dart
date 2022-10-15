@@ -55,8 +55,7 @@ class TransparentAppbar extends StatelessWidget {
                   elevation: 0,
                 ),
                 backgroundColor: Colors.transparent,
-                body: child
-            ),
+                body: child),
           ],
         ),
       ),

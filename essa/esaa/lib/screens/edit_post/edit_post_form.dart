@@ -26,7 +26,8 @@ class EditPostFormState extends State<EditPostForm> {
   final titleEditingController = TextEditingController();
   final descriptionEditingController = TextEditingController();
   final locationEditingController = TextEditingController();
-  final dateEditingController = TextEditingController();
+  final StartdateEditingController = TextEditingController();
+  final EndDateEditingController = TextEditingController();
   final noOfHoursEditingController = TextEditingController();
   final payPerHourEditingController = TextEditingController();
   final timeEditingController = TextEditingController();
@@ -41,7 +42,8 @@ class EditPostFormState extends State<EditPostForm> {
       titleEditingController,
       descriptionEditingController,
       locationEditingController,
-      dateEditingController,
+      StartdateEditingController,
+      EndDateEditingController,
       noOfHoursEditingController,
       payPerHourEditingController,
       timeEditingController,
@@ -81,9 +83,7 @@ class EditPostFormState extends State<EditPostForm> {
           borderRadius: BorderRadius.circular(20),
           borderSide: const BorderSide(color: kFillColor),
         ),
-        prefixIcon: const Padding(
-          padding: EdgeInsets.all(defaultPadding),
-        ),
+        prefixIcon: const Padding(padding: EdgeInsets.zero),
         labelText: " ادخل عنوان الاعلان الوظيفي",
         floatingLabelStyle: const TextStyle(
           color: kTextColor,
@@ -205,7 +205,7 @@ class EditPostFormState extends State<EditPostForm> {
                 "اختر المدينة",
                 style: TextStyle(
                   color: kTextColor,
-                  fontSize: 14,
+                  fontSize: 16,
                 ),
               ),
             )
@@ -213,23 +213,24 @@ class EditPostFormState extends State<EditPostForm> {
         ));
 
     final startDate = TextFormField(
-      controller: dateEditingController,
+      controller: StartdateEditingController,
       cursorColor: kPrimaryColor,
       //keyboardType: TextInputType.datetime,
       readOnly: true,
       textInputAction: TextInputAction.next,
       onSaved: (value) {
-        dateEditingController.text = value!.toString();
+        StartdateEditingController.text = value!.toString();
       },
       onTap: () async {
         DateTime? newDate = await showDatePicker(
             context: context,
             initialDate: DateTime.now(),
             firstDate: DateTime.now(),
-            lastDate: DateTime(2101));
+            lastDate: DateTime((DateTime.now().millisecondsSinceEpoch +
+                (1000 * 60 * 60 * 24 * 90))));
         if (newDate != null) {
           setState(() {
-            dateEditingController.text =
+            StartdateEditingController.text =
                 DateFormat('yyyy-MM-dd').format(newDate);
           });
         } else {
@@ -249,7 +250,66 @@ class EditPostFormState extends State<EditPostForm> {
           padding: EdgeInsets.all(defaultPadding),
           child: Icon(Icons.date_range),
         ),
-        labelText: "أدخل التاريخ ",
+        labelText: "أدخل تاريخ البداية ",
+        floatingLabelStyle: const TextStyle(
+          color: kTextColor,
+          fontSize: 20,
+        ),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return kStartDateNullError;
+        } else {
+          if (DateFormat('yyyy-MM-dd').parse(value).millisecondsSinceEpoch >
+              (DateTime.now().millisecondsSinceEpoch +
+                  (1000 * 60 * 60 * 24 * 90))) {
+            return "يجب ان يكون التاريخ بحدود ثلاث اشهر من تاريخ اليوم";
+          } else {
+            return null;
+          }
+        }
+      },
+    );
+
+    final EndDate = TextFormField(
+      controller: EndDateEditingController,
+      cursorColor: kPrimaryColor,
+      //keyboardType: TextInputType.datetime,
+      readOnly: true,
+      textInputAction: TextInputAction.next,
+      onSaved: (value) {
+        StartdateEditingController.text = value!.toString();
+      },
+      onTap: () async {
+        DateTime? newDate = await showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime.now(),
+            lastDate: DateTime((DateTime.now().millisecondsSinceEpoch +
+                (1000 * 60 * 60 * 24 * 90))));
+        if (newDate != null) {
+          setState(() {
+            StartdateEditingController.text =
+                DateFormat('yyyy-MM-dd').format(newDate);
+          });
+        } else {
+          if (kDebugMode) {
+            print(kEndDateNullError);
+          }
+        }
+      },
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: kFillColor,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: const BorderSide(color: kFillColor),
+        ),
+        prefixIcon: const Padding(
+          padding: EdgeInsets.all(defaultPadding),
+          child: Icon(Icons.date_range),
+        ),
+        labelText: "أدخل تاريخ النهاية ",
         floatingLabelStyle: const TextStyle(
           color: kTextColor,
           fontSize: 20,
@@ -308,7 +368,6 @@ class EditPostFormState extends State<EditPostForm> {
         floatingLabelStyle: const TextStyle(
           color: kTextColor,
           fontSize: 20,
-          fontWeight: FontWeight.w800,
         ),
       ),
 
@@ -319,7 +378,7 @@ class EditPostFormState extends State<EditPostForm> {
         //// checkkkkkkkkkkk
 
         final date = DateFormat('yyyy-MM-dd h:mm aa').parse(
-            "${dateEditingController.text.trim()} ${timeEditingController.text.trim()}");
+            "${StartdateEditingController.text.trim()} ${timeEditingController.text.trim()}");
 
         if (date.millisecondsSinceEpoch <
             DateTime.now().millisecondsSinceEpoch) {
@@ -492,10 +551,12 @@ class EditPostFormState extends State<EditPostForm> {
                   widget.post.description =
                       descriptionEditingController.text.trim();
                   widget.post.city = controller.city.value;
-                  widget.post.date = dateEditingController.text.trim();
+                  widget.post.Sdate = StartdateEditingController.text.trim();
+                  widget.post.Edate = EndDateEditingController.text.trim();
                   widget.post.nHours = noOfHoursEditingController.text.trim();
                   widget.post.time = timeEditingController.text.trim();
-                  widget.post.payPerHour = int.parse(payPerHourEditingController.text.trim());
+                  widget.post.payPerHour =
+                      int.parse(payPerHourEditingController.text.trim());
                   widget.post.maxNoOfApplicants =
                       applicantsEditingController.text.trim() == ""
                           ? "1"
@@ -551,7 +612,8 @@ class EditPostFormState extends State<EditPostForm> {
       TextEditingController titleEditingController,
       TextEditingController descriptionEditingController,
       TextEditingController locationEditingController,
-      TextEditingController dateEditingController,
+      TextEditingController StartdateEditingController,
+      TextEditingController EndDateEditingController,
       TextEditingController noOfHoursEditingController,
       TextEditingController payPerHourEditingController,
       TextEditingController timeEditingController,
@@ -559,7 +621,8 @@ class EditPostFormState extends State<EditPostForm> {
     titleEditingController.text = post.title;
     descriptionEditingController.text = post.description;
     locationEditingController.text = post.city;
-    dateEditingController.text = post.date;
+    StartdateEditingController.text = post.Sdate;
+    EndDateEditingController.text = post.Edate;
     noOfHoursEditingController.text = post.nHours;
     payPerHourEditingController.text = post.payPerHour.toString();
     timeEditingController.text = post.time;

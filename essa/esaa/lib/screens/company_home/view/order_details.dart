@@ -529,7 +529,7 @@ class OrderDetails extends StatelessWidget {
     var nMon = now.month;
     var nDay = now.day;
     var nYear = now.year;
-    var postDate = DateTime.parse(myPost!.date);
+    var postDate = DateTime.parse(myPost!.Sdate);
 
     var postMon = postDate.month;
     var postDay = postDate.day;
@@ -640,7 +640,7 @@ Future<bool> postTime(Order order) async {
   var nMon = now.month;
   var nDay = now.day;
   var nYear = now.year;
-  var postDate = DateTime.parse(myPost!.date);
+  var postDate = DateTime.parse(myPost!.Sdate);
 
   var postMon = postDate.month;
   var postDay = postDate.day;

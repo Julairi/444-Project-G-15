@@ -23,7 +23,8 @@ class PostJobFormState extends State<PostJobForm> {
   final titleEditingController = TextEditingController();
   final descriptionEditingController = TextEditingController();
   final locationEditingController = TextEditingController();
-  final dateEditingController = TextEditingController();
+  final StartdateEditingController = TextEditingController();
+  final EndDateEditingController = TextEditingController();
   final noOfHoursEditingController = TextEditingController();
   final payPerHourEditingController = TextEditingController();
   final timeEditingController = TextEditingController();
@@ -135,13 +136,13 @@ class PostJobFormState extends State<PostJobForm> {
     );
 
     final startDate = TextFormField(
-      controller: dateEditingController,
+      controller: StartdateEditingController,
       cursorColor: kPrimaryColor,
       //keyboardType: TextInputType.datetime,
       readOnly: true,
       textInputAction: TextInputAction.next,
       onSaved: (value) {
-        dateEditingController.text = value!.toString();
+        StartdateEditingController.text = value!.toString();
       },
       onTap: () async {
         DateTime? newDate = await showDatePicker(
@@ -151,7 +152,7 @@ class PostJobFormState extends State<PostJobForm> {
             lastDate: DateTime(2101));
         if (newDate != null) {
           setState(() {
-            dateEditingController.text =
+            StartdateEditingController.text =
                 DateFormat('yyyy-MM-dd').format(newDate);
           });
         } else {
@@ -171,7 +172,7 @@ class PostJobFormState extends State<PostJobForm> {
           padding: EdgeInsets.all(defaultPadding),
           child: Icon(Icons.date_range),
         ),
-        labelText: "أدخل التاريخ ",
+        labelText: "أدخل تاريخ البداية ",
         floatingLabelStyle: const TextStyle(
           color: kTextColor,
           fontSize: 20,
@@ -185,7 +186,57 @@ class PostJobFormState extends State<PostJobForm> {
         }
       },
     );
-
+    final EndDate = TextFormField(
+      controller: EndDateEditingController,
+      cursorColor: kPrimaryColor,
+      //keyboardType: TextInputType.datetime,
+      readOnly: true,
+      textInputAction: TextInputAction.next,
+      onSaved: (value) {
+        EndDateEditingController.text = value!.toString();
+      },
+      onTap: () async {
+        DateTime? newDate2 = await showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime.now(),
+            lastDate: DateTime(2101));
+        if (newDate2 != null) {
+          setState(() {
+            EndDateEditingController.text =
+                DateFormat('yyyy-MM-dd').format(newDate2);
+          });
+        } else {
+          if (kDebugMode) {
+            print(kEndDateNullError);
+          }
+        }
+      },
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: kFillColor,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: const BorderSide(color: kFillColor),
+        ),
+        prefixIcon: const Padding(
+          padding: EdgeInsets.all(defaultPadding),
+          child: Icon(Icons.date_range),
+        ),
+        labelText: "أدخل تاريخ النهاية ",
+        floatingLabelStyle: const TextStyle(
+          color: kTextColor,
+          fontSize: 20,
+        ),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return kEndDateNullError;
+        } else {
+          return null;
+        }
+      },
+    );
     final time = TextFormField(
       readOnly: true,
       controller: timeEditingController,
@@ -243,7 +294,8 @@ class PostJobFormState extends State<PostJobForm> {
     final noOfHours = TextFormField(
       controller: noOfHoursEditingController,
       cursorColor: kPrimaryColor,
-      keyboardType: const TextInputType.numberWithOptions(signed: false, decimal: true),
+      keyboardType:
+          const TextInputType.numberWithOptions(signed: false, decimal: true),
       textInputAction: TextInputAction.next,
       onSaved: (value) {
         noOfHoursEditingController.text = value!;
@@ -345,43 +397,26 @@ class PostJobFormState extends State<PostJobForm> {
         child: Column(
           children: [
             const Padding(padding: EdgeInsets.all(defaultPadding)),
-
             const SizedBox(height: defaultPadding / 2),
-
             titleField,
-
             const SizedBox(height: defaultPadding / 2),
-
             descriptionField,
-
             const SizedBox(height: defaultPadding / 2),
-
             locationField,
-
             const SizedBox(height: defaultPadding / 2),
-
             startDate,
-
             const SizedBox(height: defaultPadding / 2),
-
+            EndDate,
+            const SizedBox(height: defaultPadding / 2),
             noOfHours,
-
             const SizedBox(height: defaultPadding / 2),
-
             time,
-
             const SizedBox(height: defaultPadding / 2),
-
             payPerHour,
-
             const SizedBox(height: defaultPadding / 2),
-
             maxNoOfApplicants,
-
             const Padding(padding: EdgeInsets.all(defaultPadding)),
-
             const SizedBox(height: defaultPadding / 2),
-
             ElevatedButton(
               onPressed: () async {
                 final controller = Get.find<UserController>();
@@ -391,14 +426,19 @@ class PostJobFormState extends State<PostJobForm> {
                   post.title = titleEditingController.text;
                   post.description = descriptionEditingController.text;
                   post.city = locationEditingController.text;
-                  post.date = dateEditingController.text;
+                  post.Sdate = StartdateEditingController.text;
+                  post.Edate = EndDateEditingController.text;
+
                   post.nHours = noOfHoursEditingController.text;
                   post.time = timeEditingController.text;
                   post.payPerHour = int.parse(payPerHourEditingController.text);
                   post.offerStatus = 'pending';
                   post.companyID = App.user.id;
                   post.companyName = App.user.name;
-                  post.maxNoOfApplicants = applicantsEditingController.text == "" ? "1" : applicantsEditingController.text;
+                  post.maxNoOfApplicants =
+                      applicantsEditingController.text == ""
+                          ? "1"
+                          : applicantsEditingController.text;
                   post.acceptedApplicants = "0";
 
                   controller.isLoading.value = true; //Show Indicator
@@ -410,37 +450,31 @@ class PostJobFormState extends State<PostJobForm> {
                   Get.find<UserController>().changePage(1);
                 }
               },
-              child:
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-
-                      //Show indicator if post is being created, hide otherwise
-                      GetX<UserController>(
-                        builder: (controller) {
-                          return Visibility(
-                            visible: controller.isLoading.value,
-                              child: LayoutBuilder (
-                                builder: (context, constraints) {
-                                  return const SpinKitRing(
-                                    color: kFillColor,
-                                    size: 24.0,
-                                  );
-                                }
-                              )
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  //Show indicator if post is being created, hide otherwise
+                  GetX<UserController>(builder: (controller) {
+                    return Visibility(
+                        visible: controller.isLoading.value,
+                        child: LayoutBuilder(builder: (context, constraints) {
+                          return const SpinKitRing(
+                            color: kFillColor,
+                            size: 24.0,
                           );
-                        }
-                      ),
+                        }));
+                  }),
 
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: defaultPadding * 2),
-                        child: Text("ارسال".toUpperCase(), style: const TextStyle(fontSize: 16)),
-                      ),
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: defaultPadding * 2),
+                    child: Text("ارسال".toUpperCase(),
+                        style: const TextStyle(fontSize: 16)),
                   ),
+                ],
+              ),
             ),
-
             const SizedBox(height: defaultPadding),
           ],
         ),

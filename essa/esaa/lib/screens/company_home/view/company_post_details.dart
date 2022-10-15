@@ -38,8 +38,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
 
     controller.isLoading.value = false;
 
-    return CustomAppbar(
-      showLeading: true,
+    return TransparentAppbar(
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(
@@ -63,33 +62,8 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        GetX<CompanyPostDetailsController>(
-                            builder: (controller) {
-                          return IconButton(
-                            onPressed: () => _edit(widget.post),
-                            icon: Icon(
-                              Icons.edit,
-                              color: controller.editable.value
-                                  ? Colors.blueAccent
-                                  //: Colors.grey,
-                                  : Colors.blueAccent.withOpacity(0.1),
-                              size: 30,
-                            ),
-                          );
-                        }),
                         const SizedBox(
                           width: 10,
-                        ),
-                        IconButton(
-                          onPressed: () => showConfirmDeletingDialog(context),
-                          icon: Icon(
-                            Icons.delete,
-                            color: int.parse(widget.post.acceptedApplicants) > 0
-                                // ? Colors.grey
-                                ? Colors.redAccent.withOpacity(0.1)
-                                : Colors.redAccent,
-                            size: 30,
-                          ),
                         ),
                         const SizedBox(
                           width: 10,
@@ -141,7 +115,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                         Row(
                           children: [
                             const Icon(
-                              Icons.business_outlined,
+                              Icons.business,
                               color: Color.fromARGB(255, 5, 53, 93),
                             ),
                             const SizedBox(
@@ -197,7 +171,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                               height: 20,
                               width: 10,
                             ),
-                            Text(widget.post.date,
+                            Text(widget.post.Sdate,
                                 style: const TextStyle(
                                     color: kPrimaryColor,
                                     fontSize: defaultFontSize,
@@ -220,12 +194,18 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                               height: 20,
                               width: 10,
                             ),
-                            Text(widget.post.date,
+                            Text(widget.post.time,
                                 style: const TextStyle(
                                     color: kPrimaryColor,
                                     fontSize: defaultFontSize,
                                     fontWeight: FontWeight.bold,
                                     overflow: TextOverflow.ellipsis))
+                            /* Text(widget.post.Edate,
+                                style: const TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: defaultFontSize,
+                                    fontWeight: FontWeight.bold,
+                                    overflow: TextOverflow.ellipsis))*/
                           ],
                         ),
                       ],
@@ -249,7 +229,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                               width: 10,
                             ),
                             Text(
-                              '${widget.post.payPerHour} لكل ساعة عمل',
+                              'لكل ساعة عمل ${widget.post.payPerHour}',
                               style: const TextStyle(
                                   color: kPrimaryColor,
                                   fontSize: defaultFontSize,
@@ -274,7 +254,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                               width: 10,
                             ),
                             Text(
-                              '${widget.post.nHours}  ساعات  ',
+                              '  ساعات  ${widget.post.nHours}',
                               style: const TextStyle(
                                   color: kPrimaryColor,
                                   fontSize: defaultFontSize,
@@ -290,12 +270,37 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                       width: 10,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
+                      padding: const EdgeInsets.only(top: 16.0),
                       child: ElevatedButton(
-                          onPressed: () => Get.to(() => PostOrders(
-                              post: widget.post, filters: widget.filters)),
+                          style: ElevatedButton.styleFrom(
+                            primary:
+                                int.parse(widget.post.acceptedApplicants) > 0
+                                    // ? Colors.grey
+                                    ? Colors.blueAccent.withOpacity(0.2)
+                                    : Colors.blueAccent, // Background color
+                          ),
+                          onPressed: () => _edit(widget.post),
                           child: const Text(
-                            'عرض الطلبات',
+                            'تعديل',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: defaultFontSize,
+                                fontWeight: FontWeight.bold),
+                          )),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary:
+                                int.parse(widget.post.acceptedApplicants) > 0
+                                    // ? Colors.grey
+                                    ? Colors.redAccent.withOpacity(0.2)
+                                    : Colors.redAccent, // Background color
+                          ),
+                          onPressed: () => showConfirmDeletingDialog(context),
+                          child: const Text(
+                            'حذف',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: defaultFontSize,

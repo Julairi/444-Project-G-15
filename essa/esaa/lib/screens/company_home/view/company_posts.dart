@@ -12,7 +12,7 @@ class CompanyPosts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomAppbar(
+    return TransparentAppbar(
       child: SingleChildScrollView(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -21,8 +21,11 @@ class CompanyPosts extends StatelessWidget {
           CustomListView(
               query: PostDatabase.postsCollection
                   .where("companyID", isEqualTo: App.user.id)
-                  .where("offerStatus", whereIn: ["pending", "assigned", "fully_assigned"])
-                  .orderBy("timePosted", descending: true),
+                  .where("offerStatus", whereIn: [
+                "pending",
+                "assigned",
+                "fully_assigned"
+              ]).orderBy("timePosted", descending: true),
               emptyListWidget: const SizedBox(
                 child: Text(
                   'لا توجد عروض منشورة',

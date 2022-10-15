@@ -136,20 +136,7 @@ class PostCardCompany extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        const Icon(
-                          Icons.business,
-                          color: Color.fromARGB(255, 3, 77, 138),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                          width: 10,
-                        ),
-                        Text(post.companyName,
-                            style: const TextStyle(
-                                color: kPrimaryColor,
-                                fontSize: defaultFontSize,
-                                fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.ellipsis))
+                        
                       ],
                     ),
                   ],
