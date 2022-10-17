@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CustomAppbar extends StatelessWidget {
+  final Widget? title;
   final Widget child;
   final String topImage, bottomImage;
   final bool showLeading;
@@ -12,6 +13,7 @@ class CustomAppbar extends StatelessWidget {
 
   const CustomAppbar({
     Key? key,
+    this.title,
     required this.child,
     this.showLeading = false,
     this.showNotification = false,
@@ -28,6 +30,7 @@ class CustomAppbar extends StatelessWidget {
         floatHeaderSlivers: true,
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
+            title: title,
             flexibleSpace: const FlexibleSpaceBar(),
             leading: showLeading
                 ? IconButton(

@@ -13,6 +13,15 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomAppbar(
+        title: const Text(
+            "Profile",
+            style: TextStyle(
+                color: kFillColor,
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                overflow: TextOverflow.ellipsis
+            )
+        ),
         showNotification: true,
         child: SingleChildScrollView(
           child: Column(
