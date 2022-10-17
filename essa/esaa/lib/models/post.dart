@@ -2,14 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Post {
 
-  late String id, city, date, description, payPerHour, time, title, nHours,
+  late String id, city, startDate, endDate, description, time, title, nHours,
       offerStatus, companyName, companyID, maxNoOfApplicants, acceptedApplicants;
+  late int payPerHour;
   late DateTime timePosted;
 
   Post({
     required this.id,
     required this.city,
-    required this.date,
+    required this.startDate,
+    required this.endDate,
     required this.description,
     required this.payPerHour,
     required this.time,
@@ -28,10 +30,11 @@ class Post {
     title = "";
     description = "";
     city = "";
-    date = "";
+    startDate = "";
+    endDate = "";
     nHours = "";
     time = "";
-    payPerHour = "";
+    payPerHour = 0;
     acceptedApplicants = "";
     maxNoOfApplicants = "";
     offerStatus = "";
@@ -44,7 +47,8 @@ class Post {
     return {
       'id': id,
       'city': city,
-      'date': date,
+      'startDate': startDate,
+      'endDate': endDate,
       'description': description,
       'payPerHour': payPerHour,
       'acceptedApplicants': acceptedApplicants,
@@ -64,9 +68,10 @@ class Post {
     return Post(
       id: snapshot.get('id') ?? "",
       city: snapshot.get('city') ?? "",
-      date: snapshot.get('date') ?? "",
+      startDate: snapshot.get('startDate') ?? "",
+      endDate: snapshot.get('endDate') ?? "",
       description: snapshot.get('description') ?? "",
-      payPerHour: snapshot.get('payPerHour') ?? "",
+      payPerHour: snapshot.get('payPerHour') ?? 0,
       acceptedApplicants: snapshot.get('acceptedApplicants') ?? "",
       maxNoOfApplicants: snapshot.get('maxNoOfApplicants') ?? "",
       time: snapshot.get('time') ?? "",

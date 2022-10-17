@@ -141,6 +141,7 @@ class _TabTwo extends StatelessWidget {
           Order order = Order.fromDocumentSnapshot(querySnapshot);
           return OrderCard(order: order);
         });
+    // ignore: dead_code
   }
 }
 
@@ -152,8 +153,9 @@ class _TabThree extends StatelessWidget {
     return CustomListView(
         query: OrderDatabase.ordersCollection
             .where("userID", isEqualTo: App.user.id)
-            .where("orderStatus", whereIn: ["rejected", "deleted"])
-            .orderBy("timeApplied", descending: true),
+            .where("orderStatus", whereIn: ["rejected", "deleted"]).orderBy(
+                "timeApplied",
+                descending: true),
         emptyListWidget: const SizedBox(
           child: Text(
             'لا يوجد تقديم مرفوض',

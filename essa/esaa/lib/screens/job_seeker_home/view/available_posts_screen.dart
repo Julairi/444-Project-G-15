@@ -15,6 +15,9 @@ class AvailablePostsScreen extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           child: Column(
             children: [
+
+              const SizedBox(height: 20),
+
               Center(
                 child: StreamBuilder<List<Post>>(
                     stream: PostDatabase().getAvailablePosts(),
@@ -38,7 +41,7 @@ class AvailablePostsScreen extends StatelessWidget {
                       );
                     }),
               ),
-              const SizedBox(height: 10),
+
               CustomListView(
                   query: PostDatabase.postsCollection.where("offerStatus",
                       whereIn: [

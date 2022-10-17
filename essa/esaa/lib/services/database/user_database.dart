@@ -38,6 +38,13 @@ class UserDatabase{
       Default.showDatabaseError(e);
     }
   }
+  Future<void> rateUser (double rating) async {
+    try {
+      await usersCollection.doc(id).update({'rates': FieldValue.arrayUnion([rating])});
+    } on FirebaseException catch (e) {
+      Default.showDatabaseError(e);
+    }
+  }
 
   Stream<User> get user {
     if(id.isNotEmpty) {

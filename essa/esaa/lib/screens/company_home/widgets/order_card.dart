@@ -1,17 +1,18 @@
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/models/models.dart';
-import 'package:esaa/screens/job_seeker_home/view/post_details.dart';
+import 'package:esaa/screens/job_seeker_home/view/view.dart';
 import 'package:esaa/services/database/database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:rating_dialog/rating_dialog.dart';
 import '../company_home.dart';
 
 class OrderCard extends StatelessWidget {
   final Order order;
   final Post? post;
+  final bool showPaymentStatus;
 
-  const OrderCard({required this.order, this.post, Key? key}) : super(key: key);
+  const OrderCard({required this.order, this.post, this.showPaymentStatus = true,  Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -156,19 +157,66 @@ class OrderCard extends StatelessWidget {
                               fontSize: defaultFontSize,
                               fontWeight: FontWeight.bold,
                               overflow: TextOverflow.ellipsis)),
-                    if (order.orderStatus == "accepted")
+                    if (order.orderStatus == "accepted" && showPaymentStatus)
                       Text(order.hasBeenPaid ? "تم الدفع" : "لم يتم الدفع",
                           style: TextStyle(
-                              color:
-                                  order.hasBeenPaid ? Colors.green : Colors.red,
+                              color: order.hasBeenPaid ? Colors.green : Colors.red,
                               fontSize: defaultFontSize,
                               fontWeight: FontWeight.bold,
                               overflow: TextOverflow.ellipsis)),
+
+                    const SizedBox(
+                      height: 20,
+                      width: 15,
+                    ),
+
+                    if (order.hasBeenPaid == true)
+                      GestureDetector(
+                        child: const Text("تقييم",
+                            style: TextStyle(
+                                color: Colors.blue,
+                                fontSize: defaultFontSize,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
+                                overflow: TextOverflow.ellipsis)),
+                        onTap: () async {
+                          show(context);
+                        },
+                      ),
                   ],
                 ),
               )
             ],
           ),
         ));
+  }
+
+  void show(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          return RatingDialog(
+              title: const Text(
+                'تقييم الخدمة',
+                textAlign: TextAlign.center,
+              ),
+              submitButtonText: 'إرسال',
+              enableComment: false,
+              onSubmitted: (response) async {
+                if (post == null) {
+                  //job seeker rates company
+                  final post = await PostDatabase().getPost(order.postID);
+
+                  if(post == null) return;
+
+                  UserDatabase(post.companyID).rateUser(response.rating);
+                } else {
+
+                  UserDatabase(order.userID).rateUser(response.rating);
+
+                }
+              });
+        });
   }
 }

@@ -1,5 +1,6 @@
 
 import 'package:esaa/config/constants.dart';
+import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/models/models.dart';
 import 'package:esaa/screens/apply/apply_screen.dart';
 import 'package:esaa/screens/shared/shared.dart';
@@ -15,7 +16,6 @@ class PostDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return CustomAppbar(
       showLeading: true,
       child: Scaffold(
@@ -85,27 +85,33 @@ class PostDetails extends StatelessWidget {
                     Row(
                       children: [
                         const Icon(
-                          Icons.business_outlined,
-                          color: Color.fromARGB(255, 5, 53, 93),
+                          Icons.people_alt,
+                          color: Colors.green,
+                          size: 35,
                         ),
+
                         const SizedBox(
                           height: 20,
                           width: 10,
                         ),
+
                         Text(
-                          post.companyName,
+                          post.maxNoOfApplicants,
                           style: const TextStyle(
                               color: kPrimaryColor,
                               fontSize: defaultFontSize,
                               fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.fade),
+                              overflow: TextOverflow.fade
+                          ),
                         ),
                       ],
                     ),
+
                     const SizedBox(
                       height: 20,
                       width: 15,
                     ),
+
                     Row(
                       children: [
                         const Icon(Icons.location_on_outlined,
@@ -121,7 +127,9 @@ class PostDetails extends StatelessWidget {
                                 color: kPrimaryColor,
                                 fontSize: defaultFontSize,
                                 fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.ellipsis))
+                                overflow: TextOverflow.ellipsis
+                            )
+                        )
                       ],
                     ),
                   ],
@@ -137,25 +145,32 @@ class PostDetails extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.calendar_month_outlined,
+                        const Icon(
+                            Icons.calendar_month_outlined,
                             color: Color.fromARGB(255, 3, 77, 138),
-                            size: 35),
+                            size: 35
+                        ),
+
                         const SizedBox(
                           height: 20,
                           width: 10,
                         ),
+
                         Text(
-                            post.date,
+                            '${_getDate(post.startDate)} - ${_getDate(post.endDate)}',
                             style: const TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: defaultFontSize,
                                 fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.fade))
+                                overflow: TextOverflow.fade
+                            ),
+                            textAlign: TextAlign.center,
+                        )
                       ],
                     ),
                     const SizedBox(
                       height: 20,
-                      width: 15,
+                      width: 10,
                     ),
                     Row(
                       children: [
@@ -169,12 +184,15 @@ class PostDetails extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                            post.date,
+                            post.time,
                             style: const TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: defaultFontSize,
                                 fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.ellipsis))
+                                overflow: TextOverflow.ellipsis
+                            ),
+                            textAlign: TextAlign.center,
+                        )
                       ],
                     ),
                   ],
@@ -184,6 +202,7 @@ class PostDetails extends StatelessWidget {
                   height: 35,
                   width: 10,
                 ),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -250,14 +269,22 @@ class PostDetails extends StatelessWidget {
                   ),
 
 
-                TextButton(
-                    onPressed: () => Get.to(() => CompanyPostsForJobSeeker(companyID: post.companyID)),
-                    child: const Text('لمزيدٍ من عروض هذه الشركه اضغط هنا ')),
+                if(Get.find<UserController>().user.value.userType == "jobSeeker")
+                  TextButton(
+                      onPressed: () => Get.to(() => CompanyPostsForJobSeeker(companyID: post.companyID)),
+                      child: const Text('لمزيدٍ من عروض هذه الشركه اضغط هنا ')),
               ],
             ),
           ),
         ),
       ),
     );
+  }
+
+  String _getDate(String date) {
+    String output = "";
+    final fields = date.split('-');
+    output = "${fields[2]}/${fields[1]}/${fields[0].substring(2)}";
+    return output;
   }
 }

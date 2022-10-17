@@ -10,6 +10,7 @@ const double defaultPadding = 16.0;
 const double defaultFontSize = 16.0;
 final RegExp emailValidatorRegExp =
     RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+final RegExp textlValidatorRegExp = RegExp("[0-9]");
 const String kEmailNullError = "الرجاء إدخال البريد الإلكتروني";
 const String kInvalidEmailError = " الرجاء إدخال البريد الإلكتروني بشكل صحيح";
 const String kPassNullError = "الرجاء إدخال كلمة المرور";
@@ -27,7 +28,8 @@ const String kDOBNullError = " الرجاء إدخال يوم ميلادك  ";
 const String kJobTitleNullError = "الرجاء إدخال عنوان الاعلان الوظيفي";
 const String kDescNullError = "الرجاء ادخال الوصف";
 const String kLocationNullError = "الرجاء ادخال الموقع";
-const String kStartDateNullError = " الرجاء إدخال التاريخ   ";
+const String kStartDateNullError = " الرجاء إدخال تاريخ البداية   ";
+const String kEndDateNullError = " الرجاء إدخال تاريخ النهاية   ";
 const String kTimeNullError = " الرجاء إدخال الوقت   ";
 const String kNullError = "الرجاء إدخال نبذة تعريفية";
 const String kDesError = "النص يجب أن لا يتجاوز 500 حرف";

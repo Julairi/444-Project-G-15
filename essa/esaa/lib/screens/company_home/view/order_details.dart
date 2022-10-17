@@ -1,6 +1,7 @@
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/models/models.dart';
+import 'package:esaa/screens/company_home/company_home.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
 import 'package:flutter/material.dart';
@@ -30,8 +31,7 @@ class OrderDetails extends StatelessWidget {
     var riyals = calcRiyal(order);
     return CustomAppbar(
       showLeading: true,
-      child: SingleChildScrollView(
-          child: Container(
+      child: Container(
         color: Colors.white,
         child: Column(
           children: [
@@ -46,12 +46,14 @@ class OrderDetails extends StatelessWidget {
                       const Icon(
                         Icons.person,
                         color: Color.fromARGB(255, 22, 126, 210),
-                        size: 40,
+                        size: 35,
                       ),
+
                       const SizedBox(
                         height: 20,
                         width: 12,
                       ),
+
                       GetX<OrderDetailsController>(builder: (controller) {
                         return Text(
                           controller.user.value.name,
@@ -62,73 +64,24 @@ class OrderDetails extends StatelessWidget {
                               overflow: TextOverflow.fade),
                         );
                       }),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Row(
-                          children: [
-                            const SizedBox(
-                              height: 20,
-                              width: 8,
-                            ),
-                            const Icon(
-                              Icons.email,
-                              color: Colors.black26,
-                              size: 24,
-                            ),
-                            const SizedBox(
-                              height: 20,
-                              width: 12,
-                            ),
-                            GetX<OrderDetailsController>(builder: (controller) {
-                              return Text(
-                                controller.user.value.email,
-                                style: const TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: defaultFontSize,
-                                    fontWeight: FontWeight.bold,
-                                    overflow: TextOverflow.ellipsis),
-                              );
-                            })
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Row(
-                          children: [
-                            const SizedBox(
-                              height: 20,
-                              width: 8,
-                            ),
-                            const Icon(
-                              Icons.male,
-                              color: Colors.black26,
-                              size: 24,
-                            ),
-                            const SizedBox(
-                              height: 20,
-                              width: 12,
-                            ),
-                            GetX<OrderDetailsController>(builder: (controller) {
-                              return Text(
-                                controller.user.value.sex,
-                                style: const TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: defaultFontSize,
-                                    fontWeight: FontWeight.bold,
-                                    overflow: TextOverflow.ellipsis),
-                              );
-                            })
-                          ],
+
+                      const Expanded(child: SizedBox()),
+
+                      TextButton(
+                        onPressed: () => Get.to(() => const JobSeekerProfile()),
+                        child: const Text(
+                          'VIEW PROFILE',
+                          style: TextStyle(
+                              color: kPrimaryColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              overflow: TextOverflow.fade
+                          ),
                         ),
                       )
                     ],
                   ),
+
                   const SizedBox(
                     height: 20,
                   ),
@@ -199,7 +152,8 @@ class OrderDetails extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 50),
+
                   if (order.orderStatus == "pending")
                     Row(
                       children: [
@@ -215,19 +169,19 @@ class OrderDetails extends StatelessWidget {
                               children: [
                                 GetX<OrderDetailsController>(
                                     builder: (controller) {
-                                  return Visibility(
-                                      visible: controller.isRejecting.value,
-                                      child: LayoutBuilder(
-                                          builder: (context, constraints) {
-                                        return const SpinKitRing(
-                                          color: kFillColor,
-                                          size: 24.0,
-                                        );
-                                      }));
-                                }),
+                                      return Visibility(
+                                          visible: controller.isRejecting.value,
+                                          child: LayoutBuilder(
+                                              builder: (context, constraints) {
+                                                return const SpinKitRing(
+                                                  color: kFillColor,
+                                                  size: 24.0,
+                                                );
+                                              }));
+                                    }),
                                 const Padding(
                                   padding:
-                                      EdgeInsets.symmetric(horizontal: 10.0),
+                                  EdgeInsets.symmetric(horizontal: 10.0),
                                   child: Text(
                                     "ارفض",
                                     style: TextStyle(
@@ -251,19 +205,19 @@ class OrderDetails extends StatelessWidget {
                               children: [
                                 GetX<OrderDetailsController>(
                                     builder: (controller) {
-                                  return Visibility(
-                                      visible: controller.isAccepting.value,
-                                      child: LayoutBuilder(
-                                          builder: (context, constraints) {
-                                        return const SpinKitRing(
-                                          color: kFillColor,
-                                          size: 24.0,
-                                        );
-                                      }));
-                                }),
+                                      return Visibility(
+                                          visible: controller.isAccepting.value,
+                                          child: LayoutBuilder(
+                                              builder: (context, constraints) {
+                                                return const SpinKitRing(
+                                                  color: kFillColor,
+                                                  size: 24.0,
+                                                );
+                                              }));
+                                    }),
                                 const Padding(
                                   padding:
-                                      EdgeInsets.symmetric(horizontal: 10.0),
+                                  EdgeInsets.symmetric(horizontal: 10.0),
                                   child: Text(
                                     "اقبل",
                                     style: TextStyle(
@@ -276,6 +230,7 @@ class OrderDetails extends StatelessWidget {
                         ),
                       ],
                     ),
+
                   if (order.orderStatus == "accepted")
                     ElevatedButton(
                       onPressed: () => payOrder(order),
@@ -289,7 +244,7 @@ class OrderDetails extends StatelessWidget {
                         children: [
                           Padding(
                             padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            const EdgeInsets.symmetric(horizontal: 10.0),
                             child: Text(
                               order.hasBeenPaid ? "تم الدفع" : "ادفع",
                               style: const TextStyle(
@@ -305,12 +260,11 @@ class OrderDetails extends StatelessWidget {
             )
           ],
         ),
-      )),
+      )
     );
   }
 
-  void showAcceptDialog(
-      BuildContext context, OrderDetailsController controller) {
+  void showAcceptDialog(BuildContext context, OrderDetailsController controller) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -384,8 +338,7 @@ class OrderDetails extends StatelessWidget {
         });
   }
 
-  void showRejectDialog(
-      BuildContext context, OrderDetailsController controller) {
+  void showRejectDialog(BuildContext context, OrderDetailsController controller) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -459,8 +412,7 @@ class OrderDetails extends StatelessWidget {
         });
   }
 
-  void _acceptOrder(
-      Order order, Post post, OrderDetailsController controller) async {
+  void _acceptOrder(Order order, Post post, OrderDetailsController controller) async {
     if (int.parse(post.maxNoOfApplicants) <=
         int.parse(post.acceptedApplicants)) {
       Fluttertoast.showToast(
@@ -529,7 +481,7 @@ class OrderDetails extends StatelessWidget {
     var nMon = now.month;
     var nDay = now.day;
     var nYear = now.year;
-    var postDate = DateTime.parse(myPost!.date);
+    var postDate = DateTime.parse(myPost!.startDate);
 
     var postMon = postDate.month;
     var postDay = postDate.day;
@@ -565,7 +517,7 @@ class OrderDetails extends StatelessWidget {
     var postPay = myPost.payPerHour;
     var postNHours = myPost.nHours;
 
-    var fee = int.parse(postPay);
+    var fee = postPay;
     var nH = int.parse(postNHours);
     var payDollars = nH * fee * 0.266667;
     var payRiyals = nH * fee;
@@ -597,8 +549,7 @@ class OrderDetailsController extends UserController {
   RxBool isRejecting = false.obs;
 }
 
-Future<void> initPayment(
-    {required String email, required double amount}) async {
+Future<void> initPayment({required String email, required double amount}) async {
   try {
     // 1. Create a payment intent on the server
     final response = await http.post(
@@ -640,7 +591,7 @@ Future<bool> postTime(Order order) async {
   var nMon = now.month;
   var nDay = now.day;
   var nYear = now.year;
-  var postDate = DateTime.parse(myPost!.date);
+  var postDate = DateTime.parse(myPost!.startDate);
 
   var postMon = postDate.month;
   var postDay = postDate.day;
@@ -662,7 +613,7 @@ Future<double> calcRiyal(Order order) async {
 
   var postPay = myPost!.payPerHour;
   var postNHours = myPost.nHours;
-  var fee = int.parse(postPay);
+  var fee = postPay;
   var nH = int.parse(postNHours);
   var payRiyals = nH * fee + 0.0;
   return payRiyals;

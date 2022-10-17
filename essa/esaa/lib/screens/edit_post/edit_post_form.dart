@@ -1,7 +1,6 @@
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/models/models.dart';
-import 'package:esaa/screens/edit_post/edit_post.dart';
 import 'package:esaa/services/database/database.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +26,8 @@ class EditPostFormState extends State<EditPostForm> {
   final titleEditingController = TextEditingController();
   final descriptionEditingController = TextEditingController();
   final locationEditingController = TextEditingController();
-  final dateEditingController = TextEditingController();
+  final startDateEditingController = TextEditingController();
+  final endDateEditingController = TextEditingController();
   final noOfHoursEditingController = TextEditingController();
   final payPerHourEditingController = TextEditingController();
   final timeEditingController = TextEditingController();
@@ -42,7 +42,8 @@ class EditPostFormState extends State<EditPostForm> {
       titleEditingController,
       descriptionEditingController,
       locationEditingController,
-      dateEditingController,
+      startDateEditingController,
+      endDateEditingController,
       noOfHoursEditingController,
       payPerHourEditingController,
       timeEditingController,
@@ -65,9 +66,14 @@ class EditPostFormState extends State<EditPostForm> {
       textInputAction: TextInputAction.next,
       onSaved: (newValue) => titleEditingController.text = newValue!.trim(),
       validator: (value) {
-        if (value!.trim().isEmpty) {
+        final number = num.tryParse(value!);
+
+        if (value.trim().isEmpty) {
           return kJobTitleNullError;
+        } else if (number != null) {
+          return 'يجب أن يحتوي عنوان الإعلان الوظيفي على حروف وأرقام معا';
         }
+
         return null;
       },
       decoration: InputDecoration(
@@ -77,9 +83,7 @@ class EditPostFormState extends State<EditPostForm> {
           borderRadius: BorderRadius.circular(20),
           borderSide: const BorderSide(color: kFillColor),
         ),
-        prefixIcon: const Padding(
-          padding: EdgeInsets.all(defaultPadding),
-        ),
+        prefixIcon: const Padding(padding: EdgeInsets.zero),
         labelText: " ادخل عنوان الاعلان الوظيفي",
         floatingLabelStyle: const TextStyle(
           color: kTextColor,
@@ -91,10 +95,13 @@ class EditPostFormState extends State<EditPostForm> {
     final descriptionField = TextFormField(
       controller: descriptionEditingController,
       onSaved: (newValue) =>
-          descriptionEditingController.text = newValue!.trim(),
+      descriptionEditingController.text = newValue!.trim(),
       validator: (value) {
-        if (value!.trim().isEmpty) {
+        final number = num.tryParse(value!);
+        if (value.trim().isEmpty) {
           return kDescNullError;
+        } else if (number != null) {
+          return 'يجب أن يحتوي وصف الوظيفة على حروف وأرقام معا';
         }
         return null;
       },
@@ -145,20 +152,20 @@ class EditPostFormState extends State<EditPostForm> {
                 position: PopupMenuPosition.under,
                 itemBuilder: (context) =>
                     controller.cities.map<PopupMenuItem<String>>((String city) {
-                  return PopupMenuItem<String>(
-                    value: city,
-                    child: SizedBox(
-                      height: 18,
-                      child: Text(
-                        city,
-                        style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            overflow: TextOverflow.ellipsis),
-                      ),
-                    ),
-                  );
-                }).toList(),
+                      return PopupMenuItem<String>(
+                        value: city,
+                        child: SizedBox(
+                          height: 18,
+                          child: Text(
+                            city,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                overflow: TextOverflow.ellipsis),
+                          ),
+                        ),
+                      );
+                    }).toList(),
                 onSelected: (String city) {
                   controller.city.value = city;
                 },
@@ -178,13 +185,13 @@ class EditPostFormState extends State<EditPostForm> {
                             height: 18,
                             child: GetX<EditPostFormController>(
                                 builder: (controller) {
-                              return Text(
-                                controller.city.value,
-                                style: const TextStyle(
-                                    color: Colors.black, fontSize: 16),
-                                textAlign: TextAlign.start,
-                              );
-                            }),
+                                  return Text(
+                                    controller.city.value,
+                                    style: const TextStyle(
+                                        color: Colors.black, fontSize: 16),
+                                    textAlign: TextAlign.start,
+                                  );
+                                }),
                           ),
                         ],
                       ),
@@ -198,7 +205,7 @@ class EditPostFormState extends State<EditPostForm> {
                 "اختر المدينة",
                 style: TextStyle(
                   color: kTextColor,
-                  fontSize: 14,
+                  fontSize: 16,
                 ),
               ),
             )
@@ -206,23 +213,24 @@ class EditPostFormState extends State<EditPostForm> {
         ));
 
     final startDate = TextFormField(
-      controller: dateEditingController,
+      controller: startDateEditingController,
       cursorColor: kPrimaryColor,
       //keyboardType: TextInputType.datetime,
       readOnly: true,
       textInputAction: TextInputAction.next,
       onSaved: (value) {
-        dateEditingController.text = value!.toString();
+        startDateEditingController.text = value!.toString();
       },
       onTap: () async {
         DateTime? newDate = await showDatePicker(
             context: context,
             initialDate: DateTime.now(),
             firstDate: DateTime.now(),
-            lastDate: DateTime(2101));
+            lastDate: DateTime((DateTime.now().millisecondsSinceEpoch +
+                (1000 * 60 * 60 * 24 * 90))));
         if (newDate != null) {
           setState(() {
-            dateEditingController.text =
+            startDateEditingController.text =
                 DateFormat('yyyy-MM-dd').format(newDate);
           });
         } else {
@@ -242,7 +250,66 @@ class EditPostFormState extends State<EditPostForm> {
           padding: EdgeInsets.all(defaultPadding),
           child: Icon(Icons.date_range),
         ),
-        labelText: "أدخل التاريخ ",
+        labelText: "أدخل تاريخ البداية ",
+        floatingLabelStyle: const TextStyle(
+          color: kTextColor,
+          fontSize: 20,
+        ),
+      ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return kStartDateNullError;
+        } else {
+          if (DateFormat('yyyy-MM-dd').parse(value).millisecondsSinceEpoch >
+              (DateTime.now().millisecondsSinceEpoch +
+                  (1000 * 60 * 60 * 24 * 90))) {
+            return "يجب ان يكون التاريخ بحدود ثلاث اشهر من تاريخ اليوم";
+          } else {
+            return null;
+          }
+        }
+      },
+    );
+
+    final endDate = TextFormField(
+      controller: endDateEditingController,
+      cursorColor: kPrimaryColor,
+      //keyboardType: TextInputType.datetime,
+      readOnly: true,
+      textInputAction: TextInputAction.next,
+      onSaved: (value) {
+        endDateEditingController.text = value!.toString();
+      },
+      onTap: () async {
+        DateTime? newDate = await showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime.now(),
+            lastDate: DateTime((DateTime.now().millisecondsSinceEpoch +
+                (1000 * 60 * 60 * 24 * 90))));
+        if (newDate != null) {
+          setState(() {
+            endDateEditingController.text =
+                DateFormat('yyyy-MM-dd').format(newDate);
+          });
+        } else {
+          if (kDebugMode) {
+            print(kEndDateNullError);
+          }
+        }
+      },
+      decoration: InputDecoration(
+        filled: true,
+        fillColor: kFillColor,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20),
+          borderSide: const BorderSide(color: kFillColor),
+        ),
+        prefixIcon: const Padding(
+          padding: EdgeInsets.all(defaultPadding),
+          child: Icon(Icons.date_range),
+        ),
+        labelText: "أدخل تاريخ النهاية ",
         floatingLabelStyle: const TextStyle(
           color: kTextColor,
           fontSize: 20,
@@ -301,7 +368,6 @@ class EditPostFormState extends State<EditPostForm> {
         floatingLabelStyle: const TextStyle(
           color: kTextColor,
           fontSize: 20,
-          fontWeight: FontWeight.w800,
         ),
       ),
 
@@ -312,7 +378,7 @@ class EditPostFormState extends State<EditPostForm> {
         //// checkkkkkkkkkkk
 
         final date = DateFormat('yyyy-MM-dd h:mm aa').parse(
-            "${dateEditingController.text.trim()} ${timeEditingController.text.trim()}");
+            "${startDateEditingController.text.trim()} ${timeEditingController.text.trim()}");
 
         if (date.millisecondsSinceEpoch <
             DateTime.now().millisecondsSinceEpoch) {
@@ -333,7 +399,7 @@ class EditPostFormState extends State<EditPostForm> {
       controller: noOfHoursEditingController,
       cursorColor: kPrimaryColor,
       keyboardType:
-          const TextInputType.numberWithOptions(signed: false, decimal: true),
+      const TextInputType.numberWithOptions(signed: false, decimal: true),
       textInputAction: TextInputAction.next,
       onSaved: (value) {
         noOfHoursEditingController.text = value!.trim();
@@ -455,6 +521,8 @@ class EditPostFormState extends State<EditPostForm> {
             const SizedBox(height: defaultPadding / 2),
             startDate,
             const SizedBox(height: defaultPadding / 2),
+            endDate,
+            const SizedBox(height: defaultPadding / 2),
             noOfHours,
             const SizedBox(height: defaultPadding / 2),
             time,
@@ -485,15 +553,16 @@ class EditPostFormState extends State<EditPostForm> {
                   widget.post.description =
                       descriptionEditingController.text.trim();
                   widget.post.city = controller.city.value;
-                  widget.post.date = dateEditingController.text.trim();
+                  widget.post.startDate = startDateEditingController.text.trim();
+                  widget.post.endDate = endDateEditingController.text.trim();
                   widget.post.nHours = noOfHoursEditingController.text.trim();
                   widget.post.time = timeEditingController.text.trim();
                   widget.post.payPerHour =
-                      payPerHourEditingController.text.trim();
+                      int.parse(payPerHourEditingController.text.trim());
                   widget.post.maxNoOfApplicants =
-                      applicantsEditingController.text.trim() == ""
-                          ? "1"
-                          : applicantsEditingController.text.trim();
+                  applicantsEditingController.text.trim() == ""
+                      ? "1"
+                      : applicantsEditingController.text.trim();
 
                   controller.isLoading.value = true;
 
@@ -545,7 +614,8 @@ class EditPostFormState extends State<EditPostForm> {
       TextEditingController titleEditingController,
       TextEditingController descriptionEditingController,
       TextEditingController locationEditingController,
-      TextEditingController dateEditingController,
+      TextEditingController startDateEditingController,
+      TextEditingController endDateEditingController,
       TextEditingController noOfHoursEditingController,
       TextEditingController payPerHourEditingController,
       TextEditingController timeEditingController,
@@ -553,9 +623,10 @@ class EditPostFormState extends State<EditPostForm> {
     titleEditingController.text = post.title;
     descriptionEditingController.text = post.description;
     locationEditingController.text = post.city;
-    dateEditingController.text = post.date;
+    startDateEditingController.text = post.startDate;
+    endDateEditingController.text = post.endDate;
     noOfHoursEditingController.text = post.nHours;
-    payPerHourEditingController.text = post.payPerHour;
+    payPerHourEditingController.text = post.payPerHour.toString();
     timeEditingController.text = post.time;
     applicantsEditingController.text = post.maxNoOfApplicants;
   }
@@ -677,4 +748,9 @@ class EditPostFormController extends UserController {
     "Az Zaimah",
     "Zulfi",
   ].obs;
+  bool isNumericUsingRegularExpression(String string) {
+    final numericRegex = RegExp(r'^-?(([0-9]*)|(([0-9]*)\.([0-9]*)))$');
+
+    return numericRegex.hasMatch(string);
+  }
 }

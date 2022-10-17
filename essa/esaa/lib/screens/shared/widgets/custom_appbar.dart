@@ -28,7 +28,7 @@ class CustomAppbar extends StatelessWidget {
         floatHeaderSlivers: true,
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
-            flexibleSpace: FlexibleSpaceBar(),
+            flexibleSpace: const FlexibleSpaceBar(),
             leading: showLeading
                 ? IconButton(
                     onPressed: () => Get.back(),
@@ -80,14 +80,7 @@ class CustomAppbar extends StatelessWidget {
               right: 0,
               child: Image.asset(bottomImage, width: 120),
             ), */
-              Scaffold(
-                  appBar: AppBar(
-                    leading: const SizedBox(),
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                  ),
-                  backgroundColor: Colors.transparent,
-                  body: child),
+              child
             ],
           ),
         ),

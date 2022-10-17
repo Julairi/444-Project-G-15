@@ -141,23 +141,28 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                         Row(
                           children: [
                             const Icon(
-                              Icons.business_outlined,
-                              color: Color.fromARGB(255, 5, 53, 93),
+                              Icons.people_alt,
+                              color: Colors.green,
+                              size: 35,
                             ),
+
                             const SizedBox(
                               height: 20,
                               width: 10,
                             ),
+
                             Text(
-                              widget.post.companyName,
+                              widget.post.maxNoOfApplicants,
                               style: const TextStyle(
                                   color: kPrimaryColor,
                                   fontSize: defaultFontSize,
                                   fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.fade),
+                                  overflow: TextOverflow.fade
+                              ),
                             ),
                           ],
                         ),
+
                         const SizedBox(
                           height: 20,
                           width: 15,
@@ -197,17 +202,21 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                               height: 20,
                               width: 10,
                             ),
-                            Text(widget.post.date,
-                                style: const TextStyle(
+                            Text(
+                              '${_getDate(widget.post.startDate)} - ${_getDate(widget.post.endDate)}',
+                              style: const TextStyle(
                                     color: kPrimaryColor,
                                     fontSize: defaultFontSize,
                                     fontWeight: FontWeight.bold,
-                                    overflow: TextOverflow.fade))
+                                    overflow: TextOverflow.fade
+                                ),
+                                textAlign: TextAlign.center,
+                            )
                           ],
                         ),
                         const SizedBox(
                           height: 20,
-                          width: 15,
+                          width: 10,
                         ),
                         Row(
                           children: [
@@ -220,7 +229,8 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                               height: 20,
                               width: 10,
                             ),
-                            Text(widget.post.date,
+                            Text(
+                                widget.post.time,
                                 style: const TextStyle(
                                     color: kPrimaryColor,
                                     fontSize: defaultFontSize,
@@ -328,6 +338,13 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
         ),
       ),
     );
+  }
+
+  String _getDate(String date) {
+    String output = "";
+    final fields = date.split('-');
+    output = "${fields[2]}/${fields[1]}/${fields[0].substring(2)}";
+    return output;
   }
 
   void showConfirmDeletingDialog(BuildContext context) {
