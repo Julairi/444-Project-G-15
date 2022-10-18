@@ -16,7 +16,6 @@ import 'company_home/company_home.dart';
 import 'job_seeker_home/job_seeker_home.dart';
 import 'post_job/post_job.dart';
 
-
 class Default extends StatefulWidget {
   Default({Key? key}) : super(key: key) {
     Get.find<UserController>().bindUser();
@@ -27,7 +26,6 @@ class Default extends StatefulWidget {
 }
 
 class _DefaultState extends State<Default> {
-
   @override
   void initState() {
     registerNotification();
@@ -46,73 +44,64 @@ class _DefaultState extends State<Default> {
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {
-        exit(0);
-      },
-      child: Scaffold(
-        backgroundColor: kFillColor,
-        body: Stack(
-          children: [
-
-            GetX<UserController>(
-                builder: (controller) {
-                  return Visibility(
-                    visible: controller.user.value.userType == "jobSeeker",
-                    child: Transform.rotate(
-                      origin: const Offset(40, -150),
-                      angle: 2.4,
-                      child: Container(
-                        margin: const EdgeInsets.only(
-                          left: 75,
-                          top: 40,
-                        ),
-                        height: 400,
-                        width: 300,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(80),
-                          gradient: const LinearGradient(
-                              begin: Alignment.bottomLeft,
-                              colors: [kPrimaryColor, kTextColor]
-                          ),
-                        ),
+        onWillPop: () async {
+          exit(0);
+        },
+        child: Scaffold(
+          backgroundColor: kFillColor,
+          body: Stack(
+            children: [
+              GetX<UserController>(builder: (controller) {
+                return Visibility(
+                  visible: controller.user.value.userType == "jobSeeker",
+                  child: Transform.rotate(
+                    origin: const Offset(40, -150),
+                    angle: 2.4,
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                        left: 75,
+                        top: 40,
+                      ),
+                      height: 400,
+                      width: 300,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(80),
+                        gradient: const LinearGradient(
+                            begin: Alignment.bottomLeft,
+                            colors: [kPrimaryColor, kTextColor]),
                       ),
                     ),
-                  );
-                }
-            ),
+                  ),
+                );
+              }),
+              GetX<UserController>(builder: (controller) {
+                return Container(
+                    child: getSelectedWidget(
+                        index: controller.currentIndex,
+                        userType: controller.user.value.userType));
+              }),
+            ],
+          ),
+          bottomNavigationBar: GetX<UserController>(builder: (controller) {
+            final items = getItems(controller.user.value.userType);
 
-            GetX<UserController>(
-                builder: (controller) {
-                  return Container(
-                      child: getSelectedWidget(index: controller.currentIndex, userType: controller.user.value.userType)
-                  );
-                }
-            ),
-          ],
-        ),
-        bottomNavigationBar: GetX<UserController>(
-            builder: (controller) {
-              final items = getItems(controller.user.value.userType);
-
-              return CurvedNavigationBar(
-                  backgroundColor: kFillColor,
-                  color: kPrimaryColor,
-                  animationDuration: const Duration(milliseconds: 40),
-                  index: controller.currentIndex,
-                  items: items,
-                  onTap: controller.changePage
-              );
-            }
-        ),
-      )
-    );
+            return CurvedNavigationBar(
+                backgroundColor: kFillColor,
+                color: kPrimaryColor,
+                animationDuration: const Duration(milliseconds: 40),
+                index: controller.currentIndex,
+                items: items,
+                onTap: controller.changePage);
+          }),
+        ));
   }
 
-  List<Widget> getItems(String userType){
-    if(userType == "jobSeeker") {
+  List<Widget> getItems(String userType) {
+    if (userType == "jobSeeker") {
       return const [
         Icon(
           Icons.document_scanner,
@@ -131,8 +120,7 @@ class _DefaultState extends State<Default> {
           color: Colors.white,
         ),
       ];
-    }
-    else if (userType == "company"){
+    } else if (userType == "company") {
       return const [
         Icon(
           Icons.add_rounded,
@@ -175,7 +163,7 @@ class _DefaultState extends State<Default> {
   Widget getSelectedWidget({required int index, required String userType}) {
     Widget widget;
 
-    if(userType == "jobSeeker"){
+    if (userType == "jobSeeker") {
       switch (index) {
         case 0:
           widget = const AvailablePostsScreen();
@@ -201,11 +189,13 @@ class _DefaultState extends State<Default> {
           break;
 
         case 1:
-          widget = const CompanyPosts(); //view all posts... both assigned and unassigned
+          widget =
+              const CompanyPosts(); //view all posts... both assigned and unassigned
           break;
 
         case 2:
-          widget = const CompanyTabBarPage(); //view all posts... differentiate assigned and unassigned
+          widget =
+              const CompanyTabBarPage(); //view all posts... differentiate assigned and unassigned
           break;
 
         case 3:
@@ -232,7 +222,6 @@ class _DefaultState extends State<Default> {
     );
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
         PushNotification notification = PushNotification(
           title: message.notification?.title ?? "",
@@ -251,7 +240,8 @@ class _DefaultState extends State<Default> {
   checkForInitialMessage() async {
     await Firebase.initializeApp();
 
-    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
 
     if (initialMessage != null) {
       PushNotification notification = PushNotification(
