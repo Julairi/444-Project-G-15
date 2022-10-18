@@ -4,9 +4,20 @@ import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:esaa/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:esaa/services/database/user_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:esaa/services/database/database.dart';
+import 'package:esaa/models/post.dart';
+import 'package:esaa/app.dart';
+import 'package:esaa/services/authentication.dart';
+import 'package:esaa/models/user.dart';
 
 class ProfileScreenForC extends StatelessWidget {
-  const ProfileScreenForC({Key? key}) : super(key: key);
+  ProfileScreenForC({Key? key}) : super(key: key);
+
+  FirebaseFirestore fireb = FirebaseFirestore.instance;
 
   Widget textfield({@required hintText}) {
     return Material(
@@ -85,10 +96,10 @@ class ProfileScreenForC extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                               primary: kPrimaryColor, elevation: 0),
                           child: Text(
-                            "Update",
+                            "حدث معلوماتك",
                             style: TextStyle(
                               fontSize: 23,
-                              color: Colors.black,
+                              color: Color.fromARGB(255, 255, 255, 255),
                             ),
                           ),
                         ),
@@ -97,14 +108,18 @@ class ProfileScreenForC extends StatelessWidget {
                         height: 55,
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            Get.find<UserController>().clearAll();
+                            await Auth().signOut();
+                            Get.offAndToNamed('/welcome_screen');
+                          },
                           style: ElevatedButton.styleFrom(
                               primary: kPrimaryColor, elevation: 0),
                           child: Text(
-                            "Logout",
+                            "تسجيل الخروج",
                             style: TextStyle(
                               fontSize: 23,
-                              color: Colors.black,
+                              color: Color.fromARGB(255, 255, 255, 255),
                             ),
                           ),
                         ),
@@ -169,6 +184,14 @@ class ProfileScreenForC extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Future<String> GetID() async {
+    var current = "";
+    if (await Auth().isSignedIn) {
+      current = Auth().uID;
+    }
+    return current;
   }
 }
 
