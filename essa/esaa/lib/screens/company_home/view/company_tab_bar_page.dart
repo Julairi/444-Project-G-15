@@ -34,6 +34,13 @@ class CompanyTabBarPageState extends State<CompanyTabBarPage>
   @override
   Widget build(BuildContext context) {
     return CustomAppbar(
+      title: const Text(" عروضي",
+          style: TextStyle(
+              color: kPrimaryColor,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              overflow: TextOverflow.ellipsis)),
+              showNotification: true,
       child: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height - 150,

@@ -200,7 +200,7 @@ class EditPostFormState extends State<EditPostForm> {
             ),
             Container(
               height: 20,
-              margin: const EdgeInsets.only(left: 48),
+              margin: const EdgeInsets.only(left: 200),
               child: const Text(
                 "اختر المدينة",
                 style: TextStyle(
@@ -285,6 +285,8 @@ class EditPostFormState extends State<EditPostForm> {
             context: context,
             initialDate: DateTime.now(),
             firstDate: DateTime.now(),
+            //DateTime('yyyy-MM-dd').format(startDateEditingController.text),
+
             lastDate: DateTime((DateTime.now().millisecondsSinceEpoch +
                 (1000 * 60 * 60 * 24 * 90))));
         if (newDate != null) {
@@ -524,7 +526,7 @@ class EditPostFormState extends State<EditPostForm> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: const [
-                Text("يجب أن يكون بحدود ثلاث أشهر من الوقت الحالي*")
+                Text("*يجب أن يكون بحدود ثلاث أشهر من الوقت الحالي")
               ],
             ),
             const SizedBox(height: defaultPadding / 2),

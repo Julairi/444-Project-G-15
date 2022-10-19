@@ -14,7 +14,14 @@ class EditPostScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TransparentAppbar(
+    return CustomAppbar(
+      title: const Text("تعديل المنشور",
+          style: TextStyle(
+              color: kPrimaryColor,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              overflow: TextOverflow.ellipsis)),
+      showLeading: true,
       child: SingleChildScrollView(
         child: Responsive(
           mobile: _MobileEditPostScreen(post: post),

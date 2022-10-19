@@ -38,7 +38,14 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
 
     controller.isLoading.value = false;
 
-    return TransparentAppbar(
+    return CustomAppbar(
+      title: const Text("تفاصيل المنشور",
+          style: TextStyle(
+              color: kPrimaryColor,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              overflow: TextOverflow.ellipsis)),
+      showLeading: true,
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(
@@ -149,7 +156,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                               width: 10,
                             ),
                             Text(
-                              widget.post.maxNoOfApplicants,
+                              '${widget.post.maxNoOfApplicants} موظفين مطلوبين',
                               style: const TextStyle(
                                   color: kPrimaryColor,
                                   fontSize: defaultFontSize,
@@ -293,7 +300,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                       width: 10,
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 20.0),
+                      padding: const EdgeInsets.only(bottom: 20),
                       child: ElevatedButton(
                           onPressed: () => Get.to(() => PostOrders(
                               post: widget.post, filters: widget.filters)),
@@ -305,9 +312,8 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                                 fontWeight: FontWeight.bold),
                           )),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
-                      child: ElevatedButton(
+                    GetX<CompanyPostDetailsController>(builder: (controller) {
+                      return ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             primary: controller.editable.value
                                 ? Colors.blueAccent
@@ -322,8 +328,8 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                                 color: Colors.white,
                                 fontSize: defaultFontSize,
                                 fontWeight: FontWeight.bold),
-                          )),
-                    ),
+                          ));
+                    }),
                     Padding(
                       padding: const EdgeInsets.only(top: 16.0),
                       child: ElevatedButton(
@@ -379,6 +385,15 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
   }
 
   void showConfirmDeletingDialog(BuildContext context) {
+    if (int.parse(widget.post.acceptedApplicants) > 0) {
+      Fluttertoast.showToast(
+          msg: "لاتستطيع حذف منشور لديه طلبات مسندة",
+          backgroundColor: Colors.redAccent,
+          toastLength: Toast.LENGTH_LONG,
+          textColor: kFillColor);
+
+      return;
+    }
     showDialog(
         context: context,
         builder: (BuildContext context) {
