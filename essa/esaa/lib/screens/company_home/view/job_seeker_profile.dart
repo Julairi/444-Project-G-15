@@ -165,7 +165,7 @@ class JobSeekerProfile extends StatelessWidget {
             const Align(
               alignment: Alignment.center,
               child: Text(
-                "PREVIOUS JOBS",
+                "الوظائف السابقة",
                 style: TextStyle(
                     color: kPrimaryColor,
                     fontSize: 18,
@@ -184,7 +184,7 @@ class JobSeekerProfile extends StatelessWidget {
                   height: 300,
                   child: Center(
                     child: Text(
-                      "This user has not gotten any job yet",
+                      "لايوجد وظائف سابقة",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 20,

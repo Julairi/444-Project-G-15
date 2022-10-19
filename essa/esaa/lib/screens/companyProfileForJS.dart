@@ -22,9 +22,10 @@ class ProfileScreenForJS extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<OrderDetailsController>();
     return CustomAppbar(
+        showLeading: true,
         title: const Text("حساب الشركة",
             style: TextStyle(
-                color: kFillColor,
+                color: kPrimaryColor,
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
                 overflow: TextOverflow.ellipsis)),
@@ -225,7 +226,7 @@ class ProfileScreenForJS extends StatelessWidget {
                     "assigned"
                   ]).orderBy("timePosted", descending: true),
                   emptyListWidget: const SizedBox(
-                    height: 300,
+                    height: 100,
                     child: Center(
                       child: Text(
                         "ليس هناك أي عروض مقدمة لهذه الشركة",
@@ -242,41 +243,17 @@ class ProfileScreenForJS extends StatelessWidget {
                     return PostCardJobSeeker(post: post);
                   }),
               const SizedBox(height: 20),
-              Card(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(12))),
-                elevation: 6,
-                child: Container(
-                  width: double.infinity,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                  child: InkWell(
-                    onTap: () => Get.to(() => CompanyPostsForJobSeeker(
-                          companyID: companyID,
-                        )),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.list,
-                          color: kPrimaryColor,
-                          size: 28,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                          width: 15,
-                        ),
-                        Text('لجميع عروض الشركة اضغط هنا',
-                            style: const TextStyle(
-                                color: Colors.blue,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                decoration: TextDecoration.underline,
-                                overflow: TextOverflow.ellipsis)),
-                      ],
-                    ),
-                  ),
-                ),
+              InkWell(
+                onTap: () => Get.to(() => CompanyPostsForJobSeeker(
+                      companyID: companyID,
+                    )),
+                child: Text('لجميع عروض الشركة اضغط هنا',
+                    style: const TextStyle(
+                        color: Colors.blue,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                        overflow: TextOverflow.ellipsis)),
               ),
               const SizedBox(height: 30),
               const Align(

@@ -37,7 +37,7 @@ class CustomAppbar extends StatelessWidget {
                     onPressed: () => Get.back(),
                     icon: const Icon(
                       Icons.arrow_back,
-                      color: kFillColor,
+                      color: kPrimaryColor,
                     ))
                 : const SizedBox(),
             actions: [
@@ -52,12 +52,12 @@ class CustomAppbar extends StatelessWidget {
                       },
                       icon: const Icon(
                         Icons.notifications,
-                        color: Colors.white,
+                        color: kPrimaryColor,
                       ))
                   : const SizedBox(),
               const SizedBox(width: defaultPadding)
             ],
-            backgroundColor: kPrimaryColor,
+            backgroundColor: Colors.transparent,
             expandedHeight: 80,
             floating: true,
             snap: true,

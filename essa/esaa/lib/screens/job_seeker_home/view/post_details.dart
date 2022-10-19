@@ -51,7 +51,7 @@ class PostDetails extends StatelessWidget {
                       post.title,
                       style: const TextStyle(
                           color: Colors.black,
-                          fontSize: 40,
+                          fontSize: 25,
                           fontWeight: FontWeight.bold,
                           overflow: TextOverflow.fade),
                     ),
@@ -60,13 +60,30 @@ class PostDetails extends StatelessWidget {
                 const SizedBox(
                   height: 15,
                 ),
+                Row(
+                  children: [
+                    Icon(Icons.business, color: Colors.blue),
+                    const SizedBox(
+                      height: 20,
+                      width: 12,
+                    ),
+                    Text(
+                      post.companyName,
+                      style: const TextStyle(
+                          color: kPrimaryColor,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis),
+                    )
+                  ],
+                ),
                 InkWell(
                   onTap: () => Get.to(
                       () => ProfileScreenForJS(companyID: post.companyID)),
                   child: Row(
                     children: [
                       const Icon(
-                        Icons.details,
+                        Icons.person,
                         color: Color.fromARGB(255, 22, 126, 210),
                         size: 20,
                       ),
@@ -75,7 +92,7 @@ class PostDetails extends StatelessWidget {
                         width: 12,
                       ),
                       Text(
-                        post.companyName,
+                        " لعرض ملف الشركة ",
                         style: const TextStyle(
                             color: Colors.blue,
                             decoration: TextDecoration.underline,
@@ -92,7 +109,7 @@ class PostDetails extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '  : وصف العمل \n ${post.description}',
+                      '   وصف العمل :\n ${post.description}',
                       style: const TextStyle(
                           color: kPrimaryColor,
                           fontSize: defaultFontSize,

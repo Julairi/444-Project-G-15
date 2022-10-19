@@ -110,7 +110,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                           widget.post.title,
                           style: const TextStyle(
                               color: Colors.black,
-                              fontSize: 40,
+                              fontSize: 25,
                               fontWeight: FontWeight.bold,
                               overflow: TextOverflow.fade),
                         ),
@@ -293,14 +293,27 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                       width: 10,
                     ),
                     Padding(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: ElevatedButton(
+                          onPressed: () => Get.to(() => PostOrders(
+                              post: widget.post, filters: widget.filters)),
+                          child: const Text(
+                            'عرض الطلبات',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: defaultFontSize,
+                                fontWeight: FontWeight.bold),
+                          )),
+                    ),
+                    Padding(
                       padding: const EdgeInsets.only(top: 16.0),
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary:
-                                int.parse(widget.post.acceptedApplicants) > 0
-                                    // ? Colors.grey
-                                    ? Colors.blueAccent.withOpacity(0.2)
-                                    : Colors.blueAccent, // Background color
+                            primary: controller.editable.value
+                                ? Colors.blueAccent
+                                //: Colors.grey,
+                                : Colors.blueAccent
+                                    .withOpacity(0.1), // Background color
                           ),
                           onPressed: () => _edit(widget.post),
                           child: const Text(

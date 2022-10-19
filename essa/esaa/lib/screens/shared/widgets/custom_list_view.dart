@@ -3,12 +3,16 @@ import 'package:esaa/screens/shared/shared.dart';
 import 'package:flutter/material.dart';
 
 class CustomListView extends StatelessWidget {
-
   final Query query;
-  final Widget Function (BuildContext, QueryDocumentSnapshot) itemBuilder;
+  final Widget Function(BuildContext, QueryDocumentSnapshot) itemBuilder;
   final Widget emptyListWidget;
 
-  const CustomListView({required this.query, required this.itemBuilder, required this.emptyListWidget, Key? key}) : super(key: key);
+  const CustomListView(
+      {required this.query,
+      required this.itemBuilder,
+      required this.emptyListWidget,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,7 @@ class CustomListView extends StatelessWidget {
         controller: controller,
         scrollDirection: Axis.vertical,
         query: query,
-        pageSize: 10,
+        pageSize: 30,
         emptyListBuilder: (context) {
           return Center(
             child: Column(
@@ -32,7 +36,6 @@ class CustomListView extends StatelessWidget {
             ),
           );
         },
-        itemBuilder: itemBuilder
-    );
+        itemBuilder: itemBuilder);
   }
 }

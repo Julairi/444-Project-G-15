@@ -22,12 +22,18 @@ class AvailablePostsScreen extends StatelessWidget {
     final controller = Get.find<AvailablePostsController>();
 
     return CustomAppbar(
+      title: const Text("الصفحةالرئيسية",
+          style: TextStyle(
+              color: kPrimaryColor,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              overflow: TextOverflow.ellipsis)),
+      showNotification: true,
       child: SingleChildScrollView(
           physics: const NeverScrollableScrollPhysics(),
           child: Column(
             children: [
               const SizedBox(height: 20),
-
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
                 child: TextField(
@@ -43,14 +49,12 @@ class AvailablePostsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
               const SizedBox(height: 10),
-
               Align(
                 alignment: Alignment.centerRight,
                 child: Container(
                   height: 44,
-                  width: 200,
+                  width: 210,
                   decoration: const BoxDecoration(
                       color: kFillColor,
                       borderRadius: BorderRadius.all(
@@ -66,22 +70,22 @@ class AvailablePostsScreen extends StatelessWidget {
                       maxWidth: 180,
                     ),
                     position: PopupMenuPosition.under,
-                    itemBuilder: (context) =>
-                        controller.filters.map<PopupMenuItem<String>>((String filter) {
-                          return PopupMenuItem<String>(
-                            value: filter,
-                            child: SizedBox(
-                              height: 18,
-                              child: Text(
-                                'Filter by $filter',
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    overflow: TextOverflow.ellipsis),
-                              ),
-                            ),
-                          );
-                        }).toList(),
+                    itemBuilder: (context) => controller.filters
+                        .map<PopupMenuItem<String>>((String filter) {
+                      return PopupMenuItem<String>(
+                        value: filter,
+                        child: SizedBox(
+                          height: 20,
+                          child: Text(
+                            'تصنيف حسب $filter',
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                                overflow: TextOverflow.ellipsis),
+                          ),
+                        ),
+                      );
+                    }).toList(),
                     onSelected: (String filter) {
                       controller.filterBy = filter;
                     },
@@ -97,42 +101,33 @@ class AvailablePostsScreen extends StatelessWidget {
                               const Padding(
                                 padding: EdgeInsets.all(10),
                               ),
-
-                              SizedBox(
-                                height: 18,
-                                child: GetX<AvailablePostsController>(
-                                    builder: (controller) {
-                                      return Text(
-                                        'Filter by ${controller.filterBy}',
-                                        style: const TextStyle(color: Colors.black, fontSize: 16),
-                                        textAlign: TextAlign.start,
-                                      );
-                                    }
-                                ),
-                              ),
-
-                              const Expanded(child: SizedBox()),
-
                               const Icon(
                                 Icons.filter_alt,
                                 color: Colors.black,
                               ),
-
-                              const Padding(
-                                padding: EdgeInsets.all(10),
+                              SizedBox(
+                                height: 18,
+                                child: GetX<AvailablePostsController>(
+                                    builder: (controller) {
+                                  return Text(
+                                    'تصنيف حسب ${controller.filterBy}',
+                                    style: const TextStyle(
+                                        color: Colors.black, fontSize: 14),
+                                    textAlign: TextAlign.start,
+                                  );
+                                }),
                               ),
+                              const Expanded(child: SizedBox()),
                             ],
                           ),
                         )),
                   ),
                 ),
               ),
-
               const SizedBox(height: 20),
-
               Center(child: GetX<AvailablePostsController>(
                 builder: (controller) {
-                  if (controller.filterBy == "date") {
+                  if (controller.filterBy == "التاريخ") {
                     return PostCount(query: _getQuery(controller.filterBy));
                   } else {
                     return PostCount(query: _getQuery(controller.filterBy));
@@ -142,7 +137,7 @@ class AvailablePostsScreen extends StatelessWidget {
               const SizedBox(height: 10),
               GetX<AvailablePostsController>(
                 builder: (controller) {
-                  if (controller.filterBy == "date") {
+                  if (controller.filterBy == "التاريخ") {
                     return AvailablePostList(
                         query: _getQuery(controller.filterBy));
                   } else {
@@ -160,7 +155,7 @@ class AvailablePostsScreen extends StatelessWidget {
     Query query = PostDatabase.postsCollection
         .where("offerStatus", whereIn: ["pending", "assigned"]);
 
-    if (filterBy == "date") {
+    if (filterBy == "التاريخ") {
       query = query.orderBy("timePosted", descending: true);
     } else {
       query = query.orderBy("payPerHour", descending: true);

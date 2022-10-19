@@ -297,7 +297,7 @@ class PostJobFormState extends State<PostJobForm> {
       controller: noOfHoursEditingController,
       cursorColor: kPrimaryColor,
       keyboardType:
-      const TextInputType.numberWithOptions(signed: false, decimal: true),
+          const TextInputType.numberWithOptions(signed: false, decimal: true),
       textInputAction: TextInputAction.next,
       onSaved: (value) {
         noOfHoursEditingController.text = value!;
@@ -437,9 +437,9 @@ class PostJobFormState extends State<PostJobForm> {
                   post.companyID = App.user.id;
                   post.companyName = App.user.name;
                   post.maxNoOfApplicants =
-                  applicantsEditingController.text == ""
-                      ? "1"
-                      : applicantsEditingController.text;
+                      applicantsEditingController.text == ""
+                          ? "1"
+                          : applicantsEditingController.text;
                   post.acceptedApplicants = "0";
 
                   controller.isLoading.value = true; //Show Indicator
@@ -483,4 +483,3 @@ class PostJobFormState extends State<PostJobForm> {
     );
   }
 }
-
