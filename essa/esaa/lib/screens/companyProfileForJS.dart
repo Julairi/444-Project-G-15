@@ -225,12 +225,15 @@ class ProfileScreenForJS extends StatelessWidget {
                     "assigned"
                   ]).orderBy("timePosted", descending: true),
                   emptyListWidget: const SizedBox(
-                    child: Text(
-                      "ليس هناك أي عروض مقدمة لهذه الشركة",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: kPrimaryColor,
+                    height: 300,
+                    child: Center(
+                      child: Text(
+                        "ليس هناك أي عروض مقدمة لهذه الشركة",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: kPrimaryColor,
+                        ),
                       ),
                     ),
                   ),
