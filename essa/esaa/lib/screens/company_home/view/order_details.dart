@@ -73,10 +73,11 @@ class OrderDetails extends StatelessWidget {
                           onPressed: () =>
                               Get.to(() => const JobSeekerProfile()),
                           child: const Text(
-                            'VIEW PROFILE',
+                            'عرض الملف الشخصي',
                             style: TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: 16,
+                                decoration: TextDecoration.underline,
                                 fontWeight: FontWeight.normal,
                                 overflow: TextOverflow.fade),
                           ),
