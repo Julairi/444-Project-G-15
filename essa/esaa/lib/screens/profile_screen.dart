@@ -171,7 +171,7 @@ class ProfileScreen extends StatelessWidget {
               const Align(
                 alignment: Alignment.center,
                 child: Text(
-                  "PREVIOUS JOBS",
+                  "الوظائف السابقة",
                   style: TextStyle(
                       color: kPrimaryColor,
                       fontSize: 18,
@@ -187,10 +187,10 @@ class ProfileScreen extends StatelessWidget {
                         .where("orderStatus", isEqualTo: "accepted")
                         .orderBy("timeApplied", descending: true),
                     emptyListWidget: Container(
-                      margin: const EdgeInsets.only(top: 100),
+                      margin: const EdgeInsets.only(top: 10),
                       child: const Center(
                         child: Text(
-                          "You have not gotten any job yet",
+                          "ليس لديك وظائف سابقة",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
