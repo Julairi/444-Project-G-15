@@ -182,7 +182,6 @@ class ProfileScreen extends StatelessWidget {
             if (App.user.userType == "jobSeeker")
               Expanded(
                 child: CustomListView(
-                    //controller: scrollController,
                     query: OrderDatabase.ordersCollection
                         .where("userID", isEqualTo: App.user.id)
                         .where("orderStatus", isEqualTo: "accepted")
