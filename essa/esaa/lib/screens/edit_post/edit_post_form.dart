@@ -285,7 +285,7 @@ class EditPostFormState extends State<EditPostForm> {
             context: context,
             initialDate: DateTime.now(),
             firstDate: DateTime.now(),
-            //DateTime('yyyy-MM-dd').format(startDateEditingController.text),
+            // DateFormat('yyyy-MM-dd').format(startDateEditingController.text),
 
             lastDate: DateTime((DateTime.now().millisecondsSinceEpoch +
                 (1000 * 60 * 60 * 24 * 90))));
@@ -379,17 +379,6 @@ class EditPostFormState extends State<EditPostForm> {
         }
         //// checkkkkkkkkkkk
 
-        final date = DateFormat('yyyy-MM-dd h:mm aa').parse(
-            "${startDateEditingController.text.trim()} ${timeEditingController.text.trim()}");
-
-        if (date.millisecondsSinceEpoch <
-            DateTime.now().millisecondsSinceEpoch) {
-          // Fluttertoast.showToast(
-          return "يحب أن يكون الوقت  بالمستقبل";
-          //backgroundColor: Colors.redAccent,
-          // textColor: kFillColor,
-          //);
-        }
         //}
         else {
           return null;
