@@ -95,7 +95,7 @@ class EditPostFormState extends State<EditPostForm> {
     final descriptionField = TextFormField(
       controller: descriptionEditingController,
       onSaved: (newValue) =>
-      descriptionEditingController.text = newValue!.trim(),
+          descriptionEditingController.text = newValue!.trim(),
       validator: (value) {
         final number = num.tryParse(value!);
         if (value.trim().isEmpty) {
@@ -152,20 +152,20 @@ class EditPostFormState extends State<EditPostForm> {
                 position: PopupMenuPosition.under,
                 itemBuilder: (context) =>
                     controller.cities.map<PopupMenuItem<String>>((String city) {
-                      return PopupMenuItem<String>(
-                        value: city,
-                        child: SizedBox(
-                          height: 18,
-                          child: Text(
-                            city,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                overflow: TextOverflow.ellipsis),
-                          ),
-                        ),
-                      );
-                    }).toList(),
+                  return PopupMenuItem<String>(
+                    value: city,
+                    child: SizedBox(
+                      height: 18,
+                      child: Text(
+                        city,
+                        style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            overflow: TextOverflow.ellipsis),
+                      ),
+                    ),
+                  );
+                }).toList(),
                 onSelected: (String city) {
                   controller.city.value = city;
                 },
@@ -185,13 +185,13 @@ class EditPostFormState extends State<EditPostForm> {
                             height: 18,
                             child: GetX<EditPostFormController>(
                                 builder: (controller) {
-                                  return Text(
-                                    controller.city.value,
-                                    style: const TextStyle(
-                                        color: Colors.black, fontSize: 16),
-                                    textAlign: TextAlign.start,
-                                  );
-                                }),
+                              return Text(
+                                controller.city.value,
+                                style: const TextStyle(
+                                    color: Colors.black, fontSize: 16),
+                                textAlign: TextAlign.start,
+                              );
+                            }),
                           ),
                         ],
                       ),
@@ -399,7 +399,7 @@ class EditPostFormState extends State<EditPostForm> {
       controller: noOfHoursEditingController,
       cursorColor: kPrimaryColor,
       keyboardType:
-      const TextInputType.numberWithOptions(signed: false, decimal: true),
+          const TextInputType.numberWithOptions(signed: false, decimal: true),
       textInputAction: TextInputAction.next,
       onSaved: (value) {
         noOfHoursEditingController.text = value!.trim();
@@ -520,6 +520,13 @@ class EditPostFormState extends State<EditPostForm> {
             locationField,
             const SizedBox(height: defaultPadding / 2),
             startDate,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: const [
+                Text("يجب أن يكون بحدود ثلاث أشهر من الوقت الحالي*")
+              ],
+            ),
             const SizedBox(height: defaultPadding / 2),
             endDate,
             const SizedBox(height: defaultPadding / 2),
@@ -553,16 +560,17 @@ class EditPostFormState extends State<EditPostForm> {
                   widget.post.description =
                       descriptionEditingController.text.trim();
                   widget.post.city = controller.city.value;
-                  widget.post.startDate = startDateEditingController.text.trim();
+                  widget.post.startDate =
+                      startDateEditingController.text.trim();
                   widget.post.endDate = endDateEditingController.text.trim();
                   widget.post.nHours = noOfHoursEditingController.text.trim();
                   widget.post.time = timeEditingController.text.trim();
                   widget.post.payPerHour =
                       int.parse(payPerHourEditingController.text.trim());
                   widget.post.maxNoOfApplicants =
-                  applicantsEditingController.text.trim() == ""
-                      ? "1"
-                      : applicantsEditingController.text.trim();
+                      applicantsEditingController.text.trim() == ""
+                          ? "1"
+                          : applicantsEditingController.text.trim();
 
                   controller.isLoading.value = true;
 
