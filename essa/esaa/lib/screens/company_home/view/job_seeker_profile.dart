@@ -14,6 +14,7 @@ class JobSeekerProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<OrderDetailsController>();
 
+    final scrollController = ScrollController();
     return CustomAppbar(
       showLeading: true,
       child: Container(
@@ -175,28 +176,31 @@ class JobSeekerProfile extends StatelessWidget {
               ),
             ),
 
-            CustomListView(
-                query: OrderDatabase.ordersCollection
-                    .where("userID", isEqualTo: controller.user.value.id)
-                    .where("orderStatus", isEqualTo: "accepted")
-                    .orderBy("timeApplied", descending: true),
-                emptyListWidget: const SizedBox(
-                  height: 300,
-                  child: Center(
-                    child: Text(
-                      "This user has not gotten any job yet",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: kPrimaryColor,
+            Expanded(
+              child: CustomListView(
+                  controller: scrollController,
+                  query: OrderDatabase.ordersCollection
+                      .where("userID", isEqualTo: controller.user.value.id)
+                      .where("orderStatus", isEqualTo: "accepted")
+                      .orderBy("timeApplied", descending: true),
+                  emptyListWidget: Container(
+                    margin: const EdgeInsets.only(top: 100),
+                    child: const Center(
+                      child: Text(
+                        "You have not gotten any job yet",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: kPrimaryColor,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                itemBuilder: (context, querySnapshot) {
-                  Order order = Order.fromDocumentSnapshot(querySnapshot);
-                  return OrderCard(order: order, showPaymentStatus: false);
-                }
+                  itemBuilder: (context, querySnapshot) {
+                    Order order = Order.fromDocumentSnapshot(querySnapshot);
+                    return OrderCard(order: order, showPaymentStatus: false);
+                  }
+              ),
             ),
           ],
         ),

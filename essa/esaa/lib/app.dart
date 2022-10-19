@@ -25,9 +25,9 @@ class App extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: const [
-          Locale('ar', 'AE'), // English, no country code
-          Locale('en', ''),
+          Locale('ar', 'AE'),
         ],
+        locale: const Locale('ar', 'AE'),
         title: 'es3a',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
