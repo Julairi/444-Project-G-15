@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:esaa/screens/company_home/widgets/post_card_job_seeker.dart';
+import 'package:esaa/screens/job_seeker_home/widgets/company_posts_for_job_seeker.dart';
 
 class ProfileScreenForJS extends StatelessWidget {
   final String companyID;
@@ -197,28 +198,44 @@ class ProfileScreenForJS extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 30),
-              CustomListView(
-                  query: PostDatabase.postsCollection
-                      .where("userID", isEqualTo: controller.user.value.id)
-                      .orderBy("timePosted", descending: true),
-                  emptyListWidget: const SizedBox(
-                    height: 300,
-                    child: Center(
-                      child: Text(
-                        "لا يوجد للشركة عروض عمل",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 20,
+              const SizedBox(height: 20),
+              Card(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12))),
+                elevation: 6,
+                child: Container(
+                  width: double.infinity,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                  child: InkWell(
+                    onTap: () => Get.to(() => CompanyPostsForJobSeeker(
+                          companyID: companyID,
+                        )),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.list,
                           color: kPrimaryColor,
+                          size: 28,
                         ),
-                      ),
+                        const SizedBox(
+                          height: 20,
+                          width: 15,
+                        ),
+                        Text('لعروض الشركة اضغط هنا',
+                            style: const TextStyle(
+                                color: Colors.blue,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                decoration: TextDecoration.underline,
+                                overflow: TextOverflow.ellipsis)),
+                      ],
                     ),
                   ),
-                  itemBuilder: (context, querySnapshot) {
-                    Post post = Post.fromDocumentSnapshot(querySnapshot);
-                    return PostCardJobSeeker(post: post, canApply: true);
-                  }),
+                ),
+              ),
+              const SizedBox(height: 30),
               RatingBar.builder(
                 initialRating: _sumRating(controller.user.value.rates),
                 minRating: 1,
@@ -233,6 +250,38 @@ class ProfileScreenForJS extends StatelessWidget {
                 ignoreGestures: true,
                 onRatingUpdate: (double value) {},
               ),
+              /*const Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "PREVIOUS JOB OFFERS",
+                  style: TextStyle(
+                      color: kPrimaryColor,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      overflow: TextOverflow.ellipsis),
+                ),
+              ),
+              CustomListView(
+                  query: PostDatabase.postsCollection
+                      .where("userID", isEqualTo: companyID)
+                      .orderBy("endDate", descending: true),
+                  emptyListWidget: const SizedBox(
+                    height: 300,
+                    child: Center(
+                      child: Text(
+                        "This user has not gotten any job yet",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: kPrimaryColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                  itemBuilder: (context, querySnapshot) {
+                    Post post = Post.fromDocumentSnapshot(querySnapshot);
+                    return PostCardJobSeeker(post: post);
+                  }),*/
             ],
           ),
         ));

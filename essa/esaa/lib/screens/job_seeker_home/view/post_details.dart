@@ -77,7 +77,7 @@ class PostDetails extends StatelessWidget {
                       Text(
                         post.companyName,
                         style: const TextStyle(
-                            color: Color.fromARGB(255, 21, 18, 63),
+                            color: Colors.blue,
                             decoration: TextDecoration.underline,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
