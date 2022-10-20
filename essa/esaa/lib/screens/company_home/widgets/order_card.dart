@@ -12,7 +12,9 @@ class OrderCard extends StatelessWidget {
   final Post? post;
   final bool showPaymentStatus;
 
-  const OrderCard({required this.order, this.post, this.showPaymentStatus = true,  Key? key}) : super(key: key);
+  const OrderCard(
+      {required this.order, this.post, this.showPaymentStatus = true, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -160,16 +162,15 @@ class OrderCard extends StatelessWidget {
                     if (order.orderStatus == "accepted" && showPaymentStatus)
                       Text(order.hasBeenPaid ? "تم الدفع" : "لم يتم الدفع",
                           style: TextStyle(
-                              color: order.hasBeenPaid ? Colors.green : Colors.red,
+                              color:
+                                  order.hasBeenPaid ? Colors.green : Colors.red,
                               fontSize: defaultFontSize,
                               fontWeight: FontWeight.bold,
                               overflow: TextOverflow.ellipsis)),
-
                     const SizedBox(
                       height: 20,
                       width: 15,
                     ),
-
                     if (order.hasBeenPaid == true)
                       GestureDetector(
                         child: const Text("تقييم",
@@ -208,13 +209,11 @@ class OrderCard extends StatelessWidget {
                   //job seeker rates company
                   final post = await PostDatabase().getPost(order.postID);
 
-                  if(post == null) return;
+                  if (post == null) return;
 
                   UserDatabase(post.companyID).rateUser(response.rating);
                 } else {
-
                   UserDatabase(order.userID).rateUser(response.rating);
-
                 }
               });
         });

@@ -274,19 +274,34 @@ class ProfileScreenForJS extends StatelessWidget {
                       overflow: TextOverflow.ellipsis),
                 ),
               ),
-              RatingBar.builder(
-                initialRating: _sumRating(controller.user.value.rates),
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                itemBuilder: (context, _) => const Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-                ignoreGestures: true,
-                onRatingUpdate: (double value) {},
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  RatingBar.builder(
+                    initialRating: _sumRating(App.user.rates),
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    itemCount: 5,
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                      size: 18,
+                    ),
+                    ignoreGestures: true,
+                    onRatingUpdate: (double value) {},
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    '(${App.user.rates.isNotEmpty ? App.user.rates.length : 'No ratings yet'})',
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: App.user.rates.isNotEmpty ? 24 : 16,
+                        fontWeight: FontWeight.w500),
+                  )
+                ],
               ),
             ],
           ),
@@ -298,6 +313,8 @@ class ProfileScreenForJS extends StatelessWidget {
     for (double rating in rates) {
       totalValue = totalValue + rating;
     }
+
+    if (totalValue == 0 || rates.isEmpty) return 0;
 
     return totalValue / rates.length;
   }
