@@ -113,7 +113,7 @@ class JobSeekerProfile extends StatelessWidget {
                     ),
                     const SizedBox(width: 10),
                     Text(
-                      '(${controller.user.value.rates.isNotEmpty ? controller.user.value.rates.length : 'No ratings yet'})',
+                      '(${controller.user.value.rates.isNotEmpty ? controller.user.value.rates.length : 'لا يوجد تقييمات'})',
                       style: TextStyle(
                           color: Colors.grey,
                           fontSize:

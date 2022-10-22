@@ -12,10 +12,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 ///
 /// See also [FirebaseDatabaseQueryBuilder].
 typedef FirestoreQueryBuilderSnapshotBuilder<T> = Widget Function(
-    BuildContext context,
-    FirestoreQueryBuilderSnapshot<T> snapshot,
-    Widget? child,
-    );
+  BuildContext context,
+  FirestoreQueryBuilderSnapshot<T> snapshot,
+  Widget? child,
+);
 
 /// {@template firebase_ui.firestore_query_builder}
 /// Listens to a query and paginates the result in a way that is compatible with
@@ -96,7 +96,6 @@ class FirestoreQueryBuilder<Document> extends StatefulWidget {
   // ignore: library_private_types_in_public_api
   _FirestoreQueryBuilderState<Document> createState() =>
       _FirestoreQueryBuilderState<Document>();
-
 }
 
 class _FirestoreQueryBuilderState<Document>
@@ -173,7 +172,7 @@ class _FirestoreQueryBuilderState<Document>
     final query = widget.query.limit(expectedDocsCount);
 
     _querySubscription = query.snapshots().listen(
-          (event) {
+      (event) {
         setState(() {
           if (nextPage) {
             _snapshot = _snapshot.copyWith(isFetchingMore: false);
@@ -352,22 +351,22 @@ class _Sentinel {
 
 /// A type representing the function passed to [FirestoreListView] for its `itemBuilder`.
 typedef FirestoreItemBuilder<Document> = Widget Function(
-    BuildContext context,
-    QueryDocumentSnapshot<Document> doc,
-    );
+  BuildContext context,
+  QueryDocumentSnapshot<Document> doc,
+);
 
 /// A type representing the function passed to [FirestoreListView] for its `loadingBuilder`.
 typedef FirestoreLoadingBuilder = Widget Function(BuildContext context);
 
 /// A type representing the function passed to [FirestoreListView] for its `errorBuilder`.
 typedef FirestoreErrorBuilder = Widget Function(
-    BuildContext context,
-    Object error,
-    StackTrace stackTrace,
-    );
+  BuildContext context,
+  Object error,
+  StackTrace stackTrace,
+);
 typedef EmptyListBuilder = Widget Function(
-    BuildContext context,
-    );
+  BuildContext context,
+);
 
 /// A [ListView.builder] that obtains its items from a Firestore query.
 ///
@@ -419,13 +418,13 @@ typedef EmptyListBuilder = Widget Function(
 /// {@subCategory description:A widget that listens to a query and display the items using a ListView}
 /// {@subCategory img:https://place-hold.it/400x150}
 
-
 class FirestoreListView<Document> extends FirestoreQueryBuilder<Document> {
   FirestoreListView({
     Key? key,
     required Query<Document> query,
     required FirestoreItemBuilder<Document> itemBuilder,
     int pageSize = 10,
+    int? absoluteSize,
     FirestoreLoadingBuilder? loadingBuilder,
     FirestoreErrorBuilder? errorBuilder,
     EmptyListBuilder? emptyListBuilder,
@@ -449,84 +448,83 @@ class FirestoreListView<Document> extends FirestoreQueryBuilder<Document> {
     String? restorationId,
     Clip clipBehavior = Clip.hardEdge,
   }) : super(
-    key: key,
-    query: query,
-    pageSize: pageSize,
-    builder: (context, snapshot, _) {
+          key: key,
+          query: query,
+          pageSize: pageSize,
+          builder: (context, snapshot, _) {
+            loadingBuilder ??= (context) => const Center(
+                  child: SizedBox(
+                      height: 50,
+                      width: 50,
+                      child: SpinKitRing(
+                        color: kPrimaryColor,
+                        size: 50.0,
+                      )),
+                );
 
-      loadingBuilder ??= (context) => const Center(
-        child: SizedBox(
-          height: 50,
-          width: 50,
-          child: SpinKitRing(
-            color: kPrimaryColor,
-            size: 50.0,
-          )
-        ),
-      );
+            if (snapshot.isFetching) {
+              return loadingBuilder!.call(context);
+            }
 
-      if (snapshot.isFetching) {
-        return loadingBuilder!.call(context);
-      }
+            errorBuilder ??= (context, error, stackTrace) {
+              if (kDebugMode) {
+                print(error.toString());
+              }
 
-      errorBuilder ??= (context, error, stackTrace) {
-        if (kDebugMode) {
-          print(error.toString());
-        }
+              Fluttertoast.showToast(
+                  msg: error.toString(),
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 14.0);
 
-        Fluttertoast.showToast(
-            msg: error.toString(),
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.red,
-            textColor: Colors.white,
-            fontSize: 14.0
+              return Container();
+            };
+
+            if (snapshot.hasError) {
+              return errorBuilder!(
+                context,
+                snapshot.error!,
+                snapshot.stackTrace!,
+              );
+            }
+
+            if (snapshot.docs.isEmpty && emptyListBuilder != null) {
+              return emptyListBuilder(context);
+            }
+
+            return ListView.builder(
+              itemCount: absoluteSize ?? snapshot.docs.length,
+              itemBuilder: (context, index) {
+                if (absoluteSize == null) {
+                  final isLastItem = index + 1 == snapshot.docs.length;
+                  if (isLastItem && snapshot.hasMore) snapshot.fetchMore();
+                }
+
+                final doc = snapshot.docs[index];
+                return itemBuilder(context, doc);
+              },
+              scrollDirection: scrollDirection,
+              reverse: reverse,
+              controller: controller,
+              primary: primary,
+              physics: physics,
+              shrinkWrap: shrinkWrap,
+              padding: padding,
+              itemExtent: itemExtent,
+              prototypeItem: prototypeItem,
+              addAutomaticKeepAlives: addAutomaticKeepAlives,
+              addRepaintBoundaries: addRepaintBoundaries,
+              addSemanticIndexes: addSemanticIndexes,
+              cacheExtent: cacheExtent,
+              semanticChildCount: semanticChildCount,
+              dragStartBehavior: dragStartBehavior,
+              keyboardDismissBehavior: keyboardDismissBehavior,
+              restorationId: restorationId,
+              clipBehavior: clipBehavior,
+            );
+          },
         );
-
-        return Container();
-      };
-
-      if (snapshot.hasError) {
-        return errorBuilder!(
-          context,
-          snapshot.error!,
-          snapshot.stackTrace!,
-        );
-      }
-
-      if(snapshot.docs.isEmpty && emptyListBuilder != null){
-        return emptyListBuilder(context);
-      }
-
-      return ListView.builder(
-        itemCount: snapshot.docs.length,
-        itemBuilder: (context, index) {
-          final isLastItem = index + 1 == snapshot.docs.length;
-          if (isLastItem && snapshot.hasMore) snapshot.fetchMore();
-
-          final doc = snapshot.docs[index];
-          return itemBuilder(context, doc);
-        },
-        scrollDirection: scrollDirection,
-        reverse: reverse,
-        controller: controller,
-        primary: primary,
-        physics: physics,
-        shrinkWrap: shrinkWrap,
-        padding: padding,
-        itemExtent: itemExtent,
-        prototypeItem: prototypeItem,
-        addAutomaticKeepAlives: addAutomaticKeepAlives,
-        addRepaintBoundaries: addRepaintBoundaries,
-        addSemanticIndexes: addSemanticIndexes,
-        cacheExtent: cacheExtent,
-        semanticChildCount: semanticChildCount,
-        dragStartBehavior: dragStartBehavior,
-        keyboardDismissBehavior: keyboardDismissBehavior,
-        restorationId: restorationId,
-        clipBehavior: clipBehavior,
-      );
-    },
-  );
 }

@@ -219,6 +219,8 @@ class ProfileScreenForJS extends StatelessWidget {
                 ),
               ),
               CustomListView(
+                  absoluteSize: 3,
+                  physics: const NeverScrollableScrollPhysics(),
                   query: PostDatabase.postsCollection
                       .where("companyID", isEqualTo: companyID)
                       .where("offerStatus", whereIn: [
@@ -295,7 +297,7 @@ class ProfileScreenForJS extends StatelessWidget {
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    '(${App.user.rates.isNotEmpty ? App.user.rates.length : 'No ratings yet'})',
+                    '(${App.user.rates.isNotEmpty ? App.user.rates.length : 'لايوجد تقييمات'})',
                     style: TextStyle(
                         color: Colors.grey,
                         fontSize: App.user.rates.isNotEmpty ? 24 : 16,

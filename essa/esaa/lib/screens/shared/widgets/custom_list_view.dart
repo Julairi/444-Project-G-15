@@ -4,26 +4,32 @@ import 'package:flutter/material.dart';
 
 class CustomListView extends StatelessWidget {
   final Query query;
+  final ScrollController? controller;
   final Widget Function(BuildContext, QueryDocumentSnapshot) itemBuilder;
   final Widget emptyListWidget;
+  final int? absoluteSize;
+  final ScrollPhysics? physics;
 
   const CustomListView(
-      {required this.query,
+      {this.controller,
+      required this.query,
       required this.itemBuilder,
       required this.emptyListWidget,
+      this.absoluteSize,
+      this.physics,
       Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final controller = ScrollController();
-
     return FirestoreListView(
         shrinkWrap: true,
-        controller: controller,
+        controller: controller ?? ScrollController(),
         scrollDirection: Axis.vertical,
         query: query,
-        pageSize: 30,
+        pageSize: 10,
+        absoluteSize: absoluteSize,
+        physics: physics,
         emptyListBuilder: (context) {
           return Center(
             child: Column(

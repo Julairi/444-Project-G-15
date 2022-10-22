@@ -18,6 +18,12 @@ class PostDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomAppbar(
+      title: const Text("تفاصيل المنشور",
+          style: TextStyle(
+              color: kPrimaryColor,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              overflow: TextOverflow.ellipsis)),
       showLeading: true,
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -115,7 +121,7 @@ class PostDetails extends StatelessWidget {
                           width: 10,
                         ),
                         Text(
-                          post.maxNoOfApplicants,
+                          '${post.maxNoOfApplicants} موظفين مطلوبين',
                           style: const TextStyle(
                               color: KGrey,
                               fontSize: defaultFontSize,

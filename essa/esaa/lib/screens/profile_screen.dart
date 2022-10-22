@@ -8,6 +8,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
 import '../models/order.dart';
+import 'company_home/widgets/full_job_list.dart';
 import 'company_home/widgets/order_card.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -211,15 +212,17 @@ class ProfileScreen extends StatelessWidget {
                 ),
               if (App.user.userType == "jobSeeker")
                 CustomListView(
+                    absoluteSize: 3,
+                    physics: const NeverScrollableScrollPhysics(),
                     query: OrderDatabase.ordersCollection
                         .where("userID", isEqualTo: App.user.id)
                         .where("orderStatus", isEqualTo: "accepted")
                         .orderBy("timeApplied", descending: true),
-                    emptyListWidget: const SizedBox(
-                      height: 300,
-                      child: Center(
+                    emptyListWidget: Container(
+                      margin: const EdgeInsets.only(top: 120, bottom: 100),
+                      child: const Center(
                         child: Text(
-                          "لايوجد وظائف سابقة",
+                          "لا يوجد وظائف سابقة",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 20,
@@ -232,6 +235,22 @@ class ProfileScreen extends StatelessWidget {
                       Order order = Order.fromDocumentSnapshot(querySnapshot);
                       return OrderCard(order: order, showPaymentStatus: false);
                     }),
+              if (App.user.userType == "jobSeeker")
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: TextButton(
+                    onPressed: () => Get.to(() => const FullJobList()),
+                    child: const Text(
+                      'عرض المزيد',
+                      style: TextStyle(
+                          color: kPrimaryColor,
+                          fontSize: 16,
+                          decoration: TextDecoration.underline,
+                          fontWeight: FontWeight.w500,
+                          overflow: TextOverflow.fade),
+                    ),
+                  ),
+                ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -253,7 +272,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    '(${App.user.rates.isNotEmpty ? App.user.rates.length : 'No ratings yet'})',
+                    '(${App.user.rates.isNotEmpty ? App.user.rates.length : 'لايوجد تقييمات'})',
                     style: TextStyle(
                         color: Colors.grey,
                         fontSize: App.user.rates.isNotEmpty ? 24 : 16,

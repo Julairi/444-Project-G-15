@@ -40,7 +40,7 @@ class CompanyTabBarPageState extends State<CompanyTabBarPage>
               fontSize: 20,
               fontWeight: FontWeight.w500,
               overflow: TextOverflow.ellipsis)),
-              showNotification: true,
+      showNotification: true,
       child: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height - 150,
@@ -73,7 +73,10 @@ class CompanyTabBarPageState extends State<CompanyTabBarPage>
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text('عروض قيد الانتظار'),
+                                const Text(
+                                  'عروض قيد الانتظار',
+                                  style: TextStyle(fontSize: 12),
+                                ),
                                 const SizedBox(width: defaultPadding),
                                 SizedBox(
                                   child: FirestoreQueryBuilder<Object?>(
@@ -114,7 +117,10 @@ class CompanyTabBarPageState extends State<CompanyTabBarPage>
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Text('العروض تم اسنادها'),
+                                const Text(
+                                  'العروض تم اسنادها',
+                                  style: TextStyle(fontSize: 12),
+                                ),
                                 const SizedBox(width: defaultPadding),
                                 FirestoreQueryBuilder<Object?>(
                                   query: PostDatabase.postsCollection
