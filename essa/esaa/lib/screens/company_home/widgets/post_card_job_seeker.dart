@@ -7,7 +7,8 @@ import 'package:get/get.dart';
 class PostCardJobSeeker extends StatelessWidget {
   final Post post;
   final bool canApply;
-  const PostCardJobSeeker({required this.post, this.canApply = true, Key? key}) : super(key: key);
+  const PostCardJobSeeker({required this.post, this.canApply = true, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +29,7 @@ class PostCardJobSeeker extends StatelessWidget {
                       topLeft: Radius.circular(15),
                       topRight: Radius.circular(15),
                     ),
-                    child: Image.network(
-                      "https://i.pinimg.com/474x/6a/d3/66/6ad3663d79ccc962377d7a6cbe4d9bfe.jpg",
-                      height: 50,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
                   ),
-
                   Positioned(
                     child: Container(
                       height: 50,
@@ -48,12 +42,13 @@ class PostCardJobSeeker extends StatelessWidget {
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: [
-                                const Color.fromARGB(255, 105, 110, 112).withOpacity(0),
-                                const Color.fromARGB(255, 64, 69, 71).withOpacity(0.2)
-                              ],
-                              stops: const [0.6, 1]
-                          )
-                      ),
+                            Color.fromARGB(255, 177, 186, 189).withOpacity(0),
+                            Color.fromARGB(255, 67, 77, 81).withOpacity(0.2)
+                          ],
+                              stops: const [
+                            0.6,
+                            1
+                          ])),
                       child: Row(
                         children: [
                           const SizedBox(
@@ -62,7 +57,7 @@ class PostCardJobSeeker extends StatelessWidget {
                           ),
                           const Icon(
                             Icons.work_outline,
-                            color: Color.fromARGB(255, 83, 80, 80),
+                            color: kSPrimaryColor,
                             size: 35,
                           ),
                           const SizedBox(
@@ -89,7 +84,6 @@ class PostCardJobSeeker extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-
                     Row(
                       children: [
                         const Icon(
@@ -100,15 +94,12 @@ class PostCardJobSeeker extends StatelessWidget {
                           height: 20,
                           width: 10,
                         ),
-                        Text(
-                            post.city,
+                        Text(post.city,
                             style: const TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: defaultFontSize,
                                 fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.fade
-                            )
-                        )
+                                overflow: TextOverflow.fade))
                       ],
                     ),
                     const SizedBox(
@@ -125,15 +116,12 @@ class PostCardJobSeeker extends StatelessWidget {
                           height: 20,
                           width: 10,
                         ),
-                        Text(
-                            post.startDate,
+                        Text(post.startDate,
                             style: const TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: defaultFontSize,
                                 fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.ellipsis
-                            )
-                        )
+                                overflow: TextOverflow.ellipsis))
                       ],
                     ),
                   ],

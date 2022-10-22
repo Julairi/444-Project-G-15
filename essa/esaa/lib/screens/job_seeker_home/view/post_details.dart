@@ -40,7 +40,7 @@ class PostDetails extends StatelessWidget {
                   children: [
                     const Icon(
                       Icons.work_outline_outlined,
-                      color: Color.fromARGB(255, 22, 126, 210),
+                      color: kSPrimaryColor,
                       size: 40,
                     ),
                     const SizedBox(
@@ -60,46 +60,25 @@ class PostDetails extends StatelessWidget {
                 const SizedBox(
                   height: 15,
                 ),
-                Row(
-                  children: [
-                    Icon(Icons.business, color: Colors.blue),
-                    const SizedBox(
-                      height: 20,
-                      width: 12,
-                    ),
-                    Text(
-                      post.companyName,
-                      style: const TextStyle(
-                          color: kPrimaryColor,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          overflow: TextOverflow.ellipsis),
-                    )
-                  ],
-                ),
                 InkWell(
                   onTap: () => Get.to(
                       () => ProfileScreenForJS(companyID: post.companyID)),
                   child: Row(
                     children: [
-                      const Icon(
-                        Icons.person,
-                        color: Color.fromARGB(255, 22, 126, 210),
-                        size: 20,
-                      ),
+                      Icon(Icons.business, color: kSPrimaryColor, size: 30),
                       const SizedBox(
                         height: 20,
                         width: 12,
                       ),
                       Text(
-                        " لعرض ملف الشركة ",
+                        post.companyName,
                         style: const TextStyle(
-                            color: Colors.blue,
+                            color: Colors.black,
                             decoration: TextDecoration.underline,
-                            fontSize: 20,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            overflow: TextOverflow.fade),
-                      ),
+                            overflow: TextOverflow.ellipsis),
+                      )
                     ],
                   ),
                 ),
@@ -111,7 +90,7 @@ class PostDetails extends StatelessWidget {
                     Text(
                       '   وصف العمل :\n ${post.description}',
                       style: const TextStyle(
-                          color: kPrimaryColor,
+                          color: Colors.black,
                           fontSize: defaultFontSize,
                           fontWeight: FontWeight.bold,
                           overflow: TextOverflow.ellipsis),
@@ -128,8 +107,8 @@ class PostDetails extends StatelessWidget {
                       children: [
                         const Icon(
                           Icons.people_alt,
-                          color: Colors.green,
-                          size: 35,
+                          color: kSPrimaryColor,
+                          size: 30,
                         ),
                         const SizedBox(
                           height: 20,
@@ -138,7 +117,7 @@ class PostDetails extends StatelessWidget {
                         Text(
                           post.maxNoOfApplicants,
                           style: const TextStyle(
-                              color: kPrimaryColor,
+                              color: KGrey,
                               fontSize: defaultFontSize,
                               fontWeight: FontWeight.bold,
                               overflow: TextOverflow.fade),
@@ -147,23 +126,26 @@ class PostDetails extends StatelessWidget {
                     ),
                     const SizedBox(
                       height: 20,
-                      width: 15,
+                      width: 90,
                     ),
                     Row(
                       children: [
                         const Icon(Icons.location_on_outlined,
-                            color: Color.fromARGB(255, 237, 229, 109),
-                            size: 35),
+                            color: kSPrimaryColor, size: 30),
                         const SizedBox(
                           height: 20,
                           width: 10,
                         ),
                         Text(post.city,
                             style: const TextStyle(
-                                color: kPrimaryColor,
+                                color: KGrey,
                                 fontSize: defaultFontSize,
                                 fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.ellipsis))
+                                overflow: TextOverflow.ellipsis)),
+                        const SizedBox(
+                          height: 20,
+                          width: 20,
+                        ),
                       ],
                     ),
                   ],
@@ -178,7 +160,7 @@ class PostDetails extends StatelessWidget {
                     Row(
                       children: [
                         const Icon(Icons.calendar_month_outlined,
-                            color: Color.fromARGB(255, 3, 77, 138), size: 35),
+                            color: kSPrimaryColor, size: 30),
                         const SizedBox(
                           height: 20,
                           width: 10,
@@ -186,7 +168,7 @@ class PostDetails extends StatelessWidget {
                         Text(
                           '${_getDate(post.startDate)} - ${_getDate(post.endDate)}',
                           style: const TextStyle(
-                              color: kPrimaryColor,
+                              color: KGrey,
                               fontSize: defaultFontSize,
                               fontWeight: FontWeight.bold,
                               overflow: TextOverflow.fade),
@@ -202,8 +184,8 @@ class PostDetails extends StatelessWidget {
                       children: [
                         const Icon(
                           Icons.timer_outlined,
-                          color: Color.fromARGB(255, 3, 77, 138),
-                          size: 35,
+                          color: kSPrimaryColor,
+                          size: 30,
                         ),
                         const SizedBox(
                           height: 20,
@@ -212,7 +194,7 @@ class PostDetails extends StatelessWidget {
                         Text(
                           post.time,
                           style: const TextStyle(
-                              color: kPrimaryColor,
+                              color: KGrey,
                               fontSize: defaultFontSize,
                               fontWeight: FontWeight.bold,
                               overflow: TextOverflow.ellipsis),
@@ -224,7 +206,7 @@ class PostDetails extends StatelessWidget {
                 ),
                 const SizedBox(
                   height: 35,
-                  width: 10,
+                  width: 70,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -233,8 +215,8 @@ class PostDetails extends StatelessWidget {
                       children: [
                         const Icon(
                           Icons.payments,
-                          color: Color.fromARGB(255, 7, 154, 68),
-                          size: 35,
+                          color: kSPrimaryColor,
+                          size: 30,
                         ),
                         const SizedBox(
                           height: 20,
@@ -243,7 +225,7 @@ class PostDetails extends StatelessWidget {
                         Text(
                           '${post.payPerHour} لكل ساعة عمل',
                           style: const TextStyle(
-                              color: kPrimaryColor,
+                              color: KGrey,
                               fontSize: defaultFontSize,
                               fontWeight: FontWeight.bold,
                               overflow: TextOverflow.ellipsis),
@@ -252,13 +234,13 @@ class PostDetails extends StatelessWidget {
                     ),
                     const SizedBox(
                       height: 20,
-                      width: 10,
+                      width: 30,
                     ),
                     Row(
                       children: [
                         const Icon(
                           Icons.hourglass_bottom_outlined,
-                          color: Color.fromARGB(255, 143, 13, 13),
+                          color: kSPrimaryColor,
                           size: 35,
                         ),
                         const SizedBox(
@@ -268,7 +250,7 @@ class PostDetails extends StatelessWidget {
                         Text(
                           '${post.nHours}  ساعات  ',
                           style: const TextStyle(
-                              color: kPrimaryColor,
+                              color: KGrey,
                               fontSize: defaultFontSize,
                               fontWeight: FontWeight.bold,
                               overflow: TextOverflow.ellipsis),
@@ -279,7 +261,7 @@ class PostDetails extends StatelessWidget {
                 ),
                 const SizedBox(
                   height: 35,
-                  width: 10,
+                  width: 30,
                 ),
                 if (canApply)
                   Padding(

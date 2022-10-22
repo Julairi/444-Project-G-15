@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 //Color.fromARGB(255, 127, 182, 177);
 const kPrimaryColor = Color.fromARGB(255, 112, 171, 166);
-const kSPrimaryColor = Color.fromARGB(255, 22, 126, 196);
+const kSPrimaryColor = Color.fromARGB(255, 2, 52, 94);
 const kPrimaryLightColor = Color.fromARGB(210, 247, 247, 247);
 const kTextColor = Color.fromARGB(255, 112, 171, 166);
 const kFillColor = Color.fromARGB(255, 249, 250, 250);
+const KGrey = Color.fromARGB(255, 108, 106, 106);
 const double defaultPadding = 16.0;
 const double defaultFontSize = 16.0;
 final RegExp emailValidatorRegExp =
