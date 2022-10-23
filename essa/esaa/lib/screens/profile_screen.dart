@@ -101,6 +101,23 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
               ),
+              const SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    Get.find<UserController>().clearAll();
+                    await Auth().signOut();
+                    Get.offAndToNamed('/welcome_screen');
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: kPrimaryColor, elevation: 0),
+                  child: const Text(
+                    "تسجيل الخروج",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                ),
+              ),
               const SizedBox(height: 20),
               if (App.user.userType == "company")
                 Card(

@@ -432,10 +432,7 @@ class OrderDetails extends StatelessWidget {
     await OrderDatabase()
         .updateOrderDetails({'id': order.id, 'orderStatus': order.orderStatus});
 
-    await notification.Notification().sendNotification(
-        Get.find<OrderDetailsController>().user.value,
-        PushNotification(
-            title: "طلب مقبول", body: "يسرناإعلامك بقبول طلبك لهذه الوظيفة"));
+   
 
     post.offerStatus = "assigned";
     post.acceptedApplicants = '${(int.parse(post.acceptedApplicants) + 1)}';
@@ -535,10 +532,7 @@ class OrderDetails extends StatelessWidget {
     }
 
     order.hasBeenPaid = true;
-    await notification.Notification().sendNotification(
-        Get.find<OrderDetailsController>().user.value,
-        PushNotification(
-            title: " تدكير بالدفع", body: "يمكنك الدفع للموظف الان"));
+
     await OrderDatabase().updateOrderDetails({
       "id": order.id,
       "hasBeenPaid": order.hasBeenPaid,
