@@ -6,6 +6,7 @@ import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:esaa/screens/company_home/widgets/post_card_job_seeker.dart';
 import 'package:esaa/screens/job_seeker_home/widgets/company_posts_for_job_seeker.dart';
@@ -293,7 +294,9 @@ class ProfileScreenForJS extends StatelessWidget {
                       size: 18,
                     ),
                     ignoreGestures: true,
-                    onRatingUpdate: (double value) {},
+                    onRatingUpdate: (double value) {
+                      Fluttertoast.showToast(msg: 'review sent successfully');
+                    },
                   ),
                   const SizedBox(width: 10),
                   Text(
