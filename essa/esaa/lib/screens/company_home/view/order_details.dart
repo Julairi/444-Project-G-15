@@ -535,7 +535,10 @@ class OrderDetails extends StatelessWidget {
     }
 
     order.hasBeenPaid = true;
-
+    await notification.Notification().sendNotification(
+        Get.find<OrderDetailsController>().user.value,
+        PushNotification(
+            title: " تدكير بالدفع", body: "يمكنك الدفع للموظف الان"));
     await OrderDatabase().updateOrderDetails({
       "id": order.id,
       "hasBeenPaid": order.hasBeenPaid,
