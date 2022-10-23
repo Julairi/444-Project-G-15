@@ -1,6 +1,7 @@
 import 'package:esaa/app.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
+import 'package:esaa/screens/edit_profile/edit_profile.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
 import 'package:flutter/material.dart';
@@ -280,6 +281,20 @@ class ProfileScreen extends StatelessWidget {
                   )
                 ],
               ),
+              const SizedBox(height: 20),
+              if (App.user.userType == "company")
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: ElevatedButton(
+                    onPressed: EditProfileScreen(),
+                    style: ElevatedButton.styleFrom(
+                        primary: kPrimaryColor, elevation: 0),
+                    child: const Text(
+                      "تعديل الحساب",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                  ),
+                ),
               const SizedBox(height: 10),
               Padding(
                 padding: const EdgeInsets.all(20.0),
