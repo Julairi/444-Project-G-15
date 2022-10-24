@@ -115,26 +115,21 @@ class ApplyFormState extends State<ApplyForm> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-
-                  GetX<UserController>(
-                      builder: (controller) {
-                        return Visibility(
-                            visible: controller.isLoading.value,
-                            child: LayoutBuilder (
-                                builder: (context, constraints) {
-                                  return const SpinKitRing(
-                                    color: kFillColor,
-                                    size: 24.0,
-                                  );
-                                }
-                            )
-                        );
-                      }
-                  ),
-
+                  GetX<UserController>(builder: (controller) {
+                    return Visibility(
+                        visible: controller.isLoading.value,
+                        child: LayoutBuilder(builder: (context, constraints) {
+                          return const SpinKitRing(
+                            color: kFillColor,
+                            size: 24.0,
+                          );
+                        }));
+                  }),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: defaultPadding * 2),
-                    child: Text("ارسال".toUpperCase(), style: const TextStyle(fontSize: 16)),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: defaultPadding * 2),
+                    child: Text("ارسال".toUpperCase(),
+                        style: const TextStyle(fontSize: 16)),
                   ),
                 ],
               ),
@@ -156,6 +151,7 @@ class ApplyFormState extends State<ApplyForm> {
       order.userName = App.user.name;
       order.orderStatus = "pending";
       order.timeApplied = DateTime.now();
+      order.companyID = post.companyID;
 
       final controller = Get.find<UserController>();
 
@@ -169,10 +165,9 @@ class ApplyFormState extends State<ApplyForm> {
             backgroundColor: Colors.redAccent,
             textColor: kFillColor);
       } else {
-
         final user = await UserDatabase(post.companyID).getUser(post.companyID);
 
-        if(user == null){
+        if (user == null) {
           Fluttertoast.showToast(
               msg: "Could not get company details, try again later",
               backgroundColor: Colors.redAccent,
@@ -184,8 +179,7 @@ class ApplyFormState extends State<ApplyForm> {
 
         await OrderDatabase().createOrder(order.toMap());
 
-        await notification.Notification().sendNotification(
-            user,
+        await notification.Notification().sendNotification(user,
             PushNotification(title: "طلب جديد", body: "عرضك تلقى طلبا جديدا"));
 
         controller.isLoading.value = false;

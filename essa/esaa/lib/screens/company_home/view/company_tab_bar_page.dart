@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../widgets/PaidJobOffersCard.dart';
+
 class CompanyTabBarPage extends StatefulWidget {
   const CompanyTabBarPage({Key? key}) : super(key: key);
 
@@ -21,7 +23,7 @@ class CompanyTabBarPageState extends State<CompanyTabBarPage>
 
   @override
   void initState() {
-    tabController = TabController(length: 2, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
     super.initState();
   }
 
@@ -62,7 +64,7 @@ class CompanyTabBarPageState extends State<CompanyTabBarPage>
                         unselectedLabelColor: kPrimaryColor,
                         labelColor: const Color.fromARGB(255, 75, 73, 73),
                         indicatorColor: Colors.white,
-                        indicatorWeight: 2,
+                        indicatorWeight: 3,
                         indicator: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(5),
@@ -75,7 +77,7 @@ class CompanyTabBarPageState extends State<CompanyTabBarPage>
                               children: [
                                 const Text(
                                   'عروض قيد الانتظار',
-                                  style: TextStyle(fontSize: 12),
+                                  style: TextStyle(fontSize: 9),
                                 ),
                                 const SizedBox(width: defaultPadding),
                                 SizedBox(
@@ -105,7 +107,7 @@ class CompanyTabBarPageState extends State<CompanyTabBarPage>
                                         style: const TextStyle(
                                             fontWeight: FontWeight.w500,
                                             color: kPrimaryColor,
-                                            fontSize: 16),
+                                            fontSize: 12),
                                       );
                                     },
                                   ),
@@ -118,10 +120,10 @@ class CompanyTabBarPageState extends State<CompanyTabBarPage>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Text(
-                                  'العروض تم اسنادها',
-                                  style: TextStyle(fontSize: 12),
+                                  'عروض تم اسنادها',
+                                  style: TextStyle(fontSize: 10.4),
                                 ),
-                                const SizedBox(width: defaultPadding),
+                                const SizedBox(width: 11),
                                 FirestoreQueryBuilder<Object?>(
                                   query: PostDatabase.postsCollection
                                       .where("companyID",
@@ -150,13 +152,57 @@ class CompanyTabBarPageState extends State<CompanyTabBarPage>
                                       style: const TextStyle(
                                           fontWeight: FontWeight.w500,
                                           color: kPrimaryColor,
-                                          fontSize: 16),
+                                          fontSize: 12),
                                     );
                                   },
                                 )
                               ],
                             ),
-                          )
+                          ),
+                          Tab(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'الطلبات المدفوعة',
+                                  style: TextStyle(fontSize: 10.5),
+                                ),
+                                const SizedBox(width: 8),
+                                FirestoreQueryBuilder<Object?>(
+                                  query: OrderDatabase.ordersCollection
+                                      .where("companyID",
+                                          isEqualTo: App.user.id)
+                                      .where("orderStatus",
+                                          isEqualTo:
+                                              "accepted") // do we need it?
+                                      .where("hasBeenPaid", isEqualTo: true),
+                                  builder: (context, snapshot, _) {
+                                    if (snapshot.isFetching) {
+                                      return const SpinKitRing(
+                                        color: kPrimaryColor,
+                                        size: 24.0,
+                                      );
+                                    }
+
+                                    if (snapshot.hasError) {
+                                      Fluttertoast.showToast(
+                                          msg: '${snapshot.error}');
+                                    }
+
+                                    final count = snapshot.docs.length;
+
+                                    return Text(
+                                      "$count",
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          color: kPrimaryColor,
+                                          fontSize: 13),
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -166,7 +212,7 @@ class CompanyTabBarPageState extends State<CompanyTabBarPage>
               Expanded(
                 child: TabBarView(
                     controller: tabController,
-                    children: const [_TabOne(), _TabTwo()]),
+                    children: const [_TabOne(), _TabTwo(), _TabThree()]),
               ),
               const SizedBox(height: 20),
             ],
@@ -233,5 +279,62 @@ class _TabTwo extends StatelessWidget {
           Post post = Post.fromDocumentSnapshot(querySnapshot);
           return PostCardCompany(post: post, filters: const ["accepted"]);
         });
+  }
+}
+
+class _TabOne2 extends StatelessWidget {
+  const _TabOne2({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomListView(
+      query: OrderDatabase.ordersCollection
+          .where("userID", isEqualTo: App.user.id)
+          .where("orderStatus", isEqualTo: "pending")
+          .orderBy("timeApplied", descending: true),
+      emptyListWidget: const SizedBox(
+        child: Text(
+          'لا يوجد تقديم معلق',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 20,
+            color: kPrimaryColor,
+          ),
+        ),
+      ),
+      itemBuilder: (context, querySnapshot) {
+        Order order = Order.fromDocumentSnapshot(querySnapshot);
+        return OrderCard(order: order);
+      },
+    );
+  }
+}
+
+class _TabThree extends StatelessWidget {
+  const _TabThree({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomListView(
+      query: OrderDatabase.ordersCollection
+          .where("companyID", isEqualTo: App.user.id)
+          .where("orderStatus", isEqualTo: "accepted") // do we need it?
+          .where("hasBeenPaid", isEqualTo: true)
+          .orderBy("timeApplied", descending: true),
+      emptyListWidget: const SizedBox(
+        child: Text(
+          'ليس هناك عروض مدفوعة',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 20,
+            color: kPrimaryColor,
+          ),
+        ),
+      ),
+      itemBuilder: (context, querySnapshot) {
+        Order order = Order.fromDocumentSnapshot(querySnapshot);
+        return PaidOrderCard(order: order);
+      },
+    );
   }
 }
