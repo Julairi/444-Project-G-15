@@ -1,11 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Post {
-
-  late String id, city, startDate, endDate, description, time, title, nHours,
-      offerStatus, companyName, companyID, maxNoOfApplicants, acceptedApplicants;
+  late String id,
+      city,
+      startDate,
+      endDate,
+      description,
+      time,
+      title,
+      nHours,
+      offerStatus,
+      companyName,
+      companyID,
+      maxNoOfApplicants,
+      acceptedApplicants;
   late int payPerHour;
   late DateTime timePosted;
+  late bool hasBeenDone;
 
   Post({
     required this.id,
@@ -23,9 +34,10 @@ class Post {
     required this.maxNoOfApplicants,
     required this.acceptedApplicants,
     required this.timePosted,
+    required this.hasBeenDone,
   });
 
-  Post.empty(){
+  Post.empty() {
     id = "";
     title = "";
     description = "";
@@ -40,6 +52,7 @@ class Post {
     offerStatus = "";
     companyName = "";
     companyID = "";
+    hasBeenDone = false;
     timePosted = DateTime.now();
   }
 
@@ -59,6 +72,7 @@ class Post {
       'offerStatus': offerStatus,
       'companyName': companyName,
       'companyID': companyID,
+      'hasBeenDone': hasBeenDone,
       "timePosted": Timestamp.fromDate(timePosted),
     };
   }
@@ -80,6 +94,7 @@ class Post {
       offerStatus: snapshot.get('offerStatus') ?? "",
       companyName: snapshot.get('companyName') ?? "",
       companyID: snapshot.get('companyID') ?? "",
+      hasBeenDone: snapshot.get('hasBeenDone') ?? "",
       timePosted: timestamp.toDate(),
     );
   }
