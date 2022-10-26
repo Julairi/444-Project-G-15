@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
@@ -74,7 +76,7 @@ class CardFormScreen extends StatelessWidget {
           await initPayment(
               amount: 200.0, context: context, email: 'email@test.com');
         },
-        style: ElevatedButton.styleFrom(primary: kPrimaryColor),
+        style: ElevatedButton.styleFrom(backgroundColor: kPrimaryColor),
         child: const Text('ادفع'),
       )),
     );

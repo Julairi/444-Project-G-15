@@ -28,6 +28,7 @@ class OrderDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<OrderDetailsController>();
+    // ignore: unused_local_variable
     var riyals = calcRiyal(order);
     return CustomAppbar(
         title: const Text("تفاصيل الطلب ",
@@ -164,7 +165,7 @@ class OrderDetails extends StatelessWidget {
                               onPressed: () =>
                                   showRejectDialog(context, controller),
                               style: ElevatedButton.styleFrom(
-                                  primary: Colors.red, elevation: 0),
+                                  backgroundColor: Colors.red, elevation: 0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -200,7 +201,7 @@ class OrderDetails extends StatelessWidget {
                               onPressed: () =>
                                   showAcceptDialog(context, controller),
                               style: ElevatedButton.styleFrom(
-                                  primary: Colors.green, elevation: 0),
+                                  backgroundColor: Colors.green, elevation: 0),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -235,7 +236,7 @@ class OrderDetails extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () => payOrder(order),
                         style: ElevatedButton.styleFrom(
-                            primary: order.hasBeenPaid
+                            backgroundColor: order.hasBeenPaid
                                 ? kPrimaryColor.withOpacity(0.5)
                                 : kPrimaryColor,
                             elevation: 0),
@@ -290,7 +291,7 @@ class OrderDetails extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () => Get.back(),
                             style: ElevatedButton.styleFrom(
-                                primary: Colors.red, elevation: 0),
+                                backgroundColor: Colors.red, elevation: 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
@@ -312,7 +313,7 @@ class OrderDetails extends StatelessWidget {
                               _acceptOrder(order, post, controller);
                             },
                             style: ElevatedButton.styleFrom(
-                                primary: Colors.green, elevation: 0),
+                                backgroundColor: Colors.green, elevation: 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
@@ -368,7 +369,7 @@ class OrderDetails extends StatelessWidget {
                               _rejectOrder(order, controller);
                             },
                             style: ElevatedButton.styleFrom(
-                                primary: Colors.red, elevation: 0),
+                                backgroundColor: Colors.red, elevation: 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
@@ -387,7 +388,7 @@ class OrderDetails extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () => Get.back(),
                             style: ElevatedButton.styleFrom(
-                                primary: Colors.green, elevation: 0),
+                                backgroundColor: Colors.green, elevation: 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [

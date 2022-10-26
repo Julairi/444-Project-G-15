@@ -739,6 +739,7 @@ class EditPostFormController extends UserController {
     "Um Al-Sahek",
     "Unaizah",
     "Uqair",
+    // ignore: unnecessary_string_escapes
     "\'Uyayna",
     "Uyun AlJiwa",
     "Wadi Al-Dawasir",

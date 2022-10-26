@@ -68,7 +68,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                     const SizedBox(height: 30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
+                      children: const [
                         /*  GetX<CompanyPostDetailsController>(
                             builder: (controller) {
                           return IconButton(
@@ -97,7 +97,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                             size: 30,
                           ),
                         ),*/
-                        const SizedBox(
+                        SizedBox(
                           width: 10,
                         ),
                       ],
@@ -315,7 +315,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                     GetX<CompanyPostDetailsController>(builder: (controller) {
                       return ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: controller.editable.value
+                            backgroundColor: controller.editable.value
                                 ? Colors.blueAccent
                                 //: Colors.grey,
                                 : Colors.blueAccent
@@ -334,7 +334,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                       padding: const EdgeInsets.only(top: 16.0),
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary:
+                            backgroundColor:
                                 int.parse(widget.post.acceptedApplicants) > 0
                                     // ? Colors.grey
                                     ? Colors.redAccent.withOpacity(0.2)
@@ -419,7 +419,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                           child: ElevatedButton(
                             onPressed: () => Get.back(),
                             style: ElevatedButton.styleFrom(
-                                primary: Colors.grey, elevation: 0),
+                                backgroundColor: Colors.grey, elevation: 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
@@ -441,7 +441,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                               _delete(widget.post);
                             },
                             style: ElevatedButton.styleFrom(
-                                primary: Colors.red, elevation: 0),
+                                backgroundColor: Colors.red, elevation: 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [

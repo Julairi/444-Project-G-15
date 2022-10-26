@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:esaa/app.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
@@ -60,7 +62,13 @@ class ProfileScreen extends StatelessWidget {
                         height: 20,
                         width: 15,
                       ),
-                      Text(App.user.name,
+//==============user name field===================
+                      TextFormField(
+                          initialValue: App.user.name,
+                          validator: (val) => val!.trim().isEmpty
+                              ? 'يجب ان لا يقل الاسم عن ثلاثة احرف'
+                              : null,
+                          onChanged: (val) => App.user.name = val,
                           style: const TextStyle(
                               color: Colors.black87,
                               fontSize: 16,
@@ -123,7 +131,13 @@ class ProfileScreen extends StatelessWidget {
                           height: 20,
                           width: 15,
                         ),
-                        Text(App.user.contact,
+//============== contact field===================
+                        TextFormField(
+                            initialValue: App.user.contact,
+                            validator: (val) => val!.trim().isEmpty
+                                ? 'يجب ان لا تكون معلومات التواصل فارغة'
+                                : null,
+                            onChanged: (val) => App.user.name = val,
                             style: const TextStyle(
                                 color: Colors.black87,
                                 fontSize: 16,
@@ -155,6 +169,7 @@ class ProfileScreen extends StatelessWidget {
                           height: 20,
                           width: 15,
                         ),
+//============== description field===================
                         Text(App.user.description,
                             style: const TextStyle(
                                 color: Colors.black87,
@@ -219,7 +234,7 @@ class ProfileScreen extends StatelessWidget {
                     Get.offAndToNamed('/welcome_screen');
                   },
                   style: ElevatedButton.styleFrom(
-                      primary: kPrimaryColor, elevation: 0),
+                      backgroundColor: kPrimaryColor, elevation: 0),
                   child: const Text(
                     "تسجيل الخروج",
                     style: TextStyle(color: Colors.white, fontSize: 16),
@@ -306,7 +321,7 @@ class ProfileScreen extends StatelessWidget {
                     Get.offAndToNamed('/welcome_screen');
                   },
                   style: ElevatedButton.styleFrom(
-                      primary: kPrimaryColor, elevation: 0),
+                      backgroundColor: kPrimaryColor, elevation: 0),
                   child: const Text(
                     "تسجيل الخروج",
                     style: TextStyle(color: Colors.white, fontSize: 16),

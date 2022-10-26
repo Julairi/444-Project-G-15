@@ -12,7 +12,7 @@ class PostJob extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: const CustomAppbar(
-        title: const Text("إضافة منشور جديد",
+        title: Text("إضافة منشور جديد",
             style: TextStyle(
                 color: kPrimaryColor,
                 fontSize: 20,

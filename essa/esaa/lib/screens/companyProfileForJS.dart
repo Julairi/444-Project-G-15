@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:esaa/app.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
@@ -35,11 +37,11 @@ class ProfileScreenForJS extends StatelessWidget {
             children: [
               const SizedBox(height: 30),
               Container(
-                  margin: EdgeInsets.all(100.0),
-                  decoration: BoxDecoration(shape: BoxShape.circle),
+                  margin: const EdgeInsets.all(100.0),
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
                   width: double.infinity,
                   child: controller.user.value.imgUrl == ''
-                      ? Icon(
+                      ? const Icon(
                           Icons.person,
                           size: 80,
                           color: Colors.white,
@@ -249,8 +251,8 @@ class ProfileScreenForJS extends StatelessWidget {
                 onTap: () => Get.to(() => CompanyPostsForJobSeeker(
                       companyID: companyID,
                     )),
-                child: Text('لجميع عروض الشركة اضغط هنا',
-                    style: const TextStyle(
+                child: const Text('لجميع عروض الشركة اضغط هنا',
+                    style: TextStyle(
                         color: Colors.blue,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
