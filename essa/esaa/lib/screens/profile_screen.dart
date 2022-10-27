@@ -286,7 +286,7 @@ class ProfileScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: ElevatedButton(
-                    onPressed: EditProfileScreen(),
+                    onPressed: () => Get.to(() => EditProfileForm()),
                     style: ElevatedButton.styleFrom(
                         primary: kPrimaryColor, elevation: 0),
                     child: const Text(
