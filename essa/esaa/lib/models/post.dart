@@ -102,4 +102,5 @@ class Post {
         timePosted: timestamp.toDate(),
         saved: snapshot.get('saved'));
   }
+  
 }
