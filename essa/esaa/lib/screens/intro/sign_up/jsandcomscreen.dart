@@ -7,7 +7,8 @@ class jscomsignup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Background(
+    return CustomAppbar(
+      showLeading: true,
       child: SingleChildScrollView(
         child: SafeArea(
           child: Responsive(
