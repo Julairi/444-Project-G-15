@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/models/models.dart';
@@ -287,7 +285,7 @@ class PostDetails extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 20),
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: _buttonColor(),
+                          primary: _buttonColor(),
                         ),
                         onPressed: () => _sendPayReminder(post),
                         child: const Text(
@@ -321,7 +319,7 @@ class PostDetails extends StatelessWidget {
 
   Future<void> _sendPayReminder(Post post) async {
     final user = await UserDatabase(post.companyID).getUser(post.companyID);
-
+   //final jobSeekerName= await OrderDatabase().
     if (user == null) {
       Fluttertoast.showToast(
           msg: "Could not get company details, try again later",
@@ -335,7 +333,7 @@ class PostDetails extends StatelessWidget {
     var nMon = now.month;
     var nDay = now.day;
     var nYear = now.year;
-    var postDate = DateTime.parse(post.startDate);
+    var postDate = DateTime.parse(post!.startDate);
 
     var postMon = postDate.month;
     var postDay = postDate.day;
@@ -386,7 +384,7 @@ class PostDetails extends StatelessWidget {
     await notification.Notification().sendNotification(
         user,
         PushNotification(
-            title: " تدكير بالدفع", body: "يمكنك الدفع للموظف الان"));
+            title: " تدكير بالدفع", body: "يمكنك الدفع للموظف"));
   }
 
   _buttonColor() {

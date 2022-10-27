@@ -5,15 +5,23 @@ import 'package:esaa/models/models.dart';
 import 'package:esaa/screens/job_seeker_home/view/post_details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:esaa/controllers/controllers.dart';
+import 'package:get/get.dart';
+import '../../../models/models.dart';
+import '../../../models/post.dart';
+import '../../../services/database/post_database.dart';
 
 class PostCardJobSeeker extends StatelessWidget {
   final Post post;
   final bool canApply;
-  const PostCardJobSeeker({required this.post, this.canApply = true, Key? key})
-      : super(key: key);
-
+  PostCardJobSeeker({required this.post, this.canApply = true, Key? key})
+      : super(key: key) {
+    Get.put(PostCardController());
+    Get.find<PostCardController>().bindUserWithID(post.id);
+  }
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<PostCardController>();
     return InkWell(
         onTap: () => Get.to(() => PostDetails(post: post, canApply: canApply)),
         child: Card(
@@ -45,7 +53,9 @@ class PostCardJobSeeker extends StatelessWidget {
                               end: Alignment.bottomCenter,
                               colors: [
                             Color.fromARGB(255, 177, 186, 189).withOpacity(0),
+
                             Color.fromARGB(255, 67, 77, 81).withOpacity(0.2)
+                            // _disableCard(),
                           ],
                               stops: const [
                             0.6,
@@ -57,6 +67,12 @@ class PostCardJobSeeker extends StatelessWidget {
                             height: 20,
                             width: 20,
                           ),
+                          IconButton(
+                              onPressed: () {
+                                Get.back();
+                                _save(post, controller);
+                              },
+                              icon: Icon(Icons.save)),
                           const Icon(
                             Icons.work_outline,
                             color: kSPrimaryColor,
@@ -133,4 +149,30 @@ class PostCardJobSeeker extends StatelessWidget {
           ),
         ));
   }
+
+  void _save(Post post, PostCardController controller) async {
+    controller.saved.value = true;
+
+    post.saved = true;
+    await PostDatabase()
+        .updatePostDetails({'id': post.id, 'saved': post.saved});
+
+    controller.saved.value = false;
+  }
+
+  _disableCard() {
+    if (post.offerStatus == "fully_assigned") {
+      return Colors.grey.withOpacity(0.3);
+    } else {
+      return Color.fromARGB(255, 177, 186, 189).withOpacity(0);
+      // return [
+      //Color.fromARGB(255, 177, 186, 189).withOpacity(0),
+      // Color.fromARGB(255, 67, 77, 81).withOpacity(0.2)
+      //];
+    }
+  }
+}
+
+class PostCardController extends UserController {
+  RxBool saved = false.obs;
 }

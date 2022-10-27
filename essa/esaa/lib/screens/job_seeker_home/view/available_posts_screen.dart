@@ -103,7 +103,8 @@ class AvailablePostsScreen extends StatelessWidget {
                               ),
                               const Icon(
                                 Icons.filter_alt,
-                                color: Colors.black,
+                                color: KGrey,
+                                size: 21,
                               ),
                               SizedBox(
                                 height: 18,
@@ -112,7 +113,7 @@ class AvailablePostsScreen extends StatelessWidget {
                                   return Text(
                                     'تصنيف حسب ${controller.filterBy}',
                                     style: const TextStyle(
-                                        color: Colors.black, fontSize: 14),
+                                        color: KGrey, fontSize: 14),
                                     textAlign: TextAlign.start,
                                   );
                                 }),
@@ -250,14 +251,6 @@ class AvailablePostList extends StatelessWidget {
     return const SizedBox(
       height: 200,
       //check the error message
-      child: Text(
-        ' لايوجد منشورات تطابق بحثك',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 20,
-          color: kPrimaryColor,
-        ),
-      ),
     );
   }
 
@@ -311,12 +304,12 @@ class PostCount extends StatelessWidget {
     final matches = _filterItems(context, snapshot, searchField);
 
     return Text(
-      '$matches المنشورات المتاحة${matches > 1 ? "" : ""}',
+      '$matches من المنشورات المتاحة${matches > 1 ? "" : ""}',
       textAlign: TextAlign.center,
       style: const TextStyle(
-        fontSize: 22,
+        fontSize: 20,
         fontWeight: FontWeight.w500,
-        color: Colors.black,
+        color: KGrey,
       ),
     );
   }

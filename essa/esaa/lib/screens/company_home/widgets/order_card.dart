@@ -203,15 +203,15 @@ class OrderCard extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               submitButtonText: 'إرسال',
-              enableComment: false,
+              enableComment: true,
               onSubmitted: (response) async {
                 if (post == null) {
                   //job seeker rates company
                   final post = await PostDatabase().getPost(order.postID);
-
                   if (post == null) return;
 
-                  UserDatabase(post.companyID).rateUser(response.rating);
+                  UserDatabase(post.companyID).rateUsercom(
+                      order.userName, response.rating, response.comment);
                 } else {
                   UserDatabase(order.userID).rateUser(response.rating);
                 }
