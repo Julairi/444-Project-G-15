@@ -50,8 +50,9 @@ class PostCardJobSeeker extends StatelessWidget {
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: [
-                            Color.fromARGB(255, 177, 186, 189).withOpacity(0),
-                            Color.fromARGB(255, 67, 77, 81).withOpacity(0.2)
+                           // Color.fromARGB(255, 177, 186, 189).withOpacity(0),
+                           /// Color.fromARGB(255, 67, 77, 81).withOpacity(0.2)
+                           _disableCard(),
                           ],
                               stops: const [
                             0.6,
@@ -154,6 +155,13 @@ class PostCardJobSeeker extends StatelessWidget {
         .updatePostDetails({'id': post.id, 'saved': post.saved});
 
     controller.saved.value = false;
+  }
+  
+  _disableCard() {
+    if(post.offerStatus isEqualTo 'fully_assigned')
+    {
+
+    }
   }
 }
 
