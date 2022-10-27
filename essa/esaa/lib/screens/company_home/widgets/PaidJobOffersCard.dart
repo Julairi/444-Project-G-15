@@ -29,6 +29,8 @@ class PaidOrderCard extends StatelessWidget {
             Get.to(() => OrderDetails(order: order, post: post!));
           } //not sure ASK!
         },
+
+        //TRRRRYYYy
         child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
