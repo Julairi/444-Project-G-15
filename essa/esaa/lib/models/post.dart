@@ -18,6 +18,7 @@ class Post {
   late DateTime timePosted;
   // ignore: prefer_typing_uninitialized_variables
   late bool saved;
+  late bool hasBeenDone;
 
   Post(
       {required this.id,
@@ -35,7 +36,8 @@ class Post {
       required this.maxNoOfApplicants,
       required this.acceptedApplicants,
       required this.timePosted,
-      required this.saved});
+      required this.saved,
+      required this.hasBeenDone});
 
   Post.empty() {
     id = "";
@@ -52,6 +54,7 @@ class Post {
     offerStatus = "";
     companyName = "";
     companyID = "";
+    hasBeenDone = false;
     timePosted = DateTime.now();
     saved = false;
   }
@@ -72,6 +75,7 @@ class Post {
       'offerStatus': offerStatus,
       'companyName': companyName,
       'companyID': companyID,
+      'hasBeenDone': hasBeenDone,
       "timePosted": Timestamp.fromDate(timePosted),
       'saved': saved
     };
@@ -94,6 +98,7 @@ class Post {
         offerStatus: snapshot.get('offerStatus') ?? "",
         companyName: snapshot.get('companyName') ?? "",
         companyID: snapshot.get('companyID') ?? "",
+        hasBeenDone: snapshot.get('hasBeenDone') ?? "",
         timePosted: timestamp.toDate(),
         saved: snapshot.get('saved'));
   }

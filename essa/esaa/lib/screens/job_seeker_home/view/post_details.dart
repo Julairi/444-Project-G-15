@@ -4,14 +4,17 @@ import 'package:esaa/models/models.dart';
 import 'package:esaa/screens/apply/apply_screen.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-
+import 'package:esaa/services/database/database.dart';
+import 'package:esaa/services/notification.dart' as notification;
 import '../widgets/company_posts_for_job_seeker.dart';
 import 'package:esaa/screens/companyProfileForJS.dart';
 
 class PostDetails extends StatelessWidget {
   final Post post;
   final bool canApply;
+
   const PostDetails({required this.post, this.canApply = true, Key? key})
       : super(key: key);
 
@@ -276,6 +279,23 @@ class PostDetails extends StatelessWidget {
                         onPressed: () => Get.to(() => ApplyScreen(post: post)),
                         child: const Text('التقديم على الوظيفة')),
                   ),
+                if (post.offerStatus == "assigned" ||
+                    post.offerStatus == "fully_assigned")
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: _buttonColor(),
+                        ),
+                        onPressed: () => _sendPayReminder(post),
+                        child: const Text(
+                          'إنهاء الفترة ',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: defaultFontSize,
+                              fontWeight: FontWeight.bold),
+                        )),
+                  ),
                 if (Get.find<UserController>().user.value.userType ==
                     "jobSeeker")
                   TextButton(
@@ -295,5 +315,98 @@ class PostDetails extends StatelessWidget {
     final fields = date.split('-');
     output = "${fields[2]}/${fields[1]}/${fields[0].substring(2)}";
     return output;
+  }
+
+  Future<void> _sendPayReminder(Post post) async {
+    final user = await UserDatabase(post.companyID).getUser(post.companyID);
+    
+    if (user == null) {
+      Fluttertoast.showToast(
+          msg: "Could not get company details, try again later",
+          backgroundColor: Colors.redAccent,
+          textColor: kFillColor);
+
+      return;
+    }
+
+    var now = DateTime.now();
+    var nMon = now.month;
+    var nDay = now.day;
+    var nYear = now.year;
+    var postDate = DateTime.parse(post!.startDate);
+
+    var postMon = postDate.month;
+    var postDay = postDate.day;
+    var postYear = postDate.year;
+    if (nYear != postYear) {
+      Fluttertoast.showToast(
+          msg: "لايمكنك إنهاء الفترة اللآن حاول لاحقاً بعد تاريخ العمل.",
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.black54,
+          textColor: kFillColor,
+          toastLength: Toast.LENGTH_LONG);
+      return;
+    }
+    if (nMon != postMon) {
+      Fluttertoast.showToast(
+          msg: "لايمكنك إنهاء الفترة اللآن حاول لاحقاً بعد تاريخ العمل",
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.black54,
+          textColor: kFillColor,
+          toastLength: Toast.LENGTH_LONG);
+      return;
+    }
+    if (nDay < postDay) {
+      Fluttertoast.showToast(
+          msg: "لايمكنك إنهاء الفترة اللآن حاول لاحقاً بعد تاريخ العمل.",
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.black54,
+          textColor: kFillColor,
+          toastLength: Toast.LENGTH_LONG);
+      return;
+    }
+
+    if (post.hasBeenDone) {
+      Fluttertoast.showToast(
+          msg: "لقد قمت بإنهاء الفترة بالفعل",
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.black54,
+          textColor: kFillColor,
+          toastLength: Toast.LENGTH_LONG);
+      return;
+    }
+    post.hasBeenDone = true;
+
+    await PostDatabase().updatePostDetails({
+      "id": post.id,
+      "hasBeenDone": post.hasBeenDone,
+    });
+    await notification.Notification().sendNotification(
+        user,
+        PushNotification(
+            title: " تدكير بالدفع", body: "يمكنك الدفع للموظف الان"));
+  }
+
+  _buttonColor() {
+    var now = DateTime.now();
+    var nMon = now.month;
+    var nDay = now.day;
+    var nYear = now.year;
+    var postDate = DateTime.parse(post.startDate);
+
+    var postMon = postDate.month;
+    var postDay = postDate.day;
+    var postYear = postDate.year;
+    if (nYear != postYear) {
+      return kPrimaryColor.withOpacity(0.3);
+    } else if (nMon != postMon) {
+      return kPrimaryColor.withOpacity(0.3);
+    } else if (nDay < postDay) {
+      //return Colors.grey.withOpacity(0.4);
+      return kPrimaryColor.withOpacity(0.3);
+    } else if (post.hasBeenDone) {
+      //return Colors.grey.withOpacity(0.4);
+      return kPrimaryColor.withOpacity(0.3);
+    }
   }
 }

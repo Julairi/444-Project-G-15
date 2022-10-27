@@ -9,7 +9,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const TransparentAppbar(
+    return const CustomAppbar(
       child: SingleChildScrollView(
         child: Responsive(
             mobile: _MobileLoginScreen(), desktop: _DesktopLoginScreen()),
