@@ -319,7 +319,7 @@ class PostDetails extends StatelessWidget {
 
   Future<void> _sendPayReminder(Post post) async {
     final user = await UserDatabase(post.companyID).getUser(post.companyID);
-    
+   //final jobSeekerName= await OrderDatabase().
     if (user == null) {
       Fluttertoast.showToast(
           msg: "Could not get company details, try again later",
@@ -384,7 +384,7 @@ class PostDetails extends StatelessWidget {
     await notification.Notification().sendNotification(
         user,
         PushNotification(
-            title: " تدكير بالدفع", body: "يمكنك الدفع للموظف الان"));
+            title: " تدكير بالدفع", body: "يمكنك الدفع للموظف"));
   }
 
   _buttonColor() {
