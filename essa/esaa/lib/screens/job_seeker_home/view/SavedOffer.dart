@@ -28,8 +28,7 @@ class savedOffers extends StatelessWidget {
           const SizedBox(height: 10),
           CustomListView(
               query: PostDatabase.postsCollection
-                  .where('saved', isEqualTo: true)
-                  
+                  .where("saved", arrayContains: App.user.id)
                   .where("offerStatus", whereIn: [
                 "pending",
                 "assigned",

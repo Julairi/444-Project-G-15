@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/models/models.dart';
 import 'package:esaa/screens/job_seeker_home/view/post_details.dart';
@@ -5,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:esaa/controllers/controllers.dart';
 import 'package:get/get.dart';
+import '../../../app.dart';
 import '../../../models/models.dart';
 import '../../../models/post.dart';
 import '../../../services/database/post_database.dart';
@@ -150,9 +152,10 @@ class PostCardJobSeeker extends StatelessWidget {
   void _save(Post post, PostCardController controller) async {
     controller.saved.value = true;
 
-    post.saved = true;
-    await PostDatabase()
-        .updatePostDetails({'id': post.id, 'saved': post.saved});
+    await PostDatabase().updatePostDetails({
+      "id": post.id,
+      "saved": FieldValue.arrayUnion([App.user.id])
+    });
 
     controller.saved.value = false;
   }
