@@ -27,6 +27,7 @@ class Default extends StatefulWidget {
 
 class _DefaultState extends State<Default> {
   @override
+  Color _iconColor = Colors.white;
   void initState() {
     registerNotification();
 
@@ -91,8 +92,8 @@ class _DefaultState extends State<Default> {
 
             return CurvedNavigationBar(
                 backgroundColor: kFillColor,
-                color: kPrimaryColor,
-                animationDuration: const Duration(milliseconds: 40),
+                color: kPrimaryLightColor,
+                animationDuration: const Duration(milliseconds: 60),
                 index: controller.currentIndex,
                 items: items,
                 onTap: controller.changePage);
@@ -105,57 +106,57 @@ class _DefaultState extends State<Default> {
       return const [
         Icon(
           Icons.document_scanner,
-          color: Colors.white,
+          color: KGrey,
         ),
         Icon(
           Icons.work_outline_outlined,
-          color: Colors.white,
+          color: KGrey,
         ),
         Icon(
           Icons.home,
-          color: Colors.white,
+          color: KGrey,
         ),
         Icon(
           Icons.account_circle,
-          color: Colors.white,
+          color: KGrey,
         ),
       ];
     } else if (userType == "company") {
       return const [
         Icon(
           Icons.add_rounded,
-          color: Colors.white,
+          color: KGrey,
         ),
         Icon(
           Icons.home,
-          color: Colors.white,
+          color: KGrey,
         ),
         Icon(
           Icons.document_scanner_rounded,
-          color: Colors.white,
+          color: KGrey,
         ),
         Icon(
           Icons.account_circle,
-          color: Colors.white,
+          color: KGrey,
         ),
       ];
     }
     return const [
       Icon(
         Icons.add_rounded,
-        color: Colors.white,
+        color: KGrey,
       ),
       Icon(
         Icons.home,
-        color: Colors.white,
+        color: KGrey,
       ),
       Icon(
         Icons.document_scanner_rounded,
-        color: Colors.white,
+        color: KGrey,
       ),
       Icon(
         Icons.account_circle,
-        color: Colors.white,
+        color: KGrey,
       ),
     ];
   }
@@ -166,20 +167,20 @@ class _DefaultState extends State<Default> {
     if (userType == "jobSeeker") {
       switch (index) {
         case 0:
-          widget =  AvailablePostsScreen();
+          widget = AvailablePostsScreen();
           break;
         case 1:
           widget = const JobSeekerTabBarPage();
           break;
         case 2:
-          widget =  AvailablePostsScreen();
+          widget = AvailablePostsScreen();
           break;
         case 3:
-          widget = const ProfileScreen();
+          widget = ProfileScreen();
           break;
 
         default:
-          widget =  AvailablePostsScreen();
+          widget = AvailablePostsScreen();
           break;
       }
     } else {
@@ -199,7 +200,7 @@ class _DefaultState extends State<Default> {
           break;
 
         case 3:
-          widget = const ProfileScreen();
+          widget = ProfileScreen();
           break;
 
         default:

@@ -10,6 +10,7 @@ class CustomAppbar extends StatelessWidget {
   final String topImage, bottomImage;
   final bool showLeading;
   final bool showNotification;
+  //final bool logout;
 
   const CustomAppbar({
     Key? key,
@@ -17,6 +18,7 @@ class CustomAppbar extends StatelessWidget {
     required this.child,
     this.showLeading = false,
     this.showNotification = false,
+    //this.logout = false,
     this.topImage = "assets/images/main_top.png",
     this.bottomImage = "assets/images/login_bottom.png",
   }) : super(key: key);
@@ -69,22 +71,7 @@ class CustomAppbar extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           child: Stack(
             alignment: Alignment.topCenter,
-            children: <Widget>[
-              /* Positioned(
-              top: 0,
-              left: 0,
-              child: Image.asset(
-                topImage,
-                width: 120,
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: Image.asset(bottomImage, width: 120),
-            ), */
-              child
-            ],
+            children: <Widget>[child],
           ),
         ),
       ),

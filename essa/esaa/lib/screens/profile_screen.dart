@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:esaa/app.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
@@ -13,11 +11,14 @@ import '../models/order.dart';
 import 'company_home/widgets/full_job_list.dart';
 import 'company_home/widgets/order_card.dart';
 
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+class ProfileScreen extends StatefulWidget {
+  profileScreenState createState() => profileScreenState();
+}
 
+class profileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
+    bool EN = false;
     return CustomAppbar(
         title: const Text("حسابك الشخصي",
             style: TextStyle(
@@ -29,6 +30,13 @@ class ProfileScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              IconButton(
+                  onPressed: () {
+                    setState(() {
+                      EN = true;
+                    });
+                  },
+                  icon: Icon(Icons.edit)),
               const SizedBox(height: 30),
               if (App.user.userType == "company")
                 Container(
@@ -50,7 +58,7 @@ class ProfileScreen extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
                   child: Row(
                     children: [
                       const Icon(
@@ -58,22 +66,20 @@ class ProfileScreen extends StatelessWidget {
                         color: kPrimaryColor,
                         size: 28,
                       ),
-                      const SizedBox(
-                        height: 20,
-                        width: 15,
-                      ),
-//==============user name field===================
-                      TextFormField(
-                          initialValue: App.user.name,
-                          validator: (val) => val!.trim().isEmpty
-                              ? 'يجب ان لا يقل الاسم عن ثلاثة احرف'
-                              : null,
-                          onChanged: (val) => App.user.name = val,
-                          style: const TextStyle(
-                              color: Colors.black87,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              overflow: TextOverflow.ellipsis)),
+                      Expanded(
+                          child: TextFormField(
+                        enabled: EN,
+                        initialValue: App.user.name,
+                        style: const TextStyle(
+                          color: Colors.black87,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          //overflow: TextOverflow.ellipsis
+                        ),
+                        decoration: new InputDecoration(
+                          fillColor: Colors.white,
+                        ),
+                      )),
                     ],
                   ),
                 ),
@@ -87,24 +93,27 @@ class ProfileScreen extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
                   child: Row(
                     children: [
                       const Icon(
                         Icons.email,
                         color: kPrimaryColor,
-                        size: 28,
+                        size: 25,
                       ),
-                      const SizedBox(
-                        height: 20,
-                        width: 15,
-                      ),
-                      Text(App.user.email,
+                      Expanded(
+                        child: TextFormField(
+                          initialValue: App.user.email,
                           style: const TextStyle(
                               color: Colors.black87,
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
-                              overflow: TextOverflow.ellipsis)),
+                              overflow: TextOverflow.ellipsis),
+                          decoration: new InputDecoration(
+                            fillColor: Colors.white,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -131,13 +140,7 @@ class ProfileScreen extends StatelessWidget {
                           height: 20,
                           width: 15,
                         ),
-//============== contact field===================
-                        TextFormField(
-                            initialValue: App.user.contact,
-                            validator: (val) => val!.trim().isEmpty
-                                ? 'يجب ان لا تكون معلومات التواصل فارغة'
-                                : null,
-                            onChanged: (val) => App.user.name = val,
+                        Text(App.user.contact,
                             style: const TextStyle(
                                 color: Colors.black87,
                                 fontSize: 16,
@@ -169,7 +172,6 @@ class ProfileScreen extends StatelessWidget {
                           height: 20,
                           width: 15,
                         ),
-//============== description field===================
                         Text(App.user.description,
                             style: const TextStyle(
                                 color: Colors.black87,
@@ -321,7 +323,7 @@ class ProfileScreen extends StatelessWidget {
                     Get.offAndToNamed('/welcome_screen');
                   },
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: kPrimaryColor, elevation: 0),
+                      primary: kPrimaryColor, elevation: 0),
                   child: const Text(
                     "تسجيل الخروج",
                     style: TextStyle(color: Colors.white, fontSize: 16),
