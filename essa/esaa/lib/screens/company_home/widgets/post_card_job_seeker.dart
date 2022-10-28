@@ -67,7 +67,6 @@ class PostCardJobSeeker extends StatelessWidget {
                           ),
                           IconButton(
                               onPressed: () {
-                                Get.back();
                                 _save(post, controller);
                               },
                               icon: Icon(Icons.save)),
