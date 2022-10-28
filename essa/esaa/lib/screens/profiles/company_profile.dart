@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esaa/app.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
@@ -17,7 +18,7 @@ class companyProfile extends StatefulWidget {
 
 class _companyProfileState extends State<companyProfile> {
   bool showPassword = false;
-  bool EN = false;
+  bool EN = true;
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final addressController = TextEditingController();
@@ -40,14 +41,19 @@ class _companyProfileState extends State<companyProfile> {
     idController.text = App.user.id;
   }
 
+  @override
+  void initState() {
+    _setInitialValues(nameController, emailController, addressController,
+        contactController, discriptionController, idController);
+    super.initState();
+  }
+
   saveNewValues() {
     App.user.name = nameController.text;
   }
 
   @override
   Widget build(BuildContext context) {
-    _setInitialValues(nameController, emailController, addressController,
-        contactController, discriptionController, idController);
     return CustomAppbar(
         title: const Text("حسابك الشخصي",
             style: TextStyle(
@@ -118,13 +124,14 @@ class _companyProfileState extends State<companyProfile> {
                         child: TextFormField(
                           keyboardType: TextInputType.text,
                           controller: nameController,
-                          onSaved: (Value) =>
-                              nameController.text = Value!.trim().toString(),
+                          onSaved: (newValue) =>
+                              nameController.text = newValue!.trim(),
                           validator: (val) => val!.trim().isEmpty
                               ? 'يجب ان يكون الاسم اكثر من ثلاث أحرف'
                               : null,
                           onChanged: (val) => setState(() {
-                            EN = true;
+                            EN = false;
+                            nameController.text = val.toString();
                           }),
                           style: const TextStyle(
                             color: Colors.black87,
@@ -279,13 +286,14 @@ class _companyProfileState extends State<companyProfile> {
                     children: [
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: EN ? saveNewValues() : null,
-                          style: ElevatedButton.styleFrom(
-                              primary: kPrimaryColor, elevation: 0),
-                          child: const Text(
-                            "حفظ التغييرات",
-                            style: TextStyle(color: Colors.white, fontSize: 16),
-                          ),
+                          onPressed: EN
+                              ? null
+                              : () async {
+                                  App.user.name = nameController.text;
+                                },
+                          child: Text(" حفظ التغييرات".toUpperCase(),
+                              style: const TextStyle(
+                                  fontSize: 16, color: Colors.white)),
                         ),
                       ),
                     ],
