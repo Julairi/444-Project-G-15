@@ -4,6 +4,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/models/models.dart';
+import 'package:esaa/screens/job_seeker_home/view/SavedOffer.dart';
 import 'package:esaa/screens/profile_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -166,20 +167,20 @@ class _DefaultState extends State<Default> {
     if (userType == "jobSeeker") {
       switch (index) {
         case 0:
-          widget =  AvailablePostsScreen();
+          widget = savedOffers();
           break;
         case 1:
           widget = const JobSeekerTabBarPage();
           break;
         case 2:
-          widget =  AvailablePostsScreen();
+          widget = AvailablePostsScreen();
           break;
         case 3:
           widget = const ProfileScreen();
           break;
 
         default:
-          widget =  AvailablePostsScreen();
+          widget = AvailablePostsScreen();
           break;
       }
     } else {

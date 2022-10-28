@@ -32,6 +32,8 @@ class savedOffers extends StatelessWidget {
                   .where('saved', isEqualTo: true)
                   .where("offerStatus", whereIn: [
                 "pending",
+                "assigned",
+                "fully_assigned"
               ]).orderBy("timePosted", descending: true),
               emptyListWidget: const SizedBox(
                 child: Text(
