@@ -46,8 +46,7 @@ class savedOffers extends StatelessWidget {
               ),
               itemBuilder: (context, querySnapshot) {
                 Post post = Post.fromDocumentSnapshot(querySnapshot);
-                return PostCardCompany(
-                    post: post, filters: const ["pending", "accepted"]);
+                return PostCardJobSeeker(post: post);
               }),
         ],
       )),

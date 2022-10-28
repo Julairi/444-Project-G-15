@@ -70,8 +70,9 @@ class PostCardJobSeeker extends StatelessWidget {
                           IconButton(
                               onPressed: () {
                                 _save(post, controller);
+                                Icon(Icons.bookmark_outlined);
                               },
-                              icon: Icon(Icons.save)),
+                              icon: Icon(Icons.bookmark_border_outlined)),
                           const Icon(
                             Icons.work_outline,
                             color: kSPrimaryColor,
