@@ -333,7 +333,7 @@ class PostDetails extends StatelessWidget {
     var nMon = now.month;
     var nDay = now.day;
     var nYear = now.year;
-    var postDate = DateTime.parse(post!.startDate);
+    var postDate = DateTime.parse(post.startDate);
 
     var postMon = postDate.month;
     var postDay = postDate.day;

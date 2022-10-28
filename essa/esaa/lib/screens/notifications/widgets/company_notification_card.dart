@@ -1,9 +1,12 @@
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/models/models.dart';
-
+import 'package:esaa/screens/company_home/company_home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
+
+import '../../../services/database/post_database.dart';
 
 class CompanyNotificationCard extends StatelessWidget {
   final PushNotification notification;

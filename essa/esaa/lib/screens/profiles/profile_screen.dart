@@ -7,18 +7,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
-import '../models/order.dart';
-import 'company_home/widgets/full_job_list.dart';
-import 'company_home/widgets/order_card.dart';
+import '../../models/order.dart';
+import '../company_home/widgets/full_job_list.dart';
+import '../company_home/widgets/order_card.dart';
 
 class ProfileScreen extends StatefulWidget {
   profileScreenState createState() => profileScreenState();
 }
 
 class profileScreenState extends State<ProfileScreen> {
+  bool EN = false;
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+
+  saveNewValues() {
+    App.user.name = nameController.text;
+  }
+
+  void setInitialValues(TextEditingController nameController) {
+    nameController.text = App.user.name;
+    emailController.text = App.user.email;
+  }
+
+  void initState() {
+    setInitialValues(nameController);
+  }
+
   @override
   Widget build(BuildContext context) {
-    bool EN = false;
     return CustomAppbar(
         title: const Text("حسابك الشخصي",
             style: TextStyle(
@@ -26,22 +42,17 @@ class profileScreenState extends State<ProfileScreen> {
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
                 overflow: TextOverflow.ellipsis)),
-        showNotification: true,
+        logout: true,
         child: SingleChildScrollView(
           child: Column(
             children: [
-              IconButton(
-                  onPressed: () {
-                    setState(() {
-                      EN = true;
-                    });
-                  },
-                  icon: Icon(Icons.edit)),
               const SizedBox(height: 30),
               if (App.user.userType == "company")
                 Container(
                     margin: EdgeInsets.all(100.0),
-                    decoration: BoxDecoration(shape: BoxShape.circle),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
                     width: double.infinity,
                     child: App.user.imgUrl == ''
                         ? Icon(
@@ -68,8 +79,17 @@ class profileScreenState extends State<ProfileScreen> {
                       ),
                       Expanded(
                           child: TextFormField(
-                        enabled: EN,
-                        initialValue: App.user.name,
+                        controller: nameController,
+                        //enabled: EN,
+                        //initialValue: App.user.name,
+                        onSaved: (newValue) =>
+                            nameController.text = newValue!.trim().toString(),
+                        validator: (val) => val!.trim().isEmpty
+                            ? 'يجب ان يكون الاسم اكثر من ثلاث أحرف'
+                            : null,
+                        onChanged: (val) => setState(() {
+                          EN = true;
+                        }),
                         style: const TextStyle(
                           color: Colors.black87,
                           fontSize: 16,
@@ -104,6 +124,7 @@ class profileScreenState extends State<ProfileScreen> {
                       Expanded(
                         child: TextFormField(
                           initialValue: App.user.email,
+                          enabled: false,
                           style: const TextStyle(
                               color: Colors.black87,
                               fontSize: 16,
@@ -196,7 +217,7 @@ class profileScreenState extends State<ProfileScreen> {
                     child: Row(
                       children: [
                         const Icon(
-                          Icons.location_city,
+                          Icons.pin_drop,
                           color: kPrimaryColor,
                           size: 28,
                         ),
@@ -215,6 +236,19 @@ class profileScreenState extends State<ProfileScreen> {
                   ),
                 ),
               const SizedBox(height: 30),
+//===================== update btn===============================
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: ElevatedButton(
+                  onPressed: EN ? saveNewValues() : null,
+                  style: ElevatedButton.styleFrom(
+                      primary: kPrimaryColor, elevation: 0),
+                  child: const Text(
+                    "حفظ التغييرات",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                ),
+              ),
               if (App.user.userType == "jobSeeker")
                 const Align(
                   alignment: Alignment.center,
@@ -227,22 +261,6 @@ class profileScreenState extends State<ProfileScreen> {
                         overflow: TextOverflow.ellipsis),
                   ),
                 ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    Get.find<UserController>().clearAll();
-                    await Auth().signOut();
-                    Get.offAndToNamed('/welcome_screen');
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: kPrimaryColor, elevation: 0),
-                  child: const Text(
-                    "تسجيل الخروج",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                ),
-              ),
               if (App.user.userType == "jobSeeker")
                 CustomListView(
                     absoluteSize: 3,
@@ -314,22 +332,6 @@ class profileScreenState extends State<ProfileScreen> {
                 ],
               ),
               const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    Get.find<UserController>().clearAll();
-                    await Auth().signOut();
-                    Get.offAndToNamed('/welcome_screen');
-                  },
-                  style: ElevatedButton.styleFrom(
-                      primary: kPrimaryColor, elevation: 0),
-                  child: const Text(
-                    "تسجيل الخروج",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                ),
-              ),
             ],
           ),
         ));

@@ -17,7 +17,7 @@ class Post {
   late int payPerHour;
   late DateTime timePosted;
   // ignore: prefer_typing_uninitialized_variables
-  late bool saved;
+  late List saved;
   late bool hasBeenDone;
 
   Post(
@@ -56,7 +56,7 @@ class Post {
     companyID = "";
     hasBeenDone = false;
     timePosted = DateTime.now();
-    saved = false;
+    saved = [];
   }
 
   Map<String, dynamic> toMap() {
@@ -100,7 +100,6 @@ class Post {
         companyID: snapshot.get('companyID') ?? "",
         hasBeenDone: snapshot.get('hasBeenDone') ?? "",
         timePosted: timestamp.toDate(),
-        saved: snapshot.get('saved'));
+        saved: snapshot.get('saved') ?? []);
   }
-  
 }

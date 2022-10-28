@@ -4,13 +4,16 @@ import 'package:esaa/screens/notifications/notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../controllers/user_controller.dart';
+import '../../../services/authentication.dart';
+
 class CustomAppbar extends StatelessWidget {
   final Widget? title;
   final Widget child;
   final String topImage, bottomImage;
   final bool showLeading;
   final bool showNotification;
-  //final bool logout;
+  final bool logout;
 
   const CustomAppbar({
     Key? key,
@@ -18,7 +21,7 @@ class CustomAppbar extends StatelessWidget {
     required this.child,
     this.showLeading = false,
     this.showNotification = false,
-    //this.logout = false,
+    this.logout = false,
     this.topImage = "assets/images/main_top.png",
     this.bottomImage = "assets/images/login_bottom.png",
   }) : super(key: key);
@@ -57,7 +60,19 @@ class CustomAppbar extends StatelessWidget {
                         color: kPrimaryColor,
                       ))
                   : const SizedBox(),
-              const SizedBox(width: defaultPadding)
+              const SizedBox(width: defaultPadding),
+              logout
+                  ? IconButton(
+                      onPressed: () async {
+                        Get.find<UserController>().clearAll();
+                        await Auth().signOut();
+                        Get.offAndToNamed('/welcome_screen');
+                      },
+                      icon: const Icon(
+                        Icons.logout_sharp,
+                        color: kPrimaryColor,
+                      ))
+                  : const SizedBox(),
             ],
             backgroundColor: Colors.transparent,
             expandedHeight: 80,
