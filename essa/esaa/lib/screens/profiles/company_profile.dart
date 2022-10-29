@@ -23,8 +23,9 @@ class companyProfile extends StatefulWidget {
 }
 
 class _companyProfileState extends State<companyProfile> {
+  final _formKey = GlobalKey<FormState>();
   bool showPassword = false;
-  bool EN = true;
+  bool en = false;
   String imgUrl = App.user.imgUrl;
   final nameController = TextEditingController();
   final emailController = TextEditingController();
@@ -69,6 +70,7 @@ class _companyProfileState extends State<companyProfile> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<EditProfileFormController>();
     return CustomAppbar(
         title: const Text("حسابك الشخصي",
             style: TextStyle(
@@ -77,247 +79,257 @@ class _companyProfileState extends State<companyProfile> {
                 fontWeight: FontWeight.w500,
                 overflow: TextOverflow.ellipsis)),
         logout: true,
-        child: SingleChildScrollView(
-          child:
-//========== profile img======================================================================
-              Column(
-            children: [
-              Center(
-                child: Stack(
-                  children: [
-                    Container(
-                        width: 130,
-                        height: 130,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 4,
-                              color: Theme.of(context).scaffoldBackgroundColor),
-                          boxShadow: [
-                            BoxShadow(
-                                spreadRadius: 2,
-                                blurRadius: 10,
-                                color: Colors.black.withOpacity(0.1),
-                                offset: Offset(0, 10))
-                          ],
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              fit: BoxFit.cover, image: NetworkImage(imgUrl)),
-                        )),
-                    Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
-                          height: 40,
-                          width: 40,
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child:
+                //========== profile img======================================================================
+                Column(
+              children: [
+                Center(
+                  child: Stack(
+                    children: [
+                      Container(
+                          width: 130,
+                          height: 130,
                           decoration: BoxDecoration(
-                            shape: BoxShape.circle,
                             border: Border.all(
-                              width: 4,
-                              color: Theme.of(context).scaffoldBackgroundColor,
+                                width: 4,
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor),
+                            boxShadow: [
+                              BoxShadow(
+                                  spreadRadius: 2,
+                                  blurRadius: 10,
+                                  color: Colors.black.withOpacity(0.1),
+                                  offset: Offset(0, 10))
+                            ],
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                                fit: BoxFit.cover, image: NetworkImage(imgUrl)),
+                          )),
+                      Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                width: 4,
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                              ),
+                              color: kPrimaryColor,
                             ),
-                            color: kPrimaryColor,
-                          ),
-                          child: IconButton(
-                            icon: Icon(Icons.edit),
-                            onPressed: () {
-                              selectImage();
-                            },
-                          ),
-                        )),
-                  ],
+                            child: IconButton(
+                              icon: Icon(Icons.edit),
+                              onPressed: () {
+                                selectImage();
+                              },
+                            ),
+                          )),
+                    ],
+                  ),
                 ),
-              ),
 
-              SizedBox(
-                height: 35,
-              ),
-//====================form ============================================
-              Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          keyboardType: TextInputType.text,
-                          controller: nameController,
-                          onSaved: (newValue) =>
-                              nameController.text = newValue!.trim(),
-                          validator: (val) => val!.trim().isEmpty
-                              ? 'يجب ان يكون الاسم اكثر من ثلاث أحرف'
-                              : null,
-                          onChanged: (val) => setState(() {
-                            EN = false;
-                            nameController.text = val.toString();
-                          }),
-                          style: const TextStyle(
-                            color: Colors.black87,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            //overflow: TextOverflow.ellipsis
-                          ),
-                          decoration: InputDecoration(
-                            labelText: "اسم الشركة",
-                            fillColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: const BorderSide(
-                                    color: Colors.white, width: 0.0)),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: discriptionController,
-                          onSaved: (newValue) => discriptionController.text =
-                              newValue!.trim().toString(),
-                          validator: (val) => val!.trim().isEmpty
-                              ? 'يجب ان لا يكون الوصف فارغًا'
-                              : null,
-                          onChanged: (val) => setState(() {
-                            EN = true;
-                          }),
-                          style: const TextStyle(
-                            color: Colors.black87,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            //overflow: TextOverflow.ellipsis
-                          ),
-                          decoration: InputDecoration(
-                            labelText: "وصف الشركة",
-                            fillColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: const BorderSide(
-                                    color: Colors.white, width: 0.0)),
+                SizedBox(
+                  height: 35,
+                ),
+                //====================form ============================================
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            keyboardType: TextInputType.text,
+                            controller: nameController,
+                            onSaved: (newValue) =>
+                                nameController.text = newValue!.trim(),
+                            validator: (val) => val!.trim().isEmpty
+                                ? 'يجب ان يكون الاسم اكثر من ثلاث أحرف'
+                                : null,
+                            onChanged: (val) => setState(() {
+                              en = true;
+                              nameController.text = val.toString();
+                            }),
+                            style: const TextStyle(
+                              color: Colors.black87,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              //overflow: TextOverflow.ellipsis
+                            ),
+                            decoration: InputDecoration(
+                              labelText: "اسم الشركة",
+                              fillColor: Colors.white,
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: const BorderSide(
+                                      color: Colors.white, width: 0.0)),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: contactController,
-                          onSaved: (newValue) => contactController.text =
-                              newValue!.trim().toString(),
-                          validator: (val) => val!.trim().isEmpty
-                              ? 'يجب ان لا تكون معلومات التواصل فارغة'
-                              : null,
-                          onChanged: (val) => setState(() {
-                            EN = true;
-                          }),
-                          style: const TextStyle(
-                            color: Colors.black87,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            //overflow: TextOverflow.ellipsis
-                          ),
-                          decoration: InputDecoration(
-                            labelText: " معلومات التواصل",
-                            fillColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: const BorderSide(
-                                    color: Colors.white, width: 0.0)),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: addressController,
-                          onSaved: (newValue) => addressController.text =
-                              newValue!.trim().toString(),
-                          validator: (val) => val!.trim().isEmpty
-                              ? 'يجب ان لا يكون اسم المدينة فارغًا'
-                              : null,
-                          onChanged: (val) => setState(() {
-                            EN = true;
-                          }),
-                          style: const TextStyle(
-                            color: Colors.black87,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            //overflow: TextOverflow.ellipsis
-                          ),
-                          decoration: InputDecoration(
-                            labelText: "المدينة",
-                            fillColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: const BorderSide(
-                                    color: Colors.white, width: 0.0)),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            controller: discriptionController,
+                            onSaved: (newValue) => discriptionController.text =
+                                newValue!.trim().toString(),
+                            validator: (val) => val!.trim().isEmpty
+                                ? 'يجب ان لا يكون الوصف فارغًا'
+                                : null,
+                            onChanged: (val) => setState(() {
+                              en = true;
+                            }),
+                            style: const TextStyle(
+                              color: Colors.black87,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              //overflow: TextOverflow.ellipsis
+                            ),
+                            decoration: InputDecoration(
+                              labelText: "وصف الشركة",
+                              fillColor: Colors.white,
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: const BorderSide(
+                                      color: Colors.white, width: 0.0)),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: emailController,
-                          enabled: false,
-                          style: const TextStyle(
-                            color: Colors.black87,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          decoration: InputDecoration(
-                            labelText: "ايميل الشركة",
-                            fillColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: const BorderSide(
-                                    color: Colors.white, width: 0.0)),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 28,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            EN ? saveNewValues() : null;
-                          },
-                          style: ElevatedButton.styleFrom(
-                              primary: kPrimaryColor, elevation: 0),
-                          child: const Text(
-                            "حفظ التغييرات",
-                            style: TextStyle(color: Colors.white, fontSize: 16),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            controller: contactController,
+                            onSaved: (newValue) => contactController.text =
+                                newValue!.trim().toString(),
+                            validator: (val) => val!.trim().isEmpty
+                                ? 'يجب ان لا تكون معلومات التواصل فارغة'
+                                : null,
+                            onChanged: (val) => setState(() {
+                              en = true;
+                            }),
+                            style: const TextStyle(
+                              color: Colors.black87,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              //overflow: TextOverflow.ellipsis
+                            ),
+                            decoration: InputDecoration(
+                              labelText: " معلومات التواصل",
+                              fillColor: Colors.white,
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: const BorderSide(
+                                      color: Colors.white, width: 0.0)),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            ],
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            controller: addressController,
+                            onSaved: (newValue) => addressController.text =
+                                newValue!.trim().toString(),
+                            validator: (val) => val!.trim().isEmpty
+                                ? 'يجب ان لا يكون اسم المدينة فارغًا'
+                                : null,
+                            onChanged: (val) => setState(() {
+                              en = true;
+                            }),
+                            style: const TextStyle(
+                              color: Colors.black87,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              //overflow: TextOverflow.ellipsis
+                            ),
+                            decoration: InputDecoration(
+                              labelText: "المدينة",
+                              fillColor: Colors.white,
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: const BorderSide(
+                                      color: Colors.white, width: 0.0)),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            controller: emailController,
+                            enabled: false,
+                            style: const TextStyle(
+                              color: Colors.black87,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            decoration: InputDecoration(
+                              labelText: "ايميل الشركة",
+                              fillColor: Colors.white,
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderSide: const BorderSide(
+                                      color: Colors.white, width: 0.0)),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 28,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ElevatedButton(
+                            onPressed: en
+                                ? () async {
+                                    final controller =
+                                        Get.find<EditProfileFormController>();
+                                    //en = false;
+                                  }
+                                : null,
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: kPrimaryColor, elevation: 0),
+                            child: const Text(
+                              "حفظ التغييرات",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ));
   }
