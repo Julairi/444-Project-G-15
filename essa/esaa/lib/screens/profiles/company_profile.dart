@@ -4,9 +4,12 @@ import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
+import 'package:esaa/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../models/order.dart';
 import '../company_home/widgets/full_job_list.dart';
@@ -22,6 +25,7 @@ class companyProfile extends StatefulWidget {
 class _companyProfileState extends State<companyProfile> {
   bool showPassword = false;
   bool EN = true;
+  String imgUrl = App.user.imgUrl;
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final addressController = TextEditingController();
@@ -43,7 +47,24 @@ class _companyProfileState extends State<companyProfile> {
     App.user.description = discriptionController.text;
     App.user.contact = contactController.text;
     App.user.id = idController.text;
+
+    if (_image != null) {
+      imgUrl = await Storage().uploadImageToString("companyLogo ", _image!);
+    }
     await UserDatabase(App.user.id).updateDetails(App.user.toMap());
+  }
+
+  Uint8List? _image;
+  void selectImage() async {
+    final pickedFile = await pickImage(ImageSource.gallery);
+
+    if (pickedFile != null) {
+      Uint8List image = await pickImage(ImageSource.gallery);
+
+      setState(() {
+        _image = image;
+      });
+    }
   }
 
   @override
@@ -80,8 +101,7 @@ class _companyProfileState extends State<companyProfile> {
                           ],
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(App.user.imgUrl)),
+                              fit: BoxFit.cover, image: NetworkImage(imgUrl)),
                         )),
                     Positioned(
                         bottom: 0,
@@ -97,9 +117,11 @@ class _companyProfileState extends State<companyProfile> {
                             ),
                             color: kPrimaryColor,
                           ),
-                          child: Icon(
-                            Icons.edit,
-                            color: Colors.white,
+                          child: IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              selectImage();
+                            },
                           ),
                         )),
                   ],
