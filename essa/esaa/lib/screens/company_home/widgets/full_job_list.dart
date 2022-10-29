@@ -12,16 +12,20 @@ class FullJobList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomAppbar(
-        title: const Text("الوظائف السابقة",
+        title: const Text(
+            "Previous Jobs",
             style: TextStyle(
                 color: kFillColor,
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
-                overflow: TextOverflow.ellipsis)),
+                overflow: TextOverflow.ellipsis
+            )
+        ),
         showLeading: true,
         child: SingleChildScrollView(
           child: Column(
             children: [
+
               CustomListView(
                   query: OrderDatabase.ordersCollection
                       .where("userID", isEqualTo: App.user.id)
@@ -32,8 +36,7 @@ class FullJobList extends StatelessWidget {
                     child: Center(
                       child: Text(
                         App.user.userType == "jobSeeker"
-                            ? "لا يوجد وظائف سابقة"
-                            : "لا يوجد وظائف سابقة",
+                            ? "You have not gotten any job yet" : "This user has not gotten any job yet",
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                           fontSize: 20,
@@ -45,9 +48,12 @@ class FullJobList extends StatelessWidget {
                   itemBuilder: (context, querySnapshot) {
                     Order order = Order.fromDocumentSnapshot(querySnapshot);
                     return OrderCard(order: order, showPaymentStatus: false);
-                  }),
+                  }
+              ),
+
             ],
           ),
-        ));
+        )
+    );
   }
 }

@@ -3,22 +3,16 @@ import 'package:esaa/screens/shared/shared.dart';
 import 'package:flutter/material.dart';
 
 class CustomListView extends StatelessWidget {
+
   final Query query;
   final ScrollController? controller;
-  final Widget Function(BuildContext, QueryDocumentSnapshot) itemBuilder;
+  final Widget Function (BuildContext, QueryDocumentSnapshot) itemBuilder;
   final Widget emptyListWidget;
   final int? absoluteSize;
   final ScrollPhysics? physics;
 
-  const CustomListView(
-      {this.controller,
-      required this.query,
-      required this.itemBuilder,
-      required this.emptyListWidget,
-      this.absoluteSize,
-      this.physics,
-      Key? key})
-      : super(key: key);
+  const CustomListView({this.controller, required this.query, required this.itemBuilder,
+    required this.emptyListWidget, this.absoluteSize, this.physics, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +36,7 @@ class CustomListView extends StatelessWidget {
             ),
           );
         },
-        itemBuilder: itemBuilder);
+        itemBuilder: itemBuilder
+    );
   }
 }

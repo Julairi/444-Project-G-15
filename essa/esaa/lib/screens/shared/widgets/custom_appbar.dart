@@ -8,15 +8,18 @@ class CustomAppbar extends StatelessWidget {
   final Widget? title;
   final Widget child;
   final String topImage, bottomImage;
-  final bool showLeading;
-  final bool showNotification;
+  final bool showLeading, showNotification, showChat, collapsable;
+  final void Function()? onChatPressed;
 
   const CustomAppbar({
     Key? key,
     this.title,
     required this.child,
+    this.onChatPressed,
+    this.showChat = false,
     this.showLeading = false,
     this.showNotification = false,
+    this.collapsable = true,
     this.topImage = "assets/images/main_top.png",
     this.bottomImage = "assets/images/login_bottom.png",
   }) : super(key: key);
@@ -29,7 +32,8 @@ class CustomAppbar extends StatelessWidget {
       body: NestedScrollView(
         floatHeaderSlivers: true,
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          SliverAppBar(
+          if(collapsable)
+            SliverAppBar(
             title: title,
             flexibleSpace: const FlexibleSpaceBar(),
             leading: showLeading
@@ -37,7 +41,7 @@ class CustomAppbar extends StatelessWidget {
                     onPressed: () => Get.back(),
                     icon: const Icon(
                       Icons.arrow_back,
-                      color: kPrimaryColor,
+                      color: kFillColor,
                     ))
                 : const SizedBox(),
             actions: [
@@ -52,12 +56,20 @@ class CustomAppbar extends StatelessWidget {
                       },
                       icon: const Icon(
                         Icons.notifications,
-                        color: kPrimaryColor,
+                        color: Colors.white,
+                      ))
+                  : const SizedBox(),
+              showChat
+                  ? IconButton(
+                      onPressed: onChatPressed ?? () {},
+                      icon: const Icon(
+                        Icons.chat,
+                        color: Colors.white,
                       ))
                   : const SizedBox(),
               const SizedBox(width: defaultPadding)
             ],
-            backgroundColor: Colors.transparent,
+            backgroundColor: kPrimaryColor,
             expandedHeight: 80,
             floating: true,
             snap: true,
@@ -83,7 +95,48 @@ class CustomAppbar extends StatelessWidget {
               right: 0,
               child: Image.asset(bottomImage, width: 120),
             ), */
-              child
+              Scaffold(
+                appBar: collapsable ? null : AppBar(
+                  title: title,
+                  flexibleSpace: const FlexibleSpaceBar(),
+                  leading: showLeading
+                      ? IconButton(
+                      onPressed: () => Get.back(),
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: kFillColor,
+                      ))
+                      : const SizedBox(),
+                  actions: [
+                    showNotification
+                        ? IconButton(
+                        onPressed: () {
+                          if (App.user.userType == 'jobSeeker') {
+                            Get.to(() => const JobSeekerNotificationScreen());
+                          } else {
+                            Get.to(() => const CompanyNotificationScreen());
+                          }
+                        },
+                        icon: const Icon(
+                          Icons.notifications,
+                          color: Colors.white,
+                        ))
+                        : const SizedBox(),
+                    showChat
+                        ? IconButton(
+                        onPressed: onChatPressed ?? () {},
+                        icon: const Icon(
+                          Icons.chat,
+                          color: Colors.white,
+                        ))
+                        : const SizedBox(),
+                    const SizedBox(width: defaultPadding)
+                  ],
+                  backgroundColor: kPrimaryColor,
+                ),
+                backgroundColor: Colors.transparent,
+                  body: child
+              )
             ],
           ),
         ),
