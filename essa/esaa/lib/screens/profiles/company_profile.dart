@@ -13,6 +13,9 @@ import '../company_home/widgets/full_job_list.dart';
 import '../company_home/widgets/order_card.dart';
 
 class companyProfile extends StatefulWidget {
+  companyProfile({Key? key}) : super(key: key) {
+    Get.put(EditProfileFormController());
+  }
   _companyProfileState createState() => _companyProfileState();
 }
 
@@ -25,31 +28,22 @@ class _companyProfileState extends State<companyProfile> {
   final contactController = TextEditingController();
   final discriptionController = TextEditingController();
   final idController = TextEditingController();
-
-  void _setInitialValues(
-      TextEditingController nameController,
-      TextEditingController emailController,
-      TextEditingController addressController,
-      TextEditingController contactController,
-      TextEditingController discriptionController,
-      TextEditingController idController) {
-    nameController.text = App.user.name;
-    emailController.text = App.user.email;
-    addressController.text = App.user.address;
-    contactController.text = App.user.contact;
-    discriptionController.text = App.user.description;
-    idController.text = App.user.id;
-  }
-
   @override
   void initState() {
     _setInitialValues(nameController, emailController, addressController,
         contactController, discriptionController, idController);
+    final controller = Get.find<EditProfileFormController>();
     super.initState();
   }
 
-  saveNewValues() {
+  saveNewValues() async {
     App.user.name = nameController.text;
+    App.user.address = addressController.text;
+    App.user.email = emailController.text;
+    App.user.description = discriptionController.text;
+    App.user.contact = contactController.text;
+    App.user.id = idController.text;
+    await UserDatabase(App.user.id).updateDetails(App.user.toMap());
   }
 
   @override
@@ -286,14 +280,15 @@ class _companyProfileState extends State<companyProfile> {
                     children: [
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: EN
-                              ? null
-                              : () async {
-                                  App.user.name = nameController.text;
-                                },
-                          child: Text(" حفظ التغييرات".toUpperCase(),
-                              style: const TextStyle(
-                                  fontSize: 16, color: Colors.white)),
+                          onPressed: () {
+                            EN ? saveNewValues() : null;
+                          },
+                          style: ElevatedButton.styleFrom(
+                              primary: kPrimaryColor, elevation: 0),
+                          child: const Text(
+                            "حفظ التغييرات",
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
                         ),
                       ),
                     ],
@@ -305,3 +300,20 @@ class _companyProfileState extends State<companyProfile> {
         ));
   }
 }
+
+void _setInitialValues(
+    TextEditingController nameController,
+    TextEditingController emailController,
+    TextEditingController addressController,
+    TextEditingController contactController,
+    TextEditingController discriptionController,
+    TextEditingController idController) {
+  nameController.text = App.user.name;
+  emailController.text = App.user.email;
+  addressController.text = App.user.address;
+  contactController.text = App.user.contact;
+  discriptionController.text = App.user.description;
+  idController.text = App.user.id;
+}
+
+class EditProfileFormController extends UserController {}
