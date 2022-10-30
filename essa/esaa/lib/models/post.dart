@@ -56,6 +56,7 @@ class Post {
     companyName = "";
     companyID = "";
     timePosted = DateTime.now();
+    hasBeenDone = false;
     saved = [];
   }
 
@@ -76,6 +77,8 @@ class Post {
       'companyName': companyName,
       'companyID': companyID,
       "timePosted": Timestamp.fromDate(timePosted),
+      'saved': saved,
+      'hasBeenDone': hasBeenDone,
     };
   }
 

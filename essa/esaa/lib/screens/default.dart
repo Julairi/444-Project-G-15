@@ -121,11 +121,7 @@ class _DefaultState extends State<Default> {
         ),
         Icon(
           Icons.chat,
-          color: Colors.white,
-        ),
-        Icon(
-          Icons.chat,
-          color: Colors.white,
+          color: KGrey,
         ),
         Icon(
           Icons.account_circle,
@@ -148,11 +144,7 @@ class _DefaultState extends State<Default> {
         ),
         Icon(
           Icons.chat,
-          color: Colors.white,
-        ),
-        Icon(
-          Icons.chat,
-          color: Colors.white,
+          color: KGrey,
         ),
         Icon(
           Icons.account_circle,
@@ -175,11 +167,7 @@ class _DefaultState extends State<Default> {
       ),
       Icon(
         Icons.chat,
-        color: Colors.white,
-      ),
-      Icon(
-        Icons.chat,
-        color: Colors.white,
+        color: KGrey,
       ),
       Icon(
         Icons.account_circle,
