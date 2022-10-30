@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class Post {
   late String id,
@@ -20,23 +21,24 @@ class Post {
   late List saved;
   late bool hasBeenDone;
 
-  Post({
-    required this.id,
-    required this.city,
-    required this.startDate,
-    required this.endDate,
-    required this.description,
-    required this.payPerHour,
-    required this.time,
-    required this.title,
-    required this.nHours,
-    required this.offerStatus,
-    required this.companyName,
-    required this.companyID,
-    required this.maxNoOfApplicants,
-    required this.acceptedApplicants,
-    required this.timePosted,
-  });
+  Post(
+      {required this.id,
+      required this.city,
+      required this.startDate,
+      required this.endDate,
+      required this.description,
+      required this.payPerHour,
+      required this.time,
+      required this.title,
+      required this.nHours,
+      required this.offerStatus,
+      required this.companyName,
+      required this.companyID,
+      required this.maxNoOfApplicants,
+      required this.acceptedApplicants,
+      required this.timePosted,
+      required this.hasBeenDone,
+      required this.saved});
 
   Post.empty() {
     id = "";

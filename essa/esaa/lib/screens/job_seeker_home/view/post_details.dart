@@ -5,8 +5,11 @@ import 'package:esaa/screens/apply/apply_screen.dart';
 import 'package:esaa/screens/chat/chat.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-
+import 'package:esaa/services/notification.dart' as notification;
+import '../../../services/database/post_database.dart';
+import '../../../services/database/user_database.dart';
 import '../widgets/company_posts_for_job_seeker.dart';
 import 'package:esaa/screens/companyProfileForJS.dart';
 

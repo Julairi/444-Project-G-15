@@ -14,16 +14,20 @@ import '../../../services/database/post_database.dart';
 class PostCardJobSeeker extends StatelessWidget {
   final Post post;
   final bool canApply;
-  const PostCardJobSeeker({required this.post, this.canApply = true, Key? key})
-      : super(key: key);
-
+  PostCardJobSeeker({required this.post, this.canApply = true, Key? key})
+      : super(key: key) {
+    Get.put(PostCardController());
+    Get.find<PostCardController>().bindUserWithID(post.id);
+  }
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<PostCardController>();
     return InkWell(
         onTap: () => Get.to(() => PostDetails(post: post, canApply: canApply)),
         child: Card(
+          color: _disableCard(),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(20),
           ),
           elevation: 7,
           margin: const EdgeInsets.all(10),
@@ -31,18 +35,6 @@ class PostCardJobSeeker extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                    ),
-                    child: Image.network(
-                      "https://i.pinimg.com/474x/6a/d3/66/6ad3663d79ccc962377d7a6cbe4d9bfe.jpg",
-                      height: 50,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
                   Positioned(
                     child: Container(
                       height: 50,
@@ -50,20 +42,7 @@ class PostCardJobSeeker extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                         vertical: 10,
                       ),
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                            const Color.fromARGB(255, 105, 110, 112)
-                                .withOpacity(0),
-                            const Color.fromARGB(255, 64, 69, 71)
-                                .withOpacity(0.2)
-                          ],
-                              stops: const [
-                            0.6,
-                            1
-                          ])),
+                      decoration: BoxDecoration(color: Colors.transparent),
                       child: Row(
                         children: [
                           const SizedBox(
@@ -72,13 +51,16 @@ class PostCardJobSeeker extends StatelessWidget {
                           ),
                           IconButton(
                               onPressed: () {
-                                _save(post, controller);
-                                Icon(Icons.bookmark_outlined);
+                                if (controller.saved.value == false) {
+                                  _save(post, controller);
+                                } else if (controller.saved == true) {
+                                  _unsave(post, controller);
+                                }
                               },
                               icon: Icon(Icons.bookmark_border_outlined)),
                           const Icon(
                             Icons.work_outline,
-                            color: Color.fromARGB(255, 83, 80, 80),
+                            color: kSPrimaryColor,
                             size: 35,
                           ),
                           const SizedBox(
@@ -154,27 +136,42 @@ class PostCardJobSeeker extends StatelessWidget {
   }
 
   void _save(Post post, PostCardController controller) async {
-    controller.saved.value = true;
-
     await PostDatabase().updatePostDetails({
       "id": post.id,
       "saved": FieldValue.arrayUnion([App.user.id])
     });
-
-    controller.saved.value = false;
+    controller.saved.value = true;
   }
 
   _disableCard() {
-    if (post.offerStatus == "fully_assigned") {
-      return Colors.grey.withOpacity(0.3);
+    var now = DateTime.now();
+    var nMon = now.month;
+    var nDay = now.day;
+    var nYear = now.year;
+    var postDate = DateTime.parse(post.startDate);
+
+    var postMon = postDate.month;
+    var postDay = postDate.day;
+    var postYear = postDate.year;
+    if (post.offerStatus == "fully_assigned" ||
+        (postMon > nMon && postYear > nYear && postDay > nDay)) {
+      return Color.fromARGB(255, 205, 201, 201).withOpacity(0.3);
     } else {
-      return Color.fromARGB(255, 177, 186, 189).withOpacity(0);
+      return Colors.white;
       // return [
       //Color.fromARGB(255, 177, 186, 189).withOpacity(0),
       // Color.fromARGB(255, 67, 77, 81).withOpacity(0.2)
       //];
     }
   }
+}
+
+void _unsave(Post post, PostCardController controller) async {
+  await PostDatabase().updatePostDetails({
+    "id": post.id,
+    "saved": FieldValue.arrayRemove([App.user.id])
+  });
+  controller.saved.value = false;
 }
 
 class PostCardController extends UserController {
