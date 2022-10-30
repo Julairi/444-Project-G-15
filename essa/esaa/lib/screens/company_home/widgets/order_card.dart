@@ -30,8 +30,9 @@ class OrderCard extends StatelessWidget {
           }
         },
         child: Card(
+          color: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(20),
           ),
           elevation: 7,
           margin: const EdgeInsets.all(10),
@@ -39,18 +40,6 @@ class OrderCard extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                    ),
-                    child: Image.network(
-                      "https://i.pinimg.com/474x/6a/d3/66/6ad3663d79ccc962377d7a6cbe4d9bfe.jpg",
-                      height: 50,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
                   Positioned(
                     child: Container(
                       height: 50,
@@ -58,20 +47,7 @@ class OrderCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                         vertical: 10,
                       ),
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                            const Color.fromARGB(255, 105, 110, 112)
-                                .withOpacity(0),
-                            const Color.fromARGB(255, 64, 69, 71)
-                                .withOpacity(0.2)
-                          ],
-                              stops: const [
-                            0.6,
-                            1
-                          ])),
+                      decoration: BoxDecoration(color: Colors.transparent),
                       child: Row(
                         children: [
                           const SizedBox(
