@@ -140,14 +140,17 @@ class savedCardJobSeeker extends StatelessWidget {
   }
 
   void _save(Post post, savedCardController controller) async {
-    controller.saved.value = true;
-
-    await PostDatabase().updatePostDetails({
-      "id": post.id,
-      "saved": FieldValue.arrayUnion([App.user.id])
-    });
-
-    controller.saved.value = false;
+    if (controller.saved.value = false) {
+      controller.saved.value = true;
+      await PostDatabase().updatePostDetails({
+        "id": post.id,
+        "saved": FieldValue.arrayUnion([App.user.id])
+      });
+    } else
+      await PostDatabase().updatePostDetails({
+        "id": post.id,
+        "saved": FieldValue.arrayRemove([App.user.id])
+      });
   }
 
   _disableCard() {
