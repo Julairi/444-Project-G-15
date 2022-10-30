@@ -21,12 +21,27 @@ class savedCardJobSeeker extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
+    var now = DateTime.now();
+    var nMon = now.month;
+    var nDay = now.day;
+    var nYear = now.year;
+    var postDate = DateTime.parse(post.startDate);
+
+    var postMon = postDate.month;
+    var postDay = postDate.day;
+    var postYear = postDate.year;
     final controller = Get.find<savedCardController>();
     return InkWell(
-        onTap: () => Get.to(() => PostDetails(post: post, canApply: canApply)),
+        onTap: () {
+          if (post.offerStatus == "fully_assigned" ||
+              (postMon > nMon && postYear > nYear && postDay > nDay)) {
+          } else
+            Get.to(() => PostDetails(post: post, canApply: canApply));
+        },
         child: Card(
+          color: _disableCard(),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(20),
           ),
           elevation: 7,
           margin: const EdgeInsets.all(10),
@@ -34,12 +49,6 @@ class savedCardJobSeeker extends StatelessWidget {
             children: [
               Stack(
                 children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                    ),
-                  ),
                   Positioned(
                     child: Container(
                       height: 50,
@@ -48,7 +57,7 @@ class savedCardJobSeeker extends StatelessWidget {
                         vertical: 10,
                       ),
                       decoration: BoxDecoration(
-                        color: _disableCard(),
+                        color: Colors.transparent,
                       ),
                       child: Row(
                         children: [
@@ -58,10 +67,9 @@ class savedCardJobSeeker extends StatelessWidget {
                           ),
                           IconButton(
                               onPressed: () {
-                                _save(post, controller);
-                                Icon(Icons.bookmark_outlined);
+                                _unsave(post, controller);
                               },
-                              icon: Icon(Icons.bookmark_border_outlined)),
+                              icon: Icon(Icons.bookmark)),
                           const Icon(
                             Icons.work_outline,
                             color: kSPrimaryColor,
@@ -151,6 +159,14 @@ class savedCardJobSeeker extends StatelessWidget {
         "id": post.id,
         "saved": FieldValue.arrayRemove([App.user.id])
       });
+  }
+
+  void _unsave(Post post, savedCardController controller) async {
+    await PostDatabase().updatePostDetails({
+      "id": post.id,
+      "saved": FieldValue.arrayRemove([App.user.id])
+    });
+    controller.saved.value = false;
   }
 
   _disableCard() {
