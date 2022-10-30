@@ -40,6 +40,10 @@ class OrderDetails extends StatelessWidget {
                 fontWeight: FontWeight.w500,
                 overflow: TextOverflow.ellipsis)),
         showLeading: true,
+        showChat: order.orderStatus == "accepted",
+        onChatPressed: () {
+          Get.to(() => ConversationScreen(order: order, post: post));
+        },
         child: Container(
           color: Colors.white,
           child: Column(
