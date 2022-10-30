@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:overlay_support/overlay_support.dart';
 
+import 'chat/chat.dart';
 import 'company_home/company_home.dart';
 import 'job_seeker_home/job_seeker_home.dart';
 import 'post_job/post_job.dart';
@@ -116,6 +117,10 @@ class _DefaultState extends State<Default> {
           color: Colors.white,
         ),
         Icon(
+          Icons.chat,
+          color: Colors.white,
+        ),
+        Icon(
           Icons.account_circle,
           color: Colors.white,
         ),
@@ -132,6 +137,10 @@ class _DefaultState extends State<Default> {
         ),
         Icon(
           Icons.document_scanner_rounded,
+          color: Colors.white,
+        ),
+        Icon(
+          Icons.chat,
           color: Colors.white,
         ),
         Icon(
@@ -154,6 +163,10 @@ class _DefaultState extends State<Default> {
         color: Colors.white,
       ),
       Icon(
+        Icons.chat,
+        color: Colors.white,
+      ),
+      Icon(
         Icons.account_circle,
         color: Colors.white,
       ),
@@ -166,39 +179,40 @@ class _DefaultState extends State<Default> {
     if (userType == "jobSeeker") {
       switch (index) {
         case 0:
-          widget =  AvailablePostsScreen();
+          widget = const AvailablePostsScreen();
           break;
         case 1:
           widget = const JobSeekerTabBarPage();
           break;
         case 2:
-          widget =  AvailablePostsScreen();
+          widget = const AvailablePostsScreen();
           break;
         case 3:
+          widget = const Conversations();
+          break;
+        case 4:
           widget = const ProfileScreen();
           break;
 
         default:
-          widget =  AvailablePostsScreen();
+          widget = const AvailablePostsScreen();
           break;
       }
     } else {
       switch (index) {
         case 0:
-          widget = const PostJob(); //post a new job
+          widget = const PostJob();
           break;
-
         case 1:
-          widget =
-              const CompanyPosts(); //view all posts... both assigned and unassigned
+          widget = const CompanyPosts();
           break;
-
         case 2:
-          widget =
-              const CompanyTabBarPage(); //view all posts... differentiate assigned and unassigned
+          widget = const CompanyTabBarPage();
           break;
-
         case 3:
+          widget = const Conversations();
+          break;
+        case 4:
           widget = const ProfileScreen();
           break;
 

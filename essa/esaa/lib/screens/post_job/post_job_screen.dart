@@ -12,13 +12,6 @@ class PostJob extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: const CustomAppbar(
-        title: const Text("إضافة منشور جديد",
-            style: TextStyle(
-                color: kPrimaryColor,
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-                overflow: TextOverflow.ellipsis)),
-        showNotification: true,
         child: SingleChildScrollView(
           child: Responsive(
             mobile: _MobilePostScreen(),
@@ -43,10 +36,12 @@ class _DesktopPostScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
+
               SizedBox(
                 width: 450,
                 child: PostJobForm(), //change
               ),
+
               SizedBox(height: defaultPadding / 2),
             ],
           ),
@@ -69,10 +64,12 @@ class _MobilePostScreen extends StatelessWidget {
         Row(
           children: const [
             Spacer(),
+
             Expanded(
               flex: 8,
               child: PostJobForm(),
             ),
+
             Spacer(),
           ],
         ),

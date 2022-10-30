@@ -25,9 +25,9 @@ class App extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: const [
-          Locale('ar', 'AE'),
+          Locale('ar', 'AE'), // English, no country code
+          Locale('en', ''),
         ],
-        locale: const Locale('ar', 'AE'),
         title: 'es3a',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -53,19 +53,16 @@ class App extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(30)),
                 borderSide: BorderSide.none,
               ),
-            )),
+            )
+        ),
         getPages: [
-          GetPage(name: '/splash', page: () => const Splash()),
-          GetPage(name: '/login_screen', page: () => const LoginScreen()),
-          GetPage(
-              name: '/company_sign_up_screen',
-              page: () => const CompanySignUpScreen()),
-          GetPage(name: '/sign_up_screen', page: () => const SignUpScreen()),
-          GetPage(name: '/login_screen', page: () => const LoginScreen()),
-          GetPage(
-              name: '/forgot_password',
-              page: () => const ForgotPasswordScreen()),
-          GetPage(name: '/', page: () => Default()),
+          GetPage(name: '/splash', page : () => const Splash()),
+          GetPage(name: '/welcome_screen', page : () => const WelcomeScreen()),
+          GetPage(name: '/company_sign_up_screen', page : () => const CompanySignUpScreen()),
+          GetPage(name: '/sign_up_screen', page : () => const SignUpScreen()),
+          GetPage(name: '/login_screen', page : () => const LoginScreen()),
+          GetPage(name: '/forgot_password', page : () => const ForgotPasswordScreen()),
+          GetPage(name: '/', page : () => Default()),
         ],
         initialRoute: '/splash',
       ),

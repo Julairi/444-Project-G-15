@@ -32,13 +32,6 @@ class JobSeekerTabBarPageState extends State<JobSeekerTabBarPage>
   @override
   Widget build(BuildContext context) {
     return CustomAppbar(
-      title: const Text("عروضك",
-          style: TextStyle(
-              color: kPrimaryColor,
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-              overflow: TextOverflow.ellipsis)),
-      showNotification: true,
       child: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height - 150,

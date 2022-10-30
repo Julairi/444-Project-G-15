@@ -102,14 +102,6 @@ class LoginFormState extends State<LoginForm> {
           const Padding(padding: EdgeInsets.all(defaultPadding)),
           const SizedBox(height: defaultPadding / 2),
           ElevatedButton(
-            style: ButtonStyle(
-              shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(
-                  // Change your radius here
-                  borderRadius: BorderRadius.circular(16),
-                ),
-              ),
-            ),
             onPressed: () =>
                 login(emailEditingController.text, passEditingController.text),
             child: Text("تسجيل الدخول".toUpperCase(),
@@ -126,7 +118,7 @@ class LoginFormState extends State<LoginForm> {
                   style: TextStyle(
                     color: kPrimaryColor,
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 20,
                     decoration: TextDecoration.underline,
                   ),
                 ),
@@ -146,14 +138,14 @@ class LoginFormState extends State<LoginForm> {
             },
             child: Column(
               children: const [
-                Padding(padding: EdgeInsets.all(defaultPadding / 5)),
-                //SizedBox(height: defaultPadding / 30),
+                Padding(padding: EdgeInsets.all(defaultPadding)),
+                SizedBox(height: defaultPadding / 4),
                 Text(
                   'لا تمتلك حساب؟ تسجيل حساب جديد',
                   style: TextStyle(
                     color: kPrimaryColor,
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
+                    fontSize: 20,
                     decoration: TextDecoration.underline,
                   ),
                 ),

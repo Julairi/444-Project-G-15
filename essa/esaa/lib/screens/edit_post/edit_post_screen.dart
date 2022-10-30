@@ -15,12 +15,6 @@ class EditPostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomAppbar(
-      title: const Text("تعديل المنشور",
-          style: TextStyle(
-              color: kPrimaryColor,
-              fontSize: 20,
-              fontWeight: FontWeight.w500,
-              overflow: TextOverflow.ellipsis)),
       showLeading: true,
       child: SingleChildScrollView(
         child: Responsive(
@@ -51,6 +45,7 @@ class _DesktopEditPostScreen extends StatelessWidget {
                 width: 450,
                 child: EditPostForm(post: post), //change
               ),
+
               const SizedBox(height: defaultPadding / 2),
             ],
           ),
@@ -75,12 +70,14 @@ class _MobileEditPostScreen extends StatelessWidget {
         Row(
           children: [
             const Spacer(),
+
             Expanded(
               flex: 8,
               child: EditPostForm(
                 post: post,
               ),
             ),
+
             const Spacer(),
           ],
         ),
