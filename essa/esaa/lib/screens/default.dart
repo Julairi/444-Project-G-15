@@ -6,7 +6,7 @@ import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/models/models.dart';
 import 'package:esaa/screens/job_seeker_home/view/SavedOffer.dart';
 import 'package:esaa/screens/profiles/company_profile.dart';
-import 'package:esaa/screens/profiles/profile_screen.dart';
+import 'package:esaa/screens/profiles/jobSeeker_profile.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -178,7 +178,7 @@ class _DefaultState extends State<Default> {
           widget = AvailablePostsScreen();
           break;
         case 3:
-          widget = ProfileScreen();
+          widget = jobseekerProfile();
           break;
 
         default:
@@ -263,7 +263,7 @@ class _DefaultState extends State<Default> {
         leading: const Icon(Icons.notifications),
         subtitle: Text(notification.body),
         background: kPrimaryColor,
-        duration: const Duration(seconds: 2),
+        duration: const Duration(seconds: 3),
       );
     }
   }

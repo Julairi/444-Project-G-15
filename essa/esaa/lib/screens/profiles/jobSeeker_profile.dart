@@ -40,6 +40,7 @@ class _jobseekerProfileState extends State<jobseekerProfile> {
     App.user.name = nameController.text;
     App.user.email = emailController.text;
     App.user.id = idController.text;
+    //App.user.rates.sex;
 
     await UserDatabase(App.user.id).updateDetails(App.user.toMap());
   }
