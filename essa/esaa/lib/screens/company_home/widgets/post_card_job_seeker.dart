@@ -1,13 +1,21 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/models/models.dart';
 import 'package:esaa/screens/job_seeker_home/view/post_details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:esaa/controllers/controllers.dart';
+import 'package:get/get.dart';
+import '../../../app.dart';
+import '../../../models/models.dart';
+import '../../../models/post.dart';
+import '../../../services/database/post_database.dart';
 
 class PostCardJobSeeker extends StatelessWidget {
   final Post post;
   final bool canApply;
-  const PostCardJobSeeker({required this.post, this.canApply = true, Key? key}) : super(key: key);
+  const PostCardJobSeeker({required this.post, this.canApply = true, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +43,6 @@ class PostCardJobSeeker extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-
                   Positioned(
                     child: Container(
                       height: 50,
@@ -48,18 +55,27 @@ class PostCardJobSeeker extends StatelessWidget {
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: [
-                                const Color.fromARGB(255, 105, 110, 112).withOpacity(0),
-                                const Color.fromARGB(255, 64, 69, 71).withOpacity(0.2)
-                              ],
-                              stops: const [0.6, 1]
-                          )
-                      ),
+                            const Color.fromARGB(255, 105, 110, 112)
+                                .withOpacity(0),
+                            const Color.fromARGB(255, 64, 69, 71)
+                                .withOpacity(0.2)
+                          ],
+                              stops: const [
+                            0.6,
+                            1
+                          ])),
                       child: Row(
                         children: [
                           const SizedBox(
                             height: 20,
                             width: 20,
                           ),
+                          IconButton(
+                              onPressed: () {
+                                _save(post, controller);
+                                Icon(Icons.bookmark_outlined);
+                              },
+                              icon: Icon(Icons.bookmark_border_outlined)),
                           const Icon(
                             Icons.work_outline,
                             color: Color.fromARGB(255, 83, 80, 80),
@@ -89,7 +105,6 @@ class PostCardJobSeeker extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-
                     Row(
                       children: [
                         const Icon(
@@ -100,15 +115,12 @@ class PostCardJobSeeker extends StatelessWidget {
                           height: 20,
                           width: 10,
                         ),
-                        Text(
-                            post.city,
+                        Text(post.city,
                             style: const TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: defaultFontSize,
                                 fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.fade
-                            )
-                        )
+                                overflow: TextOverflow.fade))
                       ],
                     ),
                     const SizedBox(
@@ -125,15 +137,12 @@ class PostCardJobSeeker extends StatelessWidget {
                           height: 20,
                           width: 10,
                         ),
-                        Text(
-                            post.startDate,
+                        Text(post.startDate,
                             style: const TextStyle(
                                 color: kPrimaryColor,
                                 fontSize: defaultFontSize,
                                 fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.ellipsis
-                            )
-                        )
+                                overflow: TextOverflow.ellipsis))
                       ],
                     ),
                   ],
@@ -143,4 +152,31 @@ class PostCardJobSeeker extends StatelessWidget {
           ),
         ));
   }
+
+  void _save(Post post, PostCardController controller) async {
+    controller.saved.value = true;
+
+    await PostDatabase().updatePostDetails({
+      "id": post.id,
+      "saved": FieldValue.arrayUnion([App.user.id])
+    });
+
+    controller.saved.value = false;
+  }
+
+  _disableCard() {
+    if (post.offerStatus == "fully_assigned") {
+      return Colors.grey.withOpacity(0.3);
+    } else {
+      return Color.fromARGB(255, 177, 186, 189).withOpacity(0);
+      // return [
+      //Color.fromARGB(255, 177, 186, 189).withOpacity(0),
+      // Color.fromARGB(255, 67, 77, 81).withOpacity(0.2)
+      //];
+    }
+  }
+}
+
+class PostCardController extends UserController {
+  RxBool saved = false.obs;
 }

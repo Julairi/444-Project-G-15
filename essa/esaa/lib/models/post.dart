@@ -1,11 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Post {
-
-  late String id, city, startDate, endDate, description, time, title, nHours,
-      offerStatus, companyName, companyID, maxNoOfApplicants, acceptedApplicants;
+  late String id,
+      city,
+      startDate,
+      endDate,
+      description,
+      time,
+      title,
+      nHours,
+      offerStatus,
+      companyName,
+      companyID,
+      maxNoOfApplicants,
+      acceptedApplicants;
   late int payPerHour;
   late DateTime timePosted;
+  // ignore: prefer_typing_uninitialized_variables
+  late List saved;
+  late bool hasBeenDone;
 
   Post({
     required this.id,
@@ -25,7 +38,7 @@ class Post {
     required this.timePosted,
   });
 
-  Post.empty(){
+  Post.empty() {
     id = "";
     title = "";
     description = "";
@@ -41,6 +54,7 @@ class Post {
     companyName = "";
     companyID = "";
     timePosted = DateTime.now();
+    saved = [];
   }
 
   Map<String, dynamic> toMap() {
@@ -66,21 +80,22 @@ class Post {
   factory Post.fromDocumentSnapshot(DocumentSnapshot snapshot) {
     final Timestamp timestamp = snapshot.get("timePosted") ?? Timestamp.now();
     return Post(
-      id: snapshot.get('id') ?? "",
-      city: snapshot.get('city') ?? "",
-      startDate: snapshot.get('startDate') ?? "",
-      endDate: snapshot.get('endDate') ?? "",
-      description: snapshot.get('description') ?? "",
-      payPerHour: snapshot.get('payPerHour') ?? 0,
-      acceptedApplicants: snapshot.get('acceptedApplicants') ?? "",
-      maxNoOfApplicants: snapshot.get('maxNoOfApplicants') ?? "",
-      time: snapshot.get('time') ?? "",
-      title: snapshot.get('title') ?? "",
-      nHours: snapshot.get('nHours') ?? "",
-      offerStatus: snapshot.get('offerStatus') ?? "",
-      companyName: snapshot.get('companyName') ?? "",
-      companyID: snapshot.get('companyID') ?? "",
-      timePosted: timestamp.toDate(),
-    );
+        id: snapshot.get('id') ?? "",
+        city: snapshot.get('city') ?? "",
+        startDate: snapshot.get('startDate') ?? "",
+        endDate: snapshot.get('endDate') ?? "",
+        description: snapshot.get('description') ?? "",
+        payPerHour: snapshot.get('payPerHour') ?? 0,
+        acceptedApplicants: snapshot.get('acceptedApplicants') ?? "",
+        maxNoOfApplicants: snapshot.get('maxNoOfApplicants') ?? "",
+        time: snapshot.get('time') ?? "",
+        title: snapshot.get('title') ?? "",
+        nHours: snapshot.get('nHours') ?? "",
+        offerStatus: snapshot.get('offerStatus') ?? "",
+        companyName: snapshot.get('companyName') ?? "",
+        companyID: snapshot.get('companyID') ?? "",
+        hasBeenDone: snapshot.get('hasBeenDone') ?? "",
+        timePosted: timestamp.toDate(),
+        saved: snapshot.get('saved') ?? []);
   }
 }

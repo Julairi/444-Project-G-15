@@ -1,3 +1,6 @@
+// ignore_for_file: file_names
+
+import 'package:esaa/app.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/models/models.dart';
@@ -32,15 +35,12 @@ class ProfileScreenForJS extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 30),
-
-              GetX<ProfileController>(
-                  builder: (controller) {
-                    return Container(
-                        margin: const EdgeInsets.all(100.0),
-                        decoration: const BoxDecoration(shape: BoxShape.circle),
-                        width: double.infinity,
-                        child: controller.user.value.imgUrl == ''
-                            ? const Icon(
+              Container(
+                  margin: const EdgeInsets.all(100.0),
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
+                  width: double.infinity,
+                  child: controller.user.value.imgUrl == ''
+                      ? const Icon(
                           Icons.person,
                           size: 80,
                           color: Colors.white,
@@ -296,6 +296,65 @@ class ProfileScreenForJS extends StatelessWidget {
                   )
                 ],
               ),
+              const SizedBox(height: 30),
+              const Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "تقييم الشركة",
+                  style: TextStyle(
+                      color: Colors.black,
+                      shadows: <Shadow>[
+                        Shadow(
+                          offset: Offset(2.0, 2.0),
+                          blurRadius: 3.0,
+                          color: kPrimaryColor,
+                        ),
+                      ],
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      overflow: TextOverflow.ellipsis),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  GetX<ProfileController>(
+                    builder: (controller) {
+                      return RatingBar.builder(
+                        initialRating: _sumRating(controller.user.value.rates),
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        itemBuilder: (context, _) => const Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                          size: 18,
+                        ),
+                        ignoreGestures: true,
+                        onRatingUpdate: (double value) {},
+                      );
+                    }
+                  ),
+
+                  const SizedBox(width: 10),
+
+                  GetX<ProfileController>(
+                    builder: (controller) {
+                      return Text(
+                        '(${controller.user.value.rates.isNotEmpty ? controller.user.value.rates.length : 'No ratings yet'})',
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: controller.user.value.rates.isNotEmpty ? 24 : 16,
+                            fontWeight: FontWeight.w500
+                        ),
+                      );
+                    }
+                  )
+                ],
+              ),
               const SizedBox(height: 20),
               const Align(
                 alignment: Alignment.center,
@@ -353,24 +412,27 @@ class ProfileScreenForJS extends StatelessWidget {
                     onTap: () => Get.to(() => CompanyPostsForJobSeeker(
                       companyID: companyID,
                     )),
-                    child: Row(
-                      children: const [
-                        Icon(
-                          Icons.list,
+                child: const Text('لجميع عروض الشركة اضغط هنا',
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        decoration: TextDecoration.underline,
+                        overflow: TextOverflow.ellipsis)),
+              ),
+              const SizedBox(height: 30),
+              const Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "تقييم الشركة",
+                  style: TextStyle(
+                      color: Colors.black,
+                      shadows: <Shadow>[
+                        Shadow(
+                          offset: Offset(2.0, 2.0),
+                          blurRadius: 3.0,
                           color: kPrimaryColor,
-                          size: 28,
                         ),
-                        SizedBox(
-                          height: 20,
-                          width: 15,
-                        ),
-                        Text('لجميع عروض الشركة اضغط هنا',
-                            style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                decoration: TextDecoration.underline,
-                                overflow: TextOverflow.ellipsis)),
                       ],
                     ),
                   ),

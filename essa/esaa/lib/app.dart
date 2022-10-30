@@ -37,7 +37,8 @@ class App extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 elevation: 0,
                 primary: kPrimaryColor,
-                shape: const StadiumBorder(),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0)),
                 maximumSize: const Size(double.infinity, 56),
                 minimumSize: const Size(double.infinity, 56),
               ),

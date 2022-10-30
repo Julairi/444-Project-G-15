@@ -36,32 +36,29 @@ class CompanyNotificationCard extends StatelessWidget {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            const Color.fromARGB(255, 105, 110, 112).withOpacity(0),
-                            const Color.fromARGB(255, 64, 69, 71).withOpacity(0.2)
-                          ],
-                          stops: const [0.6, 1]
-                      )
-                  ),
+                        const Color.fromARGB(255, 105, 110, 112).withOpacity(0),
+                        const Color.fromARGB(255, 64, 69, 71).withOpacity(0.2)
+                      ],
+                          stops: const [
+                        0.6,
+                        1
+                      ])),
                   child: Row(
                     children: [
                       const SizedBox(
                         height: 20,
                         width: 20,
                       ),
-
                       const Icon(
                         Icons.notifications,
                         color: kPrimaryColor,
                         size: 35,
                       ),
-
                       const SizedBox(
                         height: 20,
                         width: 20,
                       ),
-
-                      Text(
-                          notification.title,
+                      Text(notification.title,
                           style: const TextStyle(
                               color: kPrimaryColor,
                               fontSize: defaultFontSize,
@@ -86,12 +83,13 @@ class CompanyNotificationCard extends StatelessWidget {
                         color: Color.fromARGB(255, 6, 6, 6),
                         fontSize: 18,
                         fontFamily: 'ElMessiri',
-                        overflow: TextOverflow.fade
-                    ),
+                        overflow: TextOverflow.fade),
                   ),
                 ),
                 TextButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      //Get.to(() =>  OrderDetails()),
+
                       Get.back();
                       Get.find<UserController>().changePage(1);
                     },

@@ -30,247 +30,244 @@ class OrderDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<OrderDetailsController>();
+    // ignore: unused_local_variable
     var riyals = calcRiyal(order);
     return CustomAppbar(
-      showLeading: true,
-      showChat: order.orderStatus == "accepted",
-      onChatPressed: () {
-        Get.to(() => ConversationScreen(order: order, post: post));
-      },
-      child: Container(
-        color: Colors.white,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: defaultPadding, vertical: defaultPadding),
-              child: Column(
-                children: [
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.person,
-                        color: Color.fromARGB(255, 22, 126, 210),
-                        size: 35,
-                      ),
-
-                      const SizedBox(
-                        height: 20,
-                        width: 12,
-                      ),
-
-                      GetX<OrderDetailsController>(builder: (controller) {
-                        return Text(
-                          controller.user.value.name,
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.fade),
-                        );
-                      }),
-
-                      const Expanded(child: SizedBox()),
-
-                      TextButton(
-                        onPressed: () => Get.to(() => const JobSeekerProfile()),
-                        child: const Text(
-                          'VIEW PROFILE',
-                          style: TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.normal,
-                              overflow: TextOverflow.fade
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: const [
-                          SizedBox(width: 5),
-                          Icon(Icons.workspace_premium,
-                              color: Color.fromARGB(255, 237, 229, 109),
-                              size: 28),
-                          SizedBox(width: 5),
-                          Text(":المهارات",
-                              style: TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: defaultFontSize,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis))
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          const SizedBox(width: 20),
-                          Text(order.skills,
-                              style: const TextStyle(
-                                  color: Colors.black26,
-                                  fontSize: defaultFontSize,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis))
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: const [
-                          SizedBox(width: 5),
-                          Icon(Icons.book,
-                              color: Color.fromARGB(255, 237, 229, 109),
-                              size: 28),
-                          SizedBox(width: 5),
-                          Text(":النبذة التعريفية",
-                              style: TextStyle(
-                                  color: kPrimaryColor,
-                                  fontSize: defaultFontSize,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis))
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        children: [
-                          const SizedBox(width: 20),
-                          Text(order.summary,
-                              style: const TextStyle(
-                                  color: Colors.black26,
-                                  fontSize: defaultFontSize,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis))
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 50),
-
-                  if (order.orderStatus == "pending")
+        title: const Text("تفاصيل الطلب ",
+            style: TextStyle(
+                color: kPrimaryColor,
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                overflow: TextOverflow.ellipsis)),
+        showLeading: true,
+        child: Container(
+          color: Colors.white,
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: defaultPadding, vertical: defaultPadding),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
                     Row(
                       children: [
-                        Expanded(
-                          flex: 1,
-                          child: ElevatedButton(
-                            onPressed: () =>
-                                showRejectDialog(context, controller),
-                            style: ElevatedButton.styleFrom(
-                                primary: Colors.red, elevation: 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                GetX<OrderDetailsController>(
-                                    builder: (controller) {
-                                      return Visibility(
-                                          visible: controller.isRejecting.value,
-                                          child: LayoutBuilder(
-                                              builder: (context, constraints) {
-                                                return const SpinKitRing(
-                                                  color: kFillColor,
-                                                  size: 24.0,
-                                                );
-                                              }));
-                                    }),
-                                const Padding(
-                                  padding:
-                                  EdgeInsets.symmetric(horizontal: 10.0),
-                                  child: Text(
-                                    "ارفض",
-                                    style: TextStyle(
-                                        color: kFillColor, fontSize: 16),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                        const Icon(
+                          Icons.person,
+                          color: Color.fromARGB(255, 22, 126, 210),
+                          size: 35,
                         ),
-                        const SizedBox(width: 30),
-                        Expanded(
-                          flex: 1,
-                          child: ElevatedButton(
-                            onPressed: () =>
-                                showAcceptDialog(context, controller),
-                            style: ElevatedButton.styleFrom(
-                                primary: Colors.green, elevation: 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                GetX<OrderDetailsController>(
-                                    builder: (controller) {
-                                      return Visibility(
-                                          visible: controller.isAccepting.value,
-                                          child: LayoutBuilder(
-                                              builder: (context, constraints) {
-                                                return const SpinKitRing(
-                                                  color: kFillColor,
-                                                  size: 24.0,
-                                                );
-                                              }));
-                                    }),
-                                const Padding(
-                                  padding:
-                                  EdgeInsets.symmetric(horizontal: 10.0),
-                                  child: Text(
-                                    "اقبل",
-                                    style: TextStyle(
-                                        color: kFillColor, fontSize: 16),
-                                  ),
-                                ),
-                              ],
-                            ),
+                        const SizedBox(
+                          height: 20,
+                          width: 12,
+                        ),
+                        GetX<OrderDetailsController>(builder: (controller) {
+                          return Text(
+                            controller.user.value.name,
+                            style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.fade),
+                          );
+                        }),
+                        const Expanded(child: SizedBox()),
+                        TextButton(
+                          onPressed: () =>
+                              Get.to(() => const JobSeekerProfile()),
+                          child: const Text(
+                            'عرض الملف الشخصي',
+                            style: TextStyle(
+                                color: kPrimaryColor,
+                                fontSize: 16,
+                                decoration: TextDecoration.underline,
+                                fontWeight: FontWeight.normal,
+                                overflow: TextOverflow.fade),
                           ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: const [
+                            SizedBox(width: 5),
+                            Icon(Icons.workspace_premium,
+                                color: Color.fromARGB(255, 237, 229, 109),
+                                size: 28),
+                            SizedBox(width: 5),
+                            Text(":المهارات",
+                                style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: defaultFontSize,
+                                    fontWeight: FontWeight.bold,
+                                    overflow: TextOverflow.ellipsis))
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            const SizedBox(width: 20),
+                            Text(order.skills,
+                                style: const TextStyle(
+                                    color: Colors.black26,
+                                    fontSize: defaultFontSize,
+                                    fontWeight: FontWeight.bold,
+                                    overflow: TextOverflow.ellipsis))
+                          ],
                         ),
                       ],
                     ),
-
-                  if (order.orderStatus == "accepted")
-                    ElevatedButton(
-                      onPressed: () => payOrder(order),
-                      style: ElevatedButton.styleFrom(
-                          primary: order.hasBeenPaid
-                              ? kPrimaryColor.withOpacity(0.5)
-                              : kPrimaryColor,
-                          elevation: 0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: const [
+                            SizedBox(width: 5),
+                            Icon(Icons.book,
+                                color: Color.fromARGB(255, 237, 229, 109),
+                                size: 28),
+                            SizedBox(width: 5),
+                            Text(":النبذة التعريفية",
+                                style: TextStyle(
+                                    color: kPrimaryColor,
+                                    fontSize: defaultFontSize,
+                                    fontWeight: FontWeight.bold,
+                                    overflow: TextOverflow.ellipsis))
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            const SizedBox(width: 20),
+                            Text(order.summary,
+                                style: const TextStyle(
+                                    color: Colors.black26,
+                                    fontSize: defaultFontSize,
+                                    fontWeight: FontWeight.bold,
+                                    overflow: TextOverflow.ellipsis))
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 50),
+                    if (order.orderStatus == "pending")
+                      Row(
                         children: [
-                          Padding(
-                            padding:
-                            const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Text(
-                              order.hasBeenPaid ? "تم الدفع" : "ادفع",
-                              style: const TextStyle(
-                                  color: kFillColor, fontSize: 16),
+                          Expanded(
+                            flex: 1,
+                            child: ElevatedButton(
+                              onPressed: () =>
+                                  showRejectDialog(context, controller),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.red, elevation: 0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  GetX<OrderDetailsController>(
+                                      builder: (controller) {
+                                    return Visibility(
+                                        visible: controller.isRejecting.value,
+                                        child: LayoutBuilder(
+                                            builder: (context, constraints) {
+                                          return const SpinKitRing(
+                                            color: kFillColor,
+                                            size: 24.0,
+                                          );
+                                        }));
+                                  }),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10.0),
+                                    child: Text(
+                                      "ارفض",
+                                      style: TextStyle(
+                                          color: kFillColor, fontSize: 16),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 30),
+                          Expanded(
+                            flex: 1,
+                            child: ElevatedButton(
+                              onPressed: () =>
+                                  showAcceptDialog(context, controller),
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.green, elevation: 0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  GetX<OrderDetailsController>(
+                                      builder: (controller) {
+                                    return Visibility(
+                                        visible: controller.isAccepting.value,
+                                        child: LayoutBuilder(
+                                            builder: (context, constraints) {
+                                          return const SpinKitRing(
+                                            color: kFillColor,
+                                            size: 24.0,
+                                          );
+                                        }));
+                                  }),
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10.0),
+                                    child: Text(
+                                      "اقبل",
+                                      style: TextStyle(
+                                          color: kFillColor, fontSize: 16),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  const SizedBox(height: 20),
-                ],
-              ),
-            )
-          ],
-        ),
-      )
-    );
+                    if (order.orderStatus == "accepted")
+                      ElevatedButton(
+                        onPressed: () => payOrder(order),
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: order.hasBeenPaid
+                                ? kPrimaryColor.withOpacity(0.5)
+                                : kPrimaryColor,
+                            elevation: 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10.0),
+                              child: Text(
+                                order.hasBeenPaid ? "تم الدفع" : "ادفع",
+                                style: const TextStyle(
+                                    color: kFillColor, fontSize: 16),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ));
   }
 
-  void showAcceptDialog(BuildContext context, OrderDetailsController controller) {
+  void showAcceptDialog(
+      BuildContext context, OrderDetailsController controller) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -296,7 +293,7 @@ class OrderDetails extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () => Get.back(),
                             style: ElevatedButton.styleFrom(
-                                primary: Colors.red, elevation: 0),
+                                backgroundColor: Colors.red, elevation: 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
@@ -318,7 +315,7 @@ class OrderDetails extends StatelessWidget {
                               _acceptOrder(order, post, controller);
                             },
                             style: ElevatedButton.styleFrom(
-                                primary: Colors.green, elevation: 0),
+                                backgroundColor: Colors.green, elevation: 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
@@ -344,7 +341,8 @@ class OrderDetails extends StatelessWidget {
         });
   }
 
-  void showRejectDialog(BuildContext context, OrderDetailsController controller) {
+  void showRejectDialog(
+      BuildContext context, OrderDetailsController controller) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -373,7 +371,7 @@ class OrderDetails extends StatelessWidget {
                               _rejectOrder(order, controller);
                             },
                             style: ElevatedButton.styleFrom(
-                                primary: Colors.red, elevation: 0),
+                                backgroundColor: Colors.red, elevation: 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
@@ -392,7 +390,7 @@ class OrderDetails extends StatelessWidget {
                           child: ElevatedButton(
                             onPressed: () => Get.back(),
                             style: ElevatedButton.styleFrom(
-                                primary: Colors.green, elevation: 0),
+                                backgroundColor: Colors.green, elevation: 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
@@ -418,7 +416,8 @@ class OrderDetails extends StatelessWidget {
         });
   }
 
-  void _acceptOrder(Order order, Post post, OrderDetailsController controller) async {
+  void _acceptOrder(
+      Order order, Post post, OrderDetailsController controller) async {
     if (int.parse(post.maxNoOfApplicants) <=
         int.parse(post.acceptedApplicants)) {
       Fluttertoast.showToast(
@@ -436,18 +435,17 @@ class OrderDetails extends StatelessWidget {
     await OrderDatabase()
         .updateOrderDetails({'id': order.id, 'orderStatus': order.orderStatus});
 
-    await ConversationDatabase().createConversation(
-        Conversation(
-            title: "${controller.user.value.name}//${App.user.name}//${post.title}",
+    await ConversationDatabase().createConversation(Conversation(
+            title:
+                "${controller.user.value.name}//${App.user.name}//${post.title}",
             orderID: order.id,
             members: [
               controller.user.value.id,
               App.user.id,
             ],
             messages: [],
-            lastUpdated: DateTime.now()
-        ).toMap()
-    );
+            lastUpdated: DateTime.now())
+        .toMap());
 
     await notification.Notification().sendNotification(
         Get.find<OrderDetailsController>().user.value,
@@ -568,7 +566,8 @@ class OrderDetailsController extends UserController {
   RxBool isRejecting = false.obs;
 }
 
-Future<void> initPayment({required String email, required double amount}) async {
+Future<void> initPayment(
+    {required String email, required double amount}) async {
   try {
     // 1. Create a payment intent on the server
     final response = await http.post(

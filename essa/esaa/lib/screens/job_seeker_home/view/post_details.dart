@@ -14,7 +14,8 @@ class PostDetails extends StatelessWidget {
   final Order? order;
   final Post post;
   final bool canApply;
-  const PostDetails({this.order, required this.post, this.canApply = true, Key? key})
+  const PostDetails(
+      {this.order, required this.post, this.canApply = true, Key? key})
       : super(key: key);
 
   @override
@@ -296,5 +297,96 @@ class PostDetails extends StatelessWidget {
     final fields = date.split('-');
     output = "${fields[2]}/${fields[1]}/${fields[0].substring(2)}";
     return output;
+  }
+
+  Future<void> _sendPayReminder(Post post) async {
+    final user = await UserDatabase(post.companyID).getUser(post.companyID);
+    //final jobSeekerName= await OrderDatabase().
+    if (user == null) {
+      Fluttertoast.showToast(
+          msg: "Could not get company details, try again later",
+          backgroundColor: Colors.redAccent,
+          textColor: kFillColor);
+
+      return;
+    }
+
+    var now = DateTime.now();
+    var nMon = now.month;
+    var nDay = now.day;
+    var nYear = now.year;
+    var postDate = DateTime.parse(post.startDate);
+
+    var postMon = postDate.month;
+    var postDay = postDate.day;
+    var postYear = postDate.year;
+    if (nYear != postYear) {
+      Fluttertoast.showToast(
+          msg: "لايمكنك إنهاء الفترة اللآن حاول لاحقاً بعد تاريخ العمل.",
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.black54,
+          textColor: kFillColor,
+          toastLength: Toast.LENGTH_LONG);
+      return;
+    }
+    if (nMon != postMon) {
+      Fluttertoast.showToast(
+          msg: "لايمكنك إنهاء الفترة اللآن حاول لاحقاً بعد تاريخ العمل",
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.black54,
+          textColor: kFillColor,
+          toastLength: Toast.LENGTH_LONG);
+      return;
+    }
+    if (nDay < postDay) {
+      Fluttertoast.showToast(
+          msg: "لايمكنك إنهاء الفترة اللآن حاول لاحقاً بعد تاريخ العمل.",
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.black54,
+          textColor: kFillColor,
+          toastLength: Toast.LENGTH_LONG);
+      return;
+    }
+
+    if (post.hasBeenDone) {
+      Fluttertoast.showToast(
+          msg: "لقد قمت بإنهاء الفترة بالفعل",
+          timeInSecForIosWeb: 2,
+          backgroundColor: Colors.black54,
+          textColor: kFillColor,
+          toastLength: Toast.LENGTH_LONG);
+      return;
+    }
+    post.hasBeenDone = true;
+
+    await PostDatabase().updatePostDetails({
+      "id": post.id,
+      "hasBeenDone": post.hasBeenDone,
+    });
+    await notification.Notification().sendNotification(user,
+        PushNotification(title: " تدكير بالدفع", body: "يمكنك الدفع للموظف"));
+  }
+
+  _buttonColor() {
+    var now = DateTime.now();
+    var nMon = now.month;
+    var nDay = now.day;
+    var nYear = now.year;
+    var postDate = DateTime.parse(post.startDate);
+
+    var postMon = postDate.month;
+    var postDay = postDate.day;
+    var postYear = postDate.year;
+    if (nYear != postYear) {
+      return kPrimaryColor.withOpacity(0.3);
+    } else if (nMon != postMon) {
+      return kPrimaryColor.withOpacity(0.3);
+    } else if (nDay < postDay) {
+      //return Colors.grey.withOpacity(0.4);
+      return kPrimaryColor.withOpacity(0.3);
+    } else if (post.hasBeenDone) {
+      //return Colors.grey.withOpacity(0.4);
+      return kPrimaryColor.withOpacity(0.3);
+    }
   }
 }

@@ -62,8 +62,8 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                     const SizedBox(height: 30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        GetX<CompanyPostDetailsController>(
+                      children: const [
+                        /*  GetX<CompanyPostDetailsController>(
                             builder: (controller) {
                           return IconButton(
                             onPressed: () => _edit(widget.post),
@@ -90,8 +90,8 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                                 : Colors.redAccent,
                             size: 30,
                           ),
-                        ),
-                        const SizedBox(
+                        ),*/
+                        SizedBox(
                           width: 10,
                         ),
                       ],
@@ -145,24 +145,20 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                               color: Colors.green,
                               size: 35,
                             ),
-
                             const SizedBox(
                               height: 20,
                               width: 10,
                             ),
-
                             Text(
                               widget.post.maxNoOfApplicants,
                               style: const TextStyle(
                                   color: kPrimaryColor,
                                   fontSize: defaultFontSize,
                                   fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.fade
-                              ),
+                                  overflow: TextOverflow.fade),
                             ),
                           ],
                         ),
-
                         const SizedBox(
                           height: 20,
                           width: 15,
@@ -205,12 +201,11 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                             Text(
                               '${_getDate(widget.post.startDate)} - ${_getDate(widget.post.endDate)}',
                               style: const TextStyle(
-                                    color: kPrimaryColor,
-                                    fontSize: defaultFontSize,
-                                    fontWeight: FontWeight.bold,
-                                    overflow: TextOverflow.fade
-                                ),
-                                textAlign: TextAlign.center,
+                                  color: kPrimaryColor,
+                                  fontSize: defaultFontSize,
+                                  fontWeight: FontWeight.bold,
+                                  overflow: TextOverflow.fade),
+                              textAlign: TextAlign.center,
                             )
                           ],
                         ),
@@ -229,8 +224,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                               height: 20,
                               width: 10,
                             ),
-                            Text(
-                                widget.post.time,
+                            Text(widget.post.time,
                                 style: const TextStyle(
                                     color: kPrimaryColor,
                                     fontSize: defaultFontSize,
@@ -312,6 +306,43 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                                 fontWeight: FontWeight.bold),
                           )),
                     ),
+                    GetX<CompanyPostDetailsController>(builder: (controller) {
+                      return ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: controller.editable.value
+                                ? Colors.blueAccent
+                                //: Colors.grey,
+                                : Colors.blueAccent
+                                    .withOpacity(0.1), // Background color
+                          ),
+                          onPressed: () => _edit(widget.post),
+                          child: const Text(
+                            'تعديل',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: defaultFontSize,
+                                fontWeight: FontWeight.bold),
+                          ));
+                    }),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                int.parse(widget.post.acceptedApplicants) > 0
+                                    // ? Colors.grey
+                                    ? Colors.redAccent.withOpacity(0.2)
+                                    : Colors.redAccent, // Background color
+                          ),
+                          onPressed: () => showConfirmDeletingDialog(context),
+                          child: const Text(
+                            'حذف',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: defaultFontSize,
+                                fontWeight: FontWeight.bold),
+                          )),
+                    ),
                   ],
                 ),
               ),
@@ -373,7 +404,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                           child: ElevatedButton(
                             onPressed: () => Get.back(),
                             style: ElevatedButton.styleFrom(
-                                primary: Colors.grey, elevation: 0),
+                                backgroundColor: Colors.grey, elevation: 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
@@ -395,7 +426,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                               _delete(widget.post);
                             },
                             style: ElevatedButton.styleFrom(
-                                primary: Colors.red, elevation: 0),
+                                backgroundColor: Colors.red, elevation: 0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [

@@ -32,17 +32,6 @@ class PostJobFormState extends State<PostJobForm> {
 
   TimeOfDay timeOfDay = const TimeOfDay(hour: 8, minute: 00);
 
-  void _showTimePicker() {
-    showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    ).then((value) {
-      setState(() {
-        timeOfDay = value!;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final titleField = TextFormField(
