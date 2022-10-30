@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esaa/app.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
@@ -32,11 +31,10 @@ class _companyProfileState extends State<companyProfile> {
   final addressController = TextEditingController();
   final contactController = TextEditingController();
   final discriptionController = TextEditingController();
-  final idController = TextEditingController();
   @override
   void initState() {
     _setInitialValues(nameController, emailController, addressController,
-        contactController, discriptionController, idController);
+        contactController, discriptionController);
     final controller = Get.find<EditProfileFormController>();
     super.initState();
   }
@@ -47,7 +45,6 @@ class _companyProfileState extends State<companyProfile> {
     App.user.email = emailController.text;
     App.user.description = discriptionController.text;
     App.user.contact = contactController.text;
-    App.user.id = idController.text;
 
     if (_image != null) {
       imgUrl = await Storage().uploadImageToString("companyLogo ", _image!);
@@ -312,6 +309,7 @@ class _companyProfileState extends State<companyProfile> {
                                 ? () async {
                                     final controller =
                                         Get.find<EditProfileFormController>();
+                                    saveNewValues();
                                     //en = false;
                                   }
                                 : null,
@@ -340,14 +338,12 @@ void _setInitialValues(
     TextEditingController emailController,
     TextEditingController addressController,
     TextEditingController contactController,
-    TextEditingController discriptionController,
-    TextEditingController idController) {
+    TextEditingController discriptionController) {
   nameController.text = App.user.name;
   emailController.text = App.user.email;
   addressController.text = App.user.address;
   contactController.text = App.user.contact;
   discriptionController.text = App.user.description;
-  idController.text = App.user.id;
 }
 
 class EditProfileFormController extends UserController {}
