@@ -180,7 +180,7 @@ class _DefaultState extends State<Default> {
     if (userType == "jobSeeker") {
       switch (index) {
         case 0:
-          widget = const SavedOffers();
+          widget = const savedOffers();
           break;
         case 1:
           widget = const JobSeekerTabBarPage();

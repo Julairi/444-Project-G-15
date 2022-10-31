@@ -7,9 +7,11 @@ import 'package:esaa/services/database/database.dart';
 
 import 'package:flutter/material.dart';
 
+import '../widgets/SavedCard.dart';
+
 // ignore: camel_case_types
-class SavedOffers extends StatelessWidget {
-  const SavedOffers({Key? key}) : super(key: key);
+class savedOffers extends StatelessWidget {
+  const savedOffers({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,7 @@ class SavedOffers extends StatelessWidget {
               ),
               itemBuilder: (context, querySnapshot) {
                 Post post = Post.fromDocumentSnapshot(querySnapshot);
-                return PostCardJobSeeker(post: post);
+                return savedCardJobSeeker(post: post);
               }),
         ],
       )),

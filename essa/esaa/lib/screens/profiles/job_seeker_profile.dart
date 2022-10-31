@@ -6,6 +6,9 @@ import 'package:esaa/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../models/order.dart';
+import '../company_home/widgets/full_job_list.dart';
+import '../company_home/widgets/order_card.dart';
 
 class JobSeekerProfile extends StatefulWidget {
   JobSeekerProfile({Key? key}) : super(key: key) {
@@ -15,7 +18,8 @@ class JobSeekerProfile extends StatefulWidget {
   _JobSeekerProfileState createState() => _JobSeekerProfileState();
 }
 
-class _JobSeekerProfileState extends State<JobSeekerProfile> {
+class _JobSeekerProfileState extends State<JobSeekerProfile>
+    with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   bool showPassword = false;
   bool en = false;
@@ -23,10 +27,22 @@ class _JobSeekerProfileState extends State<JobSeekerProfile> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final idController = TextEditingController();
+  late TabController tabController;
   @override
   void initState() {
-    _setInitialValues(nameController, emailController, idController);
+    tabController = TabController(length: 2, vsync: this);
+    _setInitialValues(
+      nameController,
+      emailController,
+      idController,
+    );
+
     super.initState();
+  }
+
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
   }
 
   saveNewValues() async {
@@ -57,6 +73,7 @@ class _JobSeekerProfileState extends State<JobSeekerProfile> {
                   //========== profile img======================================================================
                   Column(
                 children: [
+                  SizedBox(height: 10),
                   //====================form ============================================
                   Column(
                     children: [
@@ -179,12 +196,66 @@ class _JobSeekerProfileState extends State<JobSeekerProfile> {
                                   primary: kPrimaryColor, elevation: 0),
                               child: const Text(
                                 "حفظ التغييرات",
-                                style:
-                                    TextStyle(color: Colors.white, fontSize: 16),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 16),
                               ),
                             ),
                           ),
                         ],
+                      ),
+                      SingleChildScrollView(
+                        child: Container(
+                          height: MediaQuery.of(context).size.height - 150,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const SizedBox(height: 20),
+                              Container(
+                                width: MediaQuery.of(context).size.height,
+                                decoration: BoxDecoration(
+                                    color: kPrimaryLightColor,
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(5),
+                                      child: TabBar(
+                                        unselectedLabelColor: kPrimaryColor,
+                                        labelColor: const Color.fromARGB(
+                                            255, 75, 73, 73),
+                                        indicatorColor: Colors.white,
+                                        indicatorWeight: 2,
+                                        indicator: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        controller: tabController,
+                                        tabs: const [
+                                          Tab(
+                                            text: 'العروض السابقة',
+                                          ),
+                                          Tab(
+                                            text: 'العروض النشطة',
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: TabBarView(
+                                    controller: tabController,
+                                    children: const [
+                                      ptab(),
+                                    ]),
+                              ),
+                              const SizedBox(height: 20),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   )
@@ -204,3 +275,53 @@ void _setInitialValues(TextEditingController nameController,
 }
 
 class JobSeekerFormController extends UserController {}
+
+class ptab extends StatelessWidget {
+  const ptab({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CustomListView(
+            absoluteSize: 3,
+            physics: const NeverScrollableScrollPhysics(),
+            query: OrderDatabase.ordersCollection
+                .where("userID", isEqualTo: App.user.id)
+                .where("orderStatus", isEqualTo: "accepted")
+                .orderBy("timeApplied", descending: true),
+            emptyListWidget: Container(
+              margin: const EdgeInsets.only(top: 120, bottom: 100),
+              child: const Center(
+                child: Text(
+                  "لم تنهي أي وظيفة بعد ",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: kPrimaryColor,
+                  ),
+                ),
+              ),
+            ),
+            itemBuilder: (context, querySnapshot) {
+              Order order = Order.fromDocumentSnapshot(querySnapshot);
+              return OrderCard(order: order, showPaymentStatus: false);
+            }),
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: TextButton(
+            onPressed: () => Get.to(() => const FullJobList()),
+            child: const Text(
+              'لعرض الكل',
+              style: TextStyle(
+                  color: kPrimaryColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  overflow: TextOverflow.fade),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
