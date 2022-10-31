@@ -248,9 +248,7 @@ class _JobSeekerProfileState extends State<JobSeekerProfile>
                               Expanded(
                                 child: TabBarView(
                                     controller: tabController,
-                                    children: const [
-                                      ptab(),
-                                    ]),
+                                    children: const [ptab(), actab()]),
                               ),
                               const SizedBox(height: 20),
                             ],
@@ -289,12 +287,63 @@ class ptab extends StatelessWidget {
             query: OrderDatabase.ordersCollection
                 .where("userID", isEqualTo: App.user.id)
                 .where("orderStatus", isEqualTo: "accepted")
+                .where('hasBeenPaid', isEqualTo: true)
                 .orderBy("timeApplied", descending: true),
             emptyListWidget: Container(
               margin: const EdgeInsets.only(top: 120, bottom: 100),
               child: const Center(
                 child: Text(
                   "لم تنهي أي وظيفة بعد ",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: kPrimaryColor,
+                  ),
+                ),
+              ),
+            ),
+            itemBuilder: (context, querySnapshot) {
+              Order order = Order.fromDocumentSnapshot(querySnapshot);
+              return OrderCard(order: order, showPaymentStatus: false);
+            }),
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: TextButton(
+            onPressed: () => Get.to(() => const FullJobList()),
+            child: const Text(
+              'لعرض الكل',
+              style: TextStyle(
+                  color: kPrimaryColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  overflow: TextOverflow.fade),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class actab extends StatelessWidget {
+  const actab({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CustomListView(
+            absoluteSize: 3,
+            physics: const NeverScrollableScrollPhysics(),
+            query: OrderDatabase.ordersCollection
+                .where("userID", isEqualTo: App.user.id)
+                .where("orderStatus", isEqualTo: "accepted")
+                .orderBy("timeApplied", descending: true),
+            emptyListWidget: Container(
+              margin: const EdgeInsets.only(top: 120, bottom: 100),
+              child: const Center(
+                child: Text(
+                  "لا يوجد عروض نشطة",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20,
