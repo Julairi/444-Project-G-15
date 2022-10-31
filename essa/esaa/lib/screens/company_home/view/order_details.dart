@@ -277,61 +277,67 @@ class OrderDetails extends StatelessWidget {
                 width: 300,
                 height: 200,
                 padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const SizedBox(height: 30),
-                    const Text(
-                      "هل أنت متأكد برغبتك بقبول هذا الطلب؟",
-                      style: TextStyle(color: Colors.black, fontSize: 20),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 30),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: ElevatedButton(
-                            onPressed: () => Get.back(),
-                            style: ElevatedButton.styleFrom(
-                                primary: Colors.red, elevation: 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  "الغاء",
-                                  style: TextStyle(
-                                      color: kFillColor, fontSize: 16),
-                                ),
-                              ],
-                            ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const SizedBox(height: 30),
+                          const Text(
+                            "هل أنت متأكد برغبتك بقبول هذا الطلب؟",
+                            style: TextStyle(color: Colors.black, fontSize: 20),
+                            textAlign: TextAlign.center,
                           ),
-                        ),
-                        const SizedBox(width: 30),
-                        Expanded(
-                          flex: 1,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Get.back();
-                              _acceptOrder(order, post, controller);
-                            },
-                            style: ElevatedButton.styleFrom(
-                                primary: Colors.green, elevation: 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  "اقبل",
-                                  style: TextStyle(
-                                      color: kFillColor, fontSize: 16),
+                          const SizedBox(height: 30),
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: ElevatedButton(
+                                  onPressed: () => Get.back(),
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.red, elevation: 0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Text(
+                                        "الغاء",
+                                        style: TextStyle(
+                                            color: kFillColor, fontSize: 16),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ],
-                            ),
+                              ),
+                              const SizedBox(width: 30),
+                              Expanded(
+                                flex: 1,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    Get.back();
+                                    _acceptOrder(order, post, controller);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.green, elevation: 0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Text(
+                                        "اقبل",
+                                        style: TextStyle(
+                                            color: kFillColor, fontSize: 16),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 )),
             backgroundColor: Colors.white,
             shape: const RoundedRectangleBorder(
@@ -352,61 +358,63 @@ class OrderDetails extends StatelessWidget {
                 width: 300,
                 height: 200,
                 padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const SizedBox(height: 30),
-                    const Text(
-                      "هل أنت متأكد أنك تريد رفض هذا العرض",
-                      style: TextStyle(color: Colors.black, fontSize: 20),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 30),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Get.back();
-                              _rejectOrder(order, controller);
-                            },
-                            style: ElevatedButton.styleFrom(
-                                primary: Colors.red, elevation: 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  "رفض",
-                                  style: TextStyle(
-                                      color: kFillColor, fontSize: 16),
-                                ),
-                              ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const SizedBox(height: 30),
+                      const Text(
+                        "هل أنت متأكد أنك تريد رفض هذا العرض",
+                        style: TextStyle(color: Colors.black, fontSize: 20),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 30),
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Get.back();
+                                _rejectOrder(order, controller);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.red, elevation: 0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Text(
+                                    "رفض",
+                                    style: TextStyle(
+                                        color: kFillColor, fontSize: 16),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 30),
-                        Expanded(
-                          flex: 1,
-                          child: ElevatedButton(
-                            onPressed: () => Get.back(),
-                            style: ElevatedButton.styleFrom(
-                                primary: Colors.green, elevation: 0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Text(
-                                  "إلغاء",
-                                  style: TextStyle(
-                                      color: kFillColor, fontSize: 16),
-                                ),
-                              ],
+                          const SizedBox(width: 30),
+                          Expanded(
+                            flex: 1,
+                            child: ElevatedButton(
+                              onPressed: () => Get.back(),
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.green, elevation: 0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  Text(
+                                    "إلغاء",
+                                    style: TextStyle(
+                                        color: kFillColor, fontSize: 16),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 )),
             backgroundColor: Colors.white,
             shape: const RoundedRectangleBorder(
@@ -436,18 +444,17 @@ class OrderDetails extends StatelessWidget {
     await OrderDatabase()
         .updateOrderDetails({'id': order.id, 'orderStatus': order.orderStatus});
 
-    await ConversationDatabase().createConversation(
-        Conversation(
-            title: "${controller.user.value.name}//${App.user.name}//${post.title}",
+    await ConversationDatabase().createConversation(Conversation(
+            title:
+                "${controller.user.value.name}//${App.user.name}//${post.title}",
             orderID: order.id,
             members: [
               controller.user.value.id,
               App.user.id,
             ],
             messages: [],
-            lastUpdated: DateTime.now()
-        ).toMap()
-    );
+            lastUpdated: DateTime.now())
+        .toMap());
 
     await notification.Notification().sendNotification(
         Get.find<OrderDetailsController>().user.value,
@@ -565,8 +572,8 @@ class OrderDetails extends StatelessWidget {
 
     int count = 0;
 
-    for(Order order in orders){
-      if(order.hasBeenPaid) count++;
+    for (Order order in orders) {
+      if (order.hasBeenPaid) count++;
     }
 
     await PostDatabase().updatePostDetails({

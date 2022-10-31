@@ -85,9 +85,9 @@ class CompanyTabBarPageState extends State<CompanyTabBarPage>
                                   child: FirestoreQueryBuilder<Object?>(
                                     query: PostDatabase.postsCollection
                                         .where("companyID",
-                                        isEqualTo: App.user.id)
+                                            isEqualTo: App.user.id)
                                         .where("offerStatus",
-                                        whereIn: ["pending", "assigned"]),
+                                            whereIn: ["pending", "assigned"]),
                                     builder: (context, snapshot, _) {
                                       if (snapshot.isFetching) {
                                         return const SpinKitRing(
@@ -130,8 +130,9 @@ class CompanyTabBarPageState extends State<CompanyTabBarPage>
                                 FirestoreQueryBuilder<Object?>(
                                   query: PostDatabase.postsCollection
                                       .where("companyID",
-                                      isEqualTo: App.user.id)
-                                      .where("offerStatus", isEqualTo: "fully_assigned"),
+                                          isEqualTo: App.user.id)
+                                      .where("offerStatus",
+                                          isEqualTo: "fully_assigned"),
                                   builder: (context, snapshot, _) {
                                     if (snapshot.isFetching) {
                                       return const SpinKitRing(
@@ -188,8 +189,8 @@ class _TabOne extends StatelessWidget {
       query: PostDatabase.postsCollection
           .where("companyID", isEqualTo: App.user.id)
           .where("offerStatus", whereIn: ["pending", "assigned"]).orderBy(
-          "timePosted",
-          descending: true),
+              "timePosted",
+              descending: true),
       emptyListWidget: const SizedBox(
         child: Text(
           'ليس هناك عروض غير مسنودة',
@@ -234,55 +235,47 @@ class _TabTwo extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8)),
                       tabs: const [
                         Tab(text: 'تحتاج للدفع'),
-
-                        Tab(text: ' مدفوعة'),
-
-                        Tab(text: 'لا تحتاج للدفع'),
+                        Tab(text: 'لا  تحتاج الدفع'),
+                        Tab(text: 'مدفوعة'),
                       ]),
                 ),
               ),
               const SizedBox(height: 10),
-
               Expanded(
                 child: SizedBox(
                     height: double.infinity,
                     width: double.infinity,
-                    child: TabBarView(
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                color: kPrimaryLightColor,
-                                borderRadius: BorderRadius.circular(8)),
-                            child: const AvailableUnpaidOrders(),
-                          ),
+                    child: TabBarView(children: [
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: kPrimaryLightColor,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: const AvailableUnpaidOrders(),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: kPrimaryLightColor,
+                            borderRadius: BorderRadius.circular(8)),
+                        child: const UnpaidOrders(),
+                      ),
+                      Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: kPrimaryLightColor,
+                              borderRadius: BorderRadius.circular(8)),
+                          child: const PaidOrders()
 
-                          Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                color: kPrimaryLightColor,
-                                borderRadius: BorderRadius.circular(8)),
-                            child: const UnpaidOrders(),
-                          ),
-
-                          Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                  color: kPrimaryLightColor,
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: const PaidOrders()
-
-                            //child:// NoNeedToPayOffers(),
+                          //child:// NoNeedToPayOffers(),
                           )
-                        ])
-                ),
+                    ])),
               )
             ],
           ),
         ),
       ),
     );
-
   }
 }
 
@@ -292,12 +285,13 @@ class AvailableUnpaidOrders extends StatelessWidget {
   const AvailableUnpaidOrders({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-
-    return _FilteredListView(filter: (querySnapshot){
+    return _FilteredListView(filter: (querySnapshot) {
       Post post = Post.fromDocumentSnapshot(querySnapshot);
       final startDate = DateFormat('yyyy-MM-dd').parse(post.startDate);
-      final now = DateFormat('yyyy-MM-dd').parse(DateFormat('yyyy-MM-dd').format(DateTime.now()));
-      if(startDate.millisecondsSinceEpoch <= now.millisecondsSinceEpoch && post.paymentStatus != "all_paid"){
+      final now = DateFormat('yyyy-MM-dd')
+          .parse(DateFormat('yyyy-MM-dd').format(DateTime.now()));
+      if (startDate.millisecondsSinceEpoch <= now.millisecondsSinceEpoch &&
+          post.paymentStatus != "all_paid") {
         return true;
       }
       return false;
@@ -310,11 +304,13 @@ class UnpaidOrders extends StatelessWidget {
   const UnpaidOrders({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return _FilteredListView(filter: (querySnapshot){
+    return _FilteredListView(filter: (querySnapshot) {
       Post post = Post.fromDocumentSnapshot(querySnapshot);
       final startDate = DateFormat('yyyy-MM-dd').parse(post.startDate);
-      final now = DateFormat('yyyy-MM-dd').parse(DateFormat('yyyy-MM-dd').format(DateTime.now()));
-      if(startDate.millisecondsSinceEpoch > now.millisecondsSinceEpoch && post.paymentStatus != "all_paid"){
+      final now = DateFormat('yyyy-MM-dd')
+          .parse(DateFormat('yyyy-MM-dd').format(DateTime.now()));
+      if (startDate.millisecondsSinceEpoch > now.millisecondsSinceEpoch &&
+          post.paymentStatus != "all_paid") {
         return true;
       }
       return false;
@@ -322,15 +318,15 @@ class UnpaidOrders extends StatelessWidget {
   }
 }
 
-//SubTab لا تحتاج للدفع
+//SubTab
 
 class PaidOrders extends StatelessWidget {
-  const PaidOrders ({Key? key}) : super(key: key);
+  const PaidOrders({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return  _FilteredListView(filter: (querySnapshot) {
+    return _FilteredListView(filter: (querySnapshot) {
       Post post = Post.fromDocumentSnapshot(querySnapshot);
-      if(post.paymentStatus == "all_paid"){
+      if (post.paymentStatus == "all_paid") {
         return true;
       }
       return false;
@@ -345,13 +341,12 @@ class _FilteredListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FirestoreQueryBuilder(
-        query:  PostDatabase.postsCollection
+        query: PostDatabase.postsCollection
             .where("companyID", isEqualTo: App.user.id)
             .where("offerStatus", isEqualTo: "fully_assigned")
             .orderBy("timePosted", descending: true),
         pageSize: 10,
-        builder: (context, snapshot, _){
-
+        builder: (context, snapshot, _) {
           if (snapshot.isFetching) {
             return const Center(
               child: SizedBox(
@@ -360,8 +355,7 @@ class _FilteredListView extends StatelessWidget {
                   child: SpinKitRing(
                     color: kPrimaryColor,
                     size: 50.0,
-                  )
-              ),
+                  )),
             );
           }
 
@@ -373,18 +367,18 @@ class _FilteredListView extends StatelessWidget {
             );
           }
 
-          if(snapshot.docs.isEmpty){
+          if (snapshot.docs.isEmpty) {
             return emptyListBuilder(context);
           }
 
           bool result = false;
-          for(DocumentSnapshot querySnapshot in snapshot.docs){
+          for (DocumentSnapshot querySnapshot in snapshot.docs) {
             result = filter(querySnapshot);
 
-            if(result) break;
+            if (result) break;
           }
 
-          if(!result) return emptyListBuilder(context);
+          if (!result) return emptyListBuilder(context);
 
           return ListView.builder(
             itemCount: snapshot.docs.length,
@@ -399,12 +393,11 @@ class _FilteredListView extends StatelessWidget {
             shrinkWrap: true,
             scrollDirection: Axis.vertical,
           );
-        }
-    );
+        });
   }
 
-
-  Widget errorBuilder(BuildContext context, Object error, StackTrace stackTrace) {
+  Widget errorBuilder(
+      BuildContext context, Object error, StackTrace stackTrace) {
     if (kDebugMode) {
       print(error.toString());
     }
@@ -416,18 +409,17 @@ class _FilteredListView extends StatelessWidget {
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.red,
         textColor: Colors.white,
-        fontSize: 14.0
-    );
+        fontSize: 14.0);
 
     return Container();
   }
 
-  Widget emptyListBuilder(BuildContext context){
+  Widget emptyListBuilder(BuildContext context) {
     return const SizedBox(
       height: 200,
       child: Center(
         child: Text(
-          'لبس هناك عروض مسنودة',
+          'ليس هناك عروض ',
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20,
@@ -438,15 +430,16 @@ class _FilteredListView extends StatelessWidget {
     );
   }
 
-  Widget itemBuilder(BuildContext context, DocumentSnapshot querySnapshot, bool Function(DocumentSnapshot<Object?> snapshot) filter){
+  Widget itemBuilder(BuildContext context, DocumentSnapshot querySnapshot,
+      bool Function(DocumentSnapshot<Object?> snapshot) filter) {
     Post post = Post.fromDocumentSnapshot(querySnapshot);
-    if(filter(querySnapshot)){
-      return PostCardCompany(post: post, filters: const ["accepted"], skipDetails: post.paymentStatus != 'all_paid');
-    }else {
+    if (filter(querySnapshot)) {
+      return PostCardCompany(
+          post: post,
+          filters: const ["accepted"],
+          skipDetails: post.paymentStatus != 'all_paid');
+    } else {
       return const SizedBox();
     }
   }
-
 }
-
-
