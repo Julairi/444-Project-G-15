@@ -8,8 +8,8 @@ import 'package:esaa/services/database/database.dart';
 import 'package:flutter/material.dart';
 
 // ignore: camel_case_types
-class savedOffers extends StatelessWidget {
-  const savedOffers({Key? key}) : super(key: key);
+class SavedOffers extends StatelessWidget {
+  const SavedOffers({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +28,11 @@ class savedOffers extends StatelessWidget {
           const SizedBox(height: 10),
           CustomListView(
               query: PostDatabase.postsCollection
-                  .where("userID", isEqualTo: App.user.id)
-                  .where('saved', isEqualTo: true)
+                  .where("saved", arrayContains: App.user.id)
                   .where("offerStatus", whereIn: [
-                    
                 "pending",
+                "assigned",
+                "fully_assigned"
               ]).orderBy("timePosted", descending: true),
               emptyListWidget: const SizedBox(
                 child: Text(
@@ -46,8 +46,7 @@ class savedOffers extends StatelessWidget {
               ),
               itemBuilder: (context, querySnapshot) {
                 Post post = Post.fromDocumentSnapshot(querySnapshot);
-                return PostCardCompany(
-                    post: post, filters: const ["pending", "accepted"]);
+                return PostCardJobSeeker(post: post);
               }),
         ],
       )),

@@ -5,8 +5,9 @@ import 'package:get/get.dart';
 class UserController extends GetxController {
 
   final Rx<User> user = User.empty().obs;
+  final RxList<Review> reviews = <Review>[].obs;
 
-  final RxInt _currentIndex = 1.obs;
+  final RxInt _currentIndex = 2.obs;
   final RxBool isLoading = false.obs;
 
   void bindUser() {
@@ -17,8 +18,17 @@ class UserController extends GetxController {
     user.bindStream(UserDatabase(userID).user);
   }
 
+  void bindReviews() {
+    reviews.bindStream(ReviewDatabase(Auth().uID).reviews);
+  }
+
+  void bindReviewsWithID(String userID) {
+    reviews.bindStream(ReviewDatabase(userID).reviews);
+  }
+
   void clearAll(){
     user.value = User.empty();
+    reviews.value = [];
   }
 
 

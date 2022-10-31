@@ -12,12 +12,13 @@ class Post {
       offerStatus,
       companyName,
       companyID,
+      paymentStatus,
       maxNoOfApplicants,
       acceptedApplicants;
   late int payPerHour;
   late DateTime timePosted;
   // ignore: prefer_typing_uninitialized_variables
-  late bool saved;
+  late List saved;
   late bool hasBeenDone;
 
   Post(
@@ -35,6 +36,7 @@ class Post {
       required this.companyID,
       required this.maxNoOfApplicants,
       required this.acceptedApplicants,
+      required this.paymentStatus,
       required this.timePosted,
       required this.saved,
       required this.hasBeenDone});
@@ -54,9 +56,10 @@ class Post {
     offerStatus = "";
     companyName = "";
     companyID = "";
+    paymentStatus = "";
     hasBeenDone = false;
     timePosted = DateTime.now();
-    saved = false;
+    saved = [];
   }
 
   Map<String, dynamic> toMap() {
@@ -75,6 +78,7 @@ class Post {
       'offerStatus': offerStatus,
       'companyName': companyName,
       'companyID': companyID,
+      'paymentStatus': paymentStatus,
       'hasBeenDone': hasBeenDone,
       "timePosted": Timestamp.fromDate(timePosted),
       'saved': saved
@@ -98,9 +102,9 @@ class Post {
         offerStatus: snapshot.get('offerStatus') ?? "",
         companyName: snapshot.get('companyName') ?? "",
         companyID: snapshot.get('companyID') ?? "",
+        paymentStatus: snapshot.get('paymentStatus') ?? "",
         hasBeenDone: snapshot.get('hasBeenDone') ?? "",
         timePosted: timestamp.toDate(),
-        saved: snapshot.get('saved'));
+        saved: snapshot.get('saved') ?? []);
   }
-  
 }

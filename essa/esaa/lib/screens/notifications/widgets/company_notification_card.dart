@@ -1,12 +1,9 @@
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/models/models.dart';
-import 'package:esaa/screens/company_home/company_home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 
-import '../../../services/database/post_database.dart';
 
 class CompanyNotificationCard extends StatelessWidget {
   final PushNotification notification;
@@ -40,32 +37,29 @@ class CompanyNotificationCard extends StatelessWidget {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            const Color.fromARGB(255, 105, 110, 112).withOpacity(0),
-                            const Color.fromARGB(255, 64, 69, 71).withOpacity(0.2)
-                          ],
-                          stops: const [0.6, 1]
-                      )
-                  ),
+                        const Color.fromARGB(255, 105, 110, 112).withOpacity(0),
+                        const Color.fromARGB(255, 64, 69, 71).withOpacity(0.2)
+                      ],
+                          stops: const [
+                        0.6,
+                        1
+                      ])),
                   child: Row(
                     children: [
                       const SizedBox(
                         height: 20,
                         width: 20,
                       ),
-
                       const Icon(
                         Icons.notifications,
                         color: kPrimaryColor,
                         size: 35,
                       ),
-
                       const SizedBox(
                         height: 20,
                         width: 20,
                       ),
-
-                      Text(
-                          notification.title,
+                      Text(notification.title,
                           style: const TextStyle(
                               color: kPrimaryColor,
                               fontSize: defaultFontSize,
@@ -90,16 +84,15 @@ class CompanyNotificationCard extends StatelessWidget {
                         color: Color.fromARGB(255, 6, 6, 6),
                         fontSize: 18,
                         fontFamily: 'ElMessiri',
-                        overflow: TextOverflow.fade
-                    ),
+                        overflow: TextOverflow.fade),
                   ),
                 ),
                 TextButton(
                     onPressed: () async {
-                       //Get.to(() =>  OrderDetails()),
-                      
+                      //Get.to(() =>  OrderDetails()),
+
                       Get.back();
-                      Get.find<UserController>().changePage(1);
+                      Get.find<UserController>().changePage(2);
                     },
                     child: const Text('تفاصيل الطلب')),
               ],

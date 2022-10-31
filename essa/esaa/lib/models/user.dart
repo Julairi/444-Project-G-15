@@ -12,7 +12,6 @@ class User {
       userType,
       description,
       notificationToken;
-  late List rates;
 
   User({
     required this.name,
@@ -26,7 +25,6 @@ class User {
     required this.userType,
     required this.description,
     required this.notificationToken,
-    required this.rates,
   });
 
   User.empty() {
@@ -41,7 +39,6 @@ class User {
     address = "";
     description = "";
     notificationToken = "";
-    rates = [];
   }
 
   String get firstName {
@@ -71,7 +68,6 @@ class User {
       'address': address,
       'description': description,
       'notificationToken': notificationToken,
-      'rates': rates,
     };
   }
 
@@ -88,7 +84,6 @@ class User {
       address: snapshot.get('address') ?? "",
       description: snapshot.get('description') ?? "",
       notificationToken: snapshot.get('notificationToken') ?? "",
-      rates: snapshot.get('rates') ?? [],
     );
   }
 }

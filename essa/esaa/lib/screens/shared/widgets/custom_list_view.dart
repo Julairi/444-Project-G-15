@@ -28,6 +28,7 @@ class CustomListView extends StatelessWidget {
         scrollDirection: Axis.vertical,
         query: query,
         pageSize: 10,
+        padding: EdgeInsets.zero,
         absoluteSize: absoluteSize,
         physics: physics,
         emptyListBuilder: (context) {

@@ -1,18 +1,20 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
+
+import 'package:esaa/app.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/models/models.dart';
 import 'package:esaa/screens/company_home/company_home.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
-
-import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'dart:developer';
 import 'package:esaa/services/notification.dart' as notification;
 
 class OrderDetails extends StatelessWidget {
@@ -23,12 +25,14 @@ class OrderDetails extends StatelessWidget {
       : super(key: key) {
     Get.put(OrderDetailsController());
     Get.find<OrderDetailsController>().bindUserWithID(order.userID);
+    Get.find<OrderDetailsController>().bindReviewsWithID(order.userID);
   }
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<OrderDetailsController>();
-    var riyals = calcRiyal(order);
+    // ignore: unused_local_variable
+    var riyals = _calcRiyal(order);
     return CustomAppbar(
         title: const Text("تفاصيل الطلب ",
             style: TextStyle(
@@ -71,7 +75,7 @@ class OrderDetails extends StatelessWidget {
                         const Expanded(child: SizedBox()),
                         TextButton(
                           onPressed: () =>
-                              Get.to(() => const JobSeekerProfile()),
+                              Get.to(() => const CompanyJobSeekerProfile()),
                           child: const Text(
                             'عرض الملف الشخصي',
                             style: TextStyle(
@@ -432,6 +436,19 @@ class OrderDetails extends StatelessWidget {
     await OrderDatabase()
         .updateOrderDetails({'id': order.id, 'orderStatus': order.orderStatus});
 
+    await ConversationDatabase().createConversation(
+        Conversation(
+            title: "${controller.user.value.name}//${App.user.name}//${post.title}",
+            orderID: order.id,
+            members: [
+              controller.user.value.id,
+              App.user.id,
+            ],
+            messages: [],
+            lastUpdated: DateTime.now()
+        ).toMap()
+    );
+
     await notification.Notification().sendNotification(
         Get.find<OrderDetailsController>().user.value,
         PushNotification(
@@ -451,6 +468,7 @@ class OrderDetails extends StatelessWidget {
       'id': post.id,
       'offerStatus': post.offerStatus,
       'acceptedApplicants': post.acceptedApplicants,
+      "paymentStatus": 'not_all_paid',
     });
 
     controller.isAccepting.value = false;
@@ -543,8 +561,21 @@ class OrderDetails extends StatelessWidget {
       "hasBeenPaid": order.hasBeenPaid,
     });
 
+    final orders = await OrderDatabase().getOrders(post.id);
+
+    int count = 0;
+
+    for(Order order in orders){
+      if(order.hasBeenPaid) count++;
+    }
+
+    await PostDatabase().updatePostDetails({
+      "id": post.id,
+      "paymentStatus": count == orders.length ? 'all_paid' : 'not_all_paid',
+    });
+
     //Actual payment method
-    await initPayment(amount: payDollars * 100, email: 'email@test.com');
+    await _initPayment(amount: payDollars * 100, email: 'email@test.com');
   }
 }
 
@@ -553,7 +584,7 @@ class OrderDetailsController extends UserController {
   RxBool isRejecting = false.obs;
 }
 
-Future<void> initPayment(
+Future<void> _initPayment(
     {required String email, required double amount}) async {
   try {
     // 1. Create a payment intent on the server
@@ -590,7 +621,7 @@ Future<void> initPayment(
   }
 }
 
-Future<bool> postTime(Order order) async {
+Future<bool> _postTime(Order order) async {
   Post? myPost = await PostDatabase().getPost(order.postID);
   var now = DateTime.now();
   var nMon = now.month;
@@ -612,7 +643,7 @@ Future<bool> postTime(Order order) async {
   return false;
 }
 
-Future<double> calcRiyal(Order order) async {
+Future<double> _calcRiyal(Order order) async {
   var postID = order.postID;
   Post? myPost = await PostDatabase().getPost(postID);
 

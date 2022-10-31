@@ -4,7 +4,6 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/models/models.dart';
-import 'package:esaa/screens/profile_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -12,13 +11,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:overlay_support/overlay_support.dart';
 
+import 'chat/chat.dart';
 import 'company_home/company_home.dart';
 import 'job_seeker_home/job_seeker_home.dart';
 import 'post_job/post_job.dart';
+import 'profiles/profiles.dart';
 
 class Default extends StatefulWidget {
   Default({Key? key}) : super(key: key) {
     Get.find<UserController>().bindUser();
+    Get.find<UserController>().bindReviews();
   }
 
   @override
@@ -91,8 +93,8 @@ class _DefaultState extends State<Default> {
 
             return CurvedNavigationBar(
                 backgroundColor: kFillColor,
-                color: kPrimaryColor,
-                animationDuration: const Duration(milliseconds: 40),
+                color: kPrimaryLightColor,
+                animationDuration: const Duration(milliseconds: 60),
                 index: controller.currentIndex,
                 items: items,
                 onTap: controller.changePage);
@@ -105,57 +107,69 @@ class _DefaultState extends State<Default> {
       return const [
         Icon(
           Icons.document_scanner,
-          color: Colors.white,
+          color: KGrey,
         ),
         Icon(
           Icons.work_outline_outlined,
-          color: Colors.white,
+          color: KGrey,
         ),
         Icon(
           Icons.home,
-          color: Colors.white,
+          color: KGrey,
+        ),
+        Icon(
+          Icons.chat,
+          color: KGrey,
         ),
         Icon(
           Icons.account_circle,
-          color: Colors.white,
+          color: KGrey,
         ),
       ];
     } else if (userType == "company") {
       return const [
         Icon(
           Icons.add_rounded,
-          color: Colors.white,
+          color: KGrey,
         ),
         Icon(
           Icons.home,
-          color: Colors.white,
+          color: KGrey,
         ),
         Icon(
           Icons.document_scanner_rounded,
-          color: Colors.white,
+          color: KGrey,
+        ),
+        Icon(
+          Icons.chat,
+          color: KGrey,
         ),
         Icon(
           Icons.account_circle,
-          color: Colors.white,
+          color: KGrey,
         ),
       ];
     }
     return const [
       Icon(
         Icons.add_rounded,
-        color: Colors.white,
+        color: KGrey,
       ),
       Icon(
         Icons.home,
-        color: Colors.white,
+        color: KGrey,
       ),
       Icon(
         Icons.document_scanner_rounded,
-        color: Colors.white,
+        color: KGrey,
+      ),
+      Icon(
+        Icons.chat,
+        color: KGrey,
       ),
       Icon(
         Icons.account_circle,
-        color: Colors.white,
+        color: KGrey,
       ),
     ];
   }
@@ -166,40 +180,41 @@ class _DefaultState extends State<Default> {
     if (userType == "jobSeeker") {
       switch (index) {
         case 0:
-          widget =  AvailablePostsScreen();
+          widget = const SavedOffers();
           break;
         case 1:
           widget = const JobSeekerTabBarPage();
           break;
         case 2:
-          widget =  AvailablePostsScreen();
+          widget = AvailablePostsScreen();
           break;
         case 3:
-          widget = const ProfileScreen();
+          widget = const Conversations();
+          break;
+        case 4:
+          widget = JobSeekerProfile();
           break;
 
         default:
-          widget =  AvailablePostsScreen();
+          widget = AvailablePostsScreen();
           break;
       }
     } else {
       switch (index) {
         case 0:
-          widget = const PostJob(); //post a new job
+          widget = const PostJob();
           break;
-
         case 1:
-          widget =
-              const CompanyPosts(); //view all posts... both assigned and unassigned
+          widget = const CompanyPosts();
           break;
-
         case 2:
-          widget =
-              const CompanyTabBarPage(); //view all posts... differentiate assigned and unassigned
+          widget = const CompanyTabBarPage();
           break;
-
         case 3:
-          widget = const ProfileScreen();
+          widget = const Conversations();
+          break;
+        case 4:
+          widget = CompanyProfile();
           break;
 
         default:
@@ -260,7 +275,7 @@ class _DefaultState extends State<Default> {
         leading: const Icon(Icons.notifications),
         subtitle: Text(notification.body),
         background: kPrimaryColor,
-        duration: const Duration(seconds: 2),
+        duration: const Duration(seconds: 3),
       );
     }
   }

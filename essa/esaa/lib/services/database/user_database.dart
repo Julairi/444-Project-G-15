@@ -21,8 +21,10 @@ class UserDatabase {
 
       String? token = await FirebaseMessaging.instance.getToken();
 
-      await updateDetails(
-          {"id": values['id'], "notificationToken": token ?? ""});
+      await updateDetails({
+        "notificationToken": token ?? ""
+      });
+
     } on FirebaseException catch (e) {
       Default.showDatabaseError(e);
     }
@@ -36,28 +38,9 @@ class UserDatabase {
     }
   }
 
-  Future<void> rateUser(double rating) async {
+  Future<void> updateUserDetails(Map<String, dynamic> values) async {
     try {
-      await usersCollection.doc(id).update({
-        'rates': FieldValue.arrayUnion([rating])
-      });
-    } on FirebaseException catch (e) {
-      Default.showDatabaseError(e);
-    }
-  }
-
-  Future<void> rateUsercom(
-      String jsname, double rating, String commentt) async {
-    try {
-      await usersCollection.doc(id).update({
-        'rates': FieldValue.arrayUnion([
-          {
-            'name': jsname,
-            'stars': rating,
-            'comment': commentt,
-          }
-        ])
-      });
+      await usersCollection.doc(values['id']).update(values);
     } on FirebaseException catch (e) {
       Default.showDatabaseError(e);
     }
@@ -87,4 +70,18 @@ class UserDatabase {
       return null;
     }
   }
+
+  Stream<User> getUserAsStream (String id) {
+    return usersCollection
+        .where("id", isEqualTo: id)
+        .snapshots().map((querySnapshot) {
+      User user = User.empty();
+
+      for (QueryDocumentSnapshot snapshot in querySnapshot.docs) {
+        user = User.fromDocumentSnapshot(snapshot);
+      }
+      return user;
+    });
+  }
+
 }

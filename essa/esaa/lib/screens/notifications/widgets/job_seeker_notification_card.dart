@@ -16,7 +16,7 @@ class JobSeekerNotificationCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         Get.back();
-        Get.find<UserController>().changePage(1);
+        Get.find<UserController>().changePage(2);
       },
       child: Card(
       shape: RoundedRectangleBorder(

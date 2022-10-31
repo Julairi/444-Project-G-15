@@ -1,13 +1,15 @@
+// ignore_for_file: camel_case_types, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
-class searchbox extends StatefulWidget {
-  const searchbox({Key? key}) : super(key: key);
+class SearchBox extends StatefulWidget {
+  const SearchBox({Key? key}) : super(key: key);
 
   @override
-  _searchboxState createState() => _searchboxState();
+  _SearchBoxState createState() => _SearchBoxState();
 }
 
-class _searchboxState extends State<searchbox> {
+class _SearchBoxState extends State<SearchBox> {
   final TextEditingController _searchController = TextEditingController();
   String searchText = '';
 

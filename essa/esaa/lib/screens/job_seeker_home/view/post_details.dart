@@ -2,6 +2,7 @@ import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/models/models.dart';
 import 'package:esaa/screens/apply/apply_screen.dart';
+import 'package:esaa/screens/chat/chat.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,10 +13,10 @@ import '../widgets/company_posts_for_job_seeker.dart';
 import 'package:esaa/screens/companyProfileForJS.dart';
 
 class PostDetails extends StatelessWidget {
+  final Order? order;
   final Post post;
   final bool canApply;
-
-  const PostDetails({required this.post, this.canApply = true, Key? key})
+  const PostDetails({this.order, required this.post, this.canApply = true, Key? key})
       : super(key: key);
 
   @override
@@ -28,6 +29,10 @@ class PostDetails extends StatelessWidget {
               fontWeight: FontWeight.w500,
               overflow: TextOverflow.ellipsis)),
       showLeading: true,
+      showChat: order == null ? false : order!.orderStatus == "accepted",
+      onChatPressed: () {
+        Get.to(() => ConversationScreen(order: order!, post: post));
+      },
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Container(
@@ -74,7 +79,7 @@ class PostDetails extends StatelessWidget {
                       () => ProfileScreenForJS(companyID: post.companyID)),
                   child: Row(
                     children: [
-                      Icon(Icons.business, color: kSPrimaryColor, size: 30),
+                      const Icon(Icons.business, color: kSPrimaryColor, size: 30),
                       const SizedBox(
                         height: 20,
                         width: 12,
@@ -319,7 +324,7 @@ class PostDetails extends StatelessWidget {
 
   Future<void> _sendPayReminder(Post post) async {
     final user = await UserDatabase(post.companyID).getUser(post.companyID);
-   //final jobSeekerName= await OrderDatabase().
+    //final jobSeekerName= await OrderDatabase().
     if (user == null) {
       Fluttertoast.showToast(
           msg: "Could not get company details, try again later",
@@ -333,7 +338,7 @@ class PostDetails extends StatelessWidget {
     var nMon = now.month;
     var nDay = now.day;
     var nYear = now.year;
-    var postDate = DateTime.parse(post!.startDate);
+    var postDate = DateTime.parse(post.startDate);
 
     var postMon = postDate.month;
     var postDay = postDate.day;
@@ -381,10 +386,8 @@ class PostDetails extends StatelessWidget {
       "id": post.id,
       "hasBeenDone": post.hasBeenDone,
     });
-    await notification.Notification().sendNotification(
-        user,
-        PushNotification(
-            title: " تدكير بالدفع", body: "يمكنك الدفع للموظف"));
+    await notification.Notification().sendNotification(user,
+        PushNotification(title: " تدكير بالدفع", body: "يمكنك الدفع للموظف"));
   }
 
   _buttonColor() {

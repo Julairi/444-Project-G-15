@@ -1,18 +1,41 @@
 import 'package:esaa/app.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
+import 'package:esaa/models/models.dart';
+import 'package:esaa/screens/company_home/company_home.dart';
+import 'package:esaa/screens/review_page.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
-import '../models/order.dart';
-import 'company_home/widgets/full_job_list.dart';
-import 'company_home/widgets/order_card.dart';
-
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
+
+  @override
+  ProfileScreenState createState() => ProfileScreenState();
+}
+
+class ProfileScreenState extends State<ProfileScreen> {
+  bool EN = false;
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+
+  saveNewValues() {
+    App.user.name = nameController.text;
+  }
+
+  void setInitialValues(TextEditingController nameController) {
+    nameController.text = App.user.name;
+    emailController.text = App.user.email;
+  }
+
+  @override
+  void initState() {
+    setInitialValues(nameController);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +46,20 @@ class ProfileScreen extends StatelessWidget {
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
                 overflow: TextOverflow.ellipsis)),
-        showNotification: true,
+        showLogout: true,
         child: SingleChildScrollView(
           child: Column(
             children: [
               const SizedBox(height: 30),
               if (App.user.userType == "company")
                 Container(
-                    margin: EdgeInsets.all(100.0),
-                    decoration: BoxDecoration(shape: BoxShape.circle),
+                    margin: const EdgeInsets.all(100.0),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
                     width: double.infinity,
                     child: App.user.imgUrl == ''
-                        ? Icon(
+                        ? const Icon(
                             Icons.person,
                             size: 80,
                             color: Colors.white,
@@ -48,7 +73,7 @@ class ProfileScreen extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
                   child: Row(
                     children: [
                       const Icon(
@@ -56,16 +81,29 @@ class ProfileScreen extends StatelessWidget {
                         color: kPrimaryColor,
                         size: 28,
                       ),
-                      const SizedBox(
-                        height: 20,
-                        width: 15,
-                      ),
-                      Text(App.user.name,
-                          style: const TextStyle(
-                              color: Colors.black87,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              overflow: TextOverflow.ellipsis)),
+                      Expanded(
+                          child: TextFormField(
+                        controller: nameController,
+                        //enabled: EN,
+                        //initialValue: App.user.name,
+                        onSaved: (newValue) =>
+                            nameController.text = newValue!.trim().toString(),
+                        validator: (val) => val!.trim().isEmpty
+                            ? 'يجب ان يكون الاسم اكثر من ثلاث أحرف'
+                            : null,
+                        onChanged: (val) => setState(() {
+                          EN = true;
+                        }),
+                        style: const TextStyle(
+                          color: Colors.black87,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          //overflow: TextOverflow.ellipsis
+                        ),
+                        decoration: const InputDecoration(
+                          fillColor: Colors.white,
+                        ),
+                      )),
                     ],
                   ),
                 ),
@@ -79,24 +117,28 @@ class ProfileScreen extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 5, vertical: 0),
                   child: Row(
                     children: [
                       const Icon(
                         Icons.email,
                         color: kPrimaryColor,
-                        size: 28,
+                        size: 25,
                       ),
-                      const SizedBox(
-                        height: 20,
-                        width: 15,
-                      ),
-                      Text(App.user.email,
+                      Expanded(
+                        child: TextFormField(
+                          initialValue: App.user.email,
+                          enabled: false,
                           style: const TextStyle(
                               color: Colors.black87,
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
-                              overflow: TextOverflow.ellipsis)),
+                              overflow: TextOverflow.ellipsis),
+                          decoration: const InputDecoration(
+                            fillColor: Colors.white,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -179,7 +221,7 @@ class ProfileScreen extends StatelessWidget {
                     child: Row(
                       children: [
                         const Icon(
-                          Icons.location_city,
+                          Icons.pin_drop,
                           color: kPrimaryColor,
                           size: 28,
                         ),
@@ -198,6 +240,19 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
               const SizedBox(height: 30),
+//===================== update btn===============================
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: ElevatedButton(
+                  onPressed: EN ? saveNewValues() : null,
+                  style: ElevatedButton.styleFrom(
+                      primary: kPrimaryColor, elevation: 0),
+                  child: const Text(
+                    "حفظ التغييرات",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                ),
+              ),
               if (App.user.userType == "jobSeeker")
                 const Align(
                   alignment: Alignment.center,
@@ -210,22 +265,6 @@ class ProfileScreen extends StatelessWidget {
                         overflow: TextOverflow.ellipsis),
                   ),
                 ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    Get.find<UserController>().clearAll();
-                    await Auth().signOut();
-                    Get.offAndToNamed('/welcome_screen');
-                  },
-                  style: ElevatedButton.styleFrom(
-                      primary: kPrimaryColor, elevation: 0),
-                  child: const Text(
-                    "تسجيل الخروج",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                ),
-              ),
               if (App.user.userType == "jobSeeker")
                 CustomListView(
                     absoluteSize: 3,
@@ -271,61 +310,74 @@ class ProfileScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  RatingBar.builder(
-                    initialRating: _sumRating(App.user.rates),
-                    minRating: 1,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                    itemBuilder: (context, _) => const Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                      size: 18,
-                    ),
-                    ignoreGestures: true,
-                    onRatingUpdate: (double value) {},
+                  GetX<UserController>(
+                      builder: (controller) {
+                        return RatingBar.builder(
+                          initialRating: _sumRating(App.reviews),
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          itemBuilder: (context, _) => const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                            size: 18,
+                          ),
+                          ignoreGestures: true,
+                          onRatingUpdate: (double value) {},
+                        );
+                      }
                   ),
+
                   const SizedBox(width: 10),
-                  Text(
-                    '(${App.user.rates.isNotEmpty ? App.user.rates.length : 'لايوجد تقييمات'})',
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: App.user.rates.isNotEmpty ? 24 : 16,
-                        fontWeight: FontWeight.w500),
+
+                  GetX<UserController>(
+                      builder: (controller) {
+                        return Text(
+                          '(${App.reviews.isNotEmpty ? App.reviews.length : 'No ratings yet'})',
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: App.reviews.isNotEmpty ? 24 : 16,
+                              fontWeight: FontWeight.w500
+                          ),
+                        );
+                      }
                   )
                 ],
               ),
               const SizedBox(height: 10),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    Get.find<UserController>().clearAll();
-                    await Auth().signOut();
-                    Get.offAndToNamed('/welcome_screen');
-                  },
-                  style: ElevatedButton.styleFrom(
-                      primary: kPrimaryColor, elevation: 0),
-                  child: const Text(
-                    "تسجيل الخروج",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: GestureDetector(
+                    onTap: () => Get.to(() => ReviewPage(userID: App.user.id)),
+                    child: const Text(
+                      "See reviews",
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: kPrimaryColor,
+                          fontWeight: FontWeight.w500
+                      ),
+                    ),
                   ),
                 ),
               ),
+              const SizedBox(height: 20),              const SizedBox(height: 10),
             ],
           ),
         ));
   }
 
-  double _sumRating(List<dynamic> rates) {
+  double _sumRating(List<Review> reviews) {
     double totalValue = 0;
-    for (double rating in rates) {
-      totalValue = totalValue + rating;
+    for(Review review in reviews){
+      totalValue = totalValue + review.rating;
     }
 
-    if (totalValue == 0 || rates.isEmpty) return 0;
+    if(totalValue == 0 || reviews.isEmpty) return 0;
 
-    return totalValue / rates.length;
+    return totalValue / reviews.length;
   }
 }

@@ -123,7 +123,22 @@ class OrderDatabase {
       Default.showDatabaseError(e);
       return [];
     }
+
   }
 
+  Stream<List<Order>> getOrdersAsStream(String postID) {
+    return ordersCollection
+        .where("postID", isEqualTo: postID)
+        .snapshots().map((querySnapshot) {
+
+      List<Order> orders = [];
+      for (QueryDocumentSnapshot snapshot in querySnapshot.docs) {
+        Order order = Order.fromDocumentSnapshot(snapshot);
+        orders.add(order);
+      }
+      return orders;
+    }
+    );
+  }
 
 }

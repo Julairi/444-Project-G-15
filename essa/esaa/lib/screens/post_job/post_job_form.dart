@@ -32,17 +32,6 @@ class PostJobFormState extends State<PostJobForm> {
 
   TimeOfDay timeOfDay = const TimeOfDay(hour: 8, minute: 00);
 
-  void _showTimePicker() {
-    showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    ).then((value) {
-      setState(() {
-        timeOfDay = value!;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final titleField = TextFormField(
@@ -441,6 +430,7 @@ class PostJobFormState extends State<PostJobForm> {
                           ? "1"
                           : applicantsEditingController.text;
                   post.acceptedApplicants = "0";
+                  post.paymentStatus = 'none_paid';
 
                   controller.isLoading.value = true; //Show Indicator
 
@@ -448,7 +438,7 @@ class PostJobFormState extends State<PostJobForm> {
 
                   controller.isLoading.value = false; //Hide Indicator
 
-                  Get.find<UserController>().changePage(1);
+                  Get.find<UserController>().changePage(2);
                 }
               },
               child: Row(

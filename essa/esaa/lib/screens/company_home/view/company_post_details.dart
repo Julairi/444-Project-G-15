@@ -68,7 +68,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                     const SizedBox(height: 30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
+                      children: const [
                         /*  GetX<CompanyPostDetailsController>(
                             builder: (controller) {
                           return IconButton(
@@ -97,7 +97,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                             size: 30,
                           ),
                         ),*/
-                        const SizedBox(
+                        SizedBox(
                           width: 10,
                         ),
                       ],
