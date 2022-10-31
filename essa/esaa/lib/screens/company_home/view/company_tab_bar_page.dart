@@ -131,10 +131,7 @@ class CompanyTabBarPageState extends State<CompanyTabBarPage>
                                   query: PostDatabase.postsCollection
                                       .where("companyID",
                                       isEqualTo: App.user.id)
-                                      .where("offerStatus", whereIn: [
-                                    "assigned",
-                                    "fully_assigned"
-                                  ]),
+                                      .where("offerStatus", isEqualTo: "fully_assigned"),
                                   builder: (context, snapshot, _) {
                                     if (snapshot.isFetching) {
                                       return const SpinKitRing(
@@ -444,7 +441,7 @@ class _FilteredListView extends StatelessWidget {
   Widget itemBuilder(BuildContext context, DocumentSnapshot querySnapshot, bool Function(DocumentSnapshot<Object?> snapshot) filter){
     Post post = Post.fromDocumentSnapshot(querySnapshot);
     if(filter(querySnapshot)){
-      return PostCardCompany(post: post, filters: const ["accepted"]);
+      return PostCardCompany(post: post, filters: const ["accepted"], skipDetails: post.paymentStatus != 'all_paid');
     }else {
       return const SizedBox();
     }

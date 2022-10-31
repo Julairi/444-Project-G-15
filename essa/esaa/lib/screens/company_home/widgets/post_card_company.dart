@@ -4,16 +4,23 @@ import 'package:esaa/screens/company_home/view/company_post_details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../company_home.dart';
+
 class PostCardCompany extends StatelessWidget {
   final Post post;
   final List<String> filters;
-  const PostCardCompany({required this.post, required this.filters, super.key});
+  final bool skipDetails;
+  const PostCardCompany({required this.post, required this.filters, this.skipDetails = false, super.key});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
         onTap: () {
-          Get.to(() => CompanyPostDetails(post: post, filters: filters));
+          if(skipDetails){
+            Get.to(() => PostOrders(post: post, filters: filters));
+          }else {
+            Get.to(() => CompanyPostDetails(post: post, filters: filters));
+          }
         },
         child: Card(
           shape: RoundedRectangleBorder(
@@ -103,9 +110,16 @@ class PostCardCompany extends StatelessWidget {
                                     fontSize: defaultFontSize,
                                     fontWeight: FontWeight.bold,
                                     decoration: TextDecoration.underline,
-                                    overflow: TextOverflow.ellipsis)),
-                            onTap: () => Get.to(() => CompanyPostDetails(
-                                post: post, filters: filters)))
+                                    overflow: TextOverflow.ellipsis)
+                            ),
+                            onTap: () {
+                              if (skipDetails) {
+                                Get.to(() => PostOrders(post: post, filters: filters));
+                              } else {
+                                Get.to(() => CompanyPostDetails(post: post, filters: filters));
+                              }
+                            }
+                        )
                       ],
                     ),
                     const SizedBox(

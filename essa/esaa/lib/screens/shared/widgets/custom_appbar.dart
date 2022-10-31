@@ -36,7 +36,7 @@ class CustomAppbar extends StatelessWidget {
       body: NestedScrollView(
         floatHeaderSlivers: true,
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          if (isCollapsable)
+          if(isCollapsable)
             SliverAppBar(
               title: title,
               flexibleSpace: const FlexibleSpaceBar(),
@@ -65,11 +65,11 @@ class CustomAppbar extends StatelessWidget {
                     : const SizedBox(),
                 showChat
                     ? IconButton(
-                        onPressed: onChatPressed ?? () {},
-                        icon: const Icon(
-                          Icons.chat,
-                          color: kPrimaryColor,
-                        ))
+                    onPressed: onChatPressed ?? () {},
+                    icon: const Icon(
+                      Icons.chat,
+                      color: Colors.white,
+                    ))
                     : const SizedBox(),
                 showLogout
                     ? IconButton(
@@ -101,62 +101,59 @@ class CustomAppbar extends StatelessWidget {
             alignment: Alignment.topCenter,
             children: <Widget>[
               Scaffold(
-                  appBar: isCollapsable
-                      ? null
-                      : AppBar(
-                          title: title,
-                          flexibleSpace: const FlexibleSpaceBar(),
-                          leading: showLeading
-                              ? IconButton(
-                                  onPressed: () => Get.back(),
-                                  icon: const Icon(
-                                    Icons.arrow_back,
-                                    color: kFillColor,
-                                  ))
-                              : const SizedBox(),
-                          actions: [
-                            showNotification
-                                ? IconButton(
-                                    onPressed: () {
-                                      if (App.user.userType == 'jobSeeker') {
-                                        Get.to(() =>
-                                            const JobSeekerNotificationScreen());
-                                      } else {
-                                        Get.to(() =>
-                                            const CompanyNotificationScreen());
-                                      }
-                                    },
-                                    icon: const Icon(
-                                      Icons.notifications,
-                                      color: Colors.white,
-                                    ))
-                                : const SizedBox(),
-                            showChat
-                                ? IconButton(
-                                    onPressed: onChatPressed ?? () {},
-                                    icon: const Icon(
-                                      Icons.chat,
-                                      color: Colors.white,
-                                    ))
-                                : const SizedBox(),
-                            showLogout
-                                ? IconButton(
-                                    onPressed: () async {
-                                      Get.find<UserController>().clearAll();
-                                      await Auth().signOut();
-                                      Get.offAndToNamed('/welcome_screen');
-                                    },
-                                    icon: const Icon(
-                                      Icons.logout_sharp,
-                                      color: kPrimaryColor,
-                                    ))
-                                : const SizedBox(),
-                            const SizedBox(width: defaultPadding)
-                          ],
-                          backgroundColor: kPrimaryColor,
-                        ),
+                  appBar: isCollapsable ? null : AppBar(
+                    title: title,
+                    flexibleSpace: const FlexibleSpaceBar(),
+                    leading: showLeading
+                        ? IconButton(
+                        onPressed: () => Get.back(),
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: kFillColor,
+                        ))
+                        : const SizedBox(),
+                    actions: [
+                      showNotification
+                          ? IconButton(
+                          onPressed: () {
+                            if (App.user.userType == 'jobSeeker') {
+                              Get.to(() => const JobSeekerNotificationScreen());
+                            } else {
+                              Get.to(() => const CompanyNotificationScreen());
+                            }
+                          },
+                          icon: const Icon(
+                            Icons.notifications,
+                            color: Colors.white,
+                          ))
+                          : const SizedBox(),
+                      showChat
+                          ? IconButton(
+                          onPressed: onChatPressed ?? () {},
+                          icon: const Icon(
+                            Icons.chat,
+                            color: Colors.white,
+                          ))
+                          : const SizedBox(),
+                      showLogout
+                          ? IconButton(
+                          onPressed: () async {
+                            Get.find<UserController>().clearAll();
+                            await Auth().signOut();
+                            Get.offAndToNamed('/welcome_screen');
+                          },
+                          icon: const Icon(
+                            Icons.logout_sharp,
+                            color: kPrimaryColor,
+                          ))
+                          : const SizedBox(),
+                      const SizedBox(width: defaultPadding)
+                    ],
+                    backgroundColor: kPrimaryColor,
+                  ),
                   backgroundColor: Colors.transparent,
-                  body: child)
+                  body: child
+              )
             ],
           ),
         ),

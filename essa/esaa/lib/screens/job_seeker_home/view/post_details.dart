@@ -16,8 +16,7 @@ class PostDetails extends StatelessWidget {
   final Order? order;
   final Post post;
   final bool canApply;
-  const PostDetails(
-      {this.order, required this.post, this.canApply = true, Key? key})
+  const PostDetails({this.order, required this.post, this.canApply = true, Key? key})
       : super(key: key);
 
   @override
@@ -80,8 +79,7 @@ class PostDetails extends StatelessWidget {
                       () => ProfileScreenForJS(companyID: post.companyID)),
                   child: Row(
                     children: [
-                      const Icon(Icons.business,
-                          color: kSPrimaryColor, size: 30),
+                      const Icon(Icons.business, color: kSPrimaryColor, size: 30),
                       const SizedBox(
                         height: 20,
                         width: 12,
@@ -411,7 +409,7 @@ class PostDetails extends StatelessWidget {
       return kPrimaryColor.withOpacity(0.3);
     } else if (post.hasBeenDone) {
       //return Colors.grey.withOpacity(0.4);
-      return Colors.grey.withOpacity(0.4);
+      return kPrimaryColor.withOpacity(0.3);
     }
   }
 }
