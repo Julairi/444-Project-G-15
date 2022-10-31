@@ -16,6 +16,7 @@ import 'package:intl/intl.dart';
 import 'package:rating_dialog/rating_dialog.dart';
 import '../company_home.dart';
 
+
 class OrderCard extends StatelessWidget {
   final Order order;
   final Post? post;
@@ -144,37 +145,15 @@ class OrderCard extends StatelessWidget {
                           onTap: () async {
                             if (post == null) {
                               final orderPost =
-                                  await PostDatabase().getPost(order.postID);
+                              await PostDatabase().getPost(order.postID);
 
-                              Get.to(() => PostDetails(
-                                  order: order,
-                                  post: orderPost!,
-                                  canApply: false));
+                              Get.to(() => PostDetails(order: order, post: orderPost!, canApply: false));
                             } else {
                               Get.to(() =>
                                   OrderDetails(order: order, post: post!));
                             }
                           },
                         ),
-                        const SizedBox(
-                          height: 20,
-                          width: 10,
-                        ),
-                        if (order.orderStatus == "pending" &&
-                            App.user.userType == 'jobSeeker')
-                          GestureDetector(
-                            child: const Text("ألغ تقديمك",
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 153, 69, 55),
-                                    fontSize: defaultFontSize,
-                                    fontWeight: FontWeight.bold,
-                                    decoration: TextDecoration.underline,
-                                    overflow: TextOverflow.ellipsis)),
-                            onTap: () async {
-                              await OrderDatabase()
-                                  .withdraw(order.postID, order.userID);
-                            },
-                          ),
                       ],
                     ),
                     const SizedBox(
@@ -197,48 +176,50 @@ class OrderCard extends StatelessWidget {
                               fontSize: defaultFontSize,
                               fontWeight: FontWeight.bold,
                               overflow: TextOverflow.ellipsis)),
+
                     const SizedBox(
                       height: 20,
                       width: 15,
                     ),
+
                     if (order.orderStatus == "accepted" && post != null)
-                      Builder(builder: (context) {
-                        final startDate =
-                            DateFormat('yyyy-MM-dd').parse(post!.startDate);
-                        final now = DateFormat('yyyy-MM-dd').parse(
-                            DateFormat('yyyy-MM-dd').format(DateTime.now()));
-                        if (startDate.millisecondsSinceEpoch <=
-                                now.millisecondsSinceEpoch &&
-                            !order.hasBeenPaid) {
-                          return SizedBox(
-                            width: 70,
-                            height: 40,
-                            child: ElevatedButton(
-                              onPressed: () => payOrder(order),
-                              style: ElevatedButton.styleFrom(
+                      Builder(
+                        builder: (context) {
+                          final startDate = DateFormat('yyyy-MM-dd').parse(post!.startDate);
+                          final now = DateFormat('yyyy-MM-dd').parse(DateFormat('yyyy-MM-dd').format(DateTime.now()));
+                          if(startDate.millisecondsSinceEpoch <= now.millisecondsSinceEpoch && !order.hasBeenPaid) {
+                            return SizedBox(
+                              width: 70,
+                              height: 40,
+                              child: ElevatedButton(
+                                onPressed: () => payOrder(order),
+                                style: ElevatedButton.styleFrom(
                                   primary: kPrimaryColor,
                                   elevation: 0,
-                                  padding: EdgeInsets.zero),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10.0),
-                                    child: Text(
-                                      "Pay",
-                                      style: TextStyle(
-                                          color: kFillColor, fontSize: 16),
+                                  padding: EdgeInsets.zero
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Padding(
+                                      padding:
+                                      EdgeInsets.symmetric(horizontal: 10.0),
+                                      child: Text(
+                                        "Pay",
+                                        style: TextStyle(
+                                            color: kFillColor, fontSize: 16),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        } else {
-                          return const SizedBox();
+                            );
+                          }else{
+                            return const SizedBox();
+                          }
                         }
-                      }),
+                      ),
+
                     if (order.hasBeenPaid == true && showPaymentStatus)
                       GestureDetector(
                         child: const Text("تقييم",
@@ -257,7 +238,8 @@ class OrderCard extends StatelessWidget {
               )
             ],
           ),
-        ));
+        )
+    );
   }
 
   void _showReviewDialog(BuildContext context) {
@@ -277,34 +259,38 @@ class OrderCard extends StatelessWidget {
                 Post? post = this.post;
                 post ??= await PostDatabase().getPost(order.postID);
 
-                final uID = App.user.userType == 'jobSeeker'
-                    ? post?.companyID
-                    : order.userID;
+                final uID = App.user.userType == 'jobSeeker' ? post?.companyID : order.userID;
 
-                final hasUserBeenRated =
-                    await ReviewDatabase(uID ?? "").hasUserBeenReviewed(
+                final hasUserBeenRated = await ReviewDatabase(uID ?? "")
+                    .hasUserBeenReviewed(
                   orderID: order.id,
                   reviewerID: App.user.id,
                 );
 
                 if (hasUserBeenRated) {
                   Fluttertoast.showToast(
-                      msg:
-                          "You have already reviewed this ${App.user.userType == 'jobSeeker' ? "company" : "user"}",
-                      backgroundColor: Colors.redAccent);
+                      msg: "You have already reviewed this ${App.user.userType == 'jobSeeker' ? "company" : "user"}",
+                      backgroundColor: Colors.redAccent
+                  );
                   return;
                 } else {
-                  await ReviewDatabase("").createReview(Review(
-                    rating: response.rating,
-                    uID: uID ?? "",
-                    comment: response.comment,
-                    orderID: order.id,
-                    timePosted: DateTime.now(),
-                    reviewerID: App.user.id,
-                  ).toMap());
+
+                  await ReviewDatabase("").createReview(
+                      Review(
+                        rating: response.rating,
+                        uID: uID ?? "",
+                        comment: response.comment,
+                        orderID: order.id,
+                        timePosted: DateTime.now(),
+                        reviewerID: App.user.id,
+                      ).toMap()
+                  );
+
                 }
-              });
-        });
+              }
+          );
+        }
+    );
   }
 
   Future<void> payOrder(Order order) async {
@@ -378,8 +364,8 @@ class OrderCard extends StatelessWidget {
 
     int count = 0;
 
-    for (Order order in orders) {
-      if (order.hasBeenPaid) count++;
+    for(Order order in orders){
+      if(order.hasBeenPaid) count++;
     }
 
     await PostDatabase().updatePostDetails({
@@ -390,6 +376,7 @@ class OrderCard extends StatelessWidget {
     //Actual payment method
     await _initPayment(amount: payDollars * 100, email: 'email@test.com');
   }
+
 }
 
 Future<void> _initPayment(
@@ -409,14 +396,14 @@ Future<void> _initPayment(
     // 2. Initialize the payment sheet
     await stripe.Stripe.instance.initPaymentSheet(
         paymentSheetParameters: stripe.SetupPaymentSheetParameters(
-      paymentIntentClientSecret: jsonResponse['paymentIntent'],
-      merchantDisplayName: 'Esaa Flutter App',
-      customerId: jsonResponse['customer'],
-      customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
+          paymentIntentClientSecret: jsonResponse['paymentIntent'],
+          merchantDisplayName: 'Esaa Flutter App',
+          customerId: jsonResponse['customer'],
+          customerEphemeralKeySecret: jsonResponse['ephemeralKey'],
 
-      //testEnv: true,
-      //merchantCountryCode: 'US',
-    ));
+          //testEnv: true,
+          //merchantCountryCode: 'US',
+        ));
     await stripe.Stripe.instance.presentPaymentSheet();
     Fluttertoast.showToast(msg: "Payment Successful");
   } catch (error) {

@@ -436,23 +436,24 @@ class OrderDetails extends StatelessWidget {
     await OrderDatabase()
         .updateOrderDetails({'id': order.id, 'orderStatus': order.orderStatus});
 
-    await ConversationDatabase().createConversation(Conversation(
-            title:
-                "${controller.user.value.name}//${App.user.name}//${post.title}",
+    await ConversationDatabase().createConversation(
+        Conversation(
+            title: "${controller.user.value.name}//${App.user.name}//${post.title}",
             orderID: order.id,
             members: [
               controller.user.value.id,
               App.user.id,
             ],
             messages: [],
-            lastUpdated: DateTime.now())
-        .toMap());
+            lastUpdated: DateTime.now()
+        ).toMap()
+    );
 
     await notification.Notification().sendNotification(
         Get.find<OrderDetailsController>().user.value,
         PushNotification(
-            title: " طلب مقبول من قبل شركة ${post.companyName}",
-            body: "يسرناإعلامك بقبول طلبك لوظيفة ${post.title} "));
+            title: "${post.companyName} طلب مقبول من قبل شركة ",
+            body: "${post.title} يسرناإعلامك بقبول طلبك لوظيفة"));
 
     post.offerStatus = "assigned";
     post.acceptedApplicants = '${(int.parse(post.acceptedApplicants) + 1)}';
@@ -485,8 +486,8 @@ class OrderDetails extends StatelessWidget {
     await notification.Notification().sendNotification(
         Get.find<OrderDetailsController>().user.value,
         PushNotification(
-            title: "طلب مرفوض من قبل شركة ${post.companyName}",
-            body: "يؤسفناإعلامك برفضك لوظيفة ${post.title} "));
+            title: " ${post.companyName} طلب مرفوض من قبل شركة",
+            body: "${post.title}:يؤسفناإعلامك برفضك لوظيفة"));
 
     controller.isRejecting.value = false;
 
@@ -564,8 +565,8 @@ class OrderDetails extends StatelessWidget {
 
     int count = 0;
 
-    for (Order order in orders) {
-      if (order.hasBeenPaid) count++;
+    for(Order order in orders){
+      if(order.hasBeenPaid) count++;
     }
 
     await PostDatabase().updatePostDetails({
