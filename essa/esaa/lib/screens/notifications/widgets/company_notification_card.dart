@@ -4,7 +4,6 @@ import 'package:esaa/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class CompanyNotificationCard extends StatelessWidget {
   final PushNotification notification;
   const CompanyNotificationCard({
@@ -87,14 +86,14 @@ class CompanyNotificationCard extends StatelessWidget {
                         overflow: TextOverflow.fade),
                   ),
                 ),
-                TextButton(
+                /*  TextButton(
                     onPressed: () async {
                       //Get.to(() =>  OrderDetails()),
 
                       Get.back();
                       Get.find<UserController>().changePage(2);
                     },
-                    child: const Text('تفاصيل الطلب')),
+                    child: const Text('تفاصيل الطلب')),*/
               ],
             ),
           )

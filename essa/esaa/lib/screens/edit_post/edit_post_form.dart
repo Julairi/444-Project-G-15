@@ -226,8 +226,9 @@ class EditPostFormState extends State<EditPostForm> {
             context: context,
             initialDate: DateTime.now(),
             firstDate: DateTime.now(),
-            lastDate: DateTime((DateTime.now().millisecondsSinceEpoch +
-                (1000 * 60 * 60 * 24 * 90))));
+            lastDate: DateTime(2030));
+        //DateTime((DateTime.now().millisecondsSinceEpoch +
+        //(1000 * 60 * 60 * 24 * 90))));
         if (newDate != null) {
           setState(() {
             startDateEditingController.text =
@@ -287,8 +288,9 @@ class EditPostFormState extends State<EditPostForm> {
             firstDate: DateTime.now(),
             // DateFormat('yyyy-MM-dd').format(startDateEditingController.text),
 
-            lastDate: DateTime((DateTime.now().millisecondsSinceEpoch +
-                (1000 * 60 * 60 * 24 * 90))));
+            lastDate: DateTime(2030));
+        // DateTime((DateTime.now().millisecondsSinceEpoch +
+        //(1000 * 60 * 60 * 24 * 90))));
         if (newDate != null) {
           setState(() {
             endDateEditingController.text =
@@ -321,10 +323,11 @@ class EditPostFormState extends State<EditPostForm> {
         if (value!.isEmpty) {
           return kStartDateNullError;
         } else {
-          if (DateFormat('yyyy-MM-dd').parse(value).millisecondsSinceEpoch >
-              (DateTime.now().millisecondsSinceEpoch +
-                  (1000 * 60 * 60 * 24 * 90))) {
-            return "يجب ان يكون التاريخ بحدود ثلاث اشهر من تاريخ اليوم";
+          if (DateFormat('yyyy-MM-dd')
+                  .parse(startDateEditingController.text)
+                  .millisecondsSinceEpoch >
+              (DateFormat('yyyy-MM-dd').parse(value).millisecondsSinceEpoch)) {
+            return " يجب ان يكون تاريخ البداية قبل تاريخ النهاية";
           } else {
             return null;
           }
@@ -574,8 +577,8 @@ class EditPostFormState extends State<EditPostForm> {
                       backgroundColor: Colors.black54,
                       toastLength: Toast.LENGTH_LONG,
                       textColor: kFillColor);
-
-                  Get.offAllNamed('/');
+                  Navigator.pop(context);
+                  //Get.offAllNamed('/');
                 }
               },
               child: Row(

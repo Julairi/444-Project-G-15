@@ -181,8 +181,8 @@ class ApplyFormState extends State<ApplyForm> {
         await notification.Notification().sendNotification(
             user,
             PushNotification(
-                title: "تلقى طلبا جديدا ${post.title}",
-                body: "${order.userName} طلب جديد من "));
+                title: " ${post.title} تلقى طلبا جديدا ",
+                body: " طلب جديد من ${order.userName}"));
 
         controller.isLoading.value = false;
 

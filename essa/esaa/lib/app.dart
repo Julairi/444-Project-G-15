@@ -28,8 +28,8 @@ class App extends StatelessWidget {
           Locale('ar', 'AE'),
           Locale('en', ''),
         ],
-        locale: const Locale('en', ''),
-        //todo locale: const Locale('ar', 'AE'),
+        //locale: const Locale('en', ''),
+        locale: const Locale('ar', 'AE'),
         title: 'es3a',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -59,10 +59,14 @@ class App extends StatelessWidget {
             )),
         getPages: [
           GetPage(name: '/splash', page: () => const Splash()),
-          GetPage(name: '/company_sign_up_screen', page: () => const CompanySignUpScreen()),
+          GetPage(
+              name: '/company_sign_up_screen',
+              page: () => const CompanySignUpScreen()),
           GetPage(name: '/sign_up_screen', page: () => const SignUpScreen()),
           GetPage(name: '/login_screen', page: () => const LoginScreen()),
-          GetPage(name: '/forgot_password', page: () => const ForgotPasswordScreen()),
+          GetPage(
+              name: '/forgot_password',
+              page: () => const ForgotPasswordScreen()),
           GetPage(name: '/', page: () => Default()),
         ],
         initialRoute: '/splash',
