@@ -239,44 +239,31 @@ class SignUpFormState extends State<SignUpForm> {
             width: 290,
             child: Image.asset("assets/logo.png"),
           ),
-
           const SizedBox(height: defaultPadding / 2),
-
           firstNameField,
-
           const SizedBox(height: defaultPadding / 2),
-
           secondNameField,
-
           const SizedBox(height: defaultPadding / 2),
-
           nationalIdField,
-
           const SizedBox(height: defaultPadding / 2),
-
           emailField,
-
           const SizedBox(height: defaultPadding / 2),
-
           passwordField,
-
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.end,
-            children: const [Text("* يجب ان تحتوي كلمة المرور على ٨ حروف على الاقل")],
+            children: const [
+              Text("* يجب ان تحتوي كلمة المرور على ٨ حروف على الاقل")
+            ],
           ),
-
           const SizedBox(height: defaultPadding / 2),
-
           confirmPasswordField,
-
           const Padding(padding: EdgeInsets.all(defaultPadding)),
-
           const SizedBox(height: defaultPadding / 2),
-
           ElevatedButton(
             onPressed: () {
-              signUp(emailEditingController.text, passwordEditingController.text);
+              signUp(
+                  emailEditingController.text, passwordEditingController.text);
 
               /* Navigator.push(
                   context,
@@ -291,11 +278,7 @@ class SignUpFormState extends State<SignUpForm> {
                 style: const TextStyle(fontSize: 16)),
           ),
           const SizedBox(height: defaultPadding),
-
-          AlreadyHasAnAccount(
-            login: false,
-            press: () => Get.toNamed('login')
-          ),
+          AlreadyHasAnAccount(login: false, press: () => Get.toNamed('login')),
         ],
       ),
     );
@@ -308,7 +291,6 @@ class SignUpFormState extends State<SignUpForm> {
       if (Auth().isSignedIn) {
         await _createJobSeeker(Auth().uID);
         Get.offAllNamed('/');
-
       } else {
         Auth().authFailed();
 
@@ -319,15 +301,15 @@ class SignUpFormState extends State<SignUpForm> {
   }
 
   Future<void> _createJobSeeker(String uID) async {
-
     User jobSeeker = User.empty();
 
     jobSeeker.id = uID;
-    jobSeeker.name = "${firstNameEditingController.text} ${secondNameEditingController.text}";
+    jobSeeker.name =
+        "${firstNameEditingController.text} ${secondNameEditingController.text}";
     jobSeeker.nationalID = nationalIdEditingController.text;
     jobSeeker.email = emailEditingController.text;
     jobSeeker.userType = "jobSeeker";
-    jobSeeker.sex = "Female"; //todo get properly
+    //jobSeeker.sex = "Female"; //todo get properly
 
     await UserDatabase(uID).createUser(jobSeeker.toMap());
   }

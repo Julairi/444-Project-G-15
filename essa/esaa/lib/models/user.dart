@@ -11,7 +11,10 @@ class User {
       sex,
       userType,
       description,
-      notificationToken;
+      notificationToken,
+      Bdate,
+      skills,
+      bio;
 
   User({
     required this.name,
@@ -25,6 +28,9 @@ class User {
     required this.userType,
     required this.description,
     required this.notificationToken,
+    required this.Bdate,
+    required this.skills,
+    required this.bio,
   });
 
   User.empty() {
@@ -39,6 +45,9 @@ class User {
     address = "";
     description = "";
     notificationToken = "";
+    Bdate = "";
+    skills = "";
+    bio = "";
   }
 
   String get firstName {
@@ -68,6 +77,9 @@ class User {
       'address': address,
       'description': description,
       'notificationToken': notificationToken,
+      'Bdate': Bdate,
+      'skills': skills,
+      'bio': bio,
     };
   }
 
@@ -84,6 +96,9 @@ class User {
       address: snapshot.get('address') ?? "",
       description: snapshot.get('description') ?? "",
       notificationToken: snapshot.get('notificationToken') ?? "",
+      Bdate: snapshot.get('Bdate') ?? "",
+      skills: snapshot.get('skills') ?? "",
+      bio: snapshot.get('bio') ?? "",
     );
   }
 }

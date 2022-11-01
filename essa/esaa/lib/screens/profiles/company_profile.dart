@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:esaa/app.dart';
@@ -7,8 +6,8 @@ import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
 import 'package:esaa/utils/utils.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -24,6 +23,14 @@ class _CompanyProfileState extends State<CompanyProfile> {
   final _formKey = GlobalKey<FormState>();
   bool showPassword = false;
   bool en = false;
+  String stroredImg = '';
+  setStoredImg() {
+    if (App.user.imgUrl == '' || App.user.imgUrl == null) {
+      stroredImg = Icons.image as String;
+    } else
+      stroredImg = App.user.imgUrl;
+  }
+
   //String imgUrl = App.user.imgUrl;
   Uint8List? _image;
   //late File _imageFile;
@@ -112,7 +119,7 @@ class _CompanyProfileState extends State<CompanyProfile> {
                                   width: 290,
                                   child: CircleAvatar(
                                       backgroundImage:
-                                          NetworkImage(App.user.imgUrl)),
+                                          NetworkImage(stroredImg)),
                                 ),
                               ),
                         /*Container(
@@ -338,6 +345,11 @@ class _CompanyProfileState extends State<CompanyProfile> {
                                   ? () async {
                                       saveNewValues();
                                       //en = false;
+                                      Fluttertoast.showToast(
+                                          msg: "تم التعديل بنجاح",
+                                          backgroundColor: Colors.black54,
+                                          toastLength: Toast.LENGTH_LONG,
+                                          textColor: kFillColor);
                                     }
                                   : null,
                               style: ElevatedButton.styleFrom(
