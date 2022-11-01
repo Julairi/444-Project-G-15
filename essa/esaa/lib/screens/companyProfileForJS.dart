@@ -21,13 +21,12 @@ class ProfileScreenForJS extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final controller = Get.find<ProfileController>();
 
     return CustomAppbar(
         title: const Text("حساب الشركة",
             style: TextStyle(
-                color: kFillColor,
+                color: kPrimaryColor,
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
                 overflow: TextOverflow.ellipsis)),
@@ -37,27 +36,75 @@ class ProfileScreenForJS extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 30),
-
-              GetX<ProfileController>(
-                  builder: (controller) {
-                    return Container(
-                        margin: const EdgeInsets.all(100.0),
-                        decoration: const BoxDecoration(shape: BoxShape.circle),
-                        width: double.infinity,
-                        child: controller.user.value.imgUrl == ''
-                            ? const Icon(
-                          Icons.person,
-                          size: 80,
-                          color: Colors.white,
-                        )
-                            :  GetX<ProfileController>(
-                            builder: (controller) {
-                              return Image.network(controller.user.value.imgUrl);
-                            }
-                        ));
-                  }
+              GetX<ProfileController>(builder: (controller) {
+                return Container(
+                    margin: const EdgeInsets.all(100.0),
+                    decoration: const BoxDecoration(shape: BoxShape.circle),
+                    width: double.infinity,
+                    child: controller.user.value.imgUrl == ''
+                        ? const Icon(
+                            Icons.person,
+                            size: 80,
+                            color: Colors.white,
+                          )
+                        : GetX<ProfileController>(builder: (controller) {
+                            return Image.network(controller.user.value.imgUrl);
+                          }));
+              }),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  GetX<ProfileController>(builder: (controller) {
+                    return RatingBar.builder(
+                      initialRating: _sumRating(controller.reviews),
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemSize: 30,
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                        size: 18,
+                      ),
+                      ignoreGestures: true,
+                      onRatingUpdate: (double value) {},
+                    );
+                  }),
+                  const SizedBox(width: 10),
+                  GetX<ProfileController>(builder: (controller) {
+                    return Text(
+                      '(${controller.reviews.isNotEmpty ? controller.reviews.length : 'لا يوجد تقييمات'})',
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: controller.reviews.isNotEmpty ? 24 : 16,
+                          fontWeight: FontWeight.w500),
+                    );
+                  })
+                ],
               ),
-
+              const SizedBox(height: 10),
+              Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: GestureDetector(
+                    onTap: () => Get.to(
+                        () => ReviewPage(userID: controller.user.value.id)),
+                    child: const Text(
+                      "عرض التقييمات",
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: kPrimaryColor,
+                          decoration: TextDecoration.underline,
+                          fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
               Card(
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 shape: const RoundedRectangleBorder(
@@ -66,7 +113,7 @@ class ProfileScreenForJS extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                   child: Row(
                     children: [
                       const Icon(
@@ -78,25 +125,19 @@ class ProfileScreenForJS extends StatelessWidget {
                         height: 20,
                         width: 15,
                       ),
-                      GetX<ProfileController>(
-                          builder: (controller) {
-                            return Text(controller.user.value.name,
-                                style: const TextStyle(
-                                    color: Colors.black87,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    overflow: TextOverflow.ellipsis
-                                )
-                            );
-                          }
-                      ),
+                      GetX<ProfileController>(builder: (controller) {
+                        return Text(controller.user.value.name,
+                            style: const TextStyle(
+                                color: Colors.black87,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                overflow: TextOverflow.ellipsis));
+                      }),
                     ],
                   ),
                 ),
               ),
-
               const SizedBox(height: 20),
-
               Card(
                 margin: const EdgeInsets.symmetric(horizontal: 20),
                 shape: const RoundedRectangleBorder(
@@ -105,7 +146,7 @@ class ProfileScreenForJS extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                   child: Row(
                     children: [
                       const Icon(
@@ -117,19 +158,14 @@ class ProfileScreenForJS extends StatelessWidget {
                         height: 20,
                         width: 15,
                       ),
-                      GetX<ProfileController>(
-                          builder: (controller) {
-                            return Text(
-                                controller.user.value.email,
-                                style: const TextStyle(
-                                    color: Colors.black87,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    overflow: TextOverflow.ellipsis
-                                )
-                            );
-                          }
-                      ),
+                      GetX<ProfileController>(builder: (controller) {
+                        return Text(controller.user.value.email,
+                            style: const TextStyle(
+                                color: Colors.black87,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                overflow: TextOverflow.ellipsis));
+                      }),
                     ],
                   ),
                 ),
@@ -143,7 +179,7 @@ class ProfileScreenForJS extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                   child: Row(
                     children: [
                       const Icon(
@@ -155,19 +191,14 @@ class ProfileScreenForJS extends StatelessWidget {
                         height: 20,
                         width: 15,
                       ),
-                      GetX<ProfileController>(
-                          builder: (controller) {
-                            return Text(
-                                controller.user.value.contact,
-                                style: const TextStyle(
-                                    color: Colors.black87,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    overflow: TextOverflow.ellipsis
-                                )
-                            );
-                          }
-                      ),
+                      GetX<ProfileController>(builder: (controller) {
+                        return Text(controller.user.value.contact,
+                            style: const TextStyle(
+                                color: Colors.black87,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                overflow: TextOverflow.ellipsis));
+                      }),
                     ],
                   ),
                 ),
@@ -181,7 +212,7 @@ class ProfileScreenForJS extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                   child: Row(
                     children: [
                       const Icon(
@@ -193,16 +224,14 @@ class ProfileScreenForJS extends StatelessWidget {
                         height: 20,
                         width: 15,
                       ),
-                      GetX<ProfileController>(
-                          builder: (controller) {
-                            return Text(controller.user.value.description,
-                                style: const TextStyle(
-                                    color: Colors.black87,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    overflow: TextOverflow.ellipsis));
-                          }
-                      ),
+                      GetX<ProfileController>(builder: (controller) {
+                        return Text(controller.user.value.description,
+                            style: const TextStyle(
+                                color: Colors.black87,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                overflow: TextOverflow.ellipsis));
+                      }),
                     ],
                   ),
                 ),
@@ -216,7 +245,7 @@ class ProfileScreenForJS extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                   child: Row(
                     children: [
                       const Icon(
@@ -228,102 +257,19 @@ class ProfileScreenForJS extends StatelessWidget {
                         height: 20,
                         width: 15,
                       ),
-                      GetX<ProfileController>(
-                          builder: (controller) {
-                            return Text(controller.user.value.address,
-                                style: const TextStyle(
-                                    color: Colors.black87,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    overflow: TextOverflow.ellipsis));
-                          }
-                      ),
+                      GetX<ProfileController>(builder: (controller) {
+                        return Text(controller.user.value.address,
+                            style: const TextStyle(
+                                color: Colors.black87,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                overflow: TextOverflow.ellipsis));
+                      }),
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 30),
-              const Align(
-                alignment: Alignment.center,
-                child: Text(
-                  "تقييم الشركة",
-                  style: TextStyle(
-                      color: Colors.black,
-                      shadows: <Shadow>[
-                        Shadow(
-                          offset: Offset(2.0, 2.0),
-                          blurRadius: 3.0,
-                          color: kPrimaryColor,
-                        ),
-                      ],
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      overflow: TextOverflow.ellipsis),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  GetX<ProfileController>(
-                      builder: (controller) {
-                        return RatingBar.builder(
-                          initialRating: _sumRating(controller.reviews),
-                          minRating: 1,
-                          direction: Axis.horizontal,
-                          allowHalfRating: true,
-                          itemCount: 5,
-                          itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
-                          itemBuilder: (context, _) => const Icon(
-                            Icons.star,
-                            color: Colors.amber,
-                            size: 18,
-                          ),
-                          ignoreGestures: true,
-                          onRatingUpdate: (double value) {},
-                        );
-                      }
-                  ),
-
-                  const SizedBox(width: 10),
-
-                  GetX<ProfileController>(
-                      builder: (controller) {
-                        return Text(
-                          '(${controller.reviews.isNotEmpty ? controller.reviews.length : 'No ratings yet'})',
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: controller.reviews.isNotEmpty ? 24 : 16,
-                              fontWeight: FontWeight.w500
-                          ),
-                        );
-                      }
-                  )
-                ],
-              ),
-
-              const SizedBox(height: 10),
-
-              Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: GestureDetector(
-                    onTap: () => Get.to(() => ReviewPage(userID: controller.user.value.id)),
-                    child: const Text(
-                      "See reviews",
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: kPrimaryColor,
-                          fontWeight: FontWeight.w500
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-
               const SizedBox(height: 20),
-
               const Align(
                 alignment: Alignment.center,
                 child: Text(
@@ -342,7 +288,6 @@ class ProfileScreenForJS extends StatelessWidget {
                       overflow: TextOverflow.ellipsis),
                 ),
               ),
-
               CustomListView(
                   query: PostDatabase.postsCollection
                       .where("companyID", isEqualTo: companyID)
@@ -376,11 +321,11 @@ class ProfileScreenForJS extends StatelessWidget {
                 child: Container(
                   width: double.infinity,
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                   child: InkWell(
                     onTap: () => Get.to(() => CompanyPostsForJobSeeker(
-                      companyID: companyID,
-                    )),
+                          companyID: companyID,
+                        )),
                     child: Row(
                       children: const [
                         Icon(
@@ -419,7 +364,7 @@ class ProfileScreenForJS extends StatelessWidget {
     if (totalValue == 0 || reviews.isEmpty) return 0;
 
     return totalValue / reviews.length;
-  }}
+  }
+}
 
 class ProfileController extends UserController {}
-

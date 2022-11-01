@@ -7,13 +7,16 @@ import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
 import 'package:esaa/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../models/models.dart';
+import '../companyProfileForJS.dart';
 import '../company_home/widgets/full_job_list.dart';
 import '../company_home/widgets/order_card.dart';
+import '../review_page.dart';
 
 class JobSeekerProfile extends StatefulWidget {
   JobSeekerProfile({Key? key}) : super(key: key) {
@@ -167,9 +170,26 @@ class _JobSeekerProfileState extends State<JobSeekerProfile>
                     ),
                   ),
 
-                  const SizedBox(
-                    height: 35,
+                  const SizedBox(height: 10),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: GestureDetector(
+                        onTap: () =>
+                            Get.to(() => ReviewPage(userID: App.user.id)),
+                        child: const Text(
+                          "عرض التقييمات",
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: kPrimaryColor,
+                              decoration: TextDecoration.underline,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
                   ),
+                  const SizedBox(height: 10),
                   //====================form ============================================
                   Column(
                     children: [

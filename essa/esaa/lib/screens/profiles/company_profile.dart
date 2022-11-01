@@ -11,6 +11,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../review_page.dart';
+
 class CompanyProfile extends StatefulWidget {
   CompanyProfile({Key? key}) : super(key: key) {
     Get.put(EditProfileFormController());
@@ -170,6 +172,25 @@ class _CompanyProfileState extends State<CompanyProfile> {
                   const SizedBox(
                     height: 35,
                   ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: GestureDetector(
+                        onTap: () =>
+                            Get.to(() => ReviewPage(userID: App.user.id)),
+                        child: const Text(
+                          "عرض التقييمات",
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: kPrimaryColor,
+                              decoration: TextDecoration.underline,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
                   //====================form ============================================
                   Column(
                     children: [
