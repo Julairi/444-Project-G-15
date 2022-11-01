@@ -11,15 +11,14 @@ class Conversations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return CustomAppbar(
-      title: const Text("Conversations",
+        title: const Text("المحادثات",
             style: TextStyle(
                 color: kPrimaryColor,
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
                 overflow: TextOverflow.ellipsis)),
-      showNotification: true,
+        showNotification: true,
         child: SingleChildScrollView(
           physics: const NeverScrollableScrollPhysics(),
           child: Column(
@@ -33,7 +32,7 @@ class Conversations extends StatelessWidget {
                     height: 300,
                     child: Center(
                       child: Text(
-                        "No conversation yet",
+                        "لا توجد محادثات بعد",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,
@@ -43,12 +42,12 @@ class Conversations extends StatelessWidget {
                     ),
                   ),
                   itemBuilder: (context, querySnapshot) {
-                    Conversation conversation = Conversation.fromDocumentSnapshot(querySnapshot);
+                    Conversation conversation =
+                        Conversation.fromDocumentSnapshot(querySnapshot);
                     return ConversationItem(conversation: conversation);
                   }),
             ],
           ),
-        )
-    );
+        ));
   }
 }
