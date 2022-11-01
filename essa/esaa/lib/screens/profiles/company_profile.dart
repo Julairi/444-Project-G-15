@@ -25,16 +25,16 @@ class _CompanyProfileState extends State<CompanyProfile> {
   bool showPassword = false;
   bool en = false;
   //String imgUrl = App.user.imgUrl;
-  //Uint8List? _image;
-  late File _imageFile;
-  final picker = ImagePicker();
+  Uint8List? _image;
+  //late File _imageFile;
+  //final picker = ImagePicker();
 
-  Future pickImage() async {
+  /* Future pickImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
       _imageFile = File(pickedFile!.path);
     });
-  }
+  }*/
 
   final nameController = TextEditingController();
   final emailController = TextEditingController();
@@ -54,28 +54,33 @@ class _CompanyProfileState extends State<CompanyProfile> {
     App.user.email = emailController.text;
     App.user.description = descriptionController.text;
     App.user.contact = contactController.text;
-
-    // if (_image != null) {
-    // imgUrl = await Storage().uploadImageToString("companyLogo ", _image!);
-    // }
+    String imgUrl = "";
+    if (_image != null) {
+      imgUrl = await Storage().uploadImageToString("companyLogo ", _image!);
+    }
+    App.user.imgUrl = imgUrl;
     await UserDatabase(App.user.id).updateDetails(App.user.toMap());
   }
 
   void selectImage() async {
     final pickedFile = await pickImage(ImageSource.gallery);
-
     if (pickedFile != null) {
       Uint8List image = await pickImage(ImageSource.gallery);
-
       setState(() {
-        // _image = image;
+        _image = image;
       });
+    }
+    String imgUrl = "";
+    if (_image != null) {
+      imgUrl = await Storage().uploadImageToString("companyLogo ", _image!);
+      App.user.imgUrl = imgUrl;
+      await UserDatabase(App.user.id).updateDetails(App.user.toMap());
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    XFile? imageFile;
+    //XFile? imageFile;
     return CustomAppbar(
         title: const Text("حسابك الشخصي",
             style: TextStyle(
@@ -96,7 +101,21 @@ class _CompanyProfileState extends State<CompanyProfile> {
                   Center(
                     child: Stack(
                       children: [
-                        Container(
+                        _image != null
+                            ? CircleAvatar(
+                                radius: 70,
+                                backgroundImage: MemoryImage(_image!))
+                            : GestureDetector(
+                                onTap: selectImage,
+                                child: SizedBox(
+                                  height: 200,
+                                  width: 290,
+                                  child: CircleAvatar(
+                                      backgroundImage:
+                                          NetworkImage(App.user.imgUrl)),
+                                ),
+                              ),
+                        /*Container(
                             width: 130,
                             height: 130,
                             decoration: BoxDecoration(
@@ -115,7 +134,8 @@ class _CompanyProfileState extends State<CompanyProfile> {
                               image: DecorationImage(
                                   fit: BoxFit.cover,
                                   image: NetworkImage(/*imgUrl*/)),
-                            )),
+                            )
+                            ),*/
                         Positioned(
                             bottom: 0,
                             right: 0,
