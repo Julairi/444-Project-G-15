@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:esaa/app.dart';
@@ -6,10 +7,10 @@ import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
 import 'package:esaa/utils/utils.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
 
 class CompanyProfile extends StatefulWidget {
   CompanyProfile({Key? key}) : super(key: key) {
@@ -23,7 +24,18 @@ class _CompanyProfileState extends State<CompanyProfile> {
   final _formKey = GlobalKey<FormState>();
   bool showPassword = false;
   bool en = false;
-  String imgUrl = App.user.imgUrl;
+  //String imgUrl = App.user.imgUrl;
+  //Uint8List? _image;
+  late File _imageFile;
+  final picker = ImagePicker();
+
+  Future pickImage() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _imageFile = File(pickedFile!.path);
+    });
+  }
+
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final addressController = TextEditingController();
@@ -43,13 +55,12 @@ class _CompanyProfileState extends State<CompanyProfile> {
     App.user.description = descriptionController.text;
     App.user.contact = contactController.text;
 
-    if (_image != null) {
-      imgUrl = await Storage().uploadImageToString("companyLogo ", _image!);
-    }
+    // if (_image != null) {
+    // imgUrl = await Storage().uploadImageToString("companyLogo ", _image!);
+    // }
     await UserDatabase(App.user.id).updateDetails(App.user.toMap());
   }
 
-  Uint8List? _image;
   void selectImage() async {
     final pickedFile = await pickImage(ImageSource.gallery);
 
@@ -57,13 +68,14 @@ class _CompanyProfileState extends State<CompanyProfile> {
       Uint8List image = await pickImage(ImageSource.gallery);
 
       setState(() {
-        _image = image;
+        // _image = image;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    XFile? imageFile;
     return CustomAppbar(
         title: const Text("حسابك الشخصي",
             style: TextStyle(
@@ -90,8 +102,8 @@ class _CompanyProfileState extends State<CompanyProfile> {
                             decoration: BoxDecoration(
                               border: Border.all(
                                   width: 4,
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor),
+                                  color: Theme.of(context)
+                                      .scaffoldBackgroundColor),
                               boxShadow: [
                                 BoxShadow(
                                     spreadRadius: 2,
@@ -101,7 +113,8 @@ class _CompanyProfileState extends State<CompanyProfile> {
                               ],
                               shape: BoxShape.circle,
                               image: DecorationImage(
-                                  fit: BoxFit.cover, image: NetworkImage(imgUrl)),
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(/*imgUrl*/)),
                             )),
                         Positioned(
                             bottom: 0,
@@ -120,9 +133,7 @@ class _CompanyProfileState extends State<CompanyProfile> {
                               ),
                               child: IconButton(
                                 icon: const Icon(Icons.edit),
-                                onPressed: () {
-                                  selectImage();
-                                },
+                                onPressed: () => selectImage(),
                               ),
                             )),
                       ],
@@ -176,8 +187,8 @@ class _CompanyProfileState extends State<CompanyProfile> {
                           Expanded(
                             child: TextFormField(
                               controller: descriptionController,
-                              onSaved: (newValue) => descriptionController.text =
-                                  newValue!.trim().toString(),
+                              onSaved: (newValue) => descriptionController
+                                  .text = newValue!.trim().toString(),
                               validator: (val) => val!.trim().isEmpty
                                   ? 'يجب ان لا يكون الوصف فارغًا'
                                   : null,
@@ -313,8 +324,8 @@ class _CompanyProfileState extends State<CompanyProfile> {
                                   primary: kPrimaryColor, elevation: 0),
                               child: const Text(
                                 "حفظ التغييرات",
-                                style:
-                                    TextStyle(color: Colors.white, fontSize: 16),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 16),
                               ),
                             ),
                           ),
