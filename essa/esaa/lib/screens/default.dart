@@ -106,7 +106,7 @@ class _DefaultState extends State<Default> {
     if (userType == "jobSeeker") {
       return const [
         Icon(
-          Icons.document_scanner,
+          Icons.bookmark,
           color: KGrey,
         ),
         Icon(
