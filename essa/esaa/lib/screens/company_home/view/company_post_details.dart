@@ -335,7 +335,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               primary: widget.post.offerStatus == "assigned"
-                                  ? kFillColor
+                                  ? kPrimaryColor
                                   : Colors.grey.withOpacity(0.4)),
                           onPressed: () {
                             if (widget.post.offerStatus == "assigned") {
@@ -370,10 +370,13 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.edit,color: controller.editable.value
-                                        ? Colors.blueAccent
-                                        //: Colors.grey,
-                                        : Colors.grey.withOpacity(0.4),),
+                                Icon(
+                                  Icons.edit,
+                                  color: controller.editable.value
+                                      ? Colors.blueAccent
+                                      //: Colors.grey,
+                                      : Colors.grey.withOpacity(0.4),
+                                ),
                                 Text(
                                   "تعديل",
                                   style: TextStyle(
@@ -415,12 +418,12 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                             children: [
                               Icon(
                                 Icons.delete,
-                                color:int.parse(
-                                              widget.post.acceptedApplicants) >
-                                          0
-                                      // ? Colors.grey
-                                      ? Colors.grey.withOpacity(0.4)
-                                      : Colors.redAccent,
+                                color:
+                                    int.parse(widget.post.acceptedApplicants) >
+                                            0
+                                        // ? Colors.grey
+                                        ? Colors.grey.withOpacity(0.4)
+                                        : Colors.redAccent,
                               ),
                               Text(
                                 "حذف",
