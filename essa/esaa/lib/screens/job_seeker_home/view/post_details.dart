@@ -18,7 +18,7 @@ class PostDetails extends StatelessWidget {
   final Post post;
   final bool canApply;
   const PostDetails(
-      {this.order, required this.post, this.canApply = true, Key? key})
+      { this.order, required this.post, this.canApply = true, Key? key})
       : super(key: key);
 
   @override
@@ -287,23 +287,23 @@ class PostDetails extends StatelessWidget {
                         onPressed: () => Get.to(() => ApplyScreen(post: post)),
                         child: const Text('التقديم على الوظيفة')),
                   ),
-                if (order?.orderStatus == 'accepted' &&
-                    order?.userID == App.user.id)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: _buttonColor(),
-                        ),
-                        onPressed: () => _sendPayReminder(post),
-                        child: const Text(
-                          'إنهاء الفترة ',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: defaultFontSize,
-                              fontWeight: FontWeight.bold),
-                        )),
-                  ),
+                // if (order?.orderStatus == 'accepted' &&
+                // order?.userID == App.user.id)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: _buttonColor(),
+                      ),
+                      onPressed: () => _sendPayReminder(post),
+                      child: const Text(
+                        'إنهاء الفترة ',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: defaultFontSize,
+                            fontWeight: FontWeight.bold),
+                      )),
+                ),
                 if (Get.find<UserController>().user.value.userType ==
                     "jobSeeker")
                   TextButton(
@@ -389,8 +389,11 @@ class PostDetails extends StatelessWidget {
       "id": post.id,
       "hasBeenDone": post.hasBeenDone,
     });
-    await notification.Notification().sendNotification(user,
-        PushNotification(title: " تدكير بالدفع", body: "يمكنك الدفع للموظف"));
+    await notification.Notification().sendNotification(
+        user,
+        PushNotification(
+            title: " تدكير بالدفع",
+            body: "يمكنك الدفع للموظف ${order?.userName}"));
   }
 
   _buttonColor() {
@@ -404,15 +407,15 @@ class PostDetails extends StatelessWidget {
     var postDay = postDate.day;
     var postYear = postDate.year;
     if (nYear != postYear) {
-      return kPrimaryColor.withOpacity(0.3);
+      return Colors.grey.withOpacity(0.4);
     } else if (nMon != postMon) {
-      return kPrimaryColor.withOpacity(0.3);
+      return Colors.grey.withOpacity(0.4);
     } else if (nDay < postDay) {
       //return Colors.grey.withOpacity(0.4);
-      return kPrimaryColor.withOpacity(0.3);
+      return Colors.grey.withOpacity(0.4);
     } else if (post.hasBeenDone) {
       //return Colors.grey.withOpacity(0.4);
-      return kPrimaryColor.withOpacity(0.3);
+      return Colors.grey.withOpacity(0.4);
     }
   }
 }

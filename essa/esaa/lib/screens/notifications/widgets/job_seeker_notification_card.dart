@@ -14,95 +14,90 @@ class JobSeekerNotificationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Get.back();
-        Get.find<UserController>().changePage(2);
-      },
-      child: Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      elevation: 7,
-      margin: const EdgeInsets.all(10),
-      child: Column(
-        children: [
-          Stack(
+        onTap: () {
+          Get.back();
+          Get.find<UserController>().changePage(2);
+        },
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          elevation: 7,
+          margin: const EdgeInsets.all(10),
+          child: Column(
             children: [
-              Positioned(
-                child: Container(
-                  height: 50,
-                  alignment: Alignment.bottomRight,
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                  ),
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            const Color.fromARGB(255, 105, 110, 112).withOpacity(0),
-                            const Color.fromARGB(255, 64, 69, 71).withOpacity(0.2)
+              Stack(
+                children: [
+                  Positioned(
+                    child: Container(
+                      height: 50,
+                      alignment: Alignment.bottomRight,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 10,
+                      ),
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                            const Color.fromARGB(255, 105, 110, 112)
+                                .withOpacity(0),
+                            const Color.fromARGB(255, 64, 69, 71)
+                                .withOpacity(0.2)
                           ],
-                          stops: const [0.6, 1]
-                      )
+                              stops: const [
+                            0.6,
+                            1
+                          ])),
+                      child: Row(
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                            width: 20,
+                          ),
+                          const Icon(
+                            Icons.notifications,
+                            color: kPrimaryColor,
+                            size: 35,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                            width: 20,
+                          ),
+                          Text(notification.title,
+                              style: const TextStyle(
+                                  color: kPrimaryColor,
+                                  fontSize: defaultFontSize,
+                                  fontWeight: FontWeight.bold,
+                                  overflow: TextOverflow.ellipsis))
+                        ],
+                      ),
+                    ),
                   ),
-                  child: Row(
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                        width: 20,
-                      ),
-
-                      const Icon(
-                        Icons.notifications,
-                        color: kPrimaryColor,
-                        size: 35,
-                      ),
-
-                      const SizedBox(
-                        height: 20,
-                        width: 20,
-                      ),
-
-                      Text(
-                          notification.title,
-                          style: const TextStyle(
-                              color: kPrimaryColor,
-                              fontSize: defaultFontSize,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.ellipsis
-                          )
-                      )
-                    ],
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: SizedBox(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      notification.body,
+                      maxLines: 3,
+                      softWrap: true,
+                      textAlign: TextAlign.start,
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 6, 6, 6),
+                          fontSize: 18,
+                          fontFamily: 'ElMessiri',
+                          height: 1.2,
+                          overflow: TextOverflow.fade),
+                    ),
                   ),
                 ),
-              ),
+              )
             ],
           ),
-
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: SizedBox(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  notification.body,
-                  maxLines: 3,
-                  softWrap: true,
-                  textAlign: TextAlign.start,
-                  style: const TextStyle(
-                      color: Color.fromARGB(255, 6, 6, 6),
-                      fontSize: 18,
-                      fontFamily: 'ElMessiri',
-                      height: 1.2,
-                      overflow: TextOverflow.fade
-                  ),
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
-    ));
+        ));
   }
 }
