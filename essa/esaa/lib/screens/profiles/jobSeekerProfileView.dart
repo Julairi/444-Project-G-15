@@ -9,19 +9,41 @@ import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../../models/order.dart';
+import '../company_home/widgets/full_job_list.dart';
+import '../company_home/widgets/order_card.dart';
 
 class jobSeekerProfileView extends StatefulWidget {
   @override
   jobSeekerProfileViewState createState() => jobSeekerProfileViewState();
 }
 
-class jobSeekerProfileViewState extends State<jobSeekerProfileView> {
+class jobSeekerProfileViewState extends State<jobSeekerProfileView>
+    with SingleTickerProviderStateMixin {
+  late TabController tabController;
+
+  void initState() {
+    tabController = TabController(length: 2, vsync: this);
+    super.initState();
+  }
+
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(children: [
-          StackContainer(),
+          StackContainer(
+            imgUrl: App.user.imgUrl,
+            reviewID: App.user.id,
+          ),
           const SizedBox(height: 10.0),
           Card(
             child: Row(
@@ -175,9 +197,160 @@ class jobSeekerProfileViewState extends State<jobSeekerProfileView> {
                 ),
               ],
             ),
-          )
+          ),
+          SingleChildScrollView(
+            child: Container(
+              height: MediaQuery.of(context).size.height - 150,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(height: 20),
+                  Container(
+                    width: MediaQuery.of(context).size.height,
+                    decoration: BoxDecoration(
+                        color: kPrimaryLightColor,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(5),
+                          child: TabBar(
+                            unselectedLabelColor: kPrimaryColor,
+                            labelColor: const Color.fromARGB(255, 75, 73, 73),
+                            indicatorColor: Colors.white,
+                            indicatorWeight: 2,
+                            indicator: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            controller: tabController,
+                            tabs: const [
+                              Tab(
+                                text: 'العروض السابقة',
+                              ),
+                              Tab(
+                                text: 'العروض النشطة',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                        controller: tabController,
+                        children: const [ptab(), actab()]),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+          ),
         ]),
       ),
+    );
+  }
+}
+
+class ptab extends StatelessWidget {
+  const ptab({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CustomListView(
+            absoluteSize: 3,
+            physics: const NeverScrollableScrollPhysics(),
+            query: OrderDatabase.ordersCollection
+                .where("userID", isEqualTo: App.user.id)
+                .where("orderStatus", isEqualTo: "accepted")
+                .where('hasBeenPaid', isEqualTo: true)
+                .orderBy("timeApplied", descending: true),
+            emptyListWidget: Container(
+              margin: const EdgeInsets.only(top: 120, bottom: 100),
+              child: const Center(
+                child: Text(
+                  "لم تنهي أي وظيفة بعد ",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: kPrimaryColor,
+                  ),
+                ),
+              ),
+            ),
+            itemBuilder: (context, querySnapshot) {
+              Order order = Order.fromDocumentSnapshot(querySnapshot);
+              return OrderCard(order: order, showPaymentStatus: false);
+            }),
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: TextButton(
+            onPressed: () => Get.to(() => const FullJobList()),
+            child: const Text(
+              'لعرض الكل',
+              style: TextStyle(
+                  color: kPrimaryColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  overflow: TextOverflow.fade),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class actab extends StatelessWidget {
+  const actab({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CustomListView(
+            absoluteSize: 3,
+            physics: const NeverScrollableScrollPhysics(),
+            query: OrderDatabase.ordersCollection
+                .where("userID", isEqualTo: App.user.id)
+                .where("orderStatus", isEqualTo: "accepted")
+                .orderBy("timeApplied", descending: true),
+            emptyListWidget: Container(
+              margin: const EdgeInsets.only(top: 120, bottom: 100),
+              child: const Center(
+                child: Text(
+                  "لا يوجد عروض نشطة",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: kPrimaryColor,
+                  ),
+                ),
+              ),
+            ),
+            itemBuilder: (context, querySnapshot) {
+              Order order = Order.fromDocumentSnapshot(querySnapshot);
+              return OrderCard(order: order, showPaymentStatus: false);
+            }),
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: TextButton(
+            onPressed: () => Get.to(() => const FullJobList()),
+            child: const Text(
+              'لعرض الكل',
+              style: TextStyle(
+                  color: kPrimaryColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  overflow: TextOverflow.fade),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

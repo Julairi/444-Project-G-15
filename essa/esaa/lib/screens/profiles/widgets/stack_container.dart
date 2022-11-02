@@ -1,3 +1,4 @@
+import 'package:esaa/models/models.dart';
 import 'package:esaa/screens/profiles/widgets/tob_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:esaa/config/constants.dart';
@@ -11,7 +12,11 @@ import '../utils/custom_clipper.dart';
 import 'package:get/get.dart';
 
 class StackContainer extends StatefulWidget {
-  StackContainer({Key? key}) : super(key: key);
+  final String imgUrl;
+  final String reviewID;
+  StackContainer({Key? key, required this.imgUrl, required this.reviewID})
+      : super(key: key);
+
   @override
   StackContainerState createState() => StackContainerState();
 }
@@ -49,7 +54,8 @@ class StackContainerState extends State<StackContainer> {
               children: <Widget>[
                 // ignore: prefer_const_constructors
                 CircleAvatar(
-                    radius: 70, backgroundImage: NetworkImage(App.user.imgUrl)),
+                    radius: 70,
+                    backgroundImage: NetworkImage(this.widget.imgUrl)),
                 const SizedBox(height: 4.0),
                 Align(
                   alignment: Alignment.center,

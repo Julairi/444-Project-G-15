@@ -22,7 +22,10 @@ class companyProfileViewState extends State<companyProfileView> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(children: [
-          StackContainer(),
+          StackContainer(
+            imgUrl: App.user.imgUrl,
+            reviewID: App.user.id,
+          ),
           const SizedBox(height: 10.0),
           Card(
             child: Row(

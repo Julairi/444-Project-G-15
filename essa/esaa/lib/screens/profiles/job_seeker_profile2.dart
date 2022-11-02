@@ -98,13 +98,14 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
   @override
   Widget build(BuildContext context) {
     return CustomAppbar(
-        title: const Text("حسابك الشخصي",
+        title: const Text("تعديل الملف الشخصي",
             style: TextStyle(
                 color: kPrimaryColor,
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
                 overflow: TextOverflow.ellipsis)),
         showLogout: true,
+        showLeading: true,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Form(
@@ -131,27 +132,6 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                                           NetworkImage(stroredImg)),
                                 ),
                               ),
-                        /*Container(
-                            width: 130,
-                            height: 130,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 4,
-                                  color: Theme.of(context)
-                                      .scaffoldBackgroundColor),
-                              boxShadow: [
-                                BoxShadow(
-                                    spreadRadius: 2,
-                                    blurRadius: 10,
-                                    color: Colors.black.withOpacity(0.1),
-                                    offset: const Offset(0, 10))
-                              ],
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(/*imgUrl*/)),
-                            )
-                            ),*/
                         Positioned(
                             bottom: 0,
                             right: 0,
@@ -175,27 +155,8 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                       ],
                     ),
                   ),
-
                   const SizedBox(
                     height: 35,
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: GestureDetector(
-                        onTap: () =>
-                            Get.to(() => ReviewPage(userID: App.user.id)),
-                        child: const Text(
-                          "عرض التقييمات",
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: kPrimaryColor,
-                              decoration: TextDecoration.underline,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ),
                   ),
                   const SizedBox(height: 10),
                   //====================form ============================================
@@ -453,7 +414,7 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                               style: ElevatedButton.styleFrom(
                                   primary: kPrimaryColor, elevation: 0),
                               child: const Text(
-                                "حفظ التغييرات",
+                                "حفظ التعديلات",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
                               ),

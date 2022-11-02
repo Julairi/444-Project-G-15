@@ -36,7 +36,10 @@ class ProfileScreenForJS2 extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              StackContainer(),
+              StackContainer(
+                imgUrl: controller.user.value.imgUrl,
+                reviewID: controller.user.value.id,
+              ),
               //==================rating
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -73,7 +76,7 @@ class ProfileScreenForJS2 extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              Align(
+              /* Align(
                 alignment: Alignment.center,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -90,7 +93,7 @@ class ProfileScreenForJS2 extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
+              ),*/
               //================== name
               Card(
                 child: Row(
@@ -240,13 +243,6 @@ class ProfileScreenForJS2 extends StatelessWidget {
                   "عروض الشركة المتاحة",
                   style: TextStyle(
                       color: Colors.black,
-                      shadows: <Shadow>[
-                        Shadow(
-                          offset: Offset(2.0, 2.0),
-                          blurRadius: 3.0,
-                          color: kPrimaryColor,
-                        ),
-                      ],
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       overflow: TextOverflow.ellipsis),
