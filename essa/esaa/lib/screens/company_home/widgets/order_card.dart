@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:esaa/controllers/controllers.dart';
 import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
 import 'package:flutter_stripe/flutter_stripe.dart' as stripe;
 import 'package:http/http.dart' as http;
@@ -21,13 +22,18 @@ class OrderCard extends StatelessWidget {
   final Order order;
   final Post? post;
   final bool showPaymentStatus;
+  late Future<Post?> someti;
 
-  const OrderCard(
+  OrderCard(
       {required this.order, this.post, this.showPaymentStatus = true, Key? key})
-      : super(key: key);
+      : super(key: key) {
+    Get.put(OrderCardController());
+    Get.find<OrderCardController>().bindUserWithID(order.userID);
+  }
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<OrderCardController>();
     return InkWell(
         onTap: () async {
           if (post == null) {
@@ -69,15 +75,32 @@ class OrderCard extends StatelessWidget {
                         height: 20,
                         width: 10,
                       ),
-                      Text(
-                        order.userName,
-                        style: const TextStyle(
-                            color: Color.fromARGB(255, 6, 6, 6),
-                            fontSize: 18,
-                            fontFamily: 'ElMessiri',
-                            fontWeight: FontWeight.bold,
-                            overflow: TextOverflow.fade),
-                      ),
+                      if (App.user.userType == 'company')
+                        Text(
+                          order.userName,
+                          style: const TextStyle(
+                              color: Color.fromARGB(255, 6, 6, 6),
+                              fontSize: 18,
+                              fontFamily: 'ElMessiri',
+                              fontWeight: FontWeight.bold,
+                              overflow: TextOverflow.fade),
+                        ),
+                      if (App.user.userType == 'jobSeeker')
+                        FutureBuilder(
+                            future: PostDatabase().getPost(order.postID),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<Post?> snapshot) {
+                              // return a widget here (you have to return a widget to the builder)
+                              return Text(
+                                snapshot.data!.title,
+                                style: const TextStyle(
+                                    color: Color.fromARGB(255, 6, 6, 6),
+                                    fontSize: 18,
+                                    fontFamily: 'ElMessiri',
+                                    fontWeight: FontWeight.bold,
+                                    overflow: TextOverflow.fade),
+                              );
+                            }),
                     ],
                   ),
                 ),
@@ -178,7 +201,7 @@ class OrderCard extends StatelessWidget {
                             width: 70,
                             height: 40,
                             child: ElevatedButton(
-                              onPressed: () => payOrder(order),
+                              onPressed: () => payOrder(order, controller),
                               style: ElevatedButton.styleFrom(
                                   primary: kPrimaryColor,
                                   elevation: 0,
@@ -271,7 +294,7 @@ class OrderCard extends StatelessWidget {
         });
   }
 
-  Future<void> payOrder(Order order) async {
+  Future<void> payOrder(Order order, OrderCardController controller) async {
     //INSERT PAYING METHOD
     var postID = order.postID;
     Post? myPost = await PostDatabase().getPost(postID);
@@ -352,10 +375,20 @@ class OrderCard extends StatelessWidget {
     });
 
     //PAYMENT COUNT
+    /*User? worker = UserDatabase(order.userID).getUser(order.userID) as User?;
+    var pastm = worker?.money;
+    var newmoney = pastm! + payRiyals;
+    await UserDatabase(order.userID)
+        .updateUserDetails({"id": order.userID, "money": 12});
+    controller.money = newmoney;*/
 
     //Actual payment method
     await _initPayment(amount: payDollars * 100, email: 'email@test.com');
   }
+}
+
+class OrderCardController extends UserController {
+  double money = 0;
 }
 
 Future<void> _initPayment(
