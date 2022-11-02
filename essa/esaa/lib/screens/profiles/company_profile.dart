@@ -54,6 +54,7 @@ class _CompanyProfileState extends State<CompanyProfile> {
     App.user.email = emailController.text;
     App.user.description = descriptionController.text;
     App.user.contact = contactController.text;
+
     String imgUrl = "";
     if (_image != null) {
       imgUrl = await Storage().uploadImageToString("companyLogo ", _image!);
@@ -81,7 +82,7 @@ class _CompanyProfileState extends State<CompanyProfile> {
   @override
   Widget build(BuildContext context) {
     return CustomAppbar(
-        title: const Text("حسابك الشخصي",
+        title: const Text("تعديل ملف الشركة ",
             style: TextStyle(
                 color: kPrimaryColor,
                 fontSize: 20,
@@ -127,25 +128,7 @@ class _CompanyProfileState extends State<CompanyProfile> {
                   const SizedBox(
                     height: 35,
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: GestureDetector(
-                        onTap: () =>
-                            Get.to(() => ReviewPage(userID: App.user.id)),
-                        child: const Text(
-                          "عرض التقييمات",
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: kPrimaryColor,
-                              decoration: TextDecoration.underline,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
+
                   //====================form ============================================
                   Column(
                     children: [

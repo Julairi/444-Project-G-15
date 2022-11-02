@@ -371,7 +371,7 @@ class PostJobFormState extends State<PostJobForm> {
         prefixIcon: const Padding(
           padding: EdgeInsets.all(defaultPadding),
         ),
-        labelText: "Max no. of applicants",
+        labelText: "العدد الأقصى للطلبات",
         floatingLabelStyle: const TextStyle(
           color: kTextColor,
           fontSize: 20,

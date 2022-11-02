@@ -12,14 +12,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../models/order.dart';
-import '../company_home/widgets/full_job_list.dart';
-import '../company_home/widgets/order_card.dart';
-import '../review_page.dart';
-
 class JobSeekerProfile2 extends StatefulWidget {
   JobSeekerProfile2({Key? key}) : super(key: key) {
-    Get.put(EditProfileFormController());
+    Get.put(EditProfileFormControllerJs());
   }
   @override
   _JobSeekerProfile2State createState() => _JobSeekerProfile2State();
@@ -48,19 +43,11 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
   final bioController = TextEditingController();
   final skillsController = TextEditingController();
 
-  late TabController tabController;
-
   @override
   void initState() {
-    tabController = TabController(length: 2, vsync: this);
     _setInitialValues(nameController, emailController, nidController,
         sexController, bdateController, bioController, skillsController);
     super.initState();
-  }
-
-  void dispose() {
-    tabController.dispose();
-    super.dispose();
   }
 
   saveNewValues() async {
@@ -105,7 +92,6 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
                 overflow: TextOverflow.ellipsis)),
-        showLogout: true,
         showLeading: true,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -132,7 +118,7 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                                     backgroundImage: NetworkImage(stroredImg),
                                     child: IconButton(
                                       iconSize: 40,
-                                      icon: const Icon(Icons.edit),
+                                      icon: const Icon(Icons.camera_alt),
                                       onPressed: () => selectImage(),
                                     ),
                                   ),
@@ -414,58 +400,6 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                           ),
                         ],
                       ),
-                      SingleChildScrollView(
-                        child: Container(
-                          height: MediaQuery.of(context).size.height - 150,
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const SizedBox(height: 20),
-                              Container(
-                                width: MediaQuery.of(context).size.height,
-                                decoration: BoxDecoration(
-                                    color: kPrimaryLightColor,
-                                    borderRadius: BorderRadius.circular(5)),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(5),
-                                      child: TabBar(
-                                        unselectedLabelColor: kPrimaryColor,
-                                        labelColor: const Color.fromARGB(
-                                            255, 75, 73, 73),
-                                        indicatorColor: Colors.white,
-                                        indicatorWeight: 2,
-                                        indicator: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                        ),
-                                        controller: tabController,
-                                        tabs: const [
-                                          Tab(
-                                            text: 'العروض السابقة',
-                                          ),
-                                          Tab(
-                                            text: 'العروض النشطة',
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Expanded(
-                                child: TabBarView(
-                                    controller: tabController,
-                                    children: const [ptab(), actab()]),
-                              ),
-                              const SizedBox(height: 20),
-                            ],
-                          ),
-                        ),
-                      ),
                     ],
                   )
                 ],
@@ -493,105 +427,4 @@ void _setInitialValues(
   skillsController.text = App.user.skills;
 }
 
-class EditProfileFormController extends UserController {}
-
-class ptab extends StatelessWidget {
-  const ptab({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CustomListView(
-            absoluteSize: 3,
-            physics: const NeverScrollableScrollPhysics(),
-            query: OrderDatabase.ordersCollection
-                .where("userID", isEqualTo: App.user.id)
-                .where("orderStatus", isEqualTo: "accepted")
-                .where('hasBeenPaid', isEqualTo: true)
-                .orderBy("timeApplied", descending: true),
-            emptyListWidget: Container(
-              margin: const EdgeInsets.only(top: 120, bottom: 100),
-              child: const Center(
-                child: Text(
-                  "لم تنهي أي وظيفة بعد ",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: kPrimaryColor,
-                  ),
-                ),
-              ),
-            ),
-            itemBuilder: (context, querySnapshot) {
-              Order order = Order.fromDocumentSnapshot(querySnapshot);
-              return OrderCard(order: order, showPaymentStatus: false);
-            }),
-        Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: TextButton(
-            onPressed: () => Get.to(() => const FullJobList()),
-            child: const Text(
-              'لعرض الكل',
-              style: TextStyle(
-                  color: kPrimaryColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  overflow: TextOverflow.fade),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class actab extends StatelessWidget {
-  const actab({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CustomListView(
-            absoluteSize: 3,
-            physics: const NeverScrollableScrollPhysics(),
-            query: OrderDatabase.ordersCollection
-                .where("userID", isEqualTo: App.user.id)
-                .where("orderStatus", isEqualTo: "accepted")
-                .orderBy("timeApplied", descending: true),
-            emptyListWidget: Container(
-              margin: const EdgeInsets.only(top: 120, bottom: 100),
-              child: const Center(
-                child: Text(
-                  "لا يوجد عروض نشطة",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: kPrimaryColor,
-                  ),
-                ),
-              ),
-            ),
-            itemBuilder: (context, querySnapshot) {
-              Order order = Order.fromDocumentSnapshot(querySnapshot);
-              return OrderCard(order: order, showPaymentStatus: false);
-            }),
-        Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: TextButton(
-            onPressed: () => Get.to(() => const FullJobList()),
-            child: const Text(
-              'لعرض الكل',
-              style: TextStyle(
-                  color: kPrimaryColor,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  overflow: TextOverflow.fade),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
+class EditProfileFormControllerJs extends UserController {}
