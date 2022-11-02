@@ -28,7 +28,7 @@ class ReviewPage extends StatelessWidget {
                 height: 200,
                 child: Center(
                   child: Text(
-                    '${userID == App.user.id ? "ليس لديك" : "This user has"} عروض بعد',
+                    '${userID == App.user.id ? "لا يوجد" : "This user has"} تقييمات ',
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 20,
