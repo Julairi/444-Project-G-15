@@ -11,25 +11,20 @@ import '../company_profile.dart';
 import '../utils/custom_clipper.dart';
 import 'package:get/get.dart';
 
-class StackContainer extends StatefulWidget {
+class StackContainer extends StatelessWidget {
   final String imgUrl;
   final String reviewID;
-  StackContainer({Key? key, required this.imgUrl, required this.reviewID})
+  final bool logout;
+  StackContainer(
+      {Key? key,
+      required this.imgUrl,
+      required this.reviewID,
+      this.logout = false})
       : super(key: key);
 
-  @override
-  StackContainerState createState() => StackContainerState();
-}
-
-class StackContainerState extends State<StackContainer> {
   String name = App.user.name;
   @override
   Widget build(BuildContext context) {
-    void initState() {
-      String name = App.user.name;
-      super.initState();
-    }
-
     return Container(
       height: 300.0,
       child: Stack(
@@ -55,8 +50,7 @@ class StackContainerState extends State<StackContainer> {
               children: <Widget>[
                 // ignore: prefer_const_constructors
                 CircleAvatar(
-                    radius: 70,
-                    backgroundImage: NetworkImage(this.widget.imgUrl)),
+                    radius: 70, backgroundImage: NetworkImage(this.imgUrl)),
                 const SizedBox(height: 4.0),
                 Align(
                   alignment: Alignment.center,
@@ -64,7 +58,7 @@ class StackContainerState extends State<StackContainer> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: GestureDetector(
                       onTap: () =>
-                          Get.to(() => ReviewPage(userID: App.user.id)),
+                          Get.to(() => ReviewPage(userID: this.reviewID)),
                       child: const Text(
                         "عرض التقييمات",
                         style: TextStyle(
@@ -90,7 +84,7 @@ class StackContainerState extends State<StackContainer> {
               ],
             ),
           ),
-          const TopBar(),
+          TopBar(logout: this.logout),
         ],
       ),
     );
