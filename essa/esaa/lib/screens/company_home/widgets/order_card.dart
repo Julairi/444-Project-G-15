@@ -39,7 +39,8 @@ class OrderCard extends StatelessWidget {
           if (post == null) {
             final orderPost = await PostDatabase().getPost(order.postID);
 
-            Get.to(() => PostDetails(post: orderPost!, canApply: false));
+            Get.to(() =>
+                PostDetails(order: order, post: orderPost!, canApply: false));
           } else {
             Get.to(() => OrderDetails(order: order, post: post!));
           }
@@ -375,12 +376,12 @@ class OrderCard extends StatelessWidget {
     });
 
     //PAYMENT COUNT
-    /*User? worker = UserDatabase(order.userID).getUser(order.userID) as User?;
-    var pastm = worker?.money;
+    final user = await UserDatabase(order.userID).getUser(order.userID);
+    var pastm = user?.money;
     var newmoney = pastm! + payRiyals;
     await UserDatabase(order.userID)
         .updateUserDetails({"id": order.userID, "money": 12});
-    controller.money = newmoney;*/
+    controller.money = newmoney;
 
     //Actual payment method
     await _initPayment(amount: payDollars * 100, email: 'email@test.com');
