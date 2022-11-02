@@ -1,5 +1,6 @@
 // ignore_for_file: camel_case_types
 
+import 'package:esaa/screens/profiles/job_seeker_profile2.dart';
 import 'package:esaa/screens/profiles/widgets/card_item.dart';
 import 'package:esaa/screens/profiles/widgets/stack_container.dart';
 import 'package:flutter/material.dart';
@@ -157,6 +158,24 @@ class jobSeekerProfileViewState extends State<jobSeekerProfileView> {
               ],
             ),
           ),
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => JobSeekerProfile2()),
+              );
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.edit),
+                Text(
+                  "تعديل الملف الشخصي",
+                  style: TextStyle(color: Color.fromARGB(255, 56, 146, 220)),
+                ),
+              ],
+            ),
+          )
         ]),
       ),
     );

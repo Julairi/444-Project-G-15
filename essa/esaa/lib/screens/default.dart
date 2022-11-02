@@ -6,6 +6,7 @@ import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/models/models.dart';
 import 'package:esaa/screens/profiles/companyProfileView.dart';
 import 'package:esaa/screens/profiles/job_seeker_profile2.dart';
+import 'package:esaa/screens/profiles/jobSeekerProfileView.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -194,7 +195,7 @@ class _DefaultState extends State<Default> {
           widget = const Conversations();
           break;
         case 4:
-          widget = JobSeekerProfile2();
+          widget = jobSeekerProfileView();
           break;
 
         default:

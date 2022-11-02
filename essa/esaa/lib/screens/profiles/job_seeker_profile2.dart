@@ -533,8 +533,8 @@ void _setInitialValues(
     TextEditingController skillsController) {
   nameController.text = App.user.name;
   emailController.text = App.user.email;
-  nidController.text = App.user.address;
-  sexController.text = App.user.description;
+  nidController.text = App.user.nationalID;
+  sexController.text = App.user.sex;
   bdateController.text = App.user.Bdate;
   bioController.text = App.user.bio;
   skillsController.text = App.user.skills;
