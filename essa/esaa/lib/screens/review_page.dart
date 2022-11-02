@@ -16,31 +16,31 @@ class ReviewPage extends StatelessWidget {
       showLeading: true,
       child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              CustomListView(
-                  query: ReviewDatabase.reviewsCollection
-                      .where("uID", isEqualTo: userID)
-                      .orderBy("timePosted", descending: true),
-                  emptyListWidget: SizedBox(
-                    height: 200,
-                    child: Center(
-                      child: Text(
-                        '${userID == App.user.id ? "You have" : "This user has"} not been reviewed yet',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: kPrimaryColor,
-                        ),
-                      ),
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          CustomListView(
+              query: ReviewDatabase.reviewsCollection
+                  .where("uID", isEqualTo: userID)
+                  .orderBy("timePosted", descending: true),
+              emptyListWidget: SizedBox(
+                height: 200,
+                child: Center(
+                  child: Text(
+                    '${userID == App.user.id ? "ليس لديك" : "This user has"} عروض بعد',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      color: kPrimaryColor,
                     ),
                   ),
-                  itemBuilder: (context, querySnapshot) {
-                    Review review = Review.fromDocumentSnapshot(querySnapshot);
-                    return ReviewCard(review: review);
-                  }),
-            ],
-          )),
+                ),
+              ),
+              itemBuilder: (context, querySnapshot) {
+                Review review = Review.fromDocumentSnapshot(querySnapshot);
+                return ReviewCard(review: review);
+              }),
+        ],
+      )),
     );
   }
 }
@@ -73,7 +73,6 @@ class ReviewCard extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-
               Positioned(
                 child: Container(
                   height: 50,
@@ -86,44 +85,41 @@ class ReviewCard extends StatelessWidget {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            const Color.fromARGB(255, 105, 110, 112).withOpacity(0),
-                            const Color.fromARGB(255, 64, 69, 71).withOpacity(0.2)
-                          ],
-                          stops: const [0.6, 1]
-                      )
-                  ),
+                        const Color.fromARGB(255, 105, 110, 112).withOpacity(0),
+                        const Color.fromARGB(255, 64, 69, 71).withOpacity(0.2)
+                      ],
+                          stops: const [
+                        0.6,
+                        1
+                      ])),
                   child: Row(
                     children: [
                       const SizedBox(
                         height: 20,
                         width: 20,
                       ),
-
                       StreamBuilder<User>(
-                        stream: UserDatabase("").getUserAsStream(review.reviewerID),
-                        builder: (context, snapshot) {
-                          return Text(
-                            snapshot.data?.name ?? "",
-                            style: const TextStyle(
-                                color: Color.fromARGB(255, 6, 6, 6),
-                                fontSize: 18,
-                                fontFamily: 'ElMessiri',
-                                fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.ellipsis
-                            ),
-                          );
-                        }
-                      )
+                          stream: UserDatabase("")
+                              .getUserAsStream(review.reviewerID),
+                          builder: (context, snapshot) {
+                            return Text(
+                              snapshot.data?.name ?? "",
+                              style: const TextStyle(
+                                  color: Color.fromARGB(255, 6, 6, 6),
+                                  fontSize: 18,
+                                  fontFamily: 'ElMessiri',
+                                  fontWeight: FontWeight.bold,
+                                  overflow: TextOverflow.ellipsis),
+                            );
+                          })
                     ],
                   ),
                 ),
               ),
             ],
           ),
-
           const SizedBox(height: 10),
-
-          if(review.comment.isNotEmpty)
+          if (review.comment.isNotEmpty)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Align(
@@ -141,24 +137,19 @@ class ReviewCard extends StatelessWidget {
                 ),
               ),
             ),
-
           const SizedBox(height: 10),
-
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-
                 Icon(
                   Icons.star,
                   color: Colors.orangeAccent,
                   size: review.comment.isEmpty ? 30 : 20,
                 ),
-
                 const SizedBox(width: 5),
-
                 Text(
                   review.rating.toString(),
                   style: const TextStyle(
@@ -170,9 +161,7 @@ class ReviewCard extends StatelessWidget {
                   textAlign: TextAlign.start,
                   maxLines: 1,
                 ),
-
                 const Expanded(child: SizedBox()),
-
                 Text(
                   DateFormat('dd/mm/yyyy hh:mm aa').format(review.timePosted),
                   style: const TextStyle(
@@ -188,9 +177,7 @@ class ReviewCard extends StatelessWidget {
               ],
             ),
           ),
-
           const SizedBox(height: 10),
-
         ],
       ),
     );

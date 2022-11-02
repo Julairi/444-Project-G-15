@@ -45,70 +45,41 @@ class OrderCard extends StatelessWidget {
           margin: const EdgeInsets.all(10),
           child: Column(
             children: [
-              Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                    ),
-                    child: Image.network(
-                      "https://i.pinimg.com/474x/6a/d3/66/6ad3663d79ccc962377d7a6cbe4d9bfe.jpg",
-                      height: 50,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
+              Positioned(
+                child: Container(
+                  height: 50,
+                  alignment: Alignment.bottomRight,
+                  decoration: BoxDecoration(color: Colors.transparent),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 5,
                   ),
-                  Positioned(
-                    child: Container(
-                      height: 50,
-                      alignment: Alignment.bottomRight,
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10,
+                  child: Row(
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                        width: 20,
                       ),
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                            const Color.fromARGB(255, 105, 110, 112)
-                                .withOpacity(0),
-                            const Color.fromARGB(255, 64, 69, 71)
-                                .withOpacity(0.2)
-                          ],
-                              stops: const [
-                            0.6,
-                            1
-                          ])),
-                      child: Row(
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                            width: 20,
-                          ),
-                          const Icon(
-                            Icons.work_outline,
-                            color: Color.fromARGB(255, 83, 80, 80),
-                            size: 35,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                            width: 20,
-                          ),
-                          Text(
-                            order.userName,
-                            style: const TextStyle(
-                                color: Color.fromARGB(255, 6, 6, 6),
-                                fontSize: 18,
-                                fontFamily: 'ElMessiri',
-                                fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.fade),
-                          ),
-                        ],
+                      const Icon(
+                        Icons.work_outline,
+                        color: Colors.black,
+                        size: 35,
                       ),
-                    ),
+                      const SizedBox(
+                        height: 20,
+                        width: 10,
+                      ),
+                      Text(
+                        order.userName,
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 6, 6, 6),
+                            fontSize: 18,
+                            fontFamily: 'ElMessiri',
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.fade),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.all(20),
@@ -117,26 +88,10 @@ class OrderCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const Icon(
-                          Icons.insights_sharp,
-                          color: Color.fromARGB(255, 237, 229, 109),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                          width: 10,
-                        ),
-                        const Icon(
-                          Icons.info,
-                          color: Color.fromARGB(255, 3, 77, 138),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                          width: 10,
-                        ),
                         GestureDetector(
                           child: const Text("تفاصيل الطلب",
                               style: TextStyle(
-                                  color: Colors.blue,
+                                  color: kSPrimaryColor,
                                   fontSize: defaultFontSize,
                                   fontWeight: FontWeight.bold,
                                   decoration: TextDecoration.underline,

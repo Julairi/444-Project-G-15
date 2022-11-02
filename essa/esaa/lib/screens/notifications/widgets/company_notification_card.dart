@@ -4,7 +4,6 @@ import 'package:esaa/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class CompanyNotificationCard extends StatelessWidget {
   final PushNotification notification;
   const CompanyNotificationCard({
@@ -73,29 +72,22 @@ class CompanyNotificationCard extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    notification.body,
-                    style: const TextStyle(
-                        color: Color.fromARGB(255, 6, 6, 6),
-                        fontSize: 18,
-                        fontFamily: 'ElMessiri',
-                        overflow: TextOverflow.fade),
-                  ),
+            child: SizedBox(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  notification.body,
+                  maxLines: 3,
+                  softWrap: true,
+                  textAlign: TextAlign.start,
+                  style: const TextStyle(
+                      color: Color.fromARGB(255, 6, 6, 6),
+                      fontSize: 18,
+                      fontFamily: 'ElMessiri',
+                      height: 1.2,
+                      overflow: TextOverflow.fade),
                 ),
-                TextButton(
-                    onPressed: () async {
-                      //Get.to(() =>  OrderDetails()),
-
-                      Get.back();
-                      Get.find<UserController>().changePage(2);
-                    },
-                    child: const Text('تفاصيل الطلب')),
-              ],
+              ),
             ),
           )
         ],

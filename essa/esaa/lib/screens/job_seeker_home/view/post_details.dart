@@ -9,6 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:esaa/services/database/database.dart';
 import 'package:esaa/services/notification.dart' as notification;
+import '../../../app.dart';
 import '../widgets/company_posts_for_job_seeker.dart';
 import 'package:esaa/screens/companyProfileForJS.dart';
 
@@ -16,7 +17,8 @@ class PostDetails extends StatelessWidget {
   final Order? order;
   final Post post;
   final bool canApply;
-  const PostDetails({this.order, required this.post, this.canApply = true, Key? key})
+  const PostDetails(
+      {this.order, required this.post, this.canApply = true, Key? key})
       : super(key: key);
 
   @override
@@ -79,7 +81,8 @@ class PostDetails extends StatelessWidget {
                       () => ProfileScreenForJS(companyID: post.companyID)),
                   child: Row(
                     children: [
-                      const Icon(Icons.business, color: kSPrimaryColor, size: 30),
+                      const Icon(Icons.business,
+                          color: kSPrimaryColor, size: 30),
                       const SizedBox(
                         height: 20,
                         width: 12,
@@ -279,28 +282,29 @@ class PostDetails extends StatelessWidget {
                 ),
                 if (canApply)
                   Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
+                    padding: const EdgeInsets.only(bottom: 20.0),
                     child: ElevatedButton(
                         onPressed: () => Get.to(() => ApplyScreen(post: post)),
                         child: const Text('التقديم على الوظيفة')),
                   ),
-                if (post.offerStatus == "assigned" ||
-                    post.offerStatus == "fully_assigned")
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: _buttonColor(),
-                        ),
-                        onPressed: () => _sendPayReminder(post),
-                        child: const Text(
-                          'إنهاء الفترة ',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: defaultFontSize,
-                              fontWeight: FontWeight.bold),
-                        )),
-                  ),
+                // if (order?.orderStatus == 'accepted' &&
+                // order?.userID == App.user.id)
+                // if (canApply == false)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: _buttonColor(),
+                      ),
+                      onPressed: () => _sendPayReminder(post),
+                      child: const Text(
+                        'إنهاء الفترة ',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: defaultFontSize,
+                            fontWeight: FontWeight.bold),
+                      )),
+                ),
                 if (Get.find<UserController>().user.value.userType ==
                     "jobSeeker")
                   TextButton(
@@ -386,8 +390,11 @@ class PostDetails extends StatelessWidget {
       "id": post.id,
       "hasBeenDone": post.hasBeenDone,
     });
-    await notification.Notification().sendNotification(user,
-        PushNotification(title: " تدكير بالدفع", body: "يمكنك الدفع للموظف"));
+    await notification.Notification().sendNotification(
+        user,
+        PushNotification(
+            title: " تدكير بالدفع",
+            body: "يمكنك الدفع للموظف ${order?.userName}"));
   }
 
   _buttonColor() {
@@ -401,15 +408,15 @@ class PostDetails extends StatelessWidget {
     var postDay = postDate.day;
     var postYear = postDate.year;
     if (nYear != postYear) {
-      return kPrimaryColor.withOpacity(0.3);
+      return Colors.grey.withOpacity(0.4);
     } else if (nMon != postMon) {
-      return kPrimaryColor.withOpacity(0.3);
+      return Colors.grey.withOpacity(0.4);
     } else if (nDay < postDay) {
       //return Colors.grey.withOpacity(0.4);
-      return kPrimaryColor.withOpacity(0.3);
+      return Colors.grey.withOpacity(0.4);
     } else if (post.hasBeenDone) {
       //return Colors.grey.withOpacity(0.4);
-      return kPrimaryColor.withOpacity(0.3);
+      return Colors.grey.withOpacity(0.4);
     }
   }
 }
