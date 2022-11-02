@@ -28,7 +28,7 @@ class PostCardJobSeeker extends StatelessWidget {
         child: Card(
           color: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(10),
           ),
           elevation: 7,
           margin: const EdgeInsets.all(10),
