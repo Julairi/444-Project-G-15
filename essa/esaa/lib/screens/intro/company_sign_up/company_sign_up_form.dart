@@ -5,6 +5,7 @@ import 'package:esaa/screens/intro/intro.dart';
 import 'package:esaa/services/services.dart';
 import 'package:esaa/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -208,7 +209,7 @@ class CompanySignUpFormState extends State<CompanySignUpForm> {
 
     final contactInfoField = TextFormField(
       controller: contactEditingController,
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.number,
       cursorColor: kPrimaryColor,
       textInputAction: TextInputAction.next,
       onSaved: (newValue) => contactEditingController.text = newValue!,
@@ -225,6 +226,13 @@ class CompanySignUpFormState extends State<CompanySignUpForm> {
           borderRadius: BorderRadius.circular(20),
           borderSide: const BorderSide(color: kFillColor),
         ),
+        prefix: const Text(
+          '05',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: defaultFontSize,
+          ),
+        ),
         prefixIcon: const Padding(
           padding: EdgeInsets.all(defaultPadding),
           child: Icon(Icons.contacts),
@@ -234,7 +242,12 @@ class CompanySignUpFormState extends State<CompanySignUpForm> {
           color: kTextColor,
           fontSize: 20,
         ),
+        counterText: "",
       ),
+      maxLength: 8,
+      inputFormatters: [
+        FilteringTextInputFormatter.allow(RegExp(r"[0-9]"))
+      ],
     );
 
     final descriptionField = TextFormField(
@@ -371,7 +384,7 @@ class CompanySignUpFormState extends State<CompanySignUpForm> {
     company.id = uID;
     company.name = nameEditingController.text;
     company.address = addressEditingController.text;
-    company.contact = contactEditingController.text;
+    company.contact = "05${contactEditingController.text}";
     company.description = descriptionEditingController.text;
     company.userType = "company";
 

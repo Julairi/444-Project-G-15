@@ -203,8 +203,20 @@ class _TabOne extends StatelessWidget {
       ),
       itemBuilder: (context, querySnapshot) {
         Post post = Post.fromDocumentSnapshot(querySnapshot);
+
+        bool skipDetails = false;
+
+        final startDate = DateFormat('yyyy-MM-dd').parse(post.startDate);
+        final now = DateFormat('yyyy-MM-dd')
+            .parse(DateFormat('yyyy-MM-dd').format(DateTime.now()));
+        if (startDate.millisecondsSinceEpoch <= now.millisecondsSinceEpoch) {
+          skipDetails = true;
+        }
         return PostCardCompany(
-            post: post, filters: const ["pending", "assigned"]);
+            post: post,
+            filters: const ["pending", "accepted"],
+            skipDetails: skipDetails,
+        );
       },
     );
   }
