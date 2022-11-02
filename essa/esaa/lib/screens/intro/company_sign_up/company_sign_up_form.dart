@@ -245,9 +245,7 @@ class CompanySignUpFormState extends State<CompanySignUpForm> {
         counterText: "",
       ),
       maxLength: 8,
-      inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r"[0-9]"))
-      ],
+      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r"[0-9]"))],
     );
 
     final descriptionField = TextFormField(
@@ -324,15 +322,16 @@ class CompanySignUpFormState extends State<CompanySignUpForm> {
               const SizedBox(height: defaultPadding / 2),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: _image == null ? Colors.grey.withOpacity(0.4) : kPrimaryColor
-                ),
+                    primary: _image == null
+                        ? Colors.grey.withOpacity(0.4)
+                        : kPrimaryColor),
                 onPressed: () {
-                  if(_image == null){
+                  if (_image == null) {
                     Fluttertoast.showToast(
-                        msg: "Please select an image fisrt",
+                        msg: "الرجاء اختيار صورة",
                         backgroundColor: Colors.redAccent,
                         textColor: kFillColor);
-                  }else {
+                  } else {
                     signUp(emailEditingController.text,
                         passwordEditingController.text);
                   }
