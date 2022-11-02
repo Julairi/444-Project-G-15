@@ -306,63 +306,140 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                       height: 35,
                       width: 10,
                     ),
-                    if (widget.post.offerStatus == "pending" ||
-                        widget.post.offerStatus == "assigned")
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: ElevatedButton(
-                            // style: ElevatedButton.styleFrom(
-                            // primary: _buttonColor(), // Background color
-                            //  ),
-                            onPressed: () => Get.to(() => PostOrders(
-                                post: widget.post, filters: const ['pending'])),
-                            child: const Text(
-                              "عرض الطلبات قيد الانتظار",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: defaultFontSize,
-                                  fontWeight: FontWeight.bold),
-                            )),
-                      ),
-                    if (widget.post.offerStatus == "assigned")
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 20),
-                        child: ElevatedButton(
-                            // style: ElevatedButton.styleFrom(
-                            // primary: _buttonColor(), // Background color
-                            //  ),
-                            onPressed: () => Get.to(() => PostOrders(
-                                post: widget.post,
-                                filters: const ['accepted'])),
-                            child: const Text(
-                              'عرض الطلبات المقبولة',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: defaultFontSize,
-                                  fontWeight: FontWeight.bold),
-                            )),
-                      ),
-                    GetX<CompanyPostDetailsController>(builder: (controller) {
-                      return ElevatedButton(
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: controller.editable.value
-                                ? Colors.blueAccent
-                                //: Colors.grey,
-                                : Colors.grey
-                                    .withOpacity(0.4), // Background color
-                          ),
-                          onPressed: () => _edit(widget.post),
+                              primary: (widget.post.offerStatus == "pending" ||
+                                      widget.post.offerStatus == "assigned")
+                                  ? kPrimaryColor
+                                  : Colors.grey.withOpacity(0.4)),
+                          onPressed: () {
+                            if (widget.post.offerStatus == "pending" ||
+                                widget.post.offerStatus == "assigned") {
+                              Get.to(() => PostOrders(
+                                  post: widget.post,
+                                  filters: const ['pending']));
+                            }
+                          },
                           child: const Text(
-                            'تعديل',
+                            "عرض الطلبات قيد الانتظار",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: defaultFontSize,
                                 fontWeight: FontWeight.bold),
-                          ));
-                    }),
+                          )),
+                    ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 16.0),
+                      padding: const EdgeInsets.only(bottom: 20),
                       child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: widget.post.offerStatus == "assigned"
+                                  ? kFillColor
+                                  : Colors.grey.withOpacity(0.4)),
+                          onPressed: () {
+                            if (widget.post.offerStatus == "assigned") {
+                              Get.to(() => PostOrders(
+                                  post: widget.post,
+                                  filters: const ['accepted']));
+                            } else {
+                              Fluttertoast.showToast(
+                                  msg: "لايوجد طلبات مقبولة بعد",
+                                  backgroundColor: Colors.redAccent,
+                                  toastLength: Toast.LENGTH_LONG,
+                                  textColor: kFillColor);
+                            }
+                          },
+                          child: const Text(
+                            'عرض الطلبات المقبولة',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: defaultFontSize,
+                                fontWeight: FontWeight.bold),
+                          )),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment
+                          .center, //Center Row contents horizontally,
+
+                      children: [
+                        GetX<CompanyPostDetailsController>(
+                            builder: (controller) {
+                          return TextButton(
+                            onPressed: () => _edit(widget.post),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.edit,color: controller.editable.value
+                                        ? Colors.blueAccent
+                                        //: Colors.grey,
+                                        : Colors.grey.withOpacity(0.4),),
+                                Text(
+                                  "تعديل",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: controller.editable.value
+                                        ? Colors.blueAccent
+                                        //: Colors.grey,
+                                        : Colors.grey.withOpacity(0.4),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                          /*return ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: controller.editable.value
+                                    ? Colors.blueAccent
+                                    //: Colors.grey,
+                                    : Colors.grey
+                                        .withOpacity(0.4), // Background color
+                              ),
+                              onPressed: () => _edit(widget.post),
+                              child: const Text(
+                                'تعديل',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: defaultFontSize,
+                                    fontWeight: FontWeight.bold),
+                              ));*/
+                        }),
+                        //  Padding(
+                        //padding: const EdgeInsets.only(top: 16.0),
+                        //child:
+
+                        TextButton(
+                          onPressed: () => showConfirmDeletingDialog(context),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.delete,
+                                color:int.parse(
+                                              widget.post.acceptedApplicants) >
+                                          0
+                                      // ? Colors.grey
+                                      ? Colors.grey.withOpacity(0.4)
+                                      : Colors.redAccent,
+                              ),
+                              Text(
+                                "حذف",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: int.parse(
+                                              widget.post.acceptedApplicants) >
+                                          0
+                                      // ? Colors.grey
+                                      ? Colors.grey.withOpacity(0.4)
+                                      : Colors.redAccent,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    /*  ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             primary:
                                 int.parse(widget.post.acceptedApplicants) > 0
@@ -377,8 +454,8 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                                 color: Colors.white,
                                 fontSize: defaultFontSize,
                                 fontWeight: FontWeight.bold),
-                          )),
-                    ),
+                          )),*/
+                    //),
                   ],
                 ),
               ),
