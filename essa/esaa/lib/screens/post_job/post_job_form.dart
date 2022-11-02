@@ -431,7 +431,7 @@ class PostJobFormState extends State<PostJobForm> {
                           : applicantsEditingController.text;
                   post.acceptedApplicants = "0";
                   post.paymentStatus = 'none_paid';
-                  post.imgUrl = App.user.id;
+                  post.imgUrl = App.user.imgUrl;
 
                   controller.isLoading.value = true; //Show Indicator
 

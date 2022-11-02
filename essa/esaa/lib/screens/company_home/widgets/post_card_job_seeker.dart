@@ -14,6 +14,7 @@ import '../../../services/database/post_database.dart';
 class PostCardJobSeeker extends StatelessWidget {
   final Post post;
   final bool canApply;
+  
   PostCardJobSeeker({required this.post, this.canApply = true, Key? key})
       : super(key: key) {
     Get.put(PostCardController());

@@ -85,7 +85,7 @@ class Post {
       'hasBeenDone': hasBeenDone,
       "timePosted": Timestamp.fromDate(timePosted),
       'saved': saved,
-      'imgurl': imgUrl
+      'imgUrl': imgUrl
     };
   }
 
