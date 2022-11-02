@@ -293,7 +293,7 @@ class CompanySignUpFormState extends State<CompanySignUpForm> {
                       child: SizedBox(
                         height: 200,
                         width: 290,
-                        child: Image.asset("assets/logo.png"),
+                        child: Image.asset("assets/addblue.png"),
                       ),
                     ),
               const Padding(padding: EdgeInsets.all(defaultPadding)),
