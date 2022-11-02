@@ -11,17 +11,21 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../models/order.dart';
+import '../company_home/widgets/full_job_list.dart';
+import '../company_home/widgets/order_card.dart';
 import '../review_page.dart';
 
-class CompanyProfile extends StatefulWidget {
-  CompanyProfile({Key? key}) : super(key: key) {
+class JobSeekerProfile2 extends StatefulWidget {
+  JobSeekerProfile2({Key? key}) : super(key: key) {
     Get.put(EditProfileFormController());
   }
   @override
-  _CompanyProfileState createState() => _CompanyProfileState();
+  _JobSeekerProfile2State createState() => _JobSeekerProfile2State();
 }
 
-class _CompanyProfileState extends State<CompanyProfile> {
+class _JobSeekerProfile2State extends State<JobSeekerProfile2>
+    with SingleTickerProviderStateMixin {
   final _formKey = GlobalKey<FormState>();
   bool showPassword = false;
   bool en = false;
@@ -37,22 +41,36 @@ class _CompanyProfileState extends State<CompanyProfile> {
 
   final nameController = TextEditingController();
   final emailController = TextEditingController();
-  final addressController = TextEditingController();
-  final contactController = TextEditingController();
-  final descriptionController = TextEditingController();
+  final nidController = TextEditingController();
+  final bdateController = TextEditingController();
+  final sexController = TextEditingController();
+  final bioController = TextEditingController();
+  final skillsController = TextEditingController();
+
+  late TabController tabController;
+
   @override
   void initState() {
-    _setInitialValues(nameController, emailController, addressController,
-        contactController, descriptionController);
+    tabController = TabController(length: 2, vsync: this);
+    _setInitialValues(nameController, emailController, nidController,
+        sexController, bdateController, bioController, skillsController);
     super.initState();
+  }
+
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
   }
 
   saveNewValues() async {
     App.user.name = nameController.text;
-    App.user.address = addressController.text;
+    App.user.nationalID = nidController.text;
     App.user.email = emailController.text;
-    App.user.description = descriptionController.text;
-    App.user.contact = contactController.text;
+    App.user.sex = sexController.text;
+    App.user.Bdate = bdateController.text;
+    App.user.bio = bioController.text;
+    App.user.skills = skillsController.text;
+
     String imgUrl = "";
     if (_image != null) {
       imgUrl = await Storage().uploadImageToString("companyLogo ", _image!);
@@ -86,8 +104,7 @@ class _CompanyProfileState extends State<CompanyProfile> {
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
                 overflow: TextOverflow.ellipsis)),
-        //showLogout: true,
-        showLeading: true,
+        showLogout: true,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Form(
@@ -206,7 +223,7 @@ class _CompanyProfileState extends State<CompanyProfile> {
                                 //overflow: TextOverflow.ellipsis
                               ),
                               decoration: InputDecoration(
-                                labelText: "اسم الشركة",
+                                labelText: "الاسم",
                                 fillColor: Colors.white,
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
@@ -220,18 +237,18 @@ class _CompanyProfileState extends State<CompanyProfile> {
                       const SizedBox(
                         height: 10,
                       ),
+                      //====================bio ============================================
                       Row(
                         children: [
                           Expanded(
                             child: TextFormField(
-                              controller: descriptionController,
-                              onSaved: (newValue) => descriptionController
-                                  .text = newValue!.trim().toString(),
-                              validator: (val) => val!.trim().isEmpty
-                                  ? 'يجب ان لا يكون الوصف فارغًا'
-                                  : null,
+                              keyboardType: TextInputType.text,
+                              controller: bioController,
+                              onSaved: (newValue) =>
+                                  bioController.text = newValue!.trim(),
                               onChanged: (val) => setState(() {
                                 en = true;
+                                bioController.text = val.toString();
                               }),
                               style: const TextStyle(
                                 color: Colors.black87,
@@ -240,7 +257,7 @@ class _CompanyProfileState extends State<CompanyProfile> {
                                 //overflow: TextOverflow.ellipsis
                               ),
                               decoration: InputDecoration(
-                                labelText: "وصف الشركة",
+                                labelText: "النبذة التعريفية",
                                 fillColor: Colors.white,
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
@@ -254,18 +271,18 @@ class _CompanyProfileState extends State<CompanyProfile> {
                       const SizedBox(
                         height: 10,
                       ),
+                      //====================skills ============================================
                       Row(
                         children: [
                           Expanded(
                             child: TextFormField(
-                              controller: contactController,
-                              onSaved: (newValue) => contactController.text =
-                                  newValue!.trim().toString(),
-                              validator: (val) => val!.trim().isEmpty
-                                  ? 'يجب ان لا تكون معلومات التواصل فارغة'
-                                  : null,
+                              keyboardType: TextInputType.text,
+                              controller: skillsController,
+                              onSaved: (newValue) =>
+                                  skillsController.text = newValue!.trim(),
                               onChanged: (val) => setState(() {
                                 en = true;
+                                skillsController.text = val.toString();
                               }),
                               style: const TextStyle(
                                 color: Colors.black87,
@@ -274,7 +291,7 @@ class _CompanyProfileState extends State<CompanyProfile> {
                                 //overflow: TextOverflow.ellipsis
                               ),
                               decoration: InputDecoration(
-                                labelText: " معلومات التواصل",
+                                labelText: "المهارات ",
                                 fillColor: Colors.white,
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
@@ -288,18 +305,27 @@ class _CompanyProfileState extends State<CompanyProfile> {
                       const SizedBox(
                         height: 10,
                       ),
+                      //====================id ============================================
                       Row(
                         children: [
                           Expanded(
                             child: TextFormField(
-                              controller: addressController,
-                              onSaved: (newValue) => addressController.text =
-                                  newValue!.trim().toString(),
-                              validator: (val) => val!.trim().isEmpty
-                                  ? 'يجب ان لا يكون اسم المدينة فارغًا'
-                                  : null,
+                              keyboardType: TextInputType.number,
+                              controller: nidController,
+                              onSaved: (newValue) =>
+                                  nidController.text = newValue!.trim(),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return kNationalIdNullError;
+                                } else if (value.length != 10) {
+                                  return kInvalidNationalIdError;
+                                } else {
+                                  return null;
+                                }
+                              },
                               onChanged: (val) => setState(() {
                                 en = true;
+                                nidController.text = val.toString();
                               }),
                               style: const TextStyle(
                                 color: Colors.black87,
@@ -308,7 +334,68 @@ class _CompanyProfileState extends State<CompanyProfile> {
                                 //overflow: TextOverflow.ellipsis
                               ),
                               decoration: InputDecoration(
-                                labelText: "المدينة",
+                                labelText: "الهوية الوطنية",
+                                fillColor: Colors.white,
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: const BorderSide(
+                                        color: Colors.white, width: 0.0)),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      //====================b date ============================================
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              controller: bdateController,
+                              keyboardType: TextInputType.datetime,
+                              style: const TextStyle(
+                                color: Colors.black87,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              decoration: InputDecoration(
+                                labelText: "تاريخ الميلاد",
+                                fillColor: Colors.white,
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: const BorderSide(
+                                        color: Colors.white, width: 0.0)),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      //====================sex ============================================
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              keyboardType: TextInputType.text,
+                              controller: sexController,
+                              onSaved: (newValue) =>
+                                  sexController.text = newValue!.trim(),
+                              onChanged: (val) => setState(() {
+                                en = true;
+                                sexController.text = val.toString();
+                              }),
+                              style: const TextStyle(
+                                color: Colors.black87,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                //overflow: TextOverflow.ellipsis
+                              ),
+                              decoration: InputDecoration(
+                                labelText: "الجنس",
                                 fillColor: Colors.white,
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
@@ -334,7 +421,7 @@ class _CompanyProfileState extends State<CompanyProfile> {
                                 fontWeight: FontWeight.w500,
                               ),
                               decoration: InputDecoration(
-                                labelText: "ايميل الشركة",
+                                labelText: "الايميل",
                                 fillColor: Colors.white,
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
@@ -366,13 +453,65 @@ class _CompanyProfileState extends State<CompanyProfile> {
                               style: ElevatedButton.styleFrom(
                                   primary: kPrimaryColor, elevation: 0),
                               child: const Text(
-                                "حفظ التعديلات",
+                                "حفظ التغييرات",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
                               ),
                             ),
                           ),
                         ],
+                      ),
+                      SingleChildScrollView(
+                        child: Container(
+                          height: MediaQuery.of(context).size.height - 150,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const SizedBox(height: 20),
+                              Container(
+                                width: MediaQuery.of(context).size.height,
+                                decoration: BoxDecoration(
+                                    color: kPrimaryLightColor,
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(5),
+                                      child: TabBar(
+                                        unselectedLabelColor: kPrimaryColor,
+                                        labelColor: const Color.fromARGB(
+                                            255, 75, 73, 73),
+                                        indicatorColor: Colors.white,
+                                        indicatorWeight: 2,
+                                        indicator: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        controller: tabController,
+                                        tabs: const [
+                                          Tab(
+                                            text: 'العروض السابقة',
+                                          ),
+                                          Tab(
+                                            text: 'العروض النشطة',
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: TabBarView(
+                                    controller: tabController,
+                                    children: const [ptab(), actab()]),
+                              ),
+                              const SizedBox(height: 20),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   )
@@ -387,14 +526,119 @@ class _CompanyProfileState extends State<CompanyProfile> {
 void _setInitialValues(
     TextEditingController nameController,
     TextEditingController emailController,
-    TextEditingController addressController,
-    TextEditingController contactController,
-    TextEditingController descriptionController) {
+    TextEditingController nidController,
+    TextEditingController sexController,
+    TextEditingController bdateController,
+    TextEditingController bioController,
+    TextEditingController skillsController) {
   nameController.text = App.user.name;
   emailController.text = App.user.email;
-  addressController.text = App.user.address;
-  contactController.text = App.user.contact;
-  descriptionController.text = App.user.description;
+  nidController.text = App.user.address;
+  sexController.text = App.user.description;
+  bdateController.text = App.user.Bdate;
+  bioController.text = App.user.bio;
+  skillsController.text = App.user.skills;
 }
 
 class EditProfileFormController extends UserController {}
+
+class ptab extends StatelessWidget {
+  const ptab({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CustomListView(
+            absoluteSize: 3,
+            physics: const NeverScrollableScrollPhysics(),
+            query: OrderDatabase.ordersCollection
+                .where("userID", isEqualTo: App.user.id)
+                .where("orderStatus", isEqualTo: "accepted")
+                .where('hasBeenPaid', isEqualTo: true)
+                .orderBy("timeApplied", descending: true),
+            emptyListWidget: Container(
+              margin: const EdgeInsets.only(top: 120, bottom: 100),
+              child: const Center(
+                child: Text(
+                  "لم تنهي أي وظيفة بعد ",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: kPrimaryColor,
+                  ),
+                ),
+              ),
+            ),
+            itemBuilder: (context, querySnapshot) {
+              Order order = Order.fromDocumentSnapshot(querySnapshot);
+              return OrderCard(order: order, showPaymentStatus: false);
+            }),
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: TextButton(
+            onPressed: () => Get.to(() => const FullJobList()),
+            child: const Text(
+              'لعرض الكل',
+              style: TextStyle(
+                  color: kPrimaryColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  overflow: TextOverflow.fade),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class actab extends StatelessWidget {
+  const actab({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CustomListView(
+            absoluteSize: 3,
+            physics: const NeverScrollableScrollPhysics(),
+            query: OrderDatabase.ordersCollection
+                .where("userID", isEqualTo: App.user.id)
+                .where("orderStatus", isEqualTo: "accepted")
+                .orderBy("timeApplied", descending: true),
+            emptyListWidget: Container(
+              margin: const EdgeInsets.only(top: 120, bottom: 100),
+              child: const Center(
+                child: Text(
+                  "لا يوجد عروض نشطة",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: kPrimaryColor,
+                  ),
+                ),
+              ),
+            ),
+            itemBuilder: (context, querySnapshot) {
+              Order order = Order.fromDocumentSnapshot(querySnapshot);
+              return OrderCard(order: order, showPaymentStatus: false);
+            }),
+        Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: TextButton(
+            onPressed: () => Get.to(() => const FullJobList()),
+            child: const Text(
+              'لعرض الكل',
+              style: TextStyle(
+                  color: kPrimaryColor,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  overflow: TextOverflow.fade),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

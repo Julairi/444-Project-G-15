@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:esaa/services/database/database.dart';
 import 'package:esaa/services/notification.dart' as notification;
 import '../../../app.dart';
+import '../../profiles/companyProfileForJS2.dart';
 import '../widgets/company_posts_for_job_seeker.dart';
 import 'package:esaa/screens/companyProfileForJS.dart';
 
@@ -78,7 +79,7 @@ class PostDetails extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () => Get.to(
-                      () => ProfileScreenForJS(companyID: post.companyID)),
+                      () => ProfileScreenForJS2(companyID: post.companyID)),
                   child: Row(
                     children: [
                       const Icon(Icons.business,

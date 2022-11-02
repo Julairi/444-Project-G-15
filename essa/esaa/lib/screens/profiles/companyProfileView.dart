@@ -9,6 +9,8 @@ import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
 
+import 'company_profile.dart';
+
 class companyProfileView extends StatefulWidget {
   @override
   companyProfileViewState createState() => companyProfileViewState();
@@ -157,6 +159,24 @@ class companyProfileViewState extends State<companyProfileView> {
               ],
             ),
           ),
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CompanyProfile()),
+              );
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.edit),
+                Text(
+                  "تعديل الملف الشخصي",
+                  style: TextStyle(color: Color.fromARGB(255, 56, 146, 220)),
+                ),
+              ],
+            ),
+          )
         ]),
       ),
     );

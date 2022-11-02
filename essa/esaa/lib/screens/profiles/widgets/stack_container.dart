@@ -5,6 +5,7 @@ import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
 import '../../../app.dart';
+import '../../review_page.dart';
 import '../company_profile.dart';
 import '../utils/custom_clipper.dart';
 import 'package:get/get.dart';
@@ -50,6 +51,25 @@ class StackContainerState extends State<StackContainer> {
                 CircleAvatar(
                     radius: 70, backgroundImage: NetworkImage(App.user.imgUrl)),
                 const SizedBox(height: 4.0),
+                Align(
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: GestureDetector(
+                      onTap: () =>
+                          Get.to(() => ReviewPage(userID: App.user.id)),
+                      child: const Text(
+                        "عرض التقييمات",
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: kPrimaryColor,
+                            decoration: TextDecoration.underline,
+                            fontWeight: FontWeight.w500),
+                      ),
+                    ),
+                  ),
+                ),
+                /*
                 GestureDetector(
                     onTap: () => CompanyProfile(),
                     child: Icon(
@@ -59,7 +79,7 @@ class StackContainerState extends State<StackContainer> {
                 Text(
                   "تعديل الملف الشخصي",
                   style: TextStyle(color: Color.fromARGB(255, 56, 146, 220)),
-                ),
+                ),*/
               ],
             ),
           ),

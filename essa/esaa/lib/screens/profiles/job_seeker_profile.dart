@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:esaa/app.dart';
@@ -31,8 +32,8 @@ class _JobSeekerProfileState extends State<JobSeekerProfile>
   final _formKey = GlobalKey<FormState>();
   bool showPassword = false;
   bool en = false;
+
   Uint8List? _image;
-  //String imgUrl = App.user.imgUrl;
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final idController = TextEditingController();
@@ -41,14 +42,12 @@ class _JobSeekerProfileState extends State<JobSeekerProfile>
   final bioController = TextEditingController();
   final skillsController = TextEditingController();
   late TabController tabController;
-  String stroredImg = '';
 
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
     _setInitialValues(nameController, emailController, idController,
         sexController, bdateController, bioController, skillsController);
-
     super.initState();
   }
 
@@ -58,6 +57,7 @@ class _JobSeekerProfileState extends State<JobSeekerProfile>
   }
 
   saveNewValues() async {
+    log('save new val');
     App.user.name = nameController.text;
     App.user.email = emailController.text;
     App.user.id = idController.text;
@@ -68,13 +68,14 @@ class _JobSeekerProfileState extends State<JobSeekerProfile>
 
     String imgUrl = "";
     if (_image != null) {
-      imgUrl = await Storage().uploadImageToString("jobseekerLogo ", _image!);
+      imgUrl = await Storage().uploadImageToString("JsProfilePic ", _image!);
     }
     App.user.imgUrl = imgUrl;
     await UserDatabase(App.user.id).updateDetails(App.user.toMap());
   }
 
   void selectImage() async {
+    log('select img');
     final pickedFile = await pickImage(ImageSource.gallery);
     if (pickedFile != null) {
       Uint8List image = await pickImage(ImageSource.gallery);
@@ -82,20 +83,16 @@ class _JobSeekerProfileState extends State<JobSeekerProfile>
         _image = image;
       });
     }
+    String imgUrl = "";
+    if (_image != null) {
+      imgUrl = await Storage().uploadImageToString("companyLogo ", _image!);
+      App.user.imgUrl = imgUrl;
+      await UserDatabase(App.user.id).updateDetails(App.user.toMap());
+    }
   }
-
-//=========== check here
-  /* setStoredImg() {
-    if (App.user.imgUrl == '' || App.user.imgUrl == null) {
-      stroredImg = 'assets/image icon.png';
-      print('image picker');
-    } else
-      stroredImg = App.user.imgUrl;
-  }*/
 
   @override
   Widget build(BuildContext context) {
-    // setStoredImg();
     return CustomAppbar(
         title: const Text("حسابك الشخصي",
             style: TextStyle(
@@ -127,7 +124,7 @@ class _JobSeekerProfileState extends State<JobSeekerProfile>
                                   width: 290,
                                   child: CircleAvatar(
                                       backgroundImage:
-                                          NetworkImage(stroredImg)),
+                                          NetworkImage(App.user.imgUrl)),
                                 ),
                               ),
                         /*Container(
@@ -449,12 +446,13 @@ class _JobSeekerProfileState extends State<JobSeekerProfile>
                                           backgroundColor: Colors.black54,
                                           toastLength: Toast.LENGTH_LONG,
                                           textColor: kFillColor);
+                                      print('btn pressd');
                                     }
                                   : null,
                               style: ElevatedButton.styleFrom(
                                   primary: kPrimaryColor, elevation: 0),
                               child: const Text(
-                                "حفظ التغييرات",
+                                "حفظ التعديلات",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
                               ),
@@ -533,6 +531,7 @@ void _setInitialValues(
     TextEditingController bdateController,
     TextEditingController bioController,
     TextEditingController skillsController) {
+  log('init values');
   nameController.text = App.user.name;
   emailController.text = App.user.email;
   idController.text = App.user.nationalID;
