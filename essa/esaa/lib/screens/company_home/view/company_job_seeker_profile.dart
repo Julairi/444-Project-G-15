@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
+import '../../profiles/widgets/stack_container.dart';
+
 class CompanyJobSeekerProfile extends StatelessWidget {
   const CompanyJobSeekerProfile({Key? key}) : super(key: key);
 
@@ -29,7 +31,11 @@ class CompanyJobSeekerProfile extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                const SizedBox(height: 30),
+                StackContainer(
+                  imgUrl: controller.user.value.imgUrl,
+                  reviewID: controller.user.value.id,
+                ),
+                //================ reviews===============
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -56,7 +62,7 @@ class CompanyJobSeekerProfile extends StatelessWidget {
                     const SizedBox(width: 10),
                     GetX<OrderDetailsController>(builder: (controller) {
                       return Text(
-                        '(${controller.reviews.isNotEmpty ? controller.reviews.length : 'ليس هناك تقييمات'})',
+                        '(${controller.reviews.isNotEmpty ? controller.reviews.length : 'لا يوجد تقييمات'})',
                         style: TextStyle(
                             color: Colors.grey,
                             fontSize: controller.reviews.isNotEmpty ? 24 : 16,
@@ -65,6 +71,7 @@ class CompanyJobSeekerProfile extends StatelessWidget {
                     })
                   ],
                 ),
+                /*
                 const SizedBox(height: 10),
                 Align(
                   alignment: Alignment.center,
@@ -83,38 +90,28 @@ class CompanyJobSeekerProfile extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
+                ),*/
                 const SizedBox(height: 10),
                 Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12))),
-                  elevation: 6,
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 15),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.person,
-                          color: kPrimaryColor,
-                          size: 28,
+                  child: Row(
+                    children: [
+                      const Text(
+                        "الاسم",
+                        style: TextStyle(
+                          fontSize: 18.0,
                         ),
-                        const SizedBox(
-                          height: 20,
-                          width: 15,
-                        ),
-                        Text(controller.user.value.name,
-                            style: const TextStyle(
-                                color: Colors.black87,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                overflow: TextOverflow.ellipsis)),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 4.0),
+                      Text(controller.user.value.name,
+                          style: const TextStyle(
+                              color: Colors.black87,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              overflow: TextOverflow.ellipsis)),
+                    ],
                   ),
                 ),
+
                 const SizedBox(height: 20),
                 Card(
                   margin: const EdgeInsets.symmetric(horizontal: 20),

@@ -128,30 +128,15 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                                   height: 200,
                                   width: 290,
                                   child: CircleAvatar(
-                                      backgroundImage:
-                                          NetworkImage(stroredImg)),
+                                    backgroundImage: NetworkImage(stroredImg),
+                                    child: IconButton(
+                                      iconSize: 40,
+                                      icon: const Icon(Icons.edit),
+                                      onPressed: () => selectImage(),
+                                    ),
+                                  ),
                                 ),
                               ),
-                        Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  width: 4,
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                ),
-                                color: kPrimaryColor,
-                              ),
-                              child: IconButton(
-                                icon: const Icon(Icons.edit),
-                                onPressed: () => selectImage(),
-                              ),
-                            )),
                       ],
                     ),
                   ),

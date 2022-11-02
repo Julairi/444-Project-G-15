@@ -110,51 +110,15 @@ class _CompanyProfileState extends State<CompanyProfile> {
                                   height: 200,
                                   width: 290,
                                   child: CircleAvatar(
-                                      backgroundImage:
-                                          NetworkImage(stroredImg)),
+                                    backgroundImage: NetworkImage(stroredImg),
+                                    child: IconButton(
+                                      iconSize: 40,
+                                      icon: const Icon(Icons.edit),
+                                      onPressed: () => selectImage(),
+                                    ),
+                                  ),
                                 ),
                               ),
-                        /*Container(
-                            width: 130,
-                            height: 130,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 4,
-                                  color: Theme.of(context)
-                                      .scaffoldBackgroundColor),
-                              boxShadow: [
-                                BoxShadow(
-                                    spreadRadius: 2,
-                                    blurRadius: 10,
-                                    color: Colors.black.withOpacity(0.1),
-                                    offset: const Offset(0, 10))
-                              ],
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(/*imgUrl*/)),
-                            )
-                            ),*/
-                        Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  width: 4,
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                ),
-                                color: kPrimaryColor,
-                              ),
-                              child: IconButton(
-                                icon: const Icon(Icons.edit),
-                                onPressed: () => selectImage(),
-                              ),
-                            )),
                       ],
                     ),
                   ),

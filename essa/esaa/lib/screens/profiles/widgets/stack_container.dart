@@ -39,9 +39,10 @@ class StackContainerState extends State<StackContainer> {
             clipper: MyCustomClipper(),
             child: Container(
               height: 300.0,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: NetworkImage("https://picsum.photos/200"),
+                  image: NetworkImage(
+                      "https://i.pinimg.com/originals/f3/43/b5/f343b5388f3035b6453e662fd1ce1f0f.jpg"),
                   fit: BoxFit.cover,
                 ),
               ),
