@@ -19,7 +19,7 @@ class LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   final emailEditingController = TextEditingController();
   final passEditingController = TextEditingController();
-
+  String errormess = '';
   @override
   Widget build(BuildContext context) {
     final emailField = TextFormField(
@@ -99,7 +99,17 @@ class LoginFormState extends State<LoginForm> {
           emailField,
           const SizedBox(height: defaultPadding / 2),
           passField,
-          const Padding(padding: EdgeInsets.all(defaultPadding)),
+          const Padding(padding: EdgeInsets.all(defaultPadding / 2)),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              errormess,
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 13,
+              ),
+            ),
+          ),
           const SizedBox(height: defaultPadding / 2),
           ElevatedButton(
             style: ButtonStyle(
@@ -173,25 +183,9 @@ class LoginFormState extends State<LoginForm> {
       await Auth().signInWithEmail(email, password,
           exceptionBuilder: (FirebaseAuthException e) {
         if (e.code == 'user-not-found') {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                content: const Text('ليس هناك حساب لهذا البريد الالكتروني'),
-                actions: [okButton],
-              );
-            },
-          );
+          errormess = 'لا يوجد حساب لهذا البريد الالكتروني';
         } else if (e.code == 'wrong-password') {
-          showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                content: const Text('البريد الالكتروني/كلمة المرور غير صحيحة'),
-                actions: [okButton],
-              );
-            },
-          );
+          errormess = 'البريد الالكتروني/كلمة المرور غير صحيح';
         }
       });
 

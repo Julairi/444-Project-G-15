@@ -25,6 +25,7 @@ class companyProfileViewState extends State<companyProfileView> {
           StackContainer(
             imgUrl: App.user.imgUrl,
             reviewID: App.user.id,
+            logout: true,
           ),
           const SizedBox(height: 10.0),
           Card(
