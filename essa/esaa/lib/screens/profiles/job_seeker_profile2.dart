@@ -14,7 +14,7 @@ import 'package:image_picker/image_picker.dart';
 
 class JobSeekerProfile2 extends StatefulWidget {
   JobSeekerProfile2({Key? key}) : super(key: key) {
-    Get.put(EditProfileFormControllerJs());
+    Get.put(EditProfileJFormControllerJs());
   }
   @override
   _JobSeekerProfile2State createState() => _JobSeekerProfile2State();
@@ -145,10 +145,6 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                               validator: (val) => val!.trim().isEmpty
                                   ? 'يجب ان يكون الاسم اكثر من ثلاث أحرف'
                                   : null,
-                              onChanged: (val) => setState(() {
-                                en = true;
-                                nameController.text = val.toString();
-                              }),
                               style: const TextStyle(
                                 color: Colors.black87,
                                 fontSize: 16,
@@ -427,4 +423,4 @@ void _setInitialValues(
   skillsController.text = App.user.skills;
 }
 
-class EditProfileFormControllerJs extends UserController {}
+class EditProfileJFormControllerJs extends UserController {}
