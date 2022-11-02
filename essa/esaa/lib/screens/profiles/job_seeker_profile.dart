@@ -38,14 +38,16 @@ class _JobSeekerProfileState extends State<JobSeekerProfile>
   final idController = TextEditingController();
   final sexController = TextEditingController();
   final bdateController = TextEditingController();
+  final bioController = TextEditingController();
+  final skillsController = TextEditingController();
   late TabController tabController;
   String stroredImg = '';
 
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
-    _setInitialValues(
-        nameController, emailController, idController, sexController);
+    _setInitialValues(nameController, emailController, idController,
+        sexController, bdateController, bioController, skillsController);
 
     super.initState();
   }
@@ -60,7 +62,10 @@ class _JobSeekerProfileState extends State<JobSeekerProfile>
     App.user.email = emailController.text;
     App.user.id = idController.text;
     App.user.sex = sexController.text;
-    App.user.sex = sexController.text;
+    App.user.bio = bioController.text;
+    App.user.Bdate = bdateController.text;
+    App.user.skills = skillsController.text;
+
     String imgUrl = "";
     if (_image != null) {
       imgUrl = await Storage().uploadImageToString("jobseekerLogo ", _image!);
@@ -80,17 +85,17 @@ class _JobSeekerProfileState extends State<JobSeekerProfile>
   }
 
 //=========== check here
-  setStoredImg() {
+  /* setStoredImg() {
     if (App.user.imgUrl == '' || App.user.imgUrl == null) {
       stroredImg = 'assets/image icon.png';
       print('image picker');
     } else
       stroredImg = App.user.imgUrl;
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
-    setStoredImg();
+    // setStoredImg();
     return CustomAppbar(
         title: const Text("حسابك الشخصي",
             style: TextStyle(
@@ -217,6 +222,74 @@ class _JobSeekerProfileState extends State<JobSeekerProfile>
                               ),
                               decoration: InputDecoration(
                                 labelText: "الاسم",
+                                fillColor: Colors.white,
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: const BorderSide(
+                                        color: Colors.white, width: 0.0)),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      //====================bio ============================================
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              keyboardType: TextInputType.text,
+                              controller: bioController,
+                              onSaved: (newValue) =>
+                                  bioController.text = newValue!.trim(),
+                              onChanged: (val) => setState(() {
+                                en = true;
+                                bioController.text = val.toString();
+                              }),
+                              style: const TextStyle(
+                                color: Colors.black87,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                //overflow: TextOverflow.ellipsis
+                              ),
+                              decoration: InputDecoration(
+                                labelText: "النبذة التعريفية",
+                                fillColor: Colors.white,
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: const BorderSide(
+                                        color: Colors.white, width: 0.0)),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      //====================skills ============================================
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              keyboardType: TextInputType.text,
+                              controller: skillsController,
+                              onSaved: (newValue) =>
+                                  skillsController.text = newValue!.trim(),
+                              onChanged: (val) => setState(() {
+                                en = true;
+                                skillsController.text = val.toString();
+                              }),
+                              style: const TextStyle(
+                                color: Colors.black87,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                //overflow: TextOverflow.ellipsis
+                              ),
+                              decoration: InputDecoration(
+                                labelText: "المهارات ",
                                 fillColor: Colors.white,
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
@@ -456,11 +529,17 @@ void _setInitialValues(
     TextEditingController nameController,
     TextEditingController emailController,
     TextEditingController idController,
-    TextEditingController sexController) {
+    TextEditingController sexController,
+    TextEditingController bdateController,
+    TextEditingController bioController,
+    TextEditingController skillsController) {
   nameController.text = App.user.name;
   emailController.text = App.user.email;
   idController.text = App.user.nationalID;
   sexController.text = App.user.sex;
+  bdateController.text = App.user.Bdate;
+  bioController.text = App.user.bio;
+  skillsController.text = App.user.skills;
 }
 
 class JobSeekerFormController extends UserController {}
