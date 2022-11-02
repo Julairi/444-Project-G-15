@@ -311,26 +311,15 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               primary: (widget.post.offerStatus == "pending" ||
-                                          widget.post.offerStatus ==
-                                              "assigned") &&
-                                      int.parse(
-                                              widget.post.acceptedApplicants) >
-                                          0
+                                      widget.post.offerStatus == "assigned")
                                   ? kPrimaryColor
                                   : Colors.grey.withOpacity(0.4)),
                           onPressed: () {
-                            if ((widget.post.offerStatus == "pending" ||
-                                    widget.post.offerStatus == "assigned") &&
-                                int.parse(widget.post.acceptedApplicants) > 0) {
+                            if (widget.post.offerStatus == "pending" ||
+                                widget.post.offerStatus == "assigned") {
                               Get.to(() => PostOrders(
                                   post: widget.post,
                                   filters: const ['pending']));
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: "لايوجد طلبات قيد الانتظار بعد",
-                                  backgroundColor: Colors.redAccent,
-                                  toastLength: Toast.LENGTH_LONG,
-                                  textColor: kFillColor);
                             }
                           },
                           child: const Text(
@@ -381,7 +370,10 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.edit),
+                                Icon(Icons.edit,color: controller.editable.value
+                                        ? Colors.blueAccent
+                                        //: Colors.grey,
+                                        : Colors.grey.withOpacity(0.4),),
                                 Text(
                                   "تعديل",
                                   style: TextStyle(
@@ -423,7 +415,12 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                             children: [
                               Icon(
                                 Icons.delete,
-                                color: Colors.red,
+                                color:int.parse(
+                                              widget.post.acceptedApplicants) >
+                                          0
+                                      // ? Colors.grey
+                                      ? Colors.grey.withOpacity(0.4)
+                                      : Colors.redAccent,
                               ),
                               Text(
                                 "حذف",
