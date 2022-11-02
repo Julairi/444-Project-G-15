@@ -33,13 +33,15 @@ class CustomListView extends StatelessWidget {
         physics: physics,
         emptyListBuilder: (context) {
           return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                emptyListWidget,
-              ],
+            child: SingleChildScrollView(
+              child: (Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  emptyListWidget,
+                ],
+              )),
             ),
           );
         },
