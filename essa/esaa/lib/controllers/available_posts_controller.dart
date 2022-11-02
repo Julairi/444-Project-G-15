@@ -2,11 +2,11 @@ import 'package:get/get.dart';
 
 class AvailablePostsController extends GetxController {
   final RxString _searchField = "".obs;
-  final RxString _filterBy = "التاريخ".obs;
+  final RxString _filterBy = "التاريخ الاقرب".obs;
 
   List<String> filters = [
-    "التاريخ",
-    "الاجر للساعه",
+    " التاريخ الاقرب",
+    "الاجر الاعلى للساعه",
   ];
 
   final RxInt matches = 0.obs;

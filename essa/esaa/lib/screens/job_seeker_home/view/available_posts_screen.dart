@@ -67,7 +67,7 @@ class AvailablePostsScreen extends StatelessWidget {
                       minHeight: 24,
                       maxHeight: MediaQuery.of(context).size.height / 1.35,
                       minWidth: 180,
-                      maxWidth: 180,
+                      maxWidth: 200,
                     ),
                     position: PopupMenuPosition.under,
                     itemBuilder: (context) => controller.filters
@@ -97,6 +97,7 @@ class AvailablePostsScreen extends StatelessWidget {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.max,
                             children: [
                               const Padding(
                                 padding: EdgeInsets.all(10),
@@ -107,11 +108,12 @@ class AvailablePostsScreen extends StatelessWidget {
                                 size: 21,
                               ),
                               SizedBox(
-                                height: 18,
+                                height: 20,
+                                width: 150,
                                 child: GetX<AvailablePostsController>(
                                     builder: (controller) {
                                   return Text(
-                                    'تصنيف حسب ${controller.filterBy}',
+                                    'عرض حسب ${controller.filterBy}',
                                     style: const TextStyle(
                                         color: KGrey, fontSize: 14),
                                     textAlign: TextAlign.start,
@@ -128,7 +130,7 @@ class AvailablePostsScreen extends StatelessWidget {
               const SizedBox(height: 20),
               Center(child: GetX<AvailablePostsController>(
                 builder: (controller) {
-                  if (controller.filterBy == "التاريخ") {
+                  if (controller.filterBy == " التاريخ الاقرب") {
                     return PostCount(query: _getQuery(controller.filterBy));
                   } else {
                     return PostCount(query: _getQuery(controller.filterBy));
@@ -138,7 +140,7 @@ class AvailablePostsScreen extends StatelessWidget {
               const SizedBox(height: 10),
               GetX<AvailablePostsController>(
                 builder: (controller) {
-                  if (controller.filterBy == "التاريخ") {
+                  if (controller.filterBy == " التاريخ الاقرب") {
                     return AvailablePostList(
                         query: _getQuery(controller.filterBy));
                   } else {
@@ -156,7 +158,7 @@ class AvailablePostsScreen extends StatelessWidget {
     Query query = PostDatabase.postsCollection
         .where("offerStatus", whereIn: ["pending", "assigned"]);
 
-    if (filterBy == "التاريخ") {
+    if (filterBy == " التاريخ الاقرب") {
       query = query.orderBy("timePosted", descending: true);
     } else {
       query = query.orderBy("payPerHour", descending: true);
@@ -227,7 +229,8 @@ class AvailablePostList extends StatelessWidget {
 
     if (searchField.trim().isEmpty ||
         post.title.contains(searchField.trim()) ||
-        post.description.contains(searchField.trim())) {
+        post.description.contains(searchField.trim()) ||
+        post.city.contains(searchField.trim())) {
       return PostCardJobSeeker(post: post);
     } else {
       return const SizedBox();
@@ -240,7 +243,7 @@ class AvailablePostList extends StatelessWidget {
         'ليس هناك أي منشورات في الوقت الحالي',
         textAlign: TextAlign.center,
         style: TextStyle(
-          fontSize: 20,
+          fontSize: 18,
           color: kPrimaryColor,
         ),
       ),
@@ -263,7 +266,8 @@ class AvailablePostList extends StatelessWidget {
 
       if (searchField.trim().isEmpty ||
           post.title.contains(searchField.trim()) ||
-          post.description.contains(searchField.trim())) {
+          post.description.contains(searchField.trim()) ||
+          post.city.contains(searchField.trim())) {
         matches++;
       }
     }
@@ -307,7 +311,7 @@ class PostCount extends StatelessWidget {
       '$matches من المنشورات المتاحة${matches > 1 ? "" : ""}',
       textAlign: TextAlign.center,
       style: const TextStyle(
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: FontWeight.w500,
         color: KGrey,
       ),
@@ -323,7 +327,8 @@ class PostCount extends StatelessWidget {
 
       if (searchField.trim().isEmpty ||
           post.title.contains(searchField.trim()) ||
-          post.description.contains(searchField.trim())) {
+          post.description.contains(searchField.trim()) ||
+          post.city.contains(searchField.trim())) {
         matches++;
       }
     }
