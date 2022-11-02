@@ -309,6 +309,9 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 20),
                       child: ElevatedButton(
+                          // style: ElevatedButton.styleFrom(
+                          // primary: _buttonColor(), // Background color
+                          //  ),
                           onPressed: () => Get.to(() => PostOrders(
                               post: widget.post, filters: widget.filters)),
                           child: const Text(
@@ -325,8 +328,8 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                             primary: controller.editable.value
                                 ? Colors.blueAccent
                                 //: Colors.grey,
-                                : Colors.blueAccent
-                                    .withOpacity(0.1), // Background color
+                                : Colors.grey
+                                    .withOpacity(0.4), // Background color
                           ),
                           onPressed: () => _edit(widget.post),
                           child: const Text(
@@ -344,7 +347,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                             primary:
                                 int.parse(widget.post.acceptedApplicants) > 0
                                     // ? Colors.grey
-                                    ? Colors.redAccent.withOpacity(0.2)
+                                    ? Colors.grey.withOpacity(0.4)
                                     : Colors.redAccent, // Background color
                           ),
                           onPressed: () => showConfirmDeletingDialog(context),
@@ -510,7 +513,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
       'offerStatus': post.offerStatus,
     });
 
-    await OrderDatabase().deleteAll(post.id);
+    await OrderDatabase().deleteAll(post.id, post.title, post.companyName);
 
     controller.isLoading.value = false;
 
@@ -531,6 +534,14 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
     controller.isLoading.value = false;
 
     controller.editable.value = result.isEmpty;
+  }
+
+  _buttonColor() {
+    if (int.parse(widget.post.acceptedApplicants) < 0)
+      return Colors.grey.withOpacity(0.4);
+    else {
+      return kPrimaryColor;
+    }
   }
 }
 

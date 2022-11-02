@@ -9,6 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:esaa/services/database/database.dart';
 import 'package:esaa/services/notification.dart' as notification;
+import '../../../app.dart';
 import '../widgets/company_posts_for_job_seeker.dart';
 import 'package:esaa/screens/companyProfileForJS.dart';
 
@@ -16,7 +17,8 @@ class PostDetails extends StatelessWidget {
   final Order? order;
   final Post post;
   final bool canApply;
-  const PostDetails({this.order, required this.post, this.canApply = true, Key? key})
+  const PostDetails(
+      {this.order, required this.post, this.canApply = true, Key? key})
       : super(key: key);
 
   @override
@@ -79,7 +81,8 @@ class PostDetails extends StatelessWidget {
                       () => ProfileScreenForJS(companyID: post.companyID)),
                   child: Row(
                     children: [
-                      const Icon(Icons.business, color: kSPrimaryColor, size: 30),
+                      const Icon(Icons.business,
+                          color: kSPrimaryColor, size: 30),
                       const SizedBox(
                         height: 20,
                         width: 12,
@@ -284,8 +287,8 @@ class PostDetails extends StatelessWidget {
                         onPressed: () => Get.to(() => ApplyScreen(post: post)),
                         child: const Text('التقديم على الوظيفة')),
                   ),
-                if (post.offerStatus == "assigned" ||
-                    post.offerStatus == "fully_assigned")
+                if (order?.orderStatus == 'accepted' &&
+                    order?.userID == App.user.id)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: ElevatedButton(
