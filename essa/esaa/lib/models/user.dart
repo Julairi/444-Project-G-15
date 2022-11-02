@@ -15,6 +15,7 @@ class User {
       Bdate,
       skills,
       bio;
+  late double money;
 
   User({
     required this.name,
@@ -31,6 +32,7 @@ class User {
     required this.Bdate,
     required this.skills,
     required this.bio,
+    required this.money,
   });
 
   User.empty() {
@@ -48,6 +50,7 @@ class User {
     Bdate = "";
     skills = "";
     bio = "";
+    money = 0;
   }
 
   String get firstName {
@@ -80,6 +83,7 @@ class User {
       'Bdate': Bdate,
       'skills': skills,
       'bio': bio,
+      'money': money,
     };
   }
 
@@ -99,6 +103,7 @@ class User {
       Bdate: snapshot.get('Bdate') ?? "",
       skills: snapshot.get('skills') ?? "",
       bio: snapshot.get('bio') ?? "",
+      money: snapshot.get('money') ?? 0,
     );
   }
 }
