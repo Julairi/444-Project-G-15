@@ -73,6 +73,20 @@ class PostCardJobSeeker extends StatelessWidget {
                         width: 90,
                       ),
                       const Icon(
+                        Icons.business,
+                        color: KGrey,
+                        size: 20,
+                      ),
+                      Text(post.companyName,
+                          style: const TextStyle(
+                              color: Colors.blueGrey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              overflow: TextOverflow.fade)),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      const Icon(
                         Icons.location_on,
                         color: KGrey,
                         size: 20,
