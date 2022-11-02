@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:esaa/app.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
+import 'package:esaa/screens/profiles/jobSeekerProfileView.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
 import 'package:esaa/utils/utils.dart';
@@ -394,6 +395,12 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                                           backgroundColor: Colors.black54,
                                           toastLength: Toast.LENGTH_LONG,
                                           textColor: kFillColor);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                jobSeekerProfileView()),
+                                      );
                                     }
                                   : null,
                               style: ElevatedButton.styleFrom(

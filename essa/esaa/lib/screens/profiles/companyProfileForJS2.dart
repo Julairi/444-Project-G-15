@@ -111,12 +111,13 @@ class ProfileScreenForJS2 extends StatelessWidget {
                         ),
                         const SizedBox(height: 4.0),
                         GetX<ProfileController>(builder: (controller) {
-                          return Text(controller.user.value.name,
-                              style: const TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  overflow: TextOverflow.ellipsis));
+                          return Text(
+                            controller.user.value.name,
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: 14.0,
+                            ),
+                          );
                         }),
                       ],
                     ),
@@ -140,12 +141,13 @@ class ProfileScreenForJS2 extends StatelessWidget {
                         ),
                         const SizedBox(height: 4.0),
                         GetX<ProfileController>(builder: (controller) {
-                          return Text(controller.user.value.description,
-                              style: const TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  overflow: TextOverflow.ellipsis));
+                          return Text(
+                            controller.user.value.description,
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: 14.0,
+                            ),
+                          );
                         }),
                       ],
                     ),
@@ -168,12 +170,13 @@ class ProfileScreenForJS2 extends StatelessWidget {
                         ),
                         const SizedBox(height: 4.0),
                         GetX<ProfileController>(builder: (controller) {
-                          return Text(controller.user.value.contact,
-                              style: const TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  overflow: TextOverflow.ellipsis));
+                          return Text(
+                            controller.user.value.contact,
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: 14.0,
+                            ),
+                          );
                         })
                       ],
                     ),
@@ -196,12 +199,13 @@ class ProfileScreenForJS2 extends StatelessWidget {
                         ),
                         const SizedBox(height: 4.0),
                         GetX<ProfileController>(builder: (controller) {
-                          return Text(controller.user.value.address,
-                              style: const TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  overflow: TextOverflow.ellipsis));
+                          return Text(
+                            controller.user.value.address,
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: 14.0,
+                            ),
+                          );
                         }),
                       ],
                     ),
@@ -224,12 +228,13 @@ class ProfileScreenForJS2 extends StatelessWidget {
                         ),
                         const SizedBox(height: 4.0),
                         GetX<ProfileController>(builder: (controller) {
-                          return Text(controller.user.value.email,
-                              style: const TextStyle(
-                                  color: Colors.black87,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  overflow: TextOverflow.ellipsis));
+                          return Text(
+                            controller.user.value.email,
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: 14.0,
+                            ),
+                          );
                         }),
                       ],
                     ),

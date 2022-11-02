@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:esaa/app.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
+import 'package:esaa/screens/profiles/companyProfileView.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
 import 'package:esaa/utils/utils.dart';
@@ -113,7 +114,7 @@ class _CompanyProfileState extends State<CompanyProfile> {
                                     backgroundImage: NetworkImage(stroredImg),
                                     child: IconButton(
                                       iconSize: 40,
-                                      icon: const Icon(Icons.edit),
+                                      icon: const Icon(Icons.camera_alt),
                                       onPressed: () => selectImage(),
                                     ),
                                   ),
@@ -325,6 +326,12 @@ class _CompanyProfileState extends State<CompanyProfile> {
                                           backgroundColor: Colors.black54,
                                           toastLength: Toast.LENGTH_LONG,
                                           textColor: kFillColor);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                companyProfileView()),
+                                      );
                                     }
                                   : null,
                               style: ElevatedButton.styleFrom(

@@ -95,85 +95,167 @@ class CompanyJobSeekerProfile extends StatelessWidget {
                 Card(
                   child: Row(
                     children: [
-                      const Text(
-                        "الاسم",
-                        style: TextStyle(
-                          fontSize: 18.0,
-                        ),
+                      const SizedBox(width: 24.0),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            "الاسم",
+                            style: TextStyle(
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          const SizedBox(height: 2.0),
+                          Text(
+                            controller.user.value.name,
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: 14.0,
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 4.0),
-                      Text(controller.user.value.name,
-                          style: const TextStyle(
-                              color: Colors.black87,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              overflow: TextOverflow.ellipsis)),
+                    ],
+                  ),
+                ),
+                Card(
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 24.0),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            "النبذة التعريفية",
+                            style: TextStyle(
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          const SizedBox(height: 4.0),
+                          Text(
+                            controller.user.value.bio,
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: 14.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Card(
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 24.0),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            "المهارات ",
+                            style: TextStyle(
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          const SizedBox(height: 4.0),
+                          Text(
+                            controller.user.value.skills,
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: 14.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Card(
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 24.0),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            "الايميل",
+                            style: TextStyle(
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          const SizedBox(height: 4.0),
+                          Text(
+                            controller.user.value.email,
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: 14.0,
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
 
-                const SizedBox(height: 20),
                 Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12))),
-                  elevation: 6,
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 15),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.email,
-                          color: kPrimaryColor,
-                          size: 28,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                          width: 15,
-                        ),
-                        Text(controller.user.value.email,
-                            style: const TextStyle(
-                                color: Colors.black87,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                overflow: TextOverflow.ellipsis)),
-                      ],
-                    ),
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 24.0),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            "الجنس",
+                            style: TextStyle(
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          const SizedBox(height: 4.0),
+                          Text(
+                            controller.user.value.sex,
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: 14.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 20),
                 Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12))),
-                  elevation: 6,
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 15),
-                    child: Row(
-                      children: [
-                        const Icon(
-                          Icons.male,
-                          color: kPrimaryColor,
-                          size: 28,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                          width: 15,
-                        ),
-                        Text(controller.user.value.sex,
-                            style: const TextStyle(
-                                color: Colors.black87,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                overflow: TextOverflow.ellipsis)),
-                      ],
-                    ),
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 24.0),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text(
+                            "تاريخ الميلاد",
+                            style: TextStyle(
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          const SizedBox(height: 4.0),
+                          Text(
+                            controller.user.value.Bdate,
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                              fontSize: 14.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
+
                 const SizedBox(
                   height: 30,
                 ),
