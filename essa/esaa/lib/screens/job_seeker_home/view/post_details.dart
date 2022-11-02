@@ -270,8 +270,7 @@ class PostDetails extends StatelessWidget {
                   ),
                 if (order != null &&
                     order!.orderStatus == 'accepted' &&
-                    order!.userID == App.user.id &&
-                    !order!.hasBeenPaid)
+                    order!.userID == App.user.id)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 20),
                     child: ElevatedButton(
