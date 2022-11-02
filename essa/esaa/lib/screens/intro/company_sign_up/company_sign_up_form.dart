@@ -328,7 +328,7 @@ class CompanySignUpFormState extends State<CompanySignUpForm> {
                 onPressed: () {
                   if (_image == null) {
                     Fluttertoast.showToast(
-                        msg: "Please select an image fisrt",
+                        msg: "الرجاء اختيار صورة",
                         backgroundColor: Colors.redAccent,
                         textColor: kFillColor);
                   } else {
