@@ -12,8 +12,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../review_page.dart';
-
 class CompanyProfile extends StatefulWidget {
   CompanyProfile({Key? key}) : super(key: key) {
     Get.put(EditProfileFormController());

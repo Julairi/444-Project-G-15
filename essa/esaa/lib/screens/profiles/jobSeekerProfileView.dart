@@ -6,12 +6,9 @@ import 'package:esaa/screens/profiles/widgets/stack_container.dart';
 import 'package:flutter/material.dart';
 import 'package:esaa/app.dart';
 import 'package:esaa/config/constants.dart';
-import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import '../../models/order.dart';
 import '../company_home/widgets/full_job_list.dart';
 import '../company_home/widgets/order_card.dart';
@@ -189,7 +186,7 @@ class jobSeekerProfileViewState extends State<jobSeekerProfileView>
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 Icon(Icons.edit),
                 Text(
                   "تعديل الملف الشخصي",
