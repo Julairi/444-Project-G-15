@@ -306,22 +306,42 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                       height: 35,
                       width: 10,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20),
-                      child: ElevatedButton(
-                          // style: ElevatedButton.styleFrom(
-                          // primary: _buttonColor(), // Background color
-                          //  ),
-                          onPressed: () => Get.to(() => PostOrders(
-                              post: widget.post, filters: widget.filters)),
-                          child: const Text(
-                            'عرض الطلبات',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: defaultFontSize,
-                                fontWeight: FontWeight.bold),
-                          )),
-                    ),
+                    if (widget.post.offerStatus == "pending" ||
+                        widget.post.offerStatus == "assigned")
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: ElevatedButton(
+                            // style: ElevatedButton.styleFrom(
+                            // primary: _buttonColor(), // Background color
+                            //  ),
+                            onPressed: () => Get.to(() => PostOrders(
+                                post: widget.post, filters: const ['pending'])),
+                            child: const Text(
+                              "عرض الطلبات قيد الانتظار",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: defaultFontSize,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                      ),
+                    if (widget.post.offerStatus == "assigned")
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20),
+                        child: ElevatedButton(
+                            // style: ElevatedButton.styleFrom(
+                            // primary: _buttonColor(), // Background color
+                            //  ),
+                            onPressed: () => Get.to(() => PostOrders(
+                                post: widget.post,
+                                filters: const ['accepted'])),
+                            child: const Text(
+                              'عرض الطلبات المقبولة',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: defaultFontSize,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                      ),
                     GetX<CompanyPostDetailsController>(builder: (controller) {
                       return ElevatedButton(
                           style: ElevatedButton.styleFrom(
@@ -537,9 +557,9 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
   }
 
   _buttonColor() {
-    if (int.parse(widget.post.acceptedApplicants) < 0)
+    if (int.parse(widget.post.acceptedApplicants) < 0) {
       return Colors.grey.withOpacity(0.4);
-    else {
+    } else {
       return kPrimaryColor;
     }
   }
