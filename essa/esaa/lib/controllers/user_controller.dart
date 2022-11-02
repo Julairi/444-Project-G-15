@@ -11,11 +11,11 @@ class UserController extends GetxController {
   final RxBool isLoading = false.obs;
 
   void bindUser() {
-    user.bindStream(UserDatabase(Auth().uID).user);
+    user.bindStream(UserDatabase(Auth().uID).getUserAsStream(Auth().uID));
   }
 
   void bindUserWithID(String userID) {
-    user.bindStream(UserDatabase(userID).user);
+    user.bindStream(UserDatabase(userID).getUserAsStream(userID));
   }
 
   void bindReviews() {
