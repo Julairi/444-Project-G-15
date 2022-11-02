@@ -7,10 +7,12 @@ import 'package:esaa/screens/profiles/jobSeekerProfileView.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
 import 'package:esaa/utils/utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class JobSeekerProfile2 extends StatefulWidget {
   JobSeekerProfile2({Key? key}) : super(key: key) {
@@ -145,6 +147,9 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                               validator: (val) => val!.trim().isEmpty
                                   ? 'يجب ان يكون الاسم اكثر من ثلاث أحرف'
                                   : null,
+                              onChanged: (val) => setState(() {
+                                en = true;
+                              }),
                               style: const TextStyle(
                                 color: Colors.black87,
                                 fontSize: 16,
@@ -177,7 +182,6 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                                   bioController.text = newValue!.trim(),
                               onChanged: (val) => setState(() {
                                 en = true;
-                                bioController.text = val.toString();
                               }),
                               style: const TextStyle(
                                 color: Colors.black87,
@@ -211,7 +215,6 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                                   skillsController.text = newValue!.trim(),
                               onChanged: (val) => setState(() {
                                 en = true;
-                                skillsController.text = val.toString();
                               }),
                               style: const TextStyle(
                                 color: Colors.black87,
@@ -254,7 +257,6 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                               },
                               onChanged: (val) => setState(() {
                                 en = true;
-                                nidController.text = val.toString();
                               }),
                               style: const TextStyle(
                                 color: Colors.black87,
@@ -282,12 +284,18 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                         children: [
                           Expanded(
                             child: TextFormField(
+                              //keyboardType: TextInputType.datetime,
                               controller: bdateController,
-                              keyboardType: TextInputType.datetime,
+                              onSaved: (newValue) =>
+                                  nidController.text = newValue!.trim(),
+                              onChanged: (val) => setState(() {
+                                en = true;
+                              }),
                               style: const TextStyle(
                                 color: Colors.black87,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
+                                //overflow: TextOverflow.ellipsis
                               ),
                               decoration: InputDecoration(
                                 labelText: "تاريخ الميلاد",
@@ -297,6 +305,25 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                                     borderSide: const BorderSide(
                                         color: Colors.white, width: 0.0)),
                               ),
+                              onTap: () async {
+                                DateTime? newDate2 = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(1900),
+                                    lastDate: DateTime.now());
+                                if (newDate2 != null) {
+                                  setState(() {
+                                    bdateController.text =
+                                        DateFormat('yyyy-MM-dd')
+                                            .format(newDate2);
+                                    en = true;
+                                  });
+                                } else {
+                                  if (kDebugMode) {
+                                    print(kEndDateNullError);
+                                  }
+                                }
+                              },
                             ),
                           ),
                         ],
