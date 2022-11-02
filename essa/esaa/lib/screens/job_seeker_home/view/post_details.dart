@@ -287,24 +287,25 @@ class PostDetails extends StatelessWidget {
                         onPressed: () => Get.to(() => ApplyScreen(post: post)),
                         child: const Text('التقديم على الوظيفة')),
                   ),
-                // if (order?.orderStatus == 'accepted' &&
-                // order?.userID == App.user.id)
-                // if (canApply == false)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 20),
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: _buttonColor(),
-                      ),
-                      onPressed: () => _sendPayReminder(post),
-                      child: const Text(
-                        'إنهاء الفترة ',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: defaultFontSize,
-                            fontWeight: FontWeight.bold),
-                      )),
-                ),
+                if (order != null &&
+                    order!.orderStatus == 'accepted' &&
+                    order!.userID == App.user.id &&
+                    !order!.hasBeenPaid)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: _buttonColor(),
+                        ),
+                        onPressed: () => _sendPayReminder(post),
+                        child: const Text(
+                          'إنهاء الفترة ',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: defaultFontSize,
+                              fontWeight: FontWeight.bold),
+                        )),
+                  ),
                 if (Get.find<UserController>().user.value.userType ==
                     "jobSeeker")
                   TextButton(
@@ -394,7 +395,7 @@ class PostDetails extends StatelessWidget {
         user,
         PushNotification(
             title: " تدكير بالدفع",
-            body: "يمكنك الدفع للموظف ${order?.userName}"));
+            body: "يمكنك الدفع للموظف ${order!.userName}"));
   }
 
   _buttonColor() {
