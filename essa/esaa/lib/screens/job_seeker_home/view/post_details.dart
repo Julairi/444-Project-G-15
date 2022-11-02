@@ -52,23 +52,19 @@ class PostDetails extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                CircleAvatar(
+                  radius: 40,
+                  backgroundImage: NetworkImage(post.imgUrl),
+                ),
                 const SizedBox(height: 30),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    const Icon(
-                      Icons.work_outline_outlined,
-                      color: kSPrimaryColor,
-                      size: 40,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                      width: 12,
-                    ),
                     Text(
                       post.title,
                       style: const TextStyle(
                           color: Colors.black,
-                          fontSize: 25,
+                          fontSize: 30,
                           fontWeight: FontWeight.bold,
                           overflow: TextOverflow.fade),
                     ),
@@ -77,28 +73,46 @@ class PostDetails extends StatelessWidget {
                 const SizedBox(
                   height: 15,
                 ),
-                InkWell(
-                  onTap: () => Get.to(
-                      () => ProfileScreenForJS2(companyID: post.companyID)),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.business,
-                          color: kSPrimaryColor, size: 30),
-                      const SizedBox(
-                        height: 20,
-                        width: 12,
-                      ),
-                      Text(
-                        post.companyName,
-                        style: const TextStyle(
-                            color: Colors.black,
-                            decoration: TextDecoration.underline,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            overflow: TextOverflow.ellipsis),
-                      )
-                    ],
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.location_on_outlined,
+                            color: kSPrimaryColor, size: 15),
+                        Text(post.city,
+                            style: const TextStyle(
+                                color: KGrey,
+                                fontSize: defaultFontSize,
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.ellipsis)),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          'الشركة:',
+                          style: const TextStyle(
+                              color: kSPrimaryColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              overflow: TextOverflow.ellipsis),
+                        ),
+                        InkWell(
+                            onTap: () => Get.to(() =>
+                                ProfileScreenForJS2(companyID: post.companyID)),
+                            child: Text(
+                              post.companyName,
+                              style: const TextStyle(
+                                  color: KGrey,
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  overflow: TextOverflow.ellipsis),
+                            )),
+                      ],
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 30,
@@ -119,126 +133,17 @@ class PostDetails extends StatelessWidget {
                   height: 40,
                 ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.people_alt,
-                          color: kSPrimaryColor,
-                          size: 30,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                          width: 10,
-                        ),
-                        Text(
-                          '${post.maxNoOfApplicants} موظفين مطلوبين',
-                          style: const TextStyle(
-                              color: KGrey,
-                              fontSize: defaultFontSize,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.fade),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                      width: 90,
-                    ),
-                    Row(
-                      children: [
-                        const Icon(Icons.location_on_outlined,
-                            color: kSPrimaryColor, size: 30),
-                        const SizedBox(
-                          height: 20,
-                          width: 10,
-                        ),
-                        Text(post.city,
-                            style: const TextStyle(
-                                color: KGrey,
-                                fontSize: defaultFontSize,
-                                fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.ellipsis)),
-                        const SizedBox(
-                          height: 20,
-                          width: 20,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 35,
-                  width: 15,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.calendar_month_outlined,
-                            color: kSPrimaryColor, size: 30),
-                        const SizedBox(
-                          height: 20,
-                          width: 10,
-                        ),
-                        Text(
-                          '${_getDate(post.startDate)} - ${_getDate(post.endDate)}',
-                          style: const TextStyle(
-                              color: KGrey,
-                              fontSize: defaultFontSize,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.fade),
-                          textAlign: TextAlign.center,
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                      width: 10,
-                    ),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.timer_outlined,
-                          color: kSPrimaryColor,
-                          size: 30,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                          width: 10,
-                        ),
-                        Text(
-                          post.time,
-                          style: const TextStyle(
-                              color: KGrey,
-                              fontSize: defaultFontSize,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.ellipsis),
-                          textAlign: TextAlign.center,
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 35,
-                  width: 70,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Row(
                       children: [
                         const Icon(
                           Icons.payments,
                           color: kSPrimaryColor,
-                          size: 30,
+                          size: 20,
                         ),
                         const SizedBox(
-                          height: 20,
-                          width: 10,
+                          width: 5,
                         ),
                         Text(
                           '${post.payPerHour} لكل ساعة عمل',
@@ -251,19 +156,17 @@ class PostDetails extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(
-                      height: 20,
-                      width: 30,
+                      width: 5,
                     ),
                     Row(
                       children: [
                         const Icon(
                           Icons.hourglass_bottom_outlined,
                           color: kSPrimaryColor,
-                          size: 35,
+                          size: 20,
                         ),
                         const SizedBox(
-                          height: 20,
-                          width: 10,
+                          width: 5,
                         ),
                         Text(
                           '${post.nHours}  ساعات  ',
@@ -272,14 +175,91 @@ class PostDetails extends StatelessWidget {
                               fontSize: defaultFontSize,
                               fontWeight: FontWeight.bold,
                               overflow: TextOverflow.ellipsis),
-                        )
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.calendar_month_outlined,
+                            color: kSPrimaryColor, size: 20),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          '${_getDate(post.startDate)} - ${_getDate(post.endDate)}',
+                          style: const TextStyle(
+                              color: KGrey,
+                              fontSize: defaultFontSize,
+                              fontWeight: FontWeight.bold,
+                              overflow: TextOverflow.fade),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.timer_outlined,
+                          color: kSPrimaryColor,
+                          size: 20,
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          post.time,
+                          style: const TextStyle(
+                              color: KGrey,
+                              fontSize: defaultFontSize,
+                              fontWeight: FontWeight.bold,
+                              overflow: TextOverflow.ellipsis),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 35,
+                ),
+                const SizedBox(
+                  height: 35,
+                  width: 30,
+                ),
+                Row(
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          ' عدد الموظفين المطلوب :',
+                          style: const TextStyle(
+                              color: KGrey,
+                              fontSize: defaultFontSize,
+                              fontWeight: FontWeight.bold,
+                              overflow: TextOverflow.fade),
+                        ),
+                        Text(
+                          '${post.maxNoOfApplicants}',
+                          style: const TextStyle(
+                              color: KGrey,
+                              fontSize: defaultFontSize,
+                              fontWeight: FontWeight.bold,
+                              overflow: TextOverflow.fade),
+                        ),
                       ],
                     ),
                   ],
                 ),
                 const SizedBox(
                   height: 35,
-                  width: 30,
                 ),
                 if (canApply)
                   Padding(

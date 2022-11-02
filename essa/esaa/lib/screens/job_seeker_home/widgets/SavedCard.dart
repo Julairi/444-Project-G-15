@@ -46,103 +46,77 @@ class savedCardJobSeeker extends StatelessWidget {
           ),
           elevation: 7,
           margin: const EdgeInsets.all(10),
-          child: Column(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Stack(
+              Column(
                 children: [
-                  Positioned(
-                    child: Container(
-                      height: 50,
-                      alignment: Alignment.bottomRight,
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10,
+                  const SizedBox(
+                    height: 10,
+                    width: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                        width: 20,
                       ),
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
+                      CircleAvatar(
+                        radius: 30,
+                        backgroundImage: NetworkImage(post.imgUrl),
                       ),
-                      child: Row(
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                            width: 20,
-                          ),
-                          IconButton(
-                              onPressed: () {
-                                _unsave(post, controller);
-                              },
-                              icon: Icon(Icons.bookmark)),
-                          const Icon(
-                            Icons.work_outline,
-                            color: kSPrimaryColor,
-                            size: 35,
-                          ),
-                          const SizedBox(
-                            height: 20,
-                            width: 20,
-                          ),
-                          Text(
-                            post.title,
-                            style: const TextStyle(
-                                color: Color.fromARGB(255, 6, 6, 6),
-                                fontSize: 18,
-                                fontFamily: 'ElMessiri',
-                                fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.fade),
-                          ),
-                        ],
+                      const SizedBox(
+                        height: 20,
+                        width: 20,
                       ),
-                    ),
+                      Text(
+                        post.title,
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 6, 6, 6),
+                            fontSize: 18,
+                            fontFamily: 'ElMessiri',
+                            fontWeight: FontWeight.bold,
+                            overflow: TextOverflow.fade),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 90,
+                      ),
+                      const Icon(
+                        Icons.location_on,
+                        color: KGrey,
+                        size: 20,
+                      ),
+                      Text(post.city,
+                          style: const TextStyle(
+                              color: Colors.blueGrey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              overflow: TextOverflow.fade))
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.location_on,
-                          color: Color.fromARGB(255, 237, 229, 109),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                          width: 10,
-                        ),
-                        Text(post.city,
-                            style: const TextStyle(
-                                color: kPrimaryColor,
-                                fontSize: defaultFontSize,
-                                fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.fade))
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                      width: 15,
-                    ),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.calendar_month,
-                          color: Color.fromARGB(255, 3, 77, 138),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                          width: 10,
-                        ),
-                        Text(post.startDate,
-                            style: const TextStyle(
-                                color: kPrimaryColor,
-                                fontSize: defaultFontSize,
-                                fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.ellipsis))
-                      ],
-                    ),
-                  ],
-                ),
-              )
+              Spacer(),
+              IconButton(
+                  onPressed: () {
+                    if (controller.saved.value == false) {
+                      _save(post, controller);
+                    } else if (controller.saved == true) {
+                      _unsave(post, controller);
+                    }
+                  },
+                  icon: Icon(Icons.bookmark)),
+              const SizedBox(
+                width: 10,
+              ),
             ],
           ),
         ));
