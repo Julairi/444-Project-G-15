@@ -28,7 +28,7 @@ class PostCardCompany extends StatelessWidget {
         },
         child: Card(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(10),
           ),
           elevation: 7,
           color: Colors.white,
