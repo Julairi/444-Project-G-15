@@ -323,10 +323,19 @@ class CompanySignUpFormState extends State<CompanySignUpForm> {
               const Padding(padding: EdgeInsets.all(defaultPadding)),
               const SizedBox(height: defaultPadding / 2),
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: _image == null ? Colors.grey.withOpacity(0.4) : kPrimaryColor
+                ),
                 onPressed: () {
-                  signUp(emailEditingController.text,
-                      passwordEditingController.text);
-
+                  if(_image == null){
+                    Fluttertoast.showToast(
+                        msg: "Please select an image fisrt",
+                        backgroundColor: Colors.redAccent,
+                        textColor: kFillColor);
+                  }else {
+                    signUp(emailEditingController.text,
+                        passwordEditingController.text);
+                  }
                   /* Navigator.push(
                   context,
                   MaterialPageRoute(
