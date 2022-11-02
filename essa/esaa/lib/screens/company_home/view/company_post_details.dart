@@ -334,11 +334,14 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                       padding: const EdgeInsets.only(bottom: 20),
                       child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              primary: widget.post.offerStatus == "assigned"
+                              primary: widget.post.offerStatus == "assigned" ||
+                                      widget.post.offerStatus ==
+                                          "fully_assigned"
                                   ? kPrimaryColor
                                   : Colors.grey.withOpacity(0.4)),
                           onPressed: () {
-                            if (widget.post.offerStatus == "assigned") {
+                            if (widget.post.offerStatus == "assigned" ||
+                                widget.post.offerStatus == "fully_assigned") {
                               Get.to(() => PostOrders(
                                   post: widget.post,
                                   filters: const ['accepted']));
