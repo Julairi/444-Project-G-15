@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:firebase_core_platform_interface/firebase_core_platform_interface.dart';
 import 'package:flutter_stripe/flutter_stripe.dart' as stripe;
 import 'package:http/http.dart' as http;
 
@@ -111,6 +112,33 @@ class OrderCard extends StatelessWidget {
                             }
                           },
                         ),
+                        const SizedBox(
+                          height: 20,
+                          width: 10,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                          width: 10,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                          width: 40,
+                        ),
+                        if (order.orderStatus == "pending" &&
+                            App.user.userType == 'jobSeeker')
+                          GestureDetector(
+                            child: const Text("ألغ تقديمك",
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 153, 69, 55),
+                                    fontSize: defaultFontSize,
+                                    fontWeight: FontWeight.bold,
+                                    decoration: TextDecoration.underline,
+                                    overflow: TextOverflow.ellipsis)),
+                            onTap: () async {
+                              await OrderDatabase()
+                                  .withdraw(order.postID, order.userID);
+                            },
+                          ),
                       ],
                     ),
                     const SizedBox(
@@ -322,6 +350,8 @@ class OrderCard extends StatelessWidget {
       "id": post!.id,
       "paymentStatus": count == orders.length ? 'all_paid' : 'not_all_paid',
     });
+
+    //PAYMENT COUNT
 
     //Actual payment method
     await _initPayment(amount: payDollars * 100, email: 'email@test.com');
