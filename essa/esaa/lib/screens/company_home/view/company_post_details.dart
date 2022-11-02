@@ -107,10 +107,11 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                       children: [
                         const Icon(
                           Icons.work_outline_outlined,
-                          color: Color.fromARGB(255, 22, 126, 210),
+                          color: kSPrimaryColor,
                           size: 40,
                         ),
                         const SizedBox(
+                          height: 20,
                           width: 12,
                         ),
                         Text(
@@ -124,14 +125,14 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                       ],
                     ),
                     const SizedBox(
-                      height: 30,
+                      height: 15,
                     ),
                     Row(
                       children: [
                         Text(
-                          '  : وصف العمل \n ${widget.post.description}',
+                          '  وصف العمل :\n ${widget.post.description}',
                           style: const TextStyle(
-                              color: kPrimaryColor,
+                              color: Colors.black,
                               fontSize: defaultFontSize,
                               fontWeight: FontWeight.bold,
                               overflow: TextOverflow.ellipsis),
@@ -148,8 +149,8 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                           children: [
                             const Icon(
                               Icons.people_alt,
-                              color: Colors.green,
-                              size: 35,
+                              color: kSPrimaryColor,
+                              size: 30,
                             ),
                             const SizedBox(
                               height: 20,
@@ -158,7 +159,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                             Text(
                               '${widget.post.maxNoOfApplicants} موظفين مطلوبين',
                               style: const TextStyle(
-                                  color: kPrimaryColor,
+                                  color: KGrey,
                                   fontSize: defaultFontSize,
                                   fontWeight: FontWeight.bold,
                                   overflow: TextOverflow.fade),
@@ -172,18 +173,21 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                         Row(
                           children: [
                             const Icon(Icons.location_on_outlined,
-                                color: Color.fromARGB(255, 237, 229, 109),
-                                size: 35),
+                                color: kSPrimaryColor, size: 30),
                             const SizedBox(
                               height: 20,
                               width: 10,
                             ),
                             Text(widget.post.city,
                                 style: const TextStyle(
-                                    color: kPrimaryColor,
+                                    color: KGrey,
                                     fontSize: defaultFontSize,
                                     fontWeight: FontWeight.bold,
-                                    overflow: TextOverflow.ellipsis))
+                                    overflow: TextOverflow.ellipsis)),
+                            const SizedBox(
+                              height: 20,
+                              width: 20,
+                            ),
                           ],
                         ),
                       ],
@@ -198,8 +202,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                         Row(
                           children: [
                             const Icon(Icons.calendar_month_outlined,
-                                color: Color.fromARGB(255, 3, 77, 138),
-                                size: 35),
+                                color: kSPrimaryColor, size: 30),
                             const SizedBox(
                               height: 20,
                               width: 10,
@@ -207,7 +210,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                             Text(
                               '${_getDate(widget.post.startDate)} - ${_getDate(widget.post.endDate)}',
                               style: const TextStyle(
-                                  color: kPrimaryColor,
+                                  color: KGrey,
                                   fontSize: defaultFontSize,
                                   fontWeight: FontWeight.bold,
                                   overflow: TextOverflow.fade),
@@ -217,14 +220,14 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                         ),
                         const SizedBox(
                           height: 20,
-                          width: 10,
+                          width: 5,
                         ),
                         Row(
                           children: [
                             const Icon(
                               Icons.timer_outlined,
-                              color: Color.fromARGB(255, 3, 77, 138),
-                              size: 35,
+                              color: kSPrimaryColor,
+                              size: 30,
                             ),
                             const SizedBox(
                               height: 20,
@@ -232,10 +235,14 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                             ),
                             Text(widget.post.time,
                                 style: const TextStyle(
-                                    color: kPrimaryColor,
+                                    color: KGrey,
                                     fontSize: defaultFontSize,
                                     fontWeight: FontWeight.bold,
-                                    overflow: TextOverflow.ellipsis))
+                                    overflow: TextOverflow.ellipsis)),
+                            const SizedBox(
+                              height: 35,
+                              width: 20,
+                            ),
                           ],
                         ),
                       ],
@@ -251,8 +258,8 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                           children: [
                             const Icon(
                               Icons.payments,
-                              color: Color.fromARGB(255, 7, 154, 68),
-                              size: 35,
+                              color: kSPrimaryColor,
+                              size: 30,
                             ),
                             const SizedBox(
                               height: 20,
@@ -261,7 +268,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                             Text(
                               '${widget.post.payPerHour} لكل ساعة عمل',
                               style: const TextStyle(
-                                  color: kPrimaryColor,
+                                  color: KGrey,
                                   fontSize: defaultFontSize,
                                   fontWeight: FontWeight.bold,
                                   overflow: TextOverflow.ellipsis),
@@ -276,8 +283,8 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                           children: [
                             const Icon(
                               Icons.hourglass_bottom_outlined,
-                              color: Color.fromARGB(255, 143, 13, 13),
-                              size: 35,
+                              color: kSPrimaryColor,
+                              size: 30,
                             ),
                             const SizedBox(
                               height: 20,
@@ -286,7 +293,7 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                             Text(
                               '${widget.post.nHours}  ساعات  ',
                               style: const TextStyle(
-                                  color: kPrimaryColor,
+                                  color: KGrey,
                                   fontSize: defaultFontSize,
                                   fontWeight: FontWeight.bold,
                                   overflow: TextOverflow.ellipsis),

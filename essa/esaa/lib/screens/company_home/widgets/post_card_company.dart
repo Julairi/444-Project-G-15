@@ -10,40 +10,34 @@ class PostCardCompany extends StatelessWidget {
   final Post post;
   final List<String> filters;
   final bool skipDetails;
-  const PostCardCompany({required this.post, required this.filters, this.skipDetails = false, super.key});
+  const PostCardCompany(
+      {required this.post,
+      required this.filters,
+      this.skipDetails = false,
+      super.key});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
         onTap: () {
-          if(skipDetails){
+          if (skipDetails) {
             Get.to(() => PostOrders(post: post, filters: filters));
-          }else {
+          } else {
             Get.to(() => CompanyPostDetails(post: post, filters: filters));
           }
         },
         child: Card(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(30),
           ),
           elevation: 7,
+          color: Colors.white,
+          shadowColor: kPrimaryColor,
           margin: const EdgeInsets.all(10),
           child: Column(
             children: [
               Stack(
                 children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                    ),
-                    child: Image.network(
-                      "https://i.pinimg.com/474x/6a/d3/66/6ad3663d79ccc962377d7a6cbe4d9bfe.jpg",
-                      height: 50,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
                   Positioned(
                     child: Container(
                       height: 50,
@@ -51,20 +45,7 @@ class PostCardCompany extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                         vertical: 10,
                       ),
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                            const Color.fromARGB(255, 105, 110, 112)
-                                .withOpacity(0),
-                            const Color.fromARGB(255, 64, 69, 71)
-                                .withOpacity(0.2)
-                          ],
-                              stops: const [
-                            0.6,
-                            1
-                          ])),
+                      decoration: BoxDecoration(),
                       child: Row(
                         children: [
                           const SizedBox(
@@ -106,25 +87,25 @@ class PostCardCompany extends StatelessWidget {
                             child: Text(
                                 '${post.acceptedApplicants}/${post.maxNoOfApplicants} طلبات مقبولة',
                                 style: const TextStyle(
-                                    color: Colors.blue,
+                                    color: Color.fromARGB(255, 63, 75, 85),
                                     fontSize: defaultFontSize,
                                     fontWeight: FontWeight.bold,
                                     decoration: TextDecoration.underline,
-                                    overflow: TextOverflow.ellipsis)
-                            ),
+                                    overflow: TextOverflow.ellipsis)),
                             onTap: () {
                               if (skipDetails) {
-                                Get.to(() => PostOrders(post: post, filters: filters));
+                                Get.to(() =>
+                                    PostOrders(post: post, filters: filters));
                               } else {
-                                Get.to(() => CompanyPostDetails(post: post, filters: filters));
+                                Get.to(() => CompanyPostDetails(
+                                    post: post, filters: filters));
                               }
-                            }
-                        )
+                            })
                       ],
                     ),
                     const SizedBox(
                       height: 20,
-                      width: 15,
+                      width: 5,
                     ),
                     Row(
                       children: [
@@ -133,8 +114,8 @@ class PostCardCompany extends StatelessWidget {
                           color: Color.fromARGB(255, 237, 229, 109),
                         ),
                         const SizedBox(
-                          height: 20,
-                          width: 10,
+                          height: 10,
+                          width: 5,
                         ),
                         Text(post.city,
                             style: const TextStyle(
