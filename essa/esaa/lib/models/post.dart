@@ -14,7 +14,8 @@ class Post {
       companyID,
       paymentStatus,
       maxNoOfApplicants,
-      acceptedApplicants;
+      acceptedApplicants,
+      imgUrl;
   late int payPerHour;
   late DateTime timePosted;
   // ignore: prefer_typing_uninitialized_variables
@@ -39,7 +40,8 @@ class Post {
       required this.paymentStatus,
       required this.timePosted,
       required this.saved,
-      required this.hasBeenDone});
+      required this.hasBeenDone,
+      required this.imgUrl});
 
   Post.empty() {
     id = "";
@@ -60,6 +62,7 @@ class Post {
     hasBeenDone = false;
     timePosted = DateTime.now();
     saved = [];
+    imgUrl = "";
   }
 
   Map<String, dynamic> toMap() {
@@ -81,30 +84,33 @@ class Post {
       'paymentStatus': paymentStatus,
       'hasBeenDone': hasBeenDone,
       "timePosted": Timestamp.fromDate(timePosted),
-      'saved': saved
+      'saved': saved,
+      'imgurl': imgUrl
     };
   }
 
   factory Post.fromDocumentSnapshot(DocumentSnapshot snapshot) {
     final Timestamp timestamp = snapshot.get("timePosted") ?? Timestamp.now();
     return Post(
-        id: snapshot.get('id') ?? "",
-        city: snapshot.get('city') ?? "",
-        startDate: snapshot.get('startDate') ?? "",
-        endDate: snapshot.get('endDate') ?? "",
-        description: snapshot.get('description') ?? "",
-        payPerHour: snapshot.get('payPerHour') ?? 0,
-        acceptedApplicants: snapshot.get('acceptedApplicants') ?? "",
-        maxNoOfApplicants: snapshot.get('maxNoOfApplicants') ?? "",
-        time: snapshot.get('time') ?? "",
-        title: snapshot.get('title') ?? "",
-        nHours: snapshot.get('nHours') ?? "",
-        offerStatus: snapshot.get('offerStatus') ?? "",
-        companyName: snapshot.get('companyName') ?? "",
-        companyID: snapshot.get('companyID') ?? "",
-        paymentStatus: snapshot.get('paymentStatus') ?? "",
-        hasBeenDone: snapshot.get('hasBeenDone') ?? "",
-        timePosted: timestamp.toDate(),
-        saved: snapshot.get('saved') ?? []);
+      id: snapshot.get('id') ?? "",
+      city: snapshot.get('city') ?? "",
+      startDate: snapshot.get('startDate') ?? "",
+      endDate: snapshot.get('endDate') ?? "",
+      description: snapshot.get('description') ?? "",
+      payPerHour: snapshot.get('payPerHour') ?? 0,
+      acceptedApplicants: snapshot.get('acceptedApplicants') ?? "",
+      maxNoOfApplicants: snapshot.get('maxNoOfApplicants') ?? "",
+      time: snapshot.get('time') ?? "",
+      title: snapshot.get('title') ?? "",
+      nHours: snapshot.get('nHours') ?? "",
+      offerStatus: snapshot.get('offerStatus') ?? "",
+      companyName: snapshot.get('companyName') ?? "",
+      companyID: snapshot.get('companyID') ?? "",
+      paymentStatus: snapshot.get('paymentStatus') ?? "",
+      hasBeenDone: snapshot.get('hasBeenDone') ?? "",
+      timePosted: timestamp.toDate(),
+      saved: snapshot.get('saved') ?? [],
+      imgUrl: snapshot.get('imgUrl') ?? "",
+    );
   }
 }
