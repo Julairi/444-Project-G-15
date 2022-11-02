@@ -163,7 +163,6 @@ class AvailablePostsScreen extends StatelessWidget {
     } else {
       query = query.orderBy("payPerHour", descending: true);
     }
-
     return query;
   }
 }
