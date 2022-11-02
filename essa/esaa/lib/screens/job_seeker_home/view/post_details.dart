@@ -18,7 +18,7 @@ class PostDetails extends StatelessWidget {
   final Post post;
   final bool canApply;
   const PostDetails(
-      { this.order, required this.post, this.canApply = true, Key? key})
+      {this.order, required this.post, this.canApply = true, Key? key})
       : super(key: key);
 
   @override
@@ -282,13 +282,14 @@ class PostDetails extends StatelessWidget {
                 ),
                 if (canApply)
                   Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
+                    padding: const EdgeInsets.only(bottom: 20.0),
                     child: ElevatedButton(
                         onPressed: () => Get.to(() => ApplyScreen(post: post)),
                         child: const Text('التقديم على الوظيفة')),
                   ),
                 // if (order?.orderStatus == 'accepted' &&
                 // order?.userID == App.user.id)
+                // if (canApply == false)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: ElevatedButton(
