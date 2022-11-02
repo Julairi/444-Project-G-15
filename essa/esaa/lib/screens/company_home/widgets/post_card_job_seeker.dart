@@ -68,14 +68,10 @@ class PostCardJobSeeker extends StatelessWidget {
                     ],
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       const SizedBox(
-                        width: 90,
-                      ),
-                      const Icon(
-                        Icons.business,
-                        color: KGrey,
-                        size: 20,
+                        width: 50,
                       ),
                       Text(post.companyName,
                           style: const TextStyle(
@@ -84,7 +80,7 @@ class PostCardJobSeeker extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               overflow: TextOverflow.fade)),
                       const SizedBox(
-                        width: 15,
+                        width: 40,
                       ),
                       const Icon(
                         Icons.location_on,
