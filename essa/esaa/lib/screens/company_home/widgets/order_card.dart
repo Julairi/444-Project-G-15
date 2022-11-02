@@ -162,7 +162,7 @@ class OrderCard extends StatelessWidget {
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 10.0),
                                     child: Text(
-                                      "Pay",
+                                      "ادفع",
                                       style: TextStyle(
                                           color: kFillColor, fontSize: 16),
                                     ),
@@ -206,7 +206,7 @@ class OrderCard extends StatelessWidget {
                 'تقييم الخدمة',
                 textAlign: TextAlign.center,
               ),
-              commentHint: "Leave a comment",
+              commentHint: "اترك تعليق !",
               enableComment: App.user.userType == 'jobSeeker',
               submitButtonText: 'إرسال',
               onSubmitted: (response) async {
