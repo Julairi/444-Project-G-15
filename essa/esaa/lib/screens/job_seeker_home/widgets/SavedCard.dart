@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:esaa/config/constants.dart';
 import 'package:esaa/models/models.dart';
-import 'package:esaa/screens/job_seeker_home/view/post_details.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:esaa/controllers/controllers.dart';
@@ -10,6 +10,7 @@ import '../../../app.dart';
 import '../../../models/models.dart';
 import '../../../models/post.dart';
 import '../../../services/database/post_database.dart';
+import '../view/post_details.dart';
 
 class savedCardJobSeeker extends StatelessWidget {
   final Post post;

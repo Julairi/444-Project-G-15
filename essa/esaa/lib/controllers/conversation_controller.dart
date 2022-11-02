@@ -11,11 +11,11 @@ class ConversationController extends GetxController {
   final RxString message = "".obs;
 
   void bindUser() {
-    recipient.bindStream(UserDatabase(Auth().uID).user);
+    recipient.bindStream(UserDatabase(Auth().uID).getUserAsStream(Auth().uID));
   }
 
   void bindRecipientWithID(String userID) {
-    recipient.bindStream(UserDatabase(userID).user);
+    recipient.bindStream(UserDatabase(userID).getUserAsStream(userID));
   }
 
   void bindConversationWithID(String conversationID) {

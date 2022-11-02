@@ -459,8 +459,8 @@ class OrderDetails extends StatelessWidget {
     await notification.Notification().sendNotification(
         Get.find<OrderDetailsController>().user.value,
         PushNotification(
-            title: "${post.companyName} طلب مقبول من قبل شركة ",
-            body: "${post.title} يسرناإعلامك بقبول طلبك لوظيفة"));
+            title: "طلب مقبول من قبل شركة ${post.companyName}",
+            body: "يسرناإعلامك بقبول طلبك لوظيفة ${post.title}"));
 
     post.offerStatus = "assigned";
     post.acceptedApplicants = '${(int.parse(post.acceptedApplicants) + 1)}';
@@ -493,8 +493,8 @@ class OrderDetails extends StatelessWidget {
     await notification.Notification().sendNotification(
         Get.find<OrderDetailsController>().user.value,
         PushNotification(
-            title: " ${post.companyName} طلب مرفوض من قبل شركة",
-            body: "${post.title}:يؤسفناإعلامك برفضك لوظيفة"));
+            title: "  طلب مرفوض من قبل شركة ${post.companyName}",
+            body: "يؤسفناإعلامك برفضك لوظيفة ${post.title}"));
 
     controller.isRejecting.value = false;
 
