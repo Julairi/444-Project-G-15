@@ -43,6 +43,26 @@ class OrderDatabase {
     }
   }
 
+  Future<void> withdraw(String postID, String userID) async {
+    try {
+      final querySnapshot = await ordersCollection
+          .where("postID", isEqualTo: postID)
+          .where("userID", isEqualTo: userID)
+          .get();
+
+      for (DocumentSnapshot snapshot in querySnapshot.docs) {
+        Order order = Order.fromDocumentSnapshot(snapshot);
+        order.orderStatus = 'withdrawn';
+
+        await updateOrderDetails(
+            {'id': order.id, 'orderStatus': order.orderStatus});
+        await updateOrderDetails({'id': order.id, 'userID': "withdrawn"});
+      }
+    } on FirebaseException catch (e) {
+      Default.showDatabaseError(e);
+    }
+  }
+
   Future<void> rejectAll(String postID) async {
     try {
       final querySnapshot = await ordersCollection
