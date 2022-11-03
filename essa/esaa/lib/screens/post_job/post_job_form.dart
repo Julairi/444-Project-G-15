@@ -41,9 +41,14 @@ class PostJobFormState extends State<PostJobForm> {
       textInputAction: TextInputAction.next,
       onSaved: (newValue) => titleEditingController.text = newValue!,
       validator: (value) {
-        if (value!.isEmpty) {
+        final number = num.tryParse(value!);
+
+        if (value.trim().isEmpty) {
           return kJobTitleNullError;
+        } else if (number != null) {
+          return 'يجب أن لا يحتوي عنوان الإعلان الوظيفي على أرقام فقط';
         }
+
         return null;
       },
       decoration: InputDecoration(
@@ -68,8 +73,11 @@ class PostJobFormState extends State<PostJobForm> {
       controller: descriptionEditingController,
       onSaved: (newValue) => descriptionEditingController.text = newValue!,
       validator: (value) {
-        if (value!.isEmpty) {
+        final number = num.tryParse(value!);
+        if (value.trim().isEmpty) {
           return kDescNullError;
+        } else if (number != null) {
+          return 'يجب أن لا يحتوي وصف الوظيفة على أرقام فقط';
         }
         return null;
       },
@@ -101,7 +109,7 @@ class PostJobFormState extends State<PostJobForm> {
       onSaved: (newValue) => locationEditingController.text = newValue!,
       validator: (value) {
         if (value!.isEmpty) {
-          return kLocationNullError;
+          return "الرجاء إدخال المدينة";
         }
         return null;
       },
@@ -171,7 +179,13 @@ class PostJobFormState extends State<PostJobForm> {
         if (value!.isEmpty) {
           return kStartDateNullError;
         } else {
-          return null;
+          if (DateFormat('yyyy-MM-dd').parse(value).millisecondsSinceEpoch >
+              (DateTime.now().millisecondsSinceEpoch +
+                  (1000 * 60 * 60 * 24 * 90))) {
+            return "يجب ان يكون التاريخ بحدود ثلاث اشهر من تاريخ اليوم";
+          } else {
+            return null;
+          }
         }
       },
     );
@@ -221,9 +235,16 @@ class PostJobFormState extends State<PostJobForm> {
       ),
       validator: (value) {
         if (value!.isEmpty) {
-          return kEndDateNullError;
+          return kStartDateNullError;
         } else {
-          return null;
+          if (DateFormat('yyyy-MM-dd')
+                  .parse(startDateEditingController.text)
+                  .millisecondsSinceEpoch >
+              (DateFormat('yyyy-MM-dd').parse(value).millisecondsSinceEpoch)) {
+            return " يجب ان يكون تاريخ البداية قبل تاريخ النهاية";
+          } else {
+            return null;
+          }
         }
       },
     );
@@ -306,13 +327,14 @@ class PostJobFormState extends State<PostJobForm> {
         ),
       ),
       validator: (value) {
-        if (value!.isEmpty) {
-          //// checkkkkkkkkkkk
+        if (value!.trim().isEmpty) {
           return 'الرجاء ادخال عدد الساعات';
-        }
-        //}
-        else {
-          return null;
+        } else {
+          if (value.trim() == "0") {
+            return "عدد الساعات لايجب ان يكون صفر";
+          } else {
+            return null;
+          }
         }
       },
     );
@@ -342,13 +364,15 @@ class PostJobFormState extends State<PostJobForm> {
         ),
       ),
       validator: (value) {
-        if (value!.isEmpty) {
+        if (value!.trim().isEmpty) {
           //// checkkkkkkkkkkk
-          return 'الرجاء ادخال المبلغ للساعه';
-        }
-        //}
-        else {
-          return null;
+          return 'الرجاء ادخال الأجر للساعه';
+        } else {
+          if (value.trim() == "0") {
+            return "الأجر للساعة لايجب ان يكون صفر";
+          } else {
+            return null;
+          }
         }
       },
     );
@@ -378,7 +402,16 @@ class PostJobFormState extends State<PostJobForm> {
         ),
       ),
       validator: (value) {
-        return null;
+        if (value!.trim().isEmpty) {
+          //// checkkkkkkkkkkk
+          return 'الرجاء ادخال العدد الأقصى للطلبات';
+        } else {
+          if (value.trim() == "0") {
+            return "العدد الأقصى للطلبات يجب أن يكون أكبر من صفر";
+          } else {
+            return null;
+          }
+        }
       },
     );
 
@@ -396,6 +429,13 @@ class PostJobFormState extends State<PostJobForm> {
             locationField,
             const SizedBox(height: defaultPadding / 2),
             startDate,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: const [
+                Text("*يجب أن يكون بحدود ثلاث أشهر من الوقت الحالي")
+              ],
+            ),
             const SizedBox(height: defaultPadding / 2),
             endDate,
             const SizedBox(height: defaultPadding / 2),
@@ -472,5 +512,11 @@ class PostJobFormState extends State<PostJobForm> {
         ),
       ),
     );
+  }
+
+  bool isNumericUsingRegularExpression(String string) {
+    final numericRegex = RegExp(r'^-?(([0-9]*)|(([0-9]*)\.([0-9]*)))$');
+
+    return numericRegex.hasMatch(string);
   }
 }

@@ -53,11 +53,12 @@ class SignUpFormState extends State<SignUpForm> {
         ),
       ),
       validator: (value) {
-        if (value!.isEmpty) {
+        if (value!.trim().isEmpty) {
           return kFirstNameNullError;
-        } else {
-          return null;
+        } else if (textlValidatorRegExp.hasMatch(value)) {
+          return "يجب أن يحتوي الاسم الأول على أحرف فقط";
         }
+         return null;
       },
     );
 
@@ -87,11 +88,12 @@ class SignUpFormState extends State<SignUpForm> {
         ),
       ),
       validator: (value) {
-        if (value!.isEmpty) {
+        if (value!.trim().isEmpty) {
           return kSecondNameNullError;
-        } else {
-          return null;
+        } else if (textlValidatorRegExp.hasMatch(value)) {
+          return "يجب أن يحتوي الاسم الثاني على أحرف فقط";
         }
+         return null;
       },
     );
 
