@@ -149,9 +149,16 @@ class _CompanyProfileState extends State<CompanyProfile> {
                               controller: nameController,
                               onSaved: (newValue) =>
                                   nameController.text = newValue!.trim(),
-                              validator: (val) => val!.trim().isEmpty
-                                  ? 'يجب ان يكون الاسم اكثر من ثلاث أحرف'
-                                  : null,
+                              validator: (value) {
+                                final number = num.tryParse(value!);
+                                if (value!.trim().isEmpty) {
+                                  return "يجب ان لا يكون الاسم فارغًا";
+                                } else if (number != null) {
+                                  return 'يجب أن لا يحتوي الاسم على أرقام فقط';
+                                }
+
+                                return null;
+                              },
                               onChanged: (val) => setState(() {
                                 en = true;
                                 nameController.text = val.toString();
@@ -184,9 +191,17 @@ class _CompanyProfileState extends State<CompanyProfile> {
                               controller: descriptionController,
                               onSaved: (newValue) => descriptionController
                                   .text = newValue!.trim().toString(),
-                              validator: (val) => val!.trim().isEmpty
-                                  ? 'يجب ان لا يكون الوصف فارغًا'
-                                  : null,
+                              validator: (value) {
+                                final number = num.tryParse(value!);
+                                if (value!.trim().isEmpty) {
+                                  return 'يجب ان لا يكون الوصف فارغًا';
+                                } else if (number != null) {
+                                  return 'يجب أن لا يحتوي الوصف على أرقام فقط';
+                                }
+
+                                return null;
+                              },
+                             
                               onChanged: (val) => setState(() {
                                 en = true;
                               }),

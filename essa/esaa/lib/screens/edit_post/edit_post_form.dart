@@ -71,7 +71,7 @@ class EditPostFormState extends State<EditPostForm> {
         if (value.trim().isEmpty) {
           return kJobTitleNullError;
         } else if (number != null) {
-          return 'يجب أن يحتوي عنوان الإعلان الوظيفي على حروف وأرقام معا';
+          return 'يجب أن لا يحتوي عنوان الإعلان الوظيفي على أرقام فقط';
         }
 
         return null;
@@ -101,7 +101,7 @@ class EditPostFormState extends State<EditPostForm> {
         if (value.trim().isEmpty) {
           return kDescNullError;
         } else if (number != null) {
-          return 'يجب أن يحتوي وصف الوظيفة على حروف وأرقام معا';
+          return 'يجب أن لا يحتوي وصف الوظيفة على أرقام فقط';
         }
         return null;
       },
