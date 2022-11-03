@@ -54,58 +54,62 @@ class OrderCard extends StatelessWidget {
           margin: const EdgeInsets.all(10),
           child: Column(
             children: [
-              Positioned(
-                child: Container(
-                  height: 50,
-                  alignment: Alignment.bottomRight,
-                  decoration: BoxDecoration(color: Colors.transparent),
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 5,
+              Stack(
+                children: [
+                  Positioned(
+                    child: Container(
+                      height: 50,
+                      alignment: Alignment.bottomRight,
+                      decoration: BoxDecoration(color: Colors.transparent),
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 5,
+                      ),
+                      child: Row(
+                        children: [
+                          const SizedBox(
+                            height: 20,
+                            width: 20,
+                          ),
+                          const Icon(
+                            Icons.work_outline,
+                            color: Colors.black,
+                            size: 35,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                            width: 10,
+                          ),
+                          if (App.user.userType == 'company')
+                            Text(
+                              order.userName,
+                              style: const TextStyle(
+                                  color: Color.fromARGB(255, 6, 6, 6),
+                                  fontSize: 18,
+                                  fontFamily: 'ElMessiri',
+                                  fontWeight: FontWeight.bold,
+                                  overflow: TextOverflow.fade),
+                            ),
+                          if (App.user.userType == 'jobSeeker')
+                            FutureBuilder(
+                                future: PostDatabase().getPost(order.postID),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<Post?> snapshot) {
+                                  // return a widget here (you have to return a widget to the builder)
+                                  return Text(
+                                    snapshot.data!.title,
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 6, 6, 6),
+                                        fontSize: 18,
+                                        fontFamily: 'ElMessiri',
+                                        fontWeight: FontWeight.bold,
+                                        overflow: TextOverflow.fade),
+                                  );
+                                }),
+                        ],
+                      ),
+                    ),
                   ),
-                  child: Row(
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                        width: 20,
-                      ),
-                      const Icon(
-                        Icons.work_outline,
-                        color: Colors.black,
-                        size: 35,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                        width: 10,
-                      ),
-                      if (App.user.userType == 'company')
-                        Text(
-                          order.userName,
-                          style: const TextStyle(
-                              color: Color.fromARGB(255, 6, 6, 6),
-                              fontSize: 18,
-                              fontFamily: 'ElMessiri',
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.fade),
-                        ),
-                      if (App.user.userType == 'jobSeeker')
-                        FutureBuilder(
-                            future: PostDatabase().getPost(order.postID),
-                            builder: (BuildContext context,
-                                AsyncSnapshot<Post?> snapshot) {
-                              // return a widget here (you have to return a widget to the builder)
-                              return Text(
-                                snapshot.data!.title,
-                                style: const TextStyle(
-                                    color: Color.fromARGB(255, 6, 6, 6),
-                                    fontSize: 18,
-                                    fontFamily: 'ElMessiri',
-                                    fontWeight: FontWeight.bold,
-                                    overflow: TextOverflow.fade),
-                              );
-                            }),
-                    ],
-                  ),
-                ),
+                ],
               ),
               Padding(
                 padding: const EdgeInsets.all(20),
