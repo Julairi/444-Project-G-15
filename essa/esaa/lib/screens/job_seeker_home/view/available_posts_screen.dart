@@ -54,7 +54,7 @@ class AvailablePostsScreen extends StatelessWidget {
                     alignment: AlignmentDirectional.topStart,
                     child: Text(App.user.name,
                         style: TextStyle(
-                            color: Color.fromARGB(255, 220, 171, 12),
+                            color: kPrimaryColor,
                             fontSize: 25,
                             fontWeight: FontWeight.w700,
                             overflow: TextOverflow.ellipsis)),
