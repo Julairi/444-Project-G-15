@@ -43,7 +43,7 @@ class AvailablePostsScreen extends StatelessWidget {
                   ),
                   Align(
                     alignment: AlignmentDirectional.topStart,
-                    child: Text("  أهلا بك  ",
+                    child: Text(" أهلا بك  ",
                         style: TextStyle(
                             color: kPrimaryColor,
                             fontSize: 40,
