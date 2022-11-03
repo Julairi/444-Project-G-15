@@ -67,58 +67,13 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                   children: [
                     const SizedBox(height: 30),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [
-                        /*  GetX<CompanyPostDetailsController>(
-                            builder: (controller) {
-                          return IconButton(
-                            onPressed: () => _edit(widget.post),
-                            icon: Icon(
-                              Icons.edit,
-                              color: controller.editable.value
-                                  ? Colors.blueAccent
-                                  //: Colors.grey,
-                                  : Colors.blueAccent.withOpacity(0.1),
-                              size: 30,
-                            ),
-                          );
-                        }),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        IconButton(
-                          onPressed: () => showConfirmDeletingDialog(context),
-                          icon: Icon(
-                            Icons.delete,
-                            color: int.parse(widget.post.acceptedApplicants) > 0
-                                // ? Colors.grey
-                                ? Colors.redAccent.withOpacity(0.1)
-                                : Colors.redAccent,
-                            size: 30,
-                          ),
-                        ),*/
-                        SizedBox(
-                          width: 10,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        const Icon(
-                          Icons.work_outline_outlined,
-                          color: kSPrimaryColor,
-                          size: 40,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                          width: 12,
-                        ),
                         Text(
                           widget.post.title,
                           style: const TextStyle(
                               color: Colors.black,
-                              fontSize: 25,
+                              fontSize: 30,
                               fontWeight: FontWeight.bold,
                               overflow: TextOverflow.fade),
                         ),
@@ -128,9 +83,29 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                       height: 15,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(Icons.location_on_outlined,
+                                color: kSPrimaryColor, size: 15),
+                            Text(widget.post.city,
+                                style: const TextStyle(
+                                    color: KGrey,
+                                    fontSize: defaultFontSize,
+                                    fontWeight: FontWeight.bold,
+                                    overflow: TextOverflow.ellipsis)),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Row(
                       children: [
                         Text(
-                          '  وصف العمل :\n ${widget.post.description}',
+                          '   وصف العمل :\n ${widget.post.description}',
                           style: const TextStyle(
                               color: Colors.black,
                               fontSize: defaultFontSize,
@@ -143,127 +118,17 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                       height: 40,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.people_alt,
-                              color: kSPrimaryColor,
-                              size: 30,
-                            ),
-                            const SizedBox(
-                              height: 20,
-                              width: 10,
-                            ),
-                            Text(
-                              '${widget.post.maxNoOfApplicants} موظفين مطلوبين',
-                              style: const TextStyle(
-                                  color: KGrey,
-                                  fontSize: defaultFontSize,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.fade),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                          width: 15,
-                        ),
-                        Row(
-                          children: [
-                            const Icon(Icons.location_on_outlined,
-                                color: kSPrimaryColor, size: 30),
-                            const SizedBox(
-                              height: 20,
-                              width: 10,
-                            ),
-                            Text(widget.post.city,
-                                style: const TextStyle(
-                                    color: KGrey,
-                                    fontSize: defaultFontSize,
-                                    fontWeight: FontWeight.bold,
-                                    overflow: TextOverflow.ellipsis)),
-                            const SizedBox(
-                              height: 20,
-                              width: 20,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 35,
-                      width: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Row(
-                          children: [
-                            const Icon(Icons.calendar_month_outlined,
-                                color: kSPrimaryColor, size: 30),
-                            const SizedBox(
-                              height: 20,
-                              width: 10,
-                            ),
-                            Text(
-                              '${_getDate(widget.post.startDate)} - ${_getDate(widget.post.endDate)}',
-                              style: const TextStyle(
-                                  color: KGrey,
-                                  fontSize: defaultFontSize,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.fade),
-                              textAlign: TextAlign.center,
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                          width: 5,
-                        ),
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.timer_outlined,
-                              color: kSPrimaryColor,
-                              size: 30,
-                            ),
-                            const SizedBox(
-                              height: 20,
-                              width: 10,
-                            ),
-                            Text(widget.post.time,
-                                style: const TextStyle(
-                                    color: KGrey,
-                                    fontSize: defaultFontSize,
-                                    fontWeight: FontWeight.bold,
-                                    overflow: TextOverflow.ellipsis)),
-                            const SizedBox(
-                              height: 35,
-                              width: 20,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 35,
-                      width: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Row(
                           children: [
                             const Icon(
                               Icons.payments,
                               color: kSPrimaryColor,
-                              size: 30,
+                              size: 20,
                             ),
                             const SizedBox(
-                              height: 20,
-                              width: 10,
+                              width: 5,
                             ),
                             Text(
                               '${widget.post.payPerHour} لكل ساعة عمل',
@@ -276,19 +141,17 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                           ],
                         ),
                         const SizedBox(
-                          height: 20,
-                          width: 10,
+                          width: 5,
                         ),
                         Row(
                           children: [
                             const Icon(
                               Icons.hourglass_bottom_outlined,
                               color: kSPrimaryColor,
-                              size: 30,
+                              size: 20,
                             ),
                             const SizedBox(
-                              height: 20,
-                              width: 10,
+                              width: 5,
                             ),
                             Text(
                               '${widget.post.nHours}  ساعات  ',
@@ -297,10 +160,91 @@ class _CompanyPostDetailsState extends State<CompanyPostDetails> {
                                   fontSize: defaultFontSize,
                                   fontWeight: FontWeight.bold,
                                   overflow: TextOverflow.ellipsis),
-                            )
+                            ),
                           ],
                         ),
                       ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(Icons.calendar_month_outlined,
+                                color: kSPrimaryColor, size: 20),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              '${_getDate(widget.post.startDate)} - ${_getDate(widget.post.endDate)}',
+                              style: const TextStyle(
+                                  color: KGrey,
+                                  fontSize: defaultFontSize,
+                                  fontWeight: FontWeight.bold,
+                                  overflow: TextOverflow.fade),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.timer_outlined,
+                              color: kSPrimaryColor,
+                              size: 20,
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              widget.post.time,
+                              style: const TextStyle(
+                                  color: KGrey,
+                                  fontSize: defaultFontSize,
+                                  fontWeight: FontWeight.bold,
+                                  overflow: TextOverflow.ellipsis),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 35,
+                    ),
+                    const SizedBox(
+                      height: 35,
+                      width: 30,
+                    ),
+                    Row(
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              ' عدد الموظفين المطلوبين: ',
+                              style: const TextStyle(
+                                  color: KGrey,
+                                  fontSize: defaultFontSize,
+                                  fontWeight: FontWeight.bold,
+                                  overflow: TextOverflow.fade),
+                            ),
+                            Text(
+                              '${widget.post.maxNoOfApplicants}',
+                              style: const TextStyle(
+                                  color: KGrey,
+                                  fontSize: defaultFontSize,
+                                  fontWeight: FontWeight.bold,
+                                  overflow: TextOverflow.fade),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 35,
                     ),
                     const SizedBox(
                       height: 35,

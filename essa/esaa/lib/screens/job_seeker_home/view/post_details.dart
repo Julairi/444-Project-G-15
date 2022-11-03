@@ -238,7 +238,7 @@ class PostDetails extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          ' عدد الموظفين المطلوب :',
+                          ' عدد الموظفين المطلوبين: ',
                           style: const TextStyle(
                               color: KGrey,
                               fontSize: defaultFontSize,
