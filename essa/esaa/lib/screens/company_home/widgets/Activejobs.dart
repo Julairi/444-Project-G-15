@@ -6,13 +6,13 @@ import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
 import 'package:flutter/material.dart';
 
-class FullJobList extends StatelessWidget {
-  const FullJobList({Key? key}) : super(key: key);
+class ActiveJobs extends StatelessWidget {
+  const ActiveJobs({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomAppbar(
-        title: const Text("الوظائف السابقة",
+        title: const Text("الوظائف النشطة",
             style: TextStyle(
                 color: kPrimaryColor,
                 fontSize: 20,
@@ -26,7 +26,7 @@ class FullJobList extends StatelessWidget {
                   query: OrderDatabase.ordersCollection
                       .where("userID", isEqualTo: App.user.id)
                       .where("orderStatus", isEqualTo: "accepted")
-                      .where('hasBeenPaid', isEqualTo: true)
+                      .where('hasBeenPaid', isEqualTo: false)
                       .orderBy("timeApplied", descending: true),
                   emptyListWidget: Container(
                     margin: const EdgeInsets.only(top: 300, bottom: 100),

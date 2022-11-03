@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart';
 import '../../models/order.dart';
 import '../../models/post.dart';
+import '../company_home/widgets/Activejobs.dart';
 import '../company_home/widgets/full_job_list.dart';
 import '../company_home/widgets/order_card.dart';
 import '../review_page.dart';
@@ -375,7 +376,7 @@ class actab extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 10),
           child: TextButton(
-            onPressed: () => Get.to(() => const FullJobList()),
+            onPressed: () => Get.to(() => const ActiveJobs()),
             child: const Text(
               'لعرض الكل',
               style: TextStyle(
