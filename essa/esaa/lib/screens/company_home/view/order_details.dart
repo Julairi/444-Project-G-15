@@ -237,7 +237,7 @@ class OrderDetails extends StatelessWidget {
                       ),
                     if (order.orderStatus == "accepted")
                       ElevatedButton(
-                        onPressed: () => payOrder(order),
+                        onPressed: () => payOrder(order, controller),
                         style: ElevatedButton.styleFrom(
                             primary: order.hasBeenPaid
                                 ? kPrimaryColor.withOpacity(0.5)
@@ -501,7 +501,7 @@ class OrderDetails extends StatelessWidget {
     Get.offAllNamed("/");
   }
 
-  Future<void> payOrder(Order order) async {
+  Future<void> payOrder(Order order, OrderDetailsController controller) async {
     //INSERT PAYING METHOD
     var postID = order.postID;
     Post? myPost = await PostDatabase().getPost(postID);
@@ -568,7 +568,7 @@ class OrderDetails extends StatelessWidget {
       "hasBeenPaid": order.hasBeenPaid,
     });
 
-    final orders = await OrderDatabase().getOrders(post.id);
+    final orders = await OrderDatabase().getOrders(post!.id);
 
     int count = 0;
 
@@ -577,9 +577,17 @@ class OrderDetails extends StatelessWidget {
     }
 
     await PostDatabase().updatePostDetails({
-      "id": post.id,
+      "id": post!.id,
       "paymentStatus": count == orders.length ? 'all_paid' : 'not_all_paid',
     });
+
+    //PAYMENT COUNT
+    final user = await UserDatabase(order.userID).getUser(order.userID);
+    var pastm = user?.money;
+    var newmoney = pastm! + payRiyals;
+    await UserDatabase(order.userID)
+        .updateUserDetails({"id": order.userID, "money": newmoney});
+    //controller.money = newmoney;
 
     //Actual payment method
     await _initPayment(amount: payDollars * 100, email: 'email@test.com');

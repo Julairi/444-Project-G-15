@@ -9,10 +9,13 @@ import 'package:esaa/services/database/database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:esaa/app.dart';
+import '../../../app.dart';
 
 class AvailablePostsScreen extends StatelessWidget {
   AvailablePostsScreen({Key? key}) : super(key: key) {
     Get.put(AvailablePostsController());
+    Get.find<AvailablePostsController>();
   }
 
   @override
@@ -33,6 +36,31 @@ class AvailablePostsScreen extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           child: Column(
             children: [
+              Row(
+                children: [
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional.topStart,
+                    child: Text("  أهلا بك  ",
+                        style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 40,
+                            fontWeight: FontWeight.w500,
+                            overflow: TextOverflow.ellipsis)),
+                  ),
+                  Align(
+                    alignment: AlignmentDirectional.topStart,
+                    child: Text(App.user.name,
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 220, 171, 12),
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                            overflow: TextOverflow.ellipsis)),
+                  ),
+                ],
+              ),
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
