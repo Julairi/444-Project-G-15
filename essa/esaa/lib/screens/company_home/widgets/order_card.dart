@@ -34,6 +34,7 @@ class OrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<OrderCardController>();
+
     return InkWell(
         onTap: () async {
           if (post == null) {
@@ -255,10 +256,10 @@ class OrderCard extends StatelessWidget {
         builder: (context) {
           return RatingDialog(
               title: const Text(
-                'تقييم الخدمة',
+                'تقييم التجربة',
                 textAlign: TextAlign.center,
               ),
-              commentHint: "Leave a comment",
+              commentHint: "اترك تعليقك",
               enableComment: App.user.userType == 'jobSeeker',
               submitButtonText: 'إرسال',
               onSubmitted: (response) async {
@@ -278,7 +279,7 @@ class OrderCard extends StatelessWidget {
                 if (hasUserBeenRated) {
                   Fluttertoast.showToast(
                       msg:
-                          "You have already reviewed this ${App.user.userType == 'jobSeeker' ? "company" : "user"}",
+                          "لقد قيمت مسبقًا ${App.user.userType == 'jobSeeker' ? "الشركة" : "الباحث عن العمل"}",
                       backgroundColor: Colors.redAccent);
                   return;
                 } else {
@@ -290,6 +291,7 @@ class OrderCard extends StatelessWidget {
                     timePosted: DateTime.now(),
                     reviewerID: App.user.id,
                   ).toMap());
+                  Fluttertoast.showToast(msg: "تم إرسال التقييم بنجاح");
                 }
               });
         });

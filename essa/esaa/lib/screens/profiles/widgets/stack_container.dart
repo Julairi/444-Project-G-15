@@ -52,24 +52,7 @@ class StackContainer extends StatelessWidget {
                 CircleAvatar(
                     radius: 70, backgroundImage: NetworkImage(this.imgUrl)),
                 const SizedBox(height: 4.0),
-                Align(
-                  alignment: Alignment.center,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: GestureDetector(
-                      onTap: () =>
-                          Get.to(() => ReviewPage(userID: this.reviewID)),
-                      child: const Text(
-                        "عرض التقييمات",
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: kPrimaryColor,
-                            decoration: TextDecoration.underline,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ),
-                  ),
-                ),
+
                 /*
                 GestureDetector(
                     onTap: () => CompanyProfile(),

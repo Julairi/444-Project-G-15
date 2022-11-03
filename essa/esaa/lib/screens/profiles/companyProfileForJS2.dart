@@ -68,24 +68,24 @@ class ProfileScreenForJS2 extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10),
-            /* Align(
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: GestureDetector(
-                    onTap: () => Get.to(
-                        () => ReviewPage(userID: controller.user.value.id)),
-                    child: const Text(
-                      "عرض التقييمات",
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: kPrimaryColor,
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.w500),
-                    ),
+            Align(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: GestureDetector(
+                  onTap: () => Get.to(
+                      () => ReviewPage(userID: controller.user.value.id)),
+                  child: const Text(
+                    "عرض التقييمات",
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: kPrimaryColor,
+                        decoration: TextDecoration.underline,
+                        fontWeight: FontWeight.w500),
                   ),
                 ),
-              ),*/
+              ),
+            ),
             //================== name
             Card(
               child: Row(
