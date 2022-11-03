@@ -216,11 +216,14 @@ class _CompanyProfileState extends State<CompanyProfile> {
                           Expanded(
                             child: TextFormField(
                               controller: contactController,
+                              keyboardType: TextInputType.number,
                               onSaved: (newValue) => contactController.text =
                                   newValue!.trim().toString(),
                               validator: (val) => val!.trim().isEmpty
                                   ? 'يجب ان لا تكون معلومات التواصل فارغة'
-                                  : null,
+                                  : val.length != 10
+                                      ? ''
+                                      : null,
                               onChanged: (val) => setState(() {
                                 en = true;
                               }),
@@ -231,7 +234,7 @@ class _CompanyProfileState extends State<CompanyProfile> {
                                 //overflow: TextOverflow.ellipsis
                               ),
                               decoration: InputDecoration(
-                                labelText: " معلومات التواصل",
+                                labelText: " رقم الجوال",
                                 fillColor: Colors.white,
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
@@ -335,9 +338,11 @@ void _setInitialValues(
   contactController.text = App.user.contact;
   descriptionController.text = App.user.description;
 }
-  bool isNumericUsingRegularExpression(String string) {
-    final numericRegex = RegExp(r'^-?(([0-9]*)|(([0-9]*)\.([0-9]*)))$');
 
-    return numericRegex.hasMatch(string);
-  }
+bool isNumericUsingRegularExpression(String string) {
+  final numericRegex = RegExp(r'^-?(([0-9]*)|(([0-9]*)\.([0-9]*)))$');
+
+  return numericRegex.hasMatch(string);
+}
+
 class EditProfileFormController extends UserController {}
