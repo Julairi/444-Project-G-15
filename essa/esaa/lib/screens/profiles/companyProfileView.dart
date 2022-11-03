@@ -8,7 +8,9 @@ import 'package:esaa/config/constants.dart';
 import 'package:esaa/controllers/controllers.dart';
 import 'package:esaa/screens/shared/shared.dart';
 import 'package:esaa/services/services.dart';
+import 'package:get/get.dart';
 
+import '../review_page.dart';
 import 'company_profile.dart';
 
 class companyProfileView extends StatefulWidget {
@@ -26,6 +28,23 @@ class companyProfileViewState extends State<companyProfileView> {
             imgUrl: App.user.imgUrl,
             reviewID: App.user.id,
             logout: true,
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: GestureDetector(
+                onTap: () => Get.to(() => ReviewPage(userID: App.user.id)),
+                child: const Text(
+                  "عرض التقييمات",
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: kPrimaryColor,
+                      decoration: TextDecoration.underline,
+                      fontWeight: FontWeight.w500),
+                ),
+              ),
+            ),
           ),
           const SizedBox(height: 10.0),
           Card(

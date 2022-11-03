@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import '../../models/order.dart';
 import '../company_home/widgets/full_job_list.dart';
 import '../company_home/widgets/order_card.dart';
+import '../review_page.dart';
 
 class jobSeekerProfileView extends StatefulWidget {
   @override
@@ -41,6 +42,23 @@ class jobSeekerProfileViewState extends State<jobSeekerProfileView>
             imgUrl: App.user.imgUrl,
             reviewID: App.user.id,
             logout: true,
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: GestureDetector(
+                onTap: () => Get.to(() => ReviewPage(userID: App.user.id)),
+                child: const Text(
+                  "عرض التقييمات",
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: kPrimaryColor,
+                      decoration: TextDecoration.underline,
+                      fontWeight: FontWeight.w500),
+                ),
+              ),
+            ),
           ),
           const SizedBox(height: 10.0),
           Card(

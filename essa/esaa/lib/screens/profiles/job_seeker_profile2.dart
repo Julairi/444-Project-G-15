@@ -61,11 +61,11 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
     App.user.bio = bioController.text;
     App.user.skills = skillsController.text;
 
-    String imgUrl = "";
+    /*String imgUrl = "";
     if (_image != null) {
       imgUrl = await Storage().uploadImageToString("companyLogo ", _image!);
     }
-    App.user.imgUrl = imgUrl;
+    App.user.imgUrl = imgUrl;*/
     await UserDatabase(App.user.id).updateDetails(App.user.toMap());
   }
 
@@ -107,6 +107,14 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                   Center(
                     child: Stack(
                       children: [
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(App.user.imgUrl),
+                          child: IconButton(
+                            iconSize: 40,
+                            icon: const Icon(Icons.camera_alt),
+                            onPressed: () => selectImage(),
+                          ),
+                        ),
                         _image != null
                             ? CircleAvatar(
                                 radius: 70,
@@ -117,7 +125,8 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                                   height: 200,
                                   width: 290,
                                   child: CircleAvatar(
-                                    backgroundImage: NetworkImage(stroredImg),
+                                    backgroundImage:
+                                        NetworkImage(App.user.imgUrl),
                                     child: IconButton(
                                       iconSize: 40,
                                       icon: const Icon(Icons.camera_alt),
@@ -434,13 +443,14 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
 }
 
 void _setInitialValues(
-    TextEditingController nameController,
-    TextEditingController emailController,
-    TextEditingController nidController,
-    TextEditingController sexController,
-    TextEditingController bdateController,
-    TextEditingController bioController,
-    TextEditingController skillsController) {
+  TextEditingController nameController,
+  TextEditingController emailController,
+  TextEditingController nidController,
+  TextEditingController sexController,
+  TextEditingController bdateController,
+  TextEditingController bioController,
+  TextEditingController skillsController,
+) {
   nameController.text = App.user.name;
   emailController.text = App.user.email;
   nidController.text = App.user.nationalID;
