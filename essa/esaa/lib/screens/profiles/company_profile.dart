@@ -100,25 +100,35 @@ class _CompanyProfileState extends State<CompanyProfile> {
                   Center(
                     child: Stack(
                       children: [
-                        _image != null
+                        App.user.imgUrl != ''
                             ? CircleAvatar(
-                                radius: 70,
-                                backgroundImage: MemoryImage(_image!))
-                            : GestureDetector(
-                                onTap: selectImage,
-                                child: SizedBox(
-                                  height: 200,
-                                  width: 290,
-                                  child: CircleAvatar(
-                                    backgroundImage: NetworkImage(stroredImg),
-                                    child: IconButton(
-                                      iconSize: 40,
-                                      icon: const Icon(Icons.camera_alt),
-                                      onPressed: () => selectImage(),
+                                backgroundImage: NetworkImage(stroredImg),
+                                child: IconButton(
+                                  iconSize: 40,
+                                  icon: const Icon(Icons.camera_alt),
+                                  onPressed: () => selectImage(),
+                                ),
+                              )
+                            : _image != null
+                                ? CircleAvatar(
+                                    radius: 70,
+                                    backgroundImage: MemoryImage(_image!))
+                                : GestureDetector(
+                                    onTap: selectImage,
+                                    child: SizedBox(
+                                      height: 200,
+                                      width: 290,
+                                      child: CircleAvatar(
+                                        backgroundImage:
+                                            NetworkImage(stroredImg),
+                                        child: IconButton(
+                                          iconSize: 40,
+                                          icon: const Icon(Icons.camera_alt),
+                                          onPressed: () => selectImage(),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
                       ],
                     ),
                   ),
@@ -300,19 +310,21 @@ class _CompanyProfileState extends State<CompanyProfile> {
                             child: ElevatedButton(
                               onPressed: en
                                   ? () async {
-                                      saveNewValues();
-                                      //en = false;
-                                      Fluttertoast.showToast(
-                                          msg: "تم التعديل بنجاح",
-                                          backgroundColor: Colors.black54,
-                                          toastLength: Toast.LENGTH_LONG,
-                                          textColor: kFillColor);
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                companyProfileView()),
-                                      );
+                                      if (_formKey.currentState!.validate()) {
+                                        saveNewValues();
+                                        //en = false;
+                                        Fluttertoast.showToast(
+                                            msg: "تم التعديل بنجاح",
+                                            backgroundColor: Colors.black54,
+                                            toastLength: Toast.LENGTH_LONG,
+                                            textColor: kFillColor);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  companyProfileView()),
+                                        );
+                                      }
                                     }
                                   : null,
                               style: ElevatedButton.styleFrom(

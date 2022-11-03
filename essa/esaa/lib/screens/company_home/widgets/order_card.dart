@@ -385,8 +385,8 @@ class OrderCard extends StatelessWidget {
     var pastm = user?.money;
     var newmoney = pastm! + payRiyals;
     await UserDatabase(order.userID)
-        .updateUserDetails({"id": order.userID, "money": 12});
-    controller.money = newmoney;
+        .updateUserDetails({"id": order.userID, "money": newmoney});
+    //controller.money = newmoney;
 
     //Actual payment method
     await _initPayment(amount: payDollars * 100, email: 'email@test.com');

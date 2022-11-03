@@ -107,34 +107,36 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                   Center(
                     child: Stack(
                       children: [
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(App.user.imgUrl),
-                          child: IconButton(
-                            iconSize: 40,
-                            icon: const Icon(Icons.camera_alt),
-                            onPressed: () => selectImage(),
-                          ),
-                        ),
-                        _image != null
+                        App.user.imgUrl != ''
                             ? CircleAvatar(
                                 radius: 70,
-                                backgroundImage: MemoryImage(_image!))
-                            : GestureDetector(
-                                onTap: selectImage,
-                                child: SizedBox(
-                                  height: 200,
-                                  width: 290,
-                                  child: CircleAvatar(
-                                    backgroundImage:
-                                        NetworkImage(App.user.imgUrl),
-                                    child: IconButton(
-                                      iconSize: 40,
-                                      icon: const Icon(Icons.camera_alt),
-                                      onPressed: () => selectImage(),
+                                backgroundImage: NetworkImage(App.user.imgUrl),
+                                child: IconButton(
+                                  iconSize: 40,
+                                  icon: const Icon(Icons.camera_alt),
+                                  onPressed: () => selectImage(),
+                                ),
+                              )
+                            : _image != null
+                                ? CircleAvatar(
+                                    radius: 70,
+                                    backgroundImage: MemoryImage(_image!))
+                                : GestureDetector(
+                                    onTap: selectImage,
+                                    child: SizedBox(
+                                      height: 200,
+                                      width: 290,
+                                      child: CircleAvatar(
+                                        backgroundImage:
+                                            NetworkImage(App.user.imgUrl),
+                                        child: IconButton(
+                                          iconSize: 40,
+                                          icon: const Icon(Icons.camera_alt),
+                                          onPressed: () => selectImage(),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
                       ],
                     ),
                   ),
@@ -173,6 +175,50 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                                     borderSide: const BorderSide(
                                         color: Colors.white, width: 0.0)),
                               ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      //====================id ============================================
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              controller: nidController,
+                              onSaved: (newValue) {
+                                nidController.text = newValue!.trim();
+                              },
+                              onChanged: (val) => setState(() {
+                                en = true;
+                              }),
+                              style: const TextStyle(
+                                color: Colors.black87,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                //overflow: TextOverflow.ellipsis
+                              ),
+                              decoration: InputDecoration(
+                                labelText: "الهوية الوطنية",
+                                fillColor: Colors.white,
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderSide: const BorderSide(
+                                        color: Colors.white, width: 0.0)),
+                              ),
+                              validator: (val) {
+                                if (val!.isEmpty) {
+                                  en = false;
+                                  return kNationalIdNullError;
+                                } else if (val.length != 10) {
+                                  return 'يجب ان يتكون رقم الهوية/الاقامة من عشرة ارقام';
+                                } else {
+                                  return null;
+                                }
+                              },
                             ),
                           ),
                         ],
@@ -233,48 +279,6 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                               ),
                               decoration: InputDecoration(
                                 labelText: "المهارات ",
-                                fillColor: Colors.white,
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: const BorderSide(
-                                        color: Colors.white, width: 0.0)),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      //====================id ============================================
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              keyboardType: TextInputType.number,
-                              controller: nidController,
-                              onSaved: (newValue) =>
-                                  nidController.text = newValue!.trim(),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return kNationalIdNullError;
-                                } else if (value.length != 10) {
-                                  return kInvalidNationalIdError;
-                                } else {
-                                  return null;
-                                }
-                              },
-                              onChanged: (val) => setState(() {
-                                en = true;
-                              }),
-                              style: const TextStyle(
-                                color: Colors.black87,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                //overflow: TextOverflow.ellipsis
-                              ),
-                              decoration: InputDecoration(
-                                labelText: "الهوية الوطنية",
                                 fillColor: Colors.white,
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),
@@ -406,19 +410,21 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                             child: ElevatedButton(
                               onPressed: en
                                   ? () async {
-                                      saveNewValues();
-                                      //en = false;
-                                      Fluttertoast.showToast(
-                                          msg: "تم التعديل بنجاح",
-                                          backgroundColor: Colors.black54,
-                                          toastLength: Toast.LENGTH_LONG,
-                                          textColor: kFillColor);
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                jobSeekerProfileView()),
-                                      );
+                                      if (_formKey.currentState!.validate()) {
+                                        saveNewValues();
+                                        //en = false;
+                                        Fluttertoast.showToast(
+                                            msg: "تم التعديل بنجاح",
+                                            backgroundColor: Colors.black54,
+                                            toastLength: Toast.LENGTH_LONG,
+                                            textColor: kFillColor);
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  jobSeekerProfileView()),
+                                        );
+                                      }
                                     }
                                   : null,
                               style: ElevatedButton.styleFrom(

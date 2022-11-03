@@ -60,6 +60,19 @@ class jobSeekerProfileViewState extends State<jobSeekerProfileView>
               ),
             ),
           ),
+          Align(
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.account_balance_wallet_outlined,
+                  size: 25,
+                ),
+                Text(App.user.money.toString() + ' ريال سعودي'),
+              ],
+            ),
+          ),
           const SizedBox(height: 10.0),
           Card(
             child: Row(
