@@ -201,7 +201,6 @@ class _CompanyProfileState extends State<CompanyProfile> {
 
                                 return null;
                               },
-                             
                               onChanged: (val) => setState(() {
                                 en = true;
                               }),
@@ -237,7 +236,7 @@ class _CompanyProfileState extends State<CompanyProfile> {
                               validator: (val) => val!.trim().isEmpty
                                   ? 'يجب ان لا تكون معلومات التواصل فارغة'
                                   : val.length != 10
-                                      ? ''
+                                      ? 'يجب ان يتكون رقم الجوال من عشر ارقام'
                                       : null,
                               onChanged: (val) => setState(() {
                                 en = true;
