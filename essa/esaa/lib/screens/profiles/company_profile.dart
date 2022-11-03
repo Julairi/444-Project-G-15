@@ -102,6 +102,7 @@ class _CompanyProfileState extends State<CompanyProfile> {
                       children: [
                         App.user.imgUrl != ''
                             ? CircleAvatar(
+                                radius: 70,
                                 backgroundImage: NetworkImage(stroredImg),
                                 child: IconButton(
                                   iconSize: 40,
@@ -265,32 +266,6 @@ class _CompanyProfileState extends State<CompanyProfile> {
                               ),
                               decoration: InputDecoration(
                                 labelText: "المدينة",
-                                fillColor: Colors.white,
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: const BorderSide(
-                                        color: Colors.white, width: 0.0)),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              controller: emailController,
-                              enabled: false,
-                              style: const TextStyle(
-                                color: Colors.black87,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              decoration: InputDecoration(
-                                labelText: "ايميل الشركة",
                                 fillColor: Colors.white,
                                 enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10.0),

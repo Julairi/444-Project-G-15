@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
-import '../../profiles/widgets/stack_container.dart';
+import 'widgets/stack_container.dart';
 
 class CompanyJobSeekerProfile extends StatelessWidget {
   const CompanyJobSeekerProfile({Key? key}) : super(key: key);

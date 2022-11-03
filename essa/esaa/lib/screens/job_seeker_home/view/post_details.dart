@@ -12,7 +12,6 @@ import 'package:esaa/services/notification.dart' as notification;
 import '../../../app.dart';
 import '../../profiles/companyProfileForJS2.dart';
 import '../widgets/company_posts_for_job_seeker.dart';
-import 'package:esaa/screens/companyProfileForJS.dart';
 
 class PostDetails extends StatelessWidget {
   final Order? order;

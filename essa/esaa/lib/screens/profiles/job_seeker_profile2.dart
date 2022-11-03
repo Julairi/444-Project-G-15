@@ -376,32 +376,6 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                         ],
                       ),
                       const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              controller: emailController,
-                              enabled: false,
-                              style: const TextStyle(
-                                color: Colors.black87,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              decoration: InputDecoration(
-                                labelText: "الايميل",
-                                fillColor: Colors.white,
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    borderSide: const BorderSide(
-                                        color: Colors.white, width: 0.0)),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
                         height: 28,
                       ),
                       Row(
