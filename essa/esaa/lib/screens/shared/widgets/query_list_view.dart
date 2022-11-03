@@ -495,8 +495,14 @@ class FirestoreListView<Document> extends FirestoreQueryBuilder<Document> {
               return emptyListBuilder(context);
             }
 
+            int itemCount = 0;
+            if(absoluteSize == null){
+              itemCount = snapshot.docs.length;
+            }else {
+              itemCount = absoluteSize > snapshot.docs.length ? snapshot.docs.length : absoluteSize;
+            }
             return ListView.builder(
-              itemCount: absoluteSize ?? snapshot.docs.length,
+              itemCount: itemCount,
               itemBuilder: (context, index) {
                 if (absoluteSize == null) {
                   final isLastItem = index + 1 == snapshot.docs.length;
