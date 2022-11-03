@@ -34,7 +34,7 @@ class OrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<OrderCardController>();
-
+    final _formKey = GlobalKey<FormState>();
     return InkWell(
         onTap: () async {
           if (post == null) {
@@ -202,25 +202,28 @@ class OrderCard extends StatelessWidget {
                           return SizedBox(
                             width: 70,
                             height: 40,
-                            child: ElevatedButton(
-                              onPressed: () => payOrder(order, controller),
-                              style: ElevatedButton.styleFrom(
-                                  primary: kPrimaryColor,
-                                  elevation: 0,
-                                  padding: EdgeInsets.zero),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10.0),
-                                    child: Text(
-                                      "Pay",
-                                      style: TextStyle(
-                                          color: kFillColor, fontSize: 16),
+                            child: Form(
+                              key: _formKey,
+                              child: ElevatedButton(
+                                onPressed: () => payOrder(order, controller),
+                                style: ElevatedButton.styleFrom(
+                                    primary: kPrimaryColor,
+                                    elevation: 0,
+                                    padding: EdgeInsets.zero),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 10.0),
+                                      child: Text(
+                                        "Pay",
+                                        style: TextStyle(
+                                            color: kFillColor, fontSize: 16),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           );
