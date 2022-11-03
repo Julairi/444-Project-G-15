@@ -222,7 +222,7 @@ class OrderCard extends StatelessWidget {
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 10.0),
                                       child: Text(
-                                        "Pay",
+                                        "ادفع",
                                         style: TextStyle(
                                             color: kFillColor, fontSize: 16),
                                       ),
