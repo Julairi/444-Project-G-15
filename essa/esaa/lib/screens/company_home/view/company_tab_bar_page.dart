@@ -210,7 +210,7 @@ class _TabOne extends StatelessWidget {
         final now = DateFormat('yyyy-MM-dd')
             .parse(DateFormat('yyyy-MM-dd').format(DateTime.now()));
         if (startDate.millisecondsSinceEpoch <= now.millisecondsSinceEpoch) {
-          skipDetails = true;
+          skipDetails = false;
         }
         return PostCardCompany(
             post: post,
