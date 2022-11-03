@@ -316,6 +316,7 @@ class actab extends StatelessWidget {
             query: OrderDatabase.ordersCollection
                 .where("userID", isEqualTo: App.user.id)
                 .where("orderStatus", isEqualTo: "accepted")
+                .where('hasBeenPaid', isEqualTo: false)
                 .orderBy("timeApplied", descending: true),
             emptyListWidget: Container(
               margin: const EdgeInsets.only(top: 120, bottom: 100),
