@@ -90,13 +90,14 @@ class OrderCard extends StatelessWidget {
                                   overflow: TextOverflow.fade),
                             ),
                           if (App.user.userType == 'jobSeeker')
-                            FutureBuilder(
-                                future: PostDatabase().getPost(order.postID),
+                            StreamBuilder<Post>(
+                                stream: PostDatabase()
+                                    .getPostAsStream(order.postID),
                                 builder: (BuildContext context,
                                     AsyncSnapshot<Post?> snapshot) {
                                   // return a widget here (you have to return a widget to the builder)
                                   return Text(
-                                    snapshot.data!.title,
+                                    snapshot.data?.title ?? "",
                                     style: const TextStyle(
                                         color: Color.fromARGB(255, 6, 6, 6),
                                         fontSize: 18,
