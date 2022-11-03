@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../config/constants.dart';
 import '../shared/shared.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -84,13 +85,12 @@ class LoginAndSignupBtn extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: 200,
-          width: 290,
+          height: 180,
+          width: 300,
           child: Image.asset("assets/logo.png"),
         ),
-
+        const SizedBox(height: defaultPadding),
         //test
-        const SizedBox(height: 16),
 
         ElevatedButton(
           onPressed: () => Get.toNamed('/login_screen'),

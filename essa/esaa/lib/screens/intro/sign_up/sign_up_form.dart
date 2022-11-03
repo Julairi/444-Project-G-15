@@ -58,7 +58,7 @@ class SignUpFormState extends State<SignUpForm> {
         } else if (textlValidatorRegExp.hasMatch(value)) {
           return "يجب أن يحتوي الاسم الأول على أحرف فقط";
         }
-         return null;
+        return null;
       },
     );
 
@@ -93,7 +93,7 @@ class SignUpFormState extends State<SignUpForm> {
         } else if (textlValidatorRegExp.hasMatch(value)) {
           return "يجب أن يحتوي الاسم الثاني على أحرف فقط";
         }
-         return null;
+        return null;
       },
     );
 
@@ -237,7 +237,7 @@ class SignUpFormState extends State<SignUpForm> {
       child: Column(
         children: [
           SizedBox(
-            height: 200,
+            height: 180,
             width: 290,
             child: Image.asset("assets/logo.png"),
           ),

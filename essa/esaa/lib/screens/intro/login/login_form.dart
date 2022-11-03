@@ -90,8 +90,8 @@ class LoginFormState extends State<LoginForm> {
       child: Column(
         children: [
           SizedBox(
-            height: 200,
-            width: 290,
+            height: 180,
+            width: 300,
             child: Image.asset("assets/logo.png"),
           ),
           const Padding(padding: EdgeInsets.all(defaultPadding)),
