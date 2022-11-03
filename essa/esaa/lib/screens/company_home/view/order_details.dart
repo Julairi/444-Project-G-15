@@ -283,13 +283,13 @@ class OrderDetails extends StatelessWidget {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const SizedBox(height: 30),
+                          const SizedBox(height: 10),
                           const Text(
                             "هل أنت متأكد برغبتك بقبول هذا الطلب؟",
                             style: TextStyle(color: Colors.black, fontSize: 20),
                             textAlign: TextAlign.center,
                           ),
-                          const SizedBox(height: 30),
+                          const SizedBox(height: 9),
                           Row(
                             children: [
                               Expanded(
