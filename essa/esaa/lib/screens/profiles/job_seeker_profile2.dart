@@ -155,9 +155,16 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                               controller: nameController,
                               onSaved: (newValue) =>
                                   nameController.text = newValue!.trim(),
-                              validator: (val) => val!.trim().isEmpty
-                                  ? 'يجب ان يكون الاسم اكثر من ثلاث أحرف'
-                                  : null,
+                              validator: (value) {
+                                final number = num.tryParse(value!);
+                                if (value!.trim().isEmpty) {
+                                  return "يجب ان لا يكون الاسم فارغًا";
+                                } else if (number != null) {
+                                  return 'يجب أن لا يحتوي الاسم على أرقام فقط';
+                                }
+
+                                return null;
+                              },
                               onChanged: (val) => setState(() {
                                 en = true;
                               }),
@@ -238,6 +245,14 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                               onChanged: (val) => setState(() {
                                 en = true;
                               }),
+                              validator: (value) {
+                                final number = num.tryParse(value!);
+                                if (number != null) {
+                                  return 'يجب أن لا تحتوي النبذه التعريفية على أرقام فقط';
+                                }
+
+                                return null;
+                              },
                               style: const TextStyle(
                                 color: Colors.black87,
                                 fontSize: 16,
@@ -271,6 +286,13 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                               onChanged: (val) => setState(() {
                                 en = true;
                               }),
+                              validator: (value) {
+                                final number = num.tryParse(value!);
+                                if (number != null) {
+                                  return 'يجب أن لا تحتوي المهارات على أرقام فقط';
+                                }
+                                return null;
+                              },
                               style: const TextStyle(
                                 color: Colors.black87,
                                 fontSize: 16,
@@ -345,7 +367,7 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                         height: 10,
                       ),
                       //====================sex ============================================
-                      Row(
+                      /*Row(
                         children: [
                           Expanded(
                             child: TextFormField(
@@ -377,7 +399,7 @@ class _JobSeekerProfile2State extends State<JobSeekerProfile2>
                       ),
                       const SizedBox(
                         height: 28,
-                      ),
+                      ),*/
                       Row(
                         children: [
                           Expanded(

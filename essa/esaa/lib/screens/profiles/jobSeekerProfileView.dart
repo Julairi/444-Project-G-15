@@ -158,7 +158,7 @@ class jobSeekerProfileViewState extends State<jobSeekerProfileView>
               ],
             ),
           ),
-          Card(
+          /* Card(
             child: Row(
               children: <Widget>[
                 const SizedBox(width: 24.0),
@@ -184,7 +184,7 @@ class jobSeekerProfileViewState extends State<jobSeekerProfileView>
                 ),
               ],
             ),
-          ),
+          ),*/
           Card(
             child: Row(
               children: <Widget>[
