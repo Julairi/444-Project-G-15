@@ -213,9 +213,9 @@ class _TabOne extends StatelessWidget {
           skipDetails = false;
         }
         return PostCardCompany(
-            post: post,
-            filters: const ["pending", "accepted"],
-            skipDetails: skipDetails,
+          post: post,
+          filters: const ["pending", "accepted"],
+          skipDetails: skipDetails,
         );
       },
     );
@@ -246,9 +246,9 @@ class _TabTwo extends StatelessWidget {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(8)),
                       tabs: const [
-                        Tab(text: 'تحتاج للدفع'),
-                        Tab(text: 'لا  تحتاج الدفع'),
-                        Tab(text: 'مدفوعة'),
+                        Tab(text: 'ادفع'),
+                        Tab(text: 'لا  تحتاج'),
+                        Tab(text: 'مدفوع'),
                       ]),
                 ),
               ),
