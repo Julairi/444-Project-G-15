@@ -41,9 +41,9 @@ class AvailablePostsScreen extends StatelessWidget {
                   const SizedBox(
                     width: 10,
                   ),
-                  Align(
+                  const Align(
                     alignment: AlignmentDirectional.topStart,
-                    child: Text(" أهلا بك  ",
+                    child: Text(" أهلا بك ",
                         style: TextStyle(
                             color: kPrimaryColor,
                             fontSize: 40,
@@ -53,7 +53,7 @@ class AvailablePostsScreen extends StatelessWidget {
                   Align(
                     alignment: AlignmentDirectional.topStart,
                     child: Text(App.user.name,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: kPrimaryColor,
                             fontSize: 25,
                             fontWeight: FontWeight.w700,
