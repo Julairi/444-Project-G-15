@@ -123,7 +123,7 @@ class OrderCard extends StatelessWidget {
                           child: const Text("تفاصيل الطلب",
                               style: TextStyle(
                                   color: kSPrimaryColor,
-                                  fontSize: defaultFontSize,
+                                  fontSize: 13,
                                   fontWeight: FontWeight.bold,
                                   decoration: TextDecoration.underline,
                                   overflow: TextOverflow.ellipsis)),
