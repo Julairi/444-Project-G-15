@@ -40,14 +40,15 @@ class AvailablePostsScreen extends StatelessWidget {
                 children: [
                   const SizedBox(
                     width: 10,
+                    height: 1,
                   ),
                   const Align(
                     alignment: AlignmentDirectional.topStart,
-                    child: Text(" أهلا بك ",
+                    child: Text("مرحبا ",
                         style: TextStyle(
                             color: kPrimaryColor,
                             fontSize: 40,
-                            fontWeight: FontWeight.w500,
+                            fontWeight: FontWeight.w400,
                             overflow: TextOverflow.ellipsis)),
                   ),
                   Align(
@@ -56,12 +57,12 @@ class AvailablePostsScreen extends StatelessWidget {
                         style: const TextStyle(
                             color: kPrimaryColor,
                             fontSize: 25,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                             overflow: TextOverflow.ellipsis)),
                   ),
                 ],
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 5),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: defaultPadding),
                 child: TextField(
@@ -77,7 +78,7 @@ class AvailablePostsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 2),
               Align(
                 alignment: Alignment.centerRight,
                 child: Container(
@@ -155,7 +156,7 @@ class AvailablePostsScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 5),
               Center(child: GetX<AvailablePostsController>(
                 builder: (controller) {
                   if (controller.filterBy == " التاريخ الاقرب") {
@@ -165,7 +166,7 @@ class AvailablePostsScreen extends StatelessWidget {
                   }
                 },
               )),
-              const SizedBox(height: 10),
+              const SizedBox(height: 0),
               GetX<AvailablePostsController>(
                 builder: (controller) {
                   if (controller.filterBy == " التاريخ الاقرب") {
@@ -279,7 +280,7 @@ class AvailablePostList extends StatelessWidget {
 
   Widget _emptyListBuilder() {
     return const SizedBox(
-      height: 200,
+      height: 100,
       //check the error message
     );
   }
